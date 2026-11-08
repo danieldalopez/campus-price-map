@@ -1,0 +1,125 @@
+id,name,area,operator,type,address,hours,lat,lng,is_benchmark,poi_id,location_precision,vendor_type
+blue-chip-cafe,Blue Chip Cafe,AMS Nest,ams,cafe,6133 University Blvd,M-F: 7 am - 7 pm; Sat-Sun: 9 am - 5 pm,49.266236,-123.249873,false,VPOI10094,exact,Cafe
+el-cartel,El Cartel,AMS Nest,ams,quick_service,6133 University Blvd,,49.266485,-123.249816,false,,building,Quick service (Mexican)
+gallery-patio-lounge,Gallery Patio & Lounge,AMS Nest,ams,restaurant,6133 University Blvd,M-F: 11 am - 10 pm; Sat-Sun: Closed,49.266747,-123.250242,false,VPOI10085,exact,Restaurant/Bar
+grand-noodle-emporium,Grand Noodle Emporium,AMS Nest,ams,quick_service,6133 University Blvd,M-F: 10:30 am - 3 pm; Sat-Sun: Closed,49.266788,-123.250186,false,VPOI10095,exact,Quick service
+grocery-checkout,Grocery Checkout,AMS Nest,independent,convenience,6133 University Blvd,M-F: 8:30 am - 7 pm; Sat-Sun: 10 am - 5 pm,49.266377,-123.249432,false,VPOI10105,exact,Grocery / convenience
+honour-roll,Honour Roll,AMS Nest,ams,quick_service,6133 University Blvd,M-F: 11 am - 3:30 pm; Sat-Sun: Closed,49.266892,-123.250198,false,VPOI10136,exact,Quick service
+ins-market,INS Market,AMS Nest,chain,convenience,6133 University Blvd,M-F: 8 am - 8 pm; Sat: 12 - 8 pm; Sun: Closed,49.266694,-123.249625,false,VPOI10155,exact,Convenience store
+kyros-kitchen,Kyros Kitchen,AMS Nest,ams,quick_service,6133 University Blvd Unit 101,M-Sa: 10:30 am - 10 pm; Sun: Closed,49.266773,-123.249760,false,VPOI10217,exact,Quick service (Mediterranean)
+seoul-hotdog,Seoul Hotdog,AMS Nest,ams,quick_service,6133 University Blvd,,49.266646,-123.249658,false,VPOI10098,exact,Quick service
+teadot,Teadot,AMS Nest,independent,cafe,6133 University Blvd Unit 1303,,49.266724,-123.249719,false,VPOI10097,exact,Bubble tea
+the-delly,The Delly,AMS Nest,ams,convenience,6133 University Blvd,M-F: 9 am - 7 pm; Sat-Sun: Closed,49.266540,-123.249497,false,VPOI10074,exact,Grab and go / deli
+thirstyyy,Thirstyyy,AMS Nest,ams,convenience,6133 University Blvd,,49.266683,-123.249691,false,VPOI10090,exact,Convenience store
+upmeals-the-nest,UpMeals (The Nest),AMS Nest,ams,convenience,6133 University Blvd,,49.266589,-123.249726,false,,building,Grab and go
+booster-juice-life-building,Booster Juice (Life Building),Life Building,chain,cafe,6138 Student Union Blvd,M-F: 10 am - 7 pm; Sat-Sun: Closed,49.267416,-123.249580,false,VPOI10456,exact,Smoothies
+pacific-poke-life-building,Pacific Poke (Life Building),Life Building,independent,quick_service,6138 Student Union Blvd,M-F: 11 am - 5 pm; Sat-Sun: Closed,49.267462,-123.249545,false,VPOI10457,exact,Quick service
+sprouts,Sprouts,Life Building,ams,cafe,6138 Student Union Blvd,M-F: 9:30 am - 4:30 pm; Sat-Sun: Closed,49.267310,-123.249652,false,VPOI10172,exact,Cafe (student-run)
+starbucks-life-building,Starbucks (Life Building),Life Building,chain,cafe,6138 Student Union Blvd,M-F: 7 am - 9 pm; Sat-Sun: 8 am - 5 pm,49.267388,-123.249698,false,VPOI10459,exact,Coffee
+subway-life-building,Subway (Life Building),Life Building,chain,quick_service,6138 Student Union Blvd,M-F: 9 am - 9 pm; Sat-Sun: 10 am - 5 pm,49.267376,-123.249529,false,VPOI10458,exact,Quick service
+corner-store,Corner Store,Bookstore,ubc_food_services,convenience,6200 University Blvd,M-F: 10 am - 6 pm; Sat: 11 am - 5 pm; Sun: Closed,49.265209,-123.250783,false,VPOI10037,exact,Grab and go / convenience
+starbucks-bookstore,Starbucks (Bookstore),Bookstore,chain,cafe,6200 University Blvd,M-F: 7 am - 6 pm; Sat: 9:30 am - 5 pm; Sun: Closed,49.265239,-123.250691,false,VPOI10039,exact,Coffee
+body-energy-club,Body Energy Club,University Blvd,chain,cafe,104-6111 University Blvd,,49.266200,-123.247000,false,,area,Smoothies
+browns-crafthouse,Browns Crafthouse,University Blvd,chain,restaurant,101-6111 University Blvd,M-Th: 11 am - 11 pm; Fri -Sat: 11 am - 12 am ; Sun: 11 am - 11 pm,49.266106,-123.248668,false,VPOI10446,exact,Restaurant
+chachi-s,Chachi's,University Blvd,independent,quick_service,6020 University Blvd,Daily: 11 am - 10 pm,49.265853,-123.247054,false,VPOI10518,exact,Quick service (sandwiches)
+chatime,Chatime,University Blvd,chain,cafe,5998 University Blvd,Daily: 11 am - 10 pm,49.265842,-123.246737,false,VPOI10452,exact,Bubble tea
+chipotle,Chipotle,University Blvd,chain,quick_service,6025 University Blvd,Daily: 11 am - 8 pm,49.266258,-123.247092,false,VPOI10036,exact,Quick service (Mexican)
+dl-chicken-shack,DL Chicken Shack,University Blvd,independent,quick_service,,M-Sat: 11 am - 9 pm ; Sun: 11 am - 4:30 pm,49.266203,-123.247574,false,VPOI10445,exact,Quick service
+hungry-zus,Hungry Zus,University Blvd,independent,quick_service,6035 University Blvd,,49.266248,-123.247168,false,VPOI10035,exact,Quick service (Mediterranean)
+jj-bean,JJ Bean,University Blvd,independent,cafe,,M-F: 7 am - 8 pm; Sat-Sun: 8 am - 6 pm,49.266298,-123.246851,false,VPOI10034,exact,Coffee
+kinton-ramen,Kinton Ramen,University Blvd,chain,restaurant,102-6111 University Blvd,Daily: 11:30 am - 8:30 pm; Closed Holidays,49.266093,-123.248412,false,VPOI10447,exact,Restaurant
+loafe-cafe-alumni-centre,Loafe Café (Alumni Centre),University Blvd,ubc_food_services,cafe,,M-F: 8 am - 6 pm; Sat: 11 am - 4 pm; Sun: Closed,49.265806,-123.250156,false,VPOI10258,exact,Cafe
+nori-bento-udon,Nori Bento & Udon,University Blvd,independent,quick_service,5900 University Blvd,M-Sat: 11 am - 7 pm; Sun: Closed,49.266214,-123.247426,false,VPOI10425,exact,Quick service
+osmow-s-shawarma,Osmow's Shawarma,University Blvd,chain,quick_service,,Daily: 11 am - 9 pm,49.265985,-123.246517,false,VPOI10455,exact,Quick service
+rain-or-shine,Rain or Shine,University Blvd,independent,cafe,,Daily: 12 pm - 10 pm,49.266432,-123.246833,false,VPOI10145,exact,Ice cream
+rosie-s-burgers,Rosie's Burgers,University Blvd,independent,quick_service,,,49.266386,-123.247401,false,VPOI10521,exact,Quick service (burgers)
+ryuu-japanese-kitchen,Ryuu Japanese Kitchen,University Blvd,independent,restaurant,5980 University Blvd,,49.266304,-123.246910,false,,area,Restaurant
+sesame,Sesame,University Blvd,independent,restaurant,103-6111 University Blvd,M-F: 11 am - 9 pm; Sat-Sun: 11 am - 7 pm,49.266111,-123.248262,false,VPOI10448,exact,Restaurant
+shoppers-drug-mart-university-blvd,Shoppers Drug Mart (University Blvd),University Blvd,chain,convenience,5940 University Blvd,,49.265265,-123.245255,false,,building,Pharmacy / convenience
+steve-s-poke-bar,Steve's Poke Bar,University Blvd,independent,restaurant,3-5990 University Blvd,Daily: 11 am - 7 pm,49.265965,-123.246716,false,VPOI10453,exact,Restaurant
+uncle-fatih-s-pizza,Uncle Fatih's Pizza,University Blvd,independent,quick_service,,W-Sat: 11 am - 12 am; Sun-Tu: 11 am - 11 pm,49.266233,-123.247290,false,VPOI10320,exact,Pizza
+avenue-c-neville-scarfe,Avenue C (Neville Scarfe),Academic core,ubc_food_services,convenience,,,49.263795,-123.252773,false,VPOI10508,exact,Grab and go
+cafe-ami,Café Ami,Academic core,independent,cafe,,M-F: 7 am - 5 pm; Sat-Sun: Closed,49.264615,-123.244472,false,VPOI10147,exact,Cafe
+cedar-cafe-moa,Cedar Café (MOA),Academic core,independent,cafe,,Tu-W: 10 am - 5 pm; Th: 10 am - 9 pm; F-Sun: 10 am - 5 pm,49.269415,-123.259170,false,VPOI10358,exact,Cafe
+corner-cafe,Corner Cafe,Academic core,independent,cafe,,M-F: 7 am - 3 pm; Sat-Sun: Closed,49.264648,-123.246102,false,VPOI10352,exact,Cafe
+dabao,DaBao,Academic core,ubc_food_services,convenience,1961 East Mall,Daily: 11 am - 6 pm,49.267234,-123.252686,false,VPOI10027,exact,Cafe / grab and go
+esc-eatery,ESC Eatery,Academic core,independent,cafe,,M-F: 9:30 am - 3 pm; Sat-Sun: Closed,49.262110,-123.249122,false,VPOI10316,exact,Cafe
+firehouse-subs,Firehouse Subs,Academic core,chain,quick_service,,M-Sat: 8 am - 8:30 pm; Sun: 9 am - 6:30 pm,49.261360,-123.246477,false,VPOI10154,exact,Quick service
+food-hub-market-cirs,Food Hub Market (CIRS),Academic core,ubc_food_services,grocery,2260 West Mall,,49.262128,-123.252933,false,,building,Low-cost grocery
+koerner-s-pub,Koerner's Pub,Academic core,independent,restaurant,,M-W: 12 pm - 7pm; Th-Fri: 12 pm - 10 pm; Sat-Sun: 12 pm - 7 pm,49.268553,-123.258017,false,VPOI10067,exact,Pub
+law-cafe,Law Café,Academic core,independent,cafe,,M-F: 7:30 am - 7:30 pm; Sat-Sun: Closed,49.269952,-123.253654,false,VPOI10025,exact,Cafe
+perugia-italian-caffe,Perugia Italian Caffè,Academic core,ubc_food_services,cafe,,M-Th: 7:30 am - 5 pm; Fri: 7:30 am - 4 pm; Sat-Sun: Closed,49.262252,-123.244823,false,VPOI10031,exact,Cafe
+pho-real,Pho Real,Academic core,ubc_food_services,quick_service,,M-F: 10:30 am - 4 pm; Sat-Sun: Closed,49.261074,-123.248308,false,VPOI10253,exact,Quick service
+starbucks-fred-kaiser,Starbucks (Fred Kaiser),Academic core,chain,cafe,,M-F: 8 am - 4 pm; Sat-Sun: Closed,49.262200,-123.250184,false,VPOI10038,exact,Coffee
+starbucks-tef3-agronomy-rd,Starbucks (TEF3 / Agronomy Rd),Academic core,chain,cafe,,M-F: 7 am - 6 pm; Sat: 9:30 am - 5 pm,49.261228,-123.246604,false,VPOI10092,exact,Coffee
+stir-it-up-cafe,Stir It Up Café,Academic core,ubc_food_services,cafe,,W-Fri: 7:30 am - 3 pm; Sat-Tu: Closed,49.268531,-123.254805,false,VPOI10093,exact,Cafe
+tim-hortons-forest-sciences,Tim Hortons (Forest Sciences),Academic core,chain,cafe,,M-F: 7 am - 6 pm; Sat-Sun: Closed,49.260189,-123.248431,false,VPOI10099,exact,Coffee
+upmeals-ikb,UpMeals (IKB),Academic core,ams,convenience,1961 East Mall,,49.267677,-123.252812,false,,building,Grab and go
+bento-sushi-david-lam,Bento Sushi (David Lam),Sauder / David Lam,chain,convenience,,,49.265869,-123.254446,false,,building,Grab and go
+loafe-cafe-sauder,Loafe Café (Sauder),Sauder / David Lam,ubc_food_services,cafe,,,49.265218,-123.253728,false,VPOI10115,exact,Cafe
+presto,Presto,Sauder / David Lam,ubc_food_services,quick_service,,M-F: 10:30 am - 6 pm; Sat-Sun: Closed,49.265861,-123.254258,false,VPOI10236,exact,Quick service
+tim-hortons-david-lam,Tim Hortons (David Lam),Sauder / David Lam,chain,cafe,,M-F: 7 am - 8 pm; Sat-Sun: Closed,49.265861,-123.254258,false,VPOI10116,exact,Coffee
+triple-o-s,Triple O's,Sauder / David Lam,chain,quick_service,,Daily: 10 am - 9 pm,49.265889,-123.254398,false,VPOI10114,exact,Quick service
+harvest-market,Harvest Market,Ponderosa / Orchard,ubc_food_services,convenience,6488 University Blvd,Daily: 7 am - 10 pm,49.263983,-123.255742,false,VPOI10100,exact,Grocery / grab and go
+hero-coffee-market,Hero Coffee + Market,Ponderosa / Orchard,ubc_food_services,convenience,,M-F: 8 am - 11 pm; Sat- Sun: 10 am - 11 pm,49.260717,-123.251377,false,VPOI10335,exact,Cafe / grab and go
+mercante,Mercante,Ponderosa / Orchard,ubc_food_services,quick_service,6488 University Blvd,M-F: 9 am - 11 pm; Sat-Sun: 12 pm - 5 pm,49.263739,-123.255072,false,VPOI10324,exact,Pizza / quick service
+open-kitchen,Open Kitchen,Ponderosa / Orchard,ubc_food_services,dining_hall,,"M-F: 7 am - 2 pm, 3 pm - 9 pm; Sat-Sun: 8 am - 2 pm, 3 pm - 9 pm",49.260676,-123.251516,false,VPOI10334,exact,Dining hall
+bean-around-the-world,Bean Around The World,Residences,independent,cafe,6308 Thunderbird Blvd,Daily: 8 am - 5 pm,49.258854,-123.248048,false,VPOI10042,exact,Coffee
+feast,Feast,Residences,ubc_food_services,dining_hall,,,49.257912,-123.252972,false,VPOI10251,exact,Dining hall
+gage-market,Gage Market,Residences,independent,convenience,,,49.269436,-123.249617,false,VPOI10427,exact,24/7 convenience (Amazon Just Walk Out)
+gather,Gather,Residences,ubc_food_services,dining_hall,,"M-F: 7 am - 2 pm, 3 pm - 9 pm; Sat-Sun: 8 am - 2 pm, 3 pm - 9 pm",49.264773,-123.258697,false,VPOI10315,exact,Dining hall
+great-dane-coffee,Great Dane Coffee,Residences,ubc_food_services,cafe,,M-F: 8 am - 4 pm; Sat-Sun: 9 am - 3 pm,49.270078,-123.250735,false,VPOI10040,exact,Coffee
+hero-harvest,Hero | Harvest,Residences,ubc_food_services,convenience,,Daily: 7 am - 10 pm,49.268929,-123.252766,false,VPOI10442,exact,Cafe / grocery
+hubbards-global-market,Hubbards Global Market,Residences,ubc_food_services,convenience,,Daily: 4:30 pm - 11:30 pm,49.264881,-123.258818,false,VPOI10319,exact,Late-night convenience
+korean-home-meal,Korean Home Meal,Residences,independent,quick_service,,,49.263336,-123.239668,false,,building,Quick service
+magda-s-night-market,Magda's Night Market,Residences,ubc_food_services,convenience,,Daily: 3:30 pm - 11:30 pm,49.257876,-123.252880,false,VPOI10077,exact,Late-night convenience
+the-beanery,The Beanery,Residences,independent,cafe,,M-Th: 7:30 am - 9 pm; Fri: 7:30 am - 7 pm; Sat-Sun: 8:30 am - 7 pm,49.263599,-123.239468,false,VPOI10143,exact,Coffee
+tim-hortons-orca-house,Tim Hortons (Orca House),Residences,chain,cafe,,M-F: 8 am - 6 pm; Sat: 11 am - 4 pm; Sun: Closed,49.268710,-123.249964,false,VPOI10429,exact,Coffee
+a-w,A&W,University Village,chain,quick_service,5778 University Blvd,24hrs,49.266470,-123.243437,false,VPOI10221,exact,Fast food
+agra-tandoori-express,Agra Tandoori Express,University Village,independent,quick_service,,M-Sat: 11 am - 10 pm; Sun: 11 am - 9 pm,49.266010,-123.243445,false,VPOI10046,exact,Quick service
+bengong-s-tea,Bengong's Tea,University Village,independent,cafe,,,49.266140,-123.242943,false,,area,Bubble tea
+bento-king,Bento King,University Village,independent,quick_service,,,49.266244,-123.242853,false,,area,Quick service
+beyond-bbq,Beyond BBQ,University Village,independent,restaurant,,,49.266244,-123.243033,false,,area,Restaurant
+big-way-hot-pot,Big Way Hot Pot,University Village,chain,restaurant,,M-F: 12 pm - 7:45 pm; Sat-Sun: Closed,49.266024,-123.242527,false,VPOI10128,exact,Restaurant (malatang)
+black-pearl-cafe,Black Pearl Cafe,University Village,independent,cafe,,,49.266140,-123.243123,false,,area,Cafe
+booster-juice-university-village,Booster Juice (University Village),University Village,chain,cafe,,M-Sat: 8 am - 8 pm; Sun: 10 am - 6 pm,49.266075,-123.242835,false,VPOI10130,exact,Smoothies
+chirpyhut-fried-chicken-ubc,Chirpyhut Fried Chicken UBC,University Village,independent,quick_service,5728 University Blvd,,49.266036,-123.243033,false,,area,Quick service
+donair-town,Donair Town,University Village,independent,quick_service,5728 University Blvd,,49.266036,-123.242853,false,,area,Quick service
+foodie-power,Foodie Power,University Village,independent,restaurant,5728 University Blvd B8,,49.266140,-123.242583,false,,area,Restaurant
+freshslice-pizza,Freshslice Pizza,University Village,chain,quick_service,,,49.266348,-123.242763,false,,area,Pizza
+granville-island-produce,Granville Island Produce,University Village,independent,grocery,,W-M: 9 am - 6 pm; Tu: 9 am -7 pm,49.265752,-123.243002,false,VPOI10326,exact,Grocery
+h-mart,H-Mart,University Village,independent,grocery,5728 University Blvd,Daily: 9 am - 10 pm,49.266614,-123.243084,false,VPOI10180,exact,Grocery
+kung-fu-noodle-ubc,Kung Fu Noodle UBC,University Village,independent,restaurant,5728 University Blvd,,49.266348,-123.243123,false,,area,Restaurant
+mcdonald-s,McDonald's,University Village,chain,quick_service,5728 University Blvd,24hrs,49.266705,-123.242512,false,VPOI10177,exact,Fast food
+meet-night-izakaya-japanese-restaurant,Meet Night Izakaya & Japanese Restaurant,University Village,independent,restaurant,,,49.266140,-123.243303,false,,area,Restaurant
+miyamae-sushi,Miyamae Sushi,University Village,independent,restaurant,5728 University Blvd,,49.265932,-123.243123,false,,area,Restaurant
+my-home-cuisine,My Home Cuisine,University Village,independent,restaurant,,,49.265932,-123.242763,false,,area,Restaurant
+only-u-cafe,Only U Cafe,University Village,independent,cafe,,M-F: 9 am - 4 pm; Sat-Sun: 9 am - 3 pm,49.265977,-123.242381,false,VPOI10131,exact,Cafe
+pho-with-us,Pho With Us,University Village,independent,restaurant,,,49.266140,-123.242403,false,,area,Restaurant
+pita-pit,Pita Pit,University Village,chain,quick_service,,M-Sat: 10:30 am - 12 am; Sun: 11am - 11 pm,49.266090,-123.242124,false,VPOI10043,exact,Quick service
+pizza-garden,Pizza Garden,University Village,independent,quick_service,,,49.266465,-123.243497,false,VPOI10220,exact,Pizza
+prime-news,Prime News,University Village,independent,convenience,,M-Th: 10 am - 7 pm; Fri: 10 am - 9 pm; Sat: 11 am - 7 pm,49.266004,-123.243040,false,VPOI10328,exact,Convenience store
+ramen-danbo-express,Ramen Danbo Express,University Village,chain,quick_service,5743 Dalhousie Rd,,49.266452,-123.242673,false,,area,Quick service (ramen)
+sahel,Sahel,University Village,independent,restaurant,,,49.266452,-123.243213,false,,area,Restaurant
+starbucks-university-village,Starbucks (University Village),University Village,chain,cafe,,M-F: 6 am - 10:30 pm; Sat-Sun: 7 am - 10 pm,49.265850,-123.242749,false,VPOI10024,exact,Coffee
+subway-university-village,Subway (University Village),University Village,chain,quick_service,,M-F: 7 am - 10 pm; Sat-Sun: 9 am - 10 pm,49.265896,-123.243203,false,VPOI10129,exact,Quick service
+vera-s-burger-shack,Vera's Burger Shack,University Village,independent,quick_service,,Daily: 10:30 am - 10:30 pm,49.265799,-123.243271,false,VPOI10044,exact,Quick service
+want-want-hot-spicy-house,Want Want Hot & Spicy House,University Village,independent,restaurant,,,49.266140,-123.243483,false,,area,Restaurant
+yang-s-braised-chicken-rice,Yang's Braised Chicken Rice,University Village,independent,quick_service,,,49.265828,-123.243213,false,,area,Quick service
+yunshang-rice-noodle-ubc,Yunshang Rice Noodle UBC,University Village,independent,quick_service,,,49.265828,-123.242673,false,,area,Quick service
+biercraft-wesbrook,BierCraft Wesbrook,Wesbrook Village,chain,restaurant,3340 Shrum Lane,,49.254766,-123.236554,false,,area,Restaurant/Pub
+big-star-sandwich-co,Big Star Sandwich Co,Wesbrook Village,independent,quick_service,,,49.254870,-123.236464,false,,area,Quick service
+blenz-coffee,Blenz Coffee,Wesbrook Village,chain,cafe,,M-Th: 6:30 am - 10 pm; Fri: 6:30 am - 9:30 pm; Sat-Sun: 7 am - 9:30 pm,49.254027,-123.235083,false,VPOI10070,exact,Coffee
+chef-hung-taiwanese-beef-noodle,Chef Hung Taiwanese Beef Noodle,Wesbrook Village,independent,restaurant,,Daily: 11 am - 9 pm,49.254311,-123.236276,false,VPOI10342,exact,Restaurant
+doughgirls,Doughgirls,Wesbrook Village,independent,cafe,,Daily: 9 am - 5 pm,49.254571,-123.235906,false,VPOI10333,exact,Bakery
+freshii,Freshii,Wesbrook Village,chain,quick_service,,Tu-F: 9 am - 8 pm; Sun-M: Closed,49.254418,-123.235382,false,VPOI10256,exact,Quick service
+neptune-chinese-kitchen,Neptune Chinese Kitchen,Wesbrook Village,independent,restaurant,3337 Shrum Lane,M-Sa: 11 am - 12 am; Sun: Closed,49.254185,-123.235952,false,VPOI10084,exact,Restaurant
+nicli-pizzeria-bar,Nicli Pizzeria + Bar,Wesbrook Village,chain,restaurant,3339 Shrum Lane,M: 4 - 9:00 PM; Tu-Sun: 11:30 AM - 9:30 PM,49.254085,-123.235873,false,VPOI10371,exact,Restaurant
+poke-by-ryuu,Poke by Ryuu,Wesbrook Village,independent,quick_service,,,49.254372,-123.234979,false,VPOI10331,exact,Quick service
+save-on-foods-wesbrook-village,Save-On-Foods (Wesbrook Village),Wesbrook Village,chain,grocery,,Daily: 7 am - 10 pm,49.254766,-123.236554,true,VPOI10285,exact,Supermarket (incl. hot food bar)
+sharetea,Sharetea,Wesbrook Village,chain,cafe,,,49.254470,-123.235059,false,VPOI10332,exact,Bubble tea
+shoppers-drug-mart-wesbrook-village,Shoppers Drug Mart (Wesbrook Village),Wesbrook Village,chain,convenience,5968 Webber Lane,M-Sat: 8 am - 12 am; Sun: Closed,49.254056,-123.236468,false,VPOI10089,exact,Pharmacy / convenience
+sports-illustrated-clubhouse,Sports Illustrated Clubhouse,Wesbrook Village,chain,restaurant,,Daily: 11 am - 11 pm,49.254273,-123.235478,false,VPOI10235,exact,Restaurant
+starbucks-inside-save-on-foods,Starbucks (inside Save-On-Foods),Wesbrook Village,chain,cafe,,Daily: 7 am - 10 pm,49.254766,-123.236554,false,VPOI10285,exact,Coffee
+togo-sushi,Togo Sushi,Wesbrook Village,chain,quick_service,3380 Shrum Lane,M-Sat: 11 am - 8 pm; Sun: 12 - 8pm,49.253988,-123.235374,false,VPOI10017,exact,Quick service
+ubc-farm-farmers-market,UBC Farm Farmers Market,South Campus,independent,grocery,,Tu: 4 pm - 6 pm; Sat: 10 am - 2 pm,49.250699,-123.237846,false,VPOI10377,exact,Farmers market (seasonal)

@@ -1,0 +1,594 @@
+item_id,location_id,price,source,reported_on,raw_item,raw_variant
+I01,avenue-c-neville-scarfe,3.89,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,body-energy-club,4.19,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,booster-juice-life-building,3.99,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,booster-juice-university-village,3.99,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,browns-crafthouse,5.25,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,corner-store,3.89,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,esc-eatery,3.49,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,gage-market,3.99,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,grocery-checkout,3.59,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,h-mart,3.19,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,harvest-market,3.89,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,hero-coffee-market,3.89,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,hero-harvest,3.79,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,hubbards-global-market,3.89,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,ins-market,3.99,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,koerner-s-pub,4.50,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,magda-s-night-market,3.89,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,prime-news,3.89,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,save-on-foods-wesbrook-village,3.09,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,shoppers-drug-mart-university-blvd,3.59,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,shoppers-drug-mart-wesbrook-village,3.49,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,starbucks-bookstore,4.25,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,starbucks-fred-kaiser,4.25,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,starbucks-inside-save-on-foods,4.25,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,starbucks-life-building,4.25,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,starbucks-tef3-agronomy-rd,4.25,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,starbucks-university-village,4.25,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,thirstyyy,4.09,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,upmeals-ikb,3.79,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I01,upmeals-the-nest,3.79,seed,2026-11-07,Red Bull Energy Drink,250 ml
+I02,avenue-c-neville-scarfe,4.29,seed,2026-11-07,Monster Energy,473 ml
+I02,corner-store,4.19,seed,2026-11-07,Monster Energy,473 ml
+I02,gage-market,4.39,seed,2026-11-07,Monster Energy,473 ml
+I02,grocery-checkout,3.69,seed,2026-11-07,Monster Energy,473 ml
+I02,h-mart,3.19,seed,2026-11-07,Monster Energy,473 ml
+I02,harvest-market,3.99,seed,2026-11-07,Monster Energy,473 ml
+I02,hero-coffee-market,4.29,seed,2026-11-07,Monster Energy,473 ml
+I02,hero-harvest,4.09,seed,2026-11-07,Monster Energy,473 ml
+I02,hubbards-global-market,4.29,seed,2026-11-07,Monster Energy,473 ml
+I02,ins-market,4.19,seed,2026-11-07,Monster Energy,473 ml
+I02,magda-s-night-market,4.19,seed,2026-11-07,Monster Energy,473 ml
+I02,prime-news,4.19,seed,2026-11-07,Monster Energy,473 ml
+I02,save-on-foods-wesbrook-village,3.29,seed,2026-11-07,Monster Energy,473 ml
+I02,shoppers-drug-mart-university-blvd,3.89,seed,2026-11-07,Monster Energy,473 ml
+I02,shoppers-drug-mart-wesbrook-village,3.79,seed,2026-11-07,Monster Energy,473 ml
+I02,thirstyyy,4.29,seed,2026-11-07,Monster Energy,473 ml
+I03,body-energy-club,3.99,seed,2026-11-07,Celsius Energy,355 ml
+I04,agra-tandoori-express,2.69,seed,2026-11-07,Coca-Cola,355 ml can
+I04,avenue-c-neville-scarfe,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,bean-around-the-world,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,bento-king,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,bento-sushi-david-lam,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,beyond-bbq,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,big-star-sandwich-co,2.69,seed,2026-11-07,Coca-Cola,355 ml can
+I04,big-way-hot-pot,2.69,seed,2026-11-07,Coca-Cola,355 ml can
+I04,black-pearl-cafe,2.39,seed,2026-11-07,Coca-Cola,355 ml can
+I04,cafe-ami,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,cedar-cafe-moa,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,chef-hung-taiwanese-beef-noodle,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,corner-cafe,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,corner-store,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,dl-chicken-shack,2.69,seed,2026-11-07,Coca-Cola,355 ml can
+I04,el-cartel,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,esc-eatery,2.39,seed,2026-11-07,Coca-Cola,355 ml can
+I04,foodie-power,2.49,menu,2026-11-07,Coca-Cola,355 ml can
+I04,freshii,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,gage-market,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,granville-island-produce,1.99,seed,2026-11-07,Coca-Cola,355 ml can
+I04,great-dane-coffee,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,grocery-checkout,2.19,seed,2026-11-07,Coca-Cola,355 ml can
+I04,h-mart,1.89,seed,2026-11-07,Coca-Cola,355 ml can
+I04,harvest-market,2.29,seed,2026-11-07,Coca-Cola,355 ml can
+I04,hero-coffee-market,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,hero-harvest,2.39,seed,2026-11-07,Coca-Cola,355 ml can
+I04,hubbards-global-market,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,ins-market,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,koerner-s-pub,2.75,seed,2026-11-07,Coca-Cola,355 ml can
+I04,korean-home-meal,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,kyros-kitchen,2.69,seed,2026-11-07,Coca-Cola,355 ml can
+I04,law-cafe,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,loafe-cafe-alumni-centre,2.50,seed,2026-11-07,Coca-Cola,355 ml can
+I04,loafe-cafe-sauder,2.50,seed,2026-11-07,Coca-Cola,355 ml can
+I04,magda-s-night-market,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,meet-night-izakaya-japanese-restaurant,2.69,seed,2026-11-07,Coca-Cola,355 ml can
+I04,mercante,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,my-home-cuisine,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,neptune-chinese-kitchen,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,nicli-pizzeria-bar,3.75,seed,2026-11-07,Coca-Cola,355 ml can
+I04,nori-bento-udon,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,only-u-cafe,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,osmow-s-shawarma,2.69,seed,2026-11-07,Coca-Cola,355 ml can
+I04,pacific-poke-life-building,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,perugia-italian-caffe,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,pho-real,2.39,seed,2026-11-07,Coca-Cola,355 ml can
+I04,pho-with-us,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,pita-pit,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,pizza-garden,2.29,seed,2026-11-07,Coca-Cola,355 ml can
+I04,poke-by-ryuu,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,presto,2.29,seed,2026-11-07,Coca-Cola,355 ml can
+I04,prime-news,2.39,seed,2026-11-07,Coca-Cola,355 ml can
+I04,ramen-danbo-express,2.89,seed,2026-11-07,Coca-Cola,355 ml can
+I04,sahel,2.79,seed,2026-11-07,Coca-Cola,355 ml can
+I04,save-on-foods-wesbrook-village,1.89,seed,2026-11-07,Coca-Cola,355 ml can
+I04,sesame,2.79,seed,2026-11-07,Coca-Cola,355 ml can
+I04,shoppers-drug-mart-university-blvd,2.29,seed,2026-11-07,Coca-Cola,355 ml can
+I04,shoppers-drug-mart-wesbrook-village,2.19,seed,2026-11-07,Coca-Cola,355 ml can
+I04,steve-s-poke-bar,2.59,seed,2026-11-07,Coca-Cola,355 ml can
+I04,stir-it-up-cafe,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,the-beanery,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,thirstyyy,2.39,seed,2026-11-07,Coca-Cola,355 ml can
+I04,triple-o-s,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,uncle-fatih-s-pizza,2.29,seed,2026-11-07,Coca-Cola,355 ml can
+I04,upmeals-ikb,2.39,seed,2026-11-07,Coca-Cola,355 ml can
+I04,upmeals-the-nest,2.39,seed,2026-11-07,Coca-Cola,355 ml can
+I04,want-want-hot-spicy-house,2.69,seed,2026-11-07,Coca-Cola,355 ml can
+I04,yang-s-braised-chicken-rice,2.49,seed,2026-11-07,Coca-Cola,355 ml can
+I04,yunshang-rice-noodle-ubc,2.69,seed,2026-11-07,Coca-Cola,355 ml can
+I05,avenue-c-neville-scarfe,3.59,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,corner-store,3.39,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,gage-market,3.59,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,grocery-checkout,3.19,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,h-mart,2.79,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,harvest-market,3.39,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,hero-coffee-market,3.29,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,hero-harvest,3.19,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,hubbards-global-market,3.49,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,ins-market,3.39,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,magda-s-night-market,3.69,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,prime-news,3.39,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,save-on-foods-wesbrook-village,2.79,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,shoppers-drug-mart-university-blvd,2.99,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,shoppers-drug-mart-wesbrook-village,3.19,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,subway-life-building,3.29,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,subway-university-village,3.29,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,thirstyyy,3.49,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,tim-hortons-david-lam,3.29,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,tim-hortons-forest-sciences,3.29,seed,2026-11-07,Coca-Cola,591 ml bottle
+I05,tim-hortons-orca-house,3.29,seed,2026-11-07,Coca-Cola,591 ml bottle
+I06,a-w,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,agra-tandoori-express,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,avenue-c-neville-scarfe,2.39,seed,2026-11-07,Bottled Water,500 ml
+I06,bean-around-the-world,2.39,seed,2026-11-07,Bottled Water,500 ml
+I06,bento-king,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,bento-sushi-david-lam,2.39,seed,2026-11-07,Bottled Water,500 ml
+I06,beyond-bbq,2.79,seed,2026-11-07,Bottled Water,500 ml
+I06,big-star-sandwich-co,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,big-way-hot-pot,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,black-pearl-cafe,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,blenz-coffee,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,body-energy-club,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,booster-juice-life-building,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,booster-juice-university-village,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,cafe-ami,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,cedar-cafe-moa,2.39,seed,2026-11-07,Bottled Water,500 ml
+I06,chef-hung-taiwanese-beef-noodle,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,chipotle,2.95,seed,2026-11-07,Bottled Water,500 ml
+I06,corner-cafe,2.39,seed,2026-11-07,Bottled Water,500 ml
+I06,corner-store,2.29,seed,2026-11-07,Bottled Water,500 ml
+I06,dl-chicken-shack,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,doughgirls,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,el-cartel,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,esc-eatery,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,firehouse-subs,2.79,seed,2026-11-07,Bottled Water,500 ml
+I06,food-hub-market-cirs,1.99,seed,2026-11-07,Bottled Water,500 ml
+I06,freshii,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,gage-market,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,granville-island-produce,1.89,seed,2026-11-07,Bottled Water,500 ml
+I06,great-dane-coffee,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,grocery-checkout,2.19,seed,2026-11-07,Bottled Water,500 ml
+I06,h-mart,1.89,seed,2026-11-07,Bottled Water,500 ml
+I06,harvest-market,2.29,seed,2026-11-07,Bottled Water,500 ml
+I06,hero-coffee-market,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,hero-harvest,2.29,seed,2026-11-07,Bottled Water,500 ml
+I06,hubbards-global-market,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,ins-market,2.39,seed,2026-11-07,Bottled Water,500 ml
+I06,jj-bean,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,korean-home-meal,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,kyros-kitchen,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,law-cafe,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,loafe-cafe-alumni-centre,2.75,seed,2026-11-07,Bottled Water,500 ml
+I06,loafe-cafe-sauder,2.75,seed,2026-11-07,Bottled Water,500 ml
+I06,magda-s-night-market,2.39,seed,2026-11-07,Bottled Water,500 ml
+I06,meet-night-izakaya-japanese-restaurant,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,mercante,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,my-home-cuisine,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,neptune-chinese-kitchen,2.79,seed,2026-11-07,Bottled Water,500 ml
+I06,nori-bento-udon,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,only-u-cafe,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,osmow-s-shawarma,2.79,seed,2026-11-07,Bottled Water,500 ml
+I06,pacific-poke-life-building,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,perugia-italian-caffe,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,pho-real,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,pho-with-us,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,pita-pit,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,pizza-garden,2.29,seed,2026-11-07,Bottled Water,500 ml
+I06,poke-by-ryuu,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,presto,2.39,seed,2026-11-07,Bottled Water,500 ml
+I06,prime-news,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,ramen-danbo-express,2.79,seed,2026-11-07,Bottled Water,500 ml
+I06,sahel,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,save-on-foods-wesbrook-village,1.99,seed,2026-11-07,Bottled Water,500 ml
+I06,sesame,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,shoppers-drug-mart-university-blvd,2.19,seed,2026-11-07,Bottled Water,500 ml
+I06,shoppers-drug-mart-wesbrook-village,2.29,seed,2026-11-07,Bottled Water,500 ml
+I06,starbucks-bookstore,2.95,seed,2026-11-07,Ethos Bottled Water,500 ml
+I06,starbucks-fred-kaiser,2.95,seed,2026-11-07,Ethos Bottled Water,500 ml
+I06,starbucks-inside-save-on-foods,2.95,seed,2026-11-07,Ethos Bottled Water,500 ml
+I06,starbucks-life-building,2.95,seed,2026-11-07,Ethos Bottled Water,500 ml
+I06,starbucks-tef3-agronomy-rd,2.95,seed,2026-11-07,Ethos Bottled Water,500 ml
+I06,starbucks-university-village,2.95,seed,2026-11-07,Ethos Bottled Water,500 ml
+I06,steve-s-poke-bar,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,stir-it-up-cafe,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,the-beanery,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,thirstyyy,2.59,seed,2026-11-07,Bottled Water,500 ml
+I06,tim-hortons-david-lam,2.19,seed,2026-11-07,Bottled Water,500 ml
+I06,tim-hortons-forest-sciences,2.19,seed,2026-11-07,Bottled Water,500 ml
+I06,tim-hortons-orca-house,2.19,seed,2026-11-07,Bottled Water,500 ml
+I06,triple-o-s,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,uncle-fatih-s-pizza,2.19,seed,2026-11-07,Bottled Water,500 ml
+I06,upmeals-ikb,2.19,seed,2026-11-07,Bottled Water,500 ml
+I06,upmeals-the-nest,2.19,seed,2026-11-07,Bottled Water,500 ml
+I06,want-want-hot-spicy-house,2.69,seed,2026-11-07,Bottled Water,500 ml
+I06,yang-s-braised-chicken-rice,2.49,seed,2026-11-07,Bottled Water,500 ml
+I06,yunshang-rice-noodle-ubc,2.59,seed,2026-11-07,Bottled Water,500 ml
+I08,avenue-c-neville-scarfe,2.74,seed,2026-11-07,Drip Coffee,12 oz
+I08,bean-around-the-world,2.74,seed,2026-11-07,Drip Coffee,12 oz
+I08,blenz-coffee,2.95,seed,2026-11-07,Brewed Coffee,Small 12 oz
+I08,blue-chip-cafe,3.19,menu,2026-11-07,Drip Coffee,12oz
+I08,cafe-ami,3.00,seed,2026-11-07,Drip Coffee,12 oz
+I08,cedar-cafe-moa,3.25,seed,2026-11-07,Drip Coffee,12 oz
+I08,corner-cafe,2.74,seed,2026-11-07,Drip Coffee,12 oz
+I08,dabao,2.60,menu,2026-11-07,Fresh Brewed Coffee,12oz
+I08,doughgirls,3.25,seed,2026-11-07,Drip Coffee,12 oz
+I08,esc-eatery,2.74,seed,2026-11-07,Drip Coffee,12 oz
+I08,great-dane-coffee,2.99,seed,2026-11-07,Drip Coffee,12 oz
+I08,harvest-market,3.00,seed,2026-11-07,Drip Coffee,12 oz
+I08,hero-coffee-market,2.99,seed,2026-11-07,Drip Coffee,12 oz
+I08,hero-harvest,2.74,seed,2026-11-07,Drip Coffee,12 oz
+I08,jj-bean,3.05,seed,2026-11-07,Drip Coffee,12 oz
+I08,law-cafe,2.75,seed,2026-11-07,Drip Coffee,12 oz
+I08,loafe-cafe-alumni-centre,3.10,seed,2026-11-07,Drip Coffee,12 oz
+I08,loafe-cafe-sauder,3.10,seed,2026-11-07,Drip Coffee,12 oz
+I08,perugia-italian-caffe,2.99,seed,2026-11-07,Drip Coffee,12 oz
+I08,starbucks-bookstore,3.25,seed,2026-11-07,Brewed Coffee,Tall 12 oz
+I08,starbucks-fred-kaiser,3.25,seed,2026-11-07,Brewed Coffee,Tall 12 oz
+I08,starbucks-inside-save-on-foods,3.25,seed,2026-11-07,Brewed Coffee,Tall 12 oz
+I08,starbucks-life-building,3.25,seed,2026-11-07,Brewed Coffee,Tall 12 oz
+I08,starbucks-tef3-agronomy-rd,3.25,seed,2026-11-07,Brewed Coffee,Tall 12 oz
+I08,starbucks-university-village,3.25,seed,2026-11-07,Brewed Coffee,Tall 12 oz
+I08,stir-it-up-cafe,2.99,seed,2026-11-07,Drip Coffee,12 oz
+I08,the-beanery,2.99,seed,2026-11-07,Drip Coffee,12 oz
+I08,tim-hortons-david-lam,2.19,seed,2026-11-07,Original Blend Coffee,Small 10 oz
+I08,tim-hortons-forest-sciences,2.19,seed,2026-11-07,Original Blend Coffee,Small 10 oz
+I08,tim-hortons-orca-house,2.19,seed,2026-11-07,Original Blend Coffee,Small 10 oz
+I09,blue-chip-cafe,3.49,menu,2026-11-07,Drip Coffee,16oz
+I09,dabao,2.95,menu,2026-11-07,Fresh Brewed Coffee,16oz
+I09,tim-hortons-david-lam,2.59,seed,2026-11-07,Original Blend Coffee,Medium 14 oz
+I09,tim-hortons-forest-sciences,2.59,seed,2026-11-07,Original Blend Coffee,Medium 14 oz
+I09,tim-hortons-orca-house,2.59,seed,2026-11-07,Original Blend Coffee,Medium 14 oz
+I10,avenue-c-neville-scarfe,5.25,seed,2026-11-07,Latte,12 oz
+I10,bean-around-the-world,4.74,seed,2026-11-07,Latte,12 oz
+I10,blenz-coffee,5.15,seed,2026-11-07,Latte,Small 12 oz
+I10,blue-chip-cafe,4.99,menu,2026-11-07,Latte,12oz
+I10,cafe-ami,4.99,seed,2026-11-07,Latte,12 oz
+I10,cedar-cafe-moa,5.49,seed,2026-11-07,Latte,12 oz
+I10,corner-cafe,5.00,seed,2026-11-07,Latte,12 oz
+I10,dabao,4.90,menu,2026-11-07,Latte,12oz
+I10,doughgirls,5.50,seed,2026-11-07,Latte,12 oz
+I10,esc-eatery,4.25,seed,2026-11-07,Latte,12 oz
+I10,great-dane-coffee,5.25,seed,2026-11-07,Latte,12 oz
+I10,harvest-market,5.00,seed,2026-11-07,Latte,12 oz
+I10,hero-coffee-market,5.25,seed,2026-11-07,Latte,12 oz
+I10,hero-harvest,4.75,seed,2026-11-07,Latte,12 oz
+I10,jj-bean,5.40,seed,2026-11-07,Latte,12 oz
+I10,law-cafe,5.25,seed,2026-11-07,Latte,12 oz
+I10,loafe-cafe-alumni-centre,5.25,seed,2026-11-07,Latte,12 oz
+I10,loafe-cafe-sauder,5.25,seed,2026-11-07,Latte,12 oz
+I10,perugia-italian-caffe,5.00,seed,2026-11-07,Latte,12 oz
+I10,starbucks-bookstore,5.45,seed,2026-11-07,Caffè Latte,Tall 12 oz
+I10,starbucks-fred-kaiser,5.45,seed,2026-11-07,Caffè Latte,Tall 12 oz
+I10,starbucks-inside-save-on-foods,5.45,seed,2026-11-07,Caffè Latte,Tall 12 oz
+I10,starbucks-life-building,5.45,seed,2026-11-07,Caffè Latte,Tall 12 oz
+I10,starbucks-tef3-agronomy-rd,5.45,seed,2026-11-07,Caffè Latte,Tall 12 oz
+I10,starbucks-university-village,5.45,seed,2026-11-07,Caffè Latte,Tall 12 oz
+I10,stir-it-up-cafe,4.99,seed,2026-11-07,Latte,12 oz
+I10,the-beanery,5.25,seed,2026-11-07,Latte,12 oz
+I10,tim-hortons-david-lam,4.29,seed,2026-11-07,Latte,Small 10 oz
+I10,tim-hortons-forest-sciences,4.29,seed,2026-11-07,Latte,Small 10 oz
+I10,tim-hortons-orca-house,4.29,seed,2026-11-07,Latte,Small 10 oz
+I11,avenue-c-neville-scarfe,2.74,seed,2026-11-07,Tea,12 oz
+I11,bean-around-the-world,2.99,seed,2026-11-07,Tea,12 oz
+I11,blenz-coffee,3.25,seed,2026-11-07,Tea,Small 12 oz
+I11,cafe-ami,3.24,seed,2026-11-07,Tea,12 oz
+I11,cedar-cafe-moa,3.24,seed,2026-11-07,Tea,12 oz
+I11,corner-cafe,3.00,seed,2026-11-07,Tea,12 oz
+I11,esc-eatery,2.50,seed,2026-11-07,Tea,12 oz
+I11,great-dane-coffee,2.99,seed,2026-11-07,Tea,12 oz
+I11,harvest-market,2.50,seed,2026-11-07,Tea,12 oz
+I11,hero-coffee-market,2.99,seed,2026-11-07,Tea,12 oz
+I11,hero-harvest,2.74,seed,2026-11-07,Tea,12 oz
+I11,jj-bean,3.25,seed,2026-11-07,Tea,12 oz
+I11,law-cafe,3.00,seed,2026-11-07,Tea,12 oz
+I11,loafe-cafe-alumni-centre,3.00,seed,2026-11-07,Tea,12 oz
+I11,loafe-cafe-sauder,3.00,seed,2026-11-07,Tea,12 oz
+I11,perugia-italian-caffe,2.99,seed,2026-11-07,Tea,12 oz
+I11,starbucks-bookstore,3.15,seed,2026-11-07,Teavana Hot Tea,Tall 12 oz
+I11,starbucks-fred-kaiser,3.15,seed,2026-11-07,Teavana Hot Tea,Tall 12 oz
+I11,starbucks-inside-save-on-foods,3.15,seed,2026-11-07,Teavana Hot Tea,Tall 12 oz
+I11,starbucks-life-building,3.15,seed,2026-11-07,Teavana Hot Tea,Tall 12 oz
+I11,starbucks-tef3-agronomy-rd,3.15,seed,2026-11-07,Teavana Hot Tea,Tall 12 oz
+I11,starbucks-university-village,3.15,seed,2026-11-07,Teavana Hot Tea,Tall 12 oz
+I11,stir-it-up-cafe,2.99,seed,2026-11-07,Tea,12 oz
+I11,the-beanery,2.99,seed,2026-11-07,Tea,12 oz
+I11,tim-hortons-david-lam,2.09,seed,2026-11-07,Steeped Tea,Small 10 oz
+I11,tim-hortons-forest-sciences,2.09,seed,2026-11-07,Steeped Tea,Small 10 oz
+I11,tim-hortons-orca-house,2.09,seed,2026-11-07,Steeped Tea,Small 10 oz
+I12,blue-chip-cafe,5.79,menu,2026-11-07,Cold Brew,12oz
+I13,avenue-c-neville-scarfe,4.00,seed,2026-11-07,Bagel with Cream Cheese,
+I13,bean-around-the-world,4.49,seed,2026-11-07,Bagel with Cream Cheese,
+I13,blenz-coffee,3.95,seed,2026-11-07,Bagel with Cream Cheese,
+I13,cafe-ami,4.25,seed,2026-11-07,Bagel with Cream Cheese,
+I13,cedar-cafe-moa,4.50,seed,2026-11-07,Bagel with Cream Cheese,
+I13,corner-cafe,4.25,seed,2026-11-07,Bagel with Cream Cheese,
+I13,corner-store,4.00,seed,2026-11-07,Bagel with Cream Cheese,
+I13,esc-eatery,3.74,seed,2026-11-07,Bagel with Cream Cheese,
+I13,gage-market,3.99,seed,2026-11-07,Bagel with Cream Cheese,
+I13,great-dane-coffee,4.50,seed,2026-11-07,Bagel with Cream Cheese,
+I13,grocery-checkout,3.74,seed,2026-11-07,Bagel with Cream Cheese,
+I13,harvest-market,3.75,seed,2026-11-07,Bagel with Cream Cheese,
+I13,hero-coffee-market,4.24,seed,2026-11-07,Bagel with Cream Cheese,
+I13,hero-harvest,3.74,seed,2026-11-07,Bagel with Cream Cheese,
+I13,hubbards-global-market,4.24,seed,2026-11-07,Bagel with Cream Cheese,
+I13,ins-market,3.99,seed,2026-11-07,Bagel with Cream Cheese,
+I13,law-cafe,4.25,seed,2026-11-07,Bagel with Cream Cheese,
+I13,magda-s-night-market,4.25,seed,2026-11-07,Bagel with Cream Cheese,
+I13,perugia-italian-caffe,4.24,seed,2026-11-07,Bagel with Cream Cheese,
+I13,save-on-foods-wesbrook-village,3.24,seed,2026-11-07,Bagel with Cream Cheese,
+I13,starbucks-bookstore,3.95,seed,2026-11-07,Plain Bagel with Cream Cheese,
+I13,starbucks-fred-kaiser,3.95,seed,2026-11-07,Plain Bagel with Cream Cheese,
+I13,starbucks-inside-save-on-foods,3.95,seed,2026-11-07,Plain Bagel with Cream Cheese,
+I13,starbucks-life-building,3.95,seed,2026-11-07,Plain Bagel with Cream Cheese,
+I13,starbucks-tef3-agronomy-rd,3.95,seed,2026-11-07,Plain Bagel with Cream Cheese,
+I13,starbucks-university-village,3.95,seed,2026-11-07,Plain Bagel with Cream Cheese,
+I13,stir-it-up-cafe,4.00,seed,2026-11-07,Bagel with Cream Cheese,
+I13,the-beanery,4.25,seed,2026-11-07,Bagel with Cream Cheese,
+I13,thirstyyy,4.00,seed,2026-11-07,Bagel with Cream Cheese,
+I13,tim-hortons-david-lam,2.99,seed,2026-11-07,Bagel with Cream Cheese,
+I13,tim-hortons-forest-sciences,2.99,seed,2026-11-07,Bagel with Cream Cheese,
+I13,tim-hortons-orca-house,2.99,seed,2026-11-07,Bagel with Cream Cheese,
+I14,avenue-c-neville-scarfe,3.50,seed,2026-11-07,Muffin,
+I14,bean-around-the-world,3.75,seed,2026-11-07,Muffin,
+I14,blenz-coffee,3.65,seed,2026-11-07,Muffin,
+I14,blue-chip-cafe,3.59,menu,2026-11-07,Muffin - Apple Cinnamon,
+I14,cafe-ami,3.74,seed,2026-11-07,Muffin,
+I14,cedar-cafe-moa,4.49,seed,2026-11-07,Muffin,
+I14,corner-cafe,3.49,seed,2026-11-07,Muffin,
+I14,corner-store,3.75,seed,2026-11-07,Muffin,
+I14,doughgirls,4.25,seed,2026-11-07,Muffin,
+I14,esc-eatery,3.49,seed,2026-11-07,Muffin,
+I14,gage-market,3.75,seed,2026-11-07,Muffin,
+I14,great-dane-coffee,3.74,seed,2026-11-07,Muffin,
+I14,grocery-checkout,3.74,seed,2026-11-07,Muffin,
+I14,harvest-market,3.49,seed,2026-11-07,Muffin,
+I14,hero-coffee-market,3.75,seed,2026-11-07,Muffin,
+I14,hero-harvest,3.49,seed,2026-11-07,Muffin,
+I14,hubbards-global-market,3.75,seed,2026-11-07,Muffin,
+I14,ins-market,3.75,seed,2026-11-07,Muffin,
+I14,jj-bean,3.95,seed,2026-11-07,Muffin,
+I14,law-cafe,3.49,seed,2026-11-07,Muffin,
+I14,loafe-cafe-alumni-centre,4.25,seed,2026-11-07,Muffin,
+I14,loafe-cafe-sauder,4.25,seed,2026-11-07,Muffin,
+I14,magda-s-night-market,3.74,seed,2026-11-07,Muffin,
+I14,perugia-italian-caffe,4.25,seed,2026-11-07,Muffin,
+I14,save-on-foods-wesbrook-village,2.74,seed,2026-11-07,Muffin,
+I14,starbucks-bookstore,3.75,seed,2026-11-07,Blueberry Muffin,
+I14,starbucks-fred-kaiser,3.75,seed,2026-11-07,Blueberry Muffin,
+I14,starbucks-inside-save-on-foods,3.75,seed,2026-11-07,Blueberry Muffin,
+I14,starbucks-life-building,3.75,seed,2026-11-07,Blueberry Muffin,
+I14,starbucks-tef3-agronomy-rd,3.75,seed,2026-11-07,Blueberry Muffin,
+I14,starbucks-university-village,3.75,seed,2026-11-07,Blueberry Muffin,
+I14,stir-it-up-cafe,3.75,seed,2026-11-07,Muffin,
+I14,the-beanery,3.74,seed,2026-11-07,Muffin,
+I14,thirstyyy,3.99,seed,2026-11-07,Muffin,
+I14,tim-hortons-david-lam,2.09,seed,2026-11-07,Muffin,
+I14,tim-hortons-forest-sciences,2.09,seed,2026-11-07,Muffin,
+I14,tim-hortons-orca-house,2.09,seed,2026-11-07,Muffin,
+I15,avenue-c-neville-scarfe,8.49,seed,2026-11-07,Pre-made Sandwich,
+I15,bean-around-the-world,10.25,seed,2026-11-07,Pre-made Sandwich,
+I15,cafe-ami,9.49,seed,2026-11-07,Pre-made Sandwich,
+I15,cedar-cafe-moa,11.50,seed,2026-11-07,Pre-made Sandwich,
+I15,corner-cafe,9.50,seed,2026-11-07,Pre-made Sandwich,
+I15,corner-store,8.24,seed,2026-11-07,Pre-made Sandwich,
+I15,esc-eatery,8.50,seed,2026-11-07,Pre-made Sandwich,
+I15,gage-market,9.00,seed,2026-11-07,Pre-made Sandwich,
+I15,great-dane-coffee,9.49,seed,2026-11-07,Pre-made Sandwich,
+I15,grocery-checkout,8.00,seed,2026-11-07,Pre-made Sandwich,
+I15,h-mart,6.74,seed,2026-11-07,Pre-made Sandwich,
+I15,harvest-market,8.00,seed,2026-11-07,Pre-made Sandwich,
+I15,hero-coffee-market,9.75,seed,2026-11-07,Pre-made Sandwich,
+I15,hero-harvest,8.74,seed,2026-11-07,Pre-made Sandwich,
+I15,hubbards-global-market,9.24,seed,2026-11-07,Pre-made Sandwich,
+I15,ins-market,9.00,seed,2026-11-07,Pre-made Sandwich,
+I15,law-cafe,9.49,seed,2026-11-07,Pre-made Sandwich,
+I15,loafe-cafe-alumni-centre,10.95,seed,2026-11-07,Turkey Sandwich,
+I15,loafe-cafe-sauder,10.95,seed,2026-11-07,Turkey Sandwich,
+I15,magda-s-night-market,8.99,seed,2026-11-07,Pre-made Sandwich,
+I15,perugia-italian-caffe,10.50,seed,2026-11-07,Pre-made Sandwich,
+I15,save-on-foods-wesbrook-village,6.74,seed,2026-11-07,Pre-made Sandwich,
+I15,starbucks-bookstore,7.45,seed,2026-11-07,"Egg, Pesto & Mozzarella Sandwich",
+I15,starbucks-fred-kaiser,7.45,seed,2026-11-07,"Egg, Pesto & Mozzarella Sandwich",
+I15,starbucks-inside-save-on-foods,7.45,seed,2026-11-07,"Egg, Pesto & Mozzarella Sandwich",
+I15,starbucks-life-building,7.45,seed,2026-11-07,"Egg, Pesto & Mozzarella Sandwich",
+I15,starbucks-tef3-agronomy-rd,7.45,seed,2026-11-07,"Egg, Pesto & Mozzarella Sandwich",
+I15,starbucks-university-village,7.45,seed,2026-11-07,"Egg, Pesto & Mozzarella Sandwich",
+I15,stir-it-up-cafe,9.99,seed,2026-11-07,Pre-made Sandwich,
+I15,the-beanery,9.24,seed,2026-11-07,Pre-made Sandwich,
+I15,thirstyyy,9.25,seed,2026-11-07,Pre-made Sandwich,
+I16,avenue-c-neville-scarfe,8.75,seed,2026-11-07,Wrap,
+I16,corner-store,9.25,seed,2026-11-07,Wrap,
+I16,gage-market,9.50,seed,2026-11-07,Wrap,
+I16,grocery-checkout,8.99,seed,2026-11-07,Wrap,
+I16,harvest-market,8.49,seed,2026-11-07,Wrap,
+I16,hero-harvest,8.74,seed,2026-11-07,Wrap,
+I16,hubbards-global-market,8.99,seed,2026-11-07,Wrap,
+I16,ins-market,8.99,seed,2026-11-07,Wrap,
+I16,magda-s-night-market,9.75,seed,2026-11-07,Wrap,
+I16,save-on-foods-wesbrook-village,7.49,seed,2026-11-07,Wrap,
+I16,subway-life-building,11.49,seed,2026-11-07,Wrap (Chicken Caesar),
+I16,subway-university-village,11.49,seed,2026-11-07,Wrap (Chicken Caesar),
+I16,thirstyyy,9.24,seed,2026-11-07,Wrap,
+I16,tim-hortons-david-lam,5.49,seed,2026-11-07,Crispy Chicken Wrap,
+I16,tim-hortons-forest-sciences,5.49,seed,2026-11-07,Crispy Chicken Wrap,
+I16,tim-hortons-orca-house,5.49,seed,2026-11-07,Crispy Chicken Wrap,
+I16,upmeals-ikb,9.49,seed,2026-11-07,Chicken Caesar Wrap,
+I16,upmeals-the-nest,9.49,seed,2026-11-07,Chicken Caesar Wrap,
+I17,avenue-c-neville-scarfe,8.99,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I17,bento-sushi-david-lam,8.49,seed,2026-11-07,California Roll,8 pcs
+I17,corner-store,8.49,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I17,gage-market,9.24,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I17,grocery-checkout,8.50,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I17,h-mart,6.75,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I17,harvest-market,8.25,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I17,hero-harvest,8.25,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I17,hubbards-global-market,8.50,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I17,ins-market,8.74,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I17,magda-s-night-market,8.99,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I17,nori-bento-udon,6.45,seed,2026-11-07,California Roll,8 pcs
+I17,ryuu-japanese-kitchen,6.25,menu,2026-11-07,California Roll,8 pcs
+I17,save-on-foods-wesbrook-village,7.25,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I17,thirstyyy,8.74,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
+I18,avenue-c-neville-scarfe,4.29,seed,2026-11-07,Quest Protein Bar,60 g
+I18,body-energy-club,4.29,seed,2026-11-07,Quest Protein Bar,60 g
+I18,corner-store,3.99,seed,2026-11-07,Quest Protein Bar,60 g
+I18,gage-market,4.39,seed,2026-11-07,Quest Protein Bar,60 g
+I18,grocery-checkout,3.89,seed,2026-11-07,Quest Protein Bar,60 g
+I18,h-mart,3.29,seed,2026-11-07,Quest Protein Bar,60 g
+I18,harvest-market,4.09,seed,2026-11-07,Quest Protein Bar,60 g
+I18,hero-coffee-market,4.29,seed,2026-11-07,Quest Protein Bar,60 g
+I18,hero-harvest,3.99,seed,2026-11-07,Quest Protein Bar,60 g
+I18,hubbards-global-market,4.29,seed,2026-11-07,Quest Protein Bar,60 g
+I18,ins-market,4.29,seed,2026-11-07,Quest Protein Bar,60 g
+I18,magda-s-night-market,4.29,seed,2026-11-07,Quest Protein Bar,60 g
+I18,prime-news,4.29,seed,2026-11-07,Quest Protein Bar,60 g
+I18,save-on-foods-wesbrook-village,3.39,seed,2026-11-07,Quest Protein Bar,60 g
+I18,shoppers-drug-mart-university-blvd,3.89,seed,2026-11-07,Quest Protein Bar,60 g
+I18,shoppers-drug-mart-wesbrook-village,3.79,seed,2026-11-07,Quest Protein Bar,60 g
+I18,thirstyyy,4.29,seed,2026-11-07,Quest Protein Bar,60 g
+I19,avenue-c-neville-scarfe,2.29,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,corner-store,2.49,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,esc-eatery,2.19,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,firehouse-subs,2.29,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,food-hub-market-cirs,1.89,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,gage-market,2.59,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,granville-island-produce,1.99,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,grocery-checkout,2.19,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,h-mart,1.89,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,harvest-market,2.39,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,hero-coffee-market,2.39,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,hero-harvest,2.29,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,hubbards-global-market,2.49,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,ins-market,2.49,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,magda-s-night-market,2.49,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,prime-news,2.39,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,save-on-foods-wesbrook-village,1.89,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,shoppers-drug-mart-university-blvd,2.19,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,shoppers-drug-mart-wesbrook-village,2.19,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,subway-life-building,2.19,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,subway-university-village,2.19,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,thirstyyy,2.49,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,upmeals-ikb,2.29,seed,2026-11-07,Lay's Classic Chips,40 g
+I19,upmeals-the-nest,2.29,seed,2026-11-07,Lay's Classic Chips,40 g
+I20,avenue-c-neville-scarfe,0.71,seed,2026-11-07,Banana,each
+I20,bean-around-the-world,0.77,seed,2026-11-07,Banana,each
+I20,blenz-coffee,0.77,seed,2026-11-07,Banana,each
+I20,cafe-ami,0.76,seed,2026-11-07,Banana,each
+I20,cedar-cafe-moa,0.72,seed,2026-11-07,Banana,each
+I20,corner-cafe,0.71,seed,2026-11-07,Banana,each
+I20,corner-store,0.72,seed,2026-11-07,Banana,each
+I20,esc-eatery,0.72,seed,2026-11-07,Banana,each
+I20,feast,1.00,seed,2026-11-07,Fruit (apple / banana),each
+I20,food-hub-market-cirs,0.54,seed,2026-11-07,Banana,each
+I20,gage-market,0.71,seed,2026-11-07,Banana,each
+I20,gather,1.00,seed,2026-11-07,Fruit (apple / banana),each
+I20,granville-island-produce,0.54,seed,2026-11-07,Banana,each
+I20,great-dane-coffee,0.78,seed,2026-11-07,Banana,each
+I20,grocery-checkout,0.69,seed,2026-11-07,Banana,each
+I20,h-mart,0.56,seed,2026-11-07,Banana,each
+I20,harvest-market,0.69,seed,2026-11-07,Banana,each
+I20,hero-coffee-market,0.72,seed,2026-11-07,Banana,each
+I20,hero-harvest,0.69,seed,2026-11-07,Banana,each
+I20,hubbards-global-market,0.74,seed,2026-11-07,Banana,each
+I20,ins-market,0.70,seed,2026-11-07,Banana,each
+I20,law-cafe,0.71,seed,2026-11-07,Banana,each
+I20,loafe-cafe-alumni-centre,0.95,seed,2026-11-07,Banana,each
+I20,loafe-cafe-sauder,0.95,seed,2026-11-07,Banana,each
+I20,magda-s-night-market,0.71,seed,2026-11-07,Banana,each
+I20,open-kitchen,1.00,seed,2026-11-07,Fruit (apple / banana),each
+I20,perugia-italian-caffe,0.73,seed,2026-11-07,Banana,each
+I20,prime-news,0.75,seed,2026-11-07,Banana,each
+I20,save-on-foods-wesbrook-village,0.35,seed,2026-11-07,Banana,each
+I20,starbucks-bookstore,0.95,seed,2026-11-07,Banana,each
+I20,starbucks-fred-kaiser,0.95,seed,2026-11-07,Banana,each
+I20,starbucks-inside-save-on-foods,0.95,seed,2026-11-07,Banana,each
+I20,starbucks-life-building,0.95,seed,2026-11-07,Banana,each
+I20,starbucks-tef3-agronomy-rd,0.95,seed,2026-11-07,Banana,each
+I20,starbucks-university-village,0.95,seed,2026-11-07,Banana,each
+I20,stir-it-up-cafe,0.73,seed,2026-11-07,Banana,each
+I20,the-beanery,0.71,seed,2026-11-07,Banana,each
+I20,thirstyyy,0.75,seed,2026-11-07,Banana,each
+I20,upmeals-ikb,0.71,seed,2026-11-07,Banana,each
+I20,upmeals-the-nest,0.71,seed,2026-11-07,Banana,each
+I21,avenue-c-neville-scarfe,1.39,seed,2026-11-07,Apple,each
+I21,corner-store,1.39,seed,2026-11-07,Apple,each
+I21,feast,1.00,seed,2026-11-07,Fruit (apple / banana),each
+I21,food-hub-market-cirs,1.09,seed,2026-11-07,Apple,each
+I21,gage-market,1.39,seed,2026-11-07,Apple,each
+I21,gather,1.00,seed,2026-11-07,Fruit (apple / banana),each
+I21,granville-island-produce,0.79,seed,2026-11-07,Gala Apples,per lb
+I21,grocery-checkout,1.29,seed,2026-11-07,Apple,each
+I21,h-mart,1.09,seed,2026-11-07,Apple,each
+I21,harvest-market,1.29,seed,2026-11-07,Apple,each
+I21,hero-harvest,1.29,seed,2026-11-07,Apple,each
+I21,hubbards-global-market,1.39,seed,2026-11-07,Apple,each
+I21,ins-market,1.39,seed,2026-11-07,Apple,each
+I21,magda-s-night-market,1.49,seed,2026-11-07,Apple,each
+I21,open-kitchen,1.00,seed,2026-11-07,Fruit (apple / banana),each
+I21,prime-news,1.39,seed,2026-11-07,Apple,each
+I21,save-on-foods-wesbrook-village,1.09,seed,2026-11-07,Apple,each
+I21,thirstyyy,1.39,seed,2026-11-07,Apple,each
+I21,ubc-farm-farmers-market,1.00,seed,2026-11-07,Apple,each
+I22,avenue-c-neville-scarfe,4.59,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,corner-store,4.59,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,gage-market,5.09,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,grocery-checkout,4.49,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,h-mart,3.89,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,harvest-market,4.39,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,hero-coffee-market,4.99,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,hero-harvest,4.79,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,hubbards-global-market,4.59,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,ins-market,4.99,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,magda-s-night-market,4.59,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,prime-news,4.79,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,save-on-foods-wesbrook-village,3.79,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,shoppers-drug-mart-university-blvd,4.19,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,shoppers-drug-mart-wesbrook-village,4.39,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I22,thirstyyy,4.69,seed,2026-11-07,Red Bull Energy Drink,355 ml
+I23,avenue-c-neville-scarfe,2.99,seed,2026-11-07,Clif Bar,68 g
+I23,body-energy-club,3.29,seed,2026-11-07,Clif Bar,68 g
+I23,booster-juice-life-building,3.19,seed,2026-11-07,Clif Bar,68 g
+I23,booster-juice-university-village,3.19,seed,2026-11-07,Clif Bar,68 g
+I23,corner-store,2.89,seed,2026-11-07,Clif Bar,68 g
+I23,food-hub-market-cirs,2.39,seed,2026-11-07,Clif Bar,68 g
+I23,gage-market,2.99,seed,2026-11-07,Clif Bar,68 g
+I23,granville-island-produce,2.39,seed,2026-11-07,Clif Bar,68 g
+I23,grocery-checkout,2.79,seed,2026-11-07,Clif Bar,68 g
+I23,h-mart,2.29,seed,2026-11-07,Clif Bar,68 g
+I23,harvest-market,2.69,seed,2026-11-07,Clif Bar,68 g
+I23,hero-coffee-market,2.89,seed,2026-11-07,Clif Bar,68 g
+I23,hero-harvest,2.69,seed,2026-11-07,Clif Bar,68 g
+I23,hubbards-global-market,2.99,seed,2026-11-07,Clif Bar,68 g
+I23,ins-market,2.99,seed,2026-11-07,Clif Bar,68 g
+I23,magda-s-night-market,2.89,seed,2026-11-07,Clif Bar,68 g
+I23,prime-news,3.09,seed,2026-11-07,Clif Bar,68 g
+I23,save-on-foods-wesbrook-village,2.39,seed,2026-11-07,Clif Bar,68 g
+I23,shoppers-drug-mart-university-blvd,2.59,seed,2026-11-07,Clif Bar,68 g
+I23,shoppers-drug-mart-wesbrook-village,2.69,seed,2026-11-07,Clif Bar,68 g
+I23,starbucks-bookstore,3.25,seed,2026-11-07,Clif Bar,68 g
+I23,starbucks-fred-kaiser,3.25,seed,2026-11-07,Clif Bar,68 g
+I23,starbucks-inside-save-on-foods,3.25,seed,2026-11-07,Clif Bar,68 g
+I23,starbucks-life-building,3.25,seed,2026-11-07,Clif Bar,68 g
+I23,starbucks-tef3-agronomy-rd,3.25,seed,2026-11-07,Clif Bar,68 g
+I23,starbucks-university-village,3.25,seed,2026-11-07,Clif Bar,68 g
+I23,thirstyyy,2.99,seed,2026-11-07,Clif Bar,68 g

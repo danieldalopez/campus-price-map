@@ -1,0 +1,24 @@
+id,name,size,volume_ml,category,image,aliases
+I01,Red Bull,250 ml can,250,Energy drinks,/items/I01.webp,redbull|red bull|rb|energy drink
+I02,Monster Energy,473 ml can,473,Energy drinks,/items/I02.webp,monster|monster energy
+I03,Celsius,355 ml can,355,Energy drinks,/items/I03.webp,celsius
+I04,Coca-Cola,355 ml can,355,Soft drinks,/items/I04.webp,coke|coca cola|cola|pop|soda|coke can
+I05,Coca-Cola,591 ml bottle,591,Soft drinks,/items/I05.webp,coke bottle|coca cola bottle|pop bottle
+I06,Bottled water,500 ml,500,Water,/items/I06.webp,water|bottled water|dasani|aquafina|ethos
+I07,Sparkling water,355 ml can,355,Water,/items/I07.webp,sparkling water|soda water|bubly|perrier
+I08,Drip coffee,"small, 10 to 12 oz",355,Hot drinks,/items/I08.webp,coffee|drip|drip coffee|brewed coffee|regular coffee
+I09,Drip coffee,"medium, 14 to 16 oz",473,Hot drinks,/items/I09.webp,medium coffee|large coffee
+I10,Latte,"small, 10 to 12 oz",355,Hot drinks,/items/I10.webp,latte|caffe latte
+I11,Tea,"small, 10 to 12 oz",355,Hot drinks,/items/I11.webp,tea|hot tea|steeped tea
+I12,Iced coffee or cold brew,12 oz,355,Cold coffee,/items/I12.webp,iced coffee|cold brew
+I13,Bagel with cream cheese,each,,Breakfast and bakery,/items/I13.webp,bagel
+I14,Muffin,each,,Breakfast and bakery,/items/I14.webp,muffin
+I15,Pre-made sandwich,each,,Lunch grab and go,/items/I15.webp,sandwich|sandwhich
+I16,Pre-made wrap,each,,Lunch grab and go,/items/I16.webp,wrap
+I17,"Sushi pack, California roll",8 pieces,,Lunch grab and go,/items/I17.webp,sushi|california roll
+I18,Quest Protein Bar,60 g,,Snacks,/items/I18.webp,quest|protein bar
+I19,Lay's Classic chips,40 g,,Snacks,/items/I19.webp,chips|lays|lay's|crisps
+I20,Banana,each,,Fruit,/items/I20.webp,banana
+I21,Apple,each,,Fruit,/items/I21.webp,apple
+I22,Red Bull,355 ml can,355,Energy drinks,/items/I22.webp,red bull 355|big red bull
+I23,Clif Bar,68 g,,Snacks,/items/I23.webp,clif|clif bar|cliff bar|energy bar
