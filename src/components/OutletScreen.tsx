@@ -11,6 +11,7 @@ import type { MenuCategory, MenuLine, Outlet, OutletItemRow, OutletResponse } fr
 import { useApi } from "@/lib/use-api";
 import { useNow } from "@/lib/use-now";
 import { Button, buttonClasses } from "./Button";
+import { DirectionsButton } from "./DirectionsButton";
 import { OutletLink } from "./OutletLink";
 import { PendingLine } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
@@ -285,15 +286,18 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
           {data ? (
             <>
               <OutletFacts outlet={data.outlet} now={now} />
-              {menuCount > 0 ? (
-                <a
-                  href="#menu-heading"
-                  className="mt-1 inline-flex min-h-12 items-center font-bold underline decoration-2 underline-offset-4"
-                >
-                  Full menu · {menuCount === 1 ? "1 item" : `${menuCount} items`}
-                  <span aria-hidden="true">&nbsp;↓</span>
-                </a>
-              ) : null}
+              <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2">
+                <DirectionsButton outlet={data.outlet} />
+                {menuCount > 0 ? (
+                  <a
+                    href="#menu-heading"
+                    className="inline-flex min-h-12 items-center font-bold underline decoration-2 underline-offset-4"
+                  >
+                    Full menu · {menuCount === 1 ? "1 item" : `${menuCount} items`}
+                    <span aria-hidden="true">&nbsp;↓</span>
+                  </a>
+                ) : null}
+              </div>
               <p className="sr-only">
                 {data.items.length === 1 ? "1 price we compare" : `${data.items.length} prices we compare`} and{" "}
                 {menuCount === 1 ? "1 menu item" : `${menuCount} menu items`}.

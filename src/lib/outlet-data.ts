@@ -5,6 +5,8 @@
 // nearest cheaper. Pending reports, stock and "just confirmed" are always live. The column mapping is the
 // one Results uses (src/lib/prices.ts), so both pages say the same thing about the same price.
 //
+// An item is listed if the outlet carries it (`carries`), has a price for it, or has a pending report.
+//
 // Full menu: every menu_items line for the outlet, from the cached campus menu (src/lib/menu.ts).
 
 import { loadOutlet } from "./catalog";
@@ -42,9 +44,13 @@ const ITEM_COLUMNS = `
   i.id as item_id, i.name as item_name, i.size, i.volume_ml, i.category, i.image, i.aliases,
   ${LIVE_EXTRA_COLUMNS}`;
 
+// What the outlet sells, even without a price yet ("No confirmed price yet", or an estimate in pipeline mode).
+const CARRIES_CTE = `ca as (select item_id as k from carries where location_id = $1)`;
+
 const ITEM_JOINS = `
   left join pp on pp.k = i.id
-  left join st on st.k = i.id`;
+  left join st on st.k = i.id
+  left join ca on ca.k = i.id`;
 
 function toItem(r: ItemCols): Item {
   return {
@@ -63,13 +69,13 @@ type LiveRow = ItemCols & LiveExtraCols & LivePriceCols & { n_outlets: string | 
 async function liveItems(outlet: Outlet, deviceId: string | undefined): Promise<OutletItemRow[]> {
   const rows = await query<LiveRow>(
     "reader",
-    `with ${liveCtes("location_id")}
+    `with ${liveCtes("location_id")}, ${CARRIES_CTE}
      select ${ITEM_COLUMNS}, cp.price, cp.source, cp.confirmations, cp.updated_at, m.n_outlets, m.campus_median
      from items i
      left join cp on cp.k = i.id
      left join item_medians m on m.item_id = i.id
      ${ITEM_JOINS}
-     where cp.k is not null or pp.k is not null
+     where cp.k is not null or pp.k is not null or ca.k is not null
      order by i.id`,
     [outlet.id],
   );
@@ -86,14 +92,14 @@ async function pipelineItems(outlet: Outlet, deviceId: string | undefined): Prom
   const rows = await query<PipelineRow>(
     "reader",
     `with pc as (select * from serving.price_comparisons where location_id = $1),
-     ${liveCtes("location_id")}
+     ${liveCtes("location_id")}, ${CARRIES_CTE}
      select ${ITEM_COLUMNS}, pc.item_id as pc_key, ${PIPELINE_COLUMNS}
      from items i
      left join pc on pc.item_id = i.id
      left join locations nl on nl.id = pc.nearest_cheaper_location_id
      left join cp on cp.k = i.id
      ${ITEM_JOINS}
-     where pc.item_id is not null or cp.k is not null or pp.k is not null
+     where pc.item_id is not null or cp.k is not null or pp.k is not null or ca.k is not null
      order by i.id`,
     [outlet.id],
   );

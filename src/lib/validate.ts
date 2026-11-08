@@ -29,14 +29,6 @@ export const pricesQuerySchema = z
     message: "Send both lat and lng, or neither.",
   });
 
-/** An outlet's slug id, e.g. "blue-chip-cafe" (GET /api/outlet/[id]). */
-export const outletIdSchema = z
-  .string({ error: "Pick an outlet to see its prices." })
-  .trim()
-  .toLowerCase()
-  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "That isn't an outlet we know.")
-  .max(80, "That isn't an outlet we know.");
-
 /** GET /api/menu-search?q=ramen&lat=49.2666&lng=-123.2499. lat and lng come together or not at all. */
 export const menuSearchQuerySchema = z
   .object({
@@ -112,3 +104,9 @@ export function iso(v: unknown): string | null {
 export function text(v: unknown): string | null {
   return typeof v === "string" && v !== "" ? v : null;
 }
+
+/** An outlet id: the `locations.id` slug, e.g. "blue-chip-cafe". */
+export const locationIdSchema = z
+  .string({ error: "Pick an outlet to see its prices." })
+  .trim()
+  .regex(/^[a-z0-9][a-z0-9-]{0,79}$/, "That isn't an outlet we track.");

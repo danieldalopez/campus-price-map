@@ -6,6 +6,9 @@ Built at HackCamp 2026 (nwPlus, UBC Vancouver) by Sergio Lopez and Sebastian Sal
 
 > **Claude Code: this file is the spec.** Read it fully before every task. Work through section 13 one step at a time. If a request conflicts with this file, ask before building.
 
+Version 6, Sun Nov 8, early morning. Changes from version 5:
+- **Walking directions open in Google Maps.** A **Directions** button opens Google Maps with walking directions to the outlet. The app no longer draws routes: no `/api/route`, no OpenRouteService calls from the app, no RouteLayer or RouteSteps, no rerouting or arrival sheet. Distances in the app stay the section 7 estimate. (`scripts/build-walk-matrix.mjs` can still use OpenRouteService once, offline, for outlet to outlet walking times in Databricks.) Section 7 "Directions", Step 15.
+
 Version 5, Sat Nov 7, late night. Changes from version 4:
 - **Worth the walk?** Every result now answers whether walking to the cheaper outlet pays off once you count your time, and what it adds up to over a term, a year or a degree. The economics are computed in Databricks (`gold_walk_worth`), and the app runs the same formula live from the student's position (section 10, section 7).
 - **The app is the map.** Full-screen map home, a live location dot, and walking routes drawn in the app from OpenRouteService (free, no card). No Google Maps API and no hand-off to another app.
@@ -35,7 +38,7 @@ Version 4, Sat Nov 7, night. Changes from version 3 (9:30 PM):
 ## 1. Product in 30 seconds
 
 - **Problem:** UBC students who buy the same coffee or energy drink most days can't tell which outlet sells it cheapest, so they overpay without knowing by how much.
-- **Promise:** open the map, search an item (or snap or scan it) and see where it's cheapest near you, whether the walk is worth it, and the route there.
+- **Promise:** open the map, search an item (or snap or scan it) and see where it's cheapest near you, whether the walk is worth it, and get walking directions there in Google Maps.
 - **Pitch:** Campus guides tell you which places are cheap. We tell you where the exact thing you buy every day is cheapest, a short walk from where you are.
 - **User:** the daily buyer, on a phone, walking between classes, one hand free.
 - **Never write in UI or copy:** "the only app", "nobody does this", invented stats. Campus Nutrition exists; our difference is item level and live.
@@ -47,7 +50,7 @@ Version 4, Sat Nov 7, night. Changes from version 3 (9:30 PM):
 3. Mobile first: design and test at 390 x 844. Every screen works without the map (list view).
 4. The browser never talks to the database, Gemini or Databricks. Browser → `/api/*` → Lakebase, Gemini or Genie.
 5. Secrets only in env vars or Databricks secrets. Never in client code, logs, commits or error messages.
-6. Only the libraries in section 3. No state library, no UI kit, no Google Maps APIs.
+6. Only the libraries in section 3. No state library, no UI kit, no Google Maps APIs (a plain Google Maps directions link is fine, section 7).
 7. TypeScript strict. Validate every API input with `zod`. No `any` in `src/app/api` or `src/lib`.
 8. API routes that use `pg` do **not** set `export const runtime`: the app has `cacheComponents` on, Next 16 rejects that line under it, and route handlers already run on Node.js. Instead they `await connection()` (from `next/server`) first, so they run at request time and are never prerendered with build-time data.
 9. **Leaflet:** load the map component with `dynamic(() => import(...), { ssr: false })`, import `leaflet/dist/leaflet.css` once, and draw pins with `L.divIcon` (no default marker images). This avoids the blank map and broken icon bugs.
@@ -70,7 +73,7 @@ Version 4, Sat Nov 7, night. Changes from version 3 (9:30 PM):
 | Location | Browser Geolocation API |
 | Validation | `zod` |
 | Asset scripts | `sharp` (dev only) |
-| Walking routes | OpenRouteService Directions API, `foot-walking` profile, free key (no card), called only from `/api/route` |
+| Walking directions | A link that opens Google Maps (`https://www.google.com/maps/dir/?api=1&destination=<lat>,<lng>&travelmode=walking`). No API key, no routing in the app. |
 | Barcodes | Native `BarcodeDetector` where the browser has it, else `@zxing/browser` (iPhone Safari has no native detector). Product lookup: bundled Open Food Facts file, then the Open Food Facts API from `/api/barcode` |
 | Hosting | Vercel Hobby (free), auto deploy from `main` |
 
@@ -93,12 +96,11 @@ src/app/
   api/vote/route.ts         POST
   api/stock/route.ts        POST
   api/ask/route.ts          POST  (Genie), stretch
-  api/route/route.ts        GET   walking route (OpenRouteService)
   api/barcode/route.ts      GET   barcode → item (bundled file, then Open Food Facts)
   api/config/route.ts       GET   app_config values (wage, weeks, thresholds)
   scan/page.tsx             Full-screen barcode scanner, lowest priority
-src/components/   PriceTag PriceBand ItemSticker ItemTiles Pin Stamp Tape ReceiptCard Button CameraButton BottomSheet SoundToggle ReadAloud Toast WakingUp WorthTheWalk RouteLayer RouteSteps LocationDot Scanner
-src/lib/          db.ts gemini.ts genie.ts geo.ts device.ts image.ts sounds.ts speech.ts validate.ts format.ts pricing.ts walkworth.ts search.ts route.ts barcode.ts
+src/components/   PriceTag PriceBand ItemSticker ItemTiles Pin Stamp Tape ReceiptCard Button CameraButton BottomSheet SoundToggle ReadAloud Toast WakingUp WorthTheWalk DirectionsButton LocationDot Scanner
+src/lib/          db.ts gemini.ts genie.ts geo.ts device.ts image.ts sounds.ts speech.ts validate.ts format.ts pricing.ts walkworth.ts search.ts directions.ts barcode.ts
 db/               schema.sql roles.sql views.sql
 data/raw/         campus_food_prices.csv barcode_lookup.csv      (raw inputs, never edited)
 data/             items.csv outlets.csv prices.csv carries.csv menu_items.csv build_report.md   (built by scripts/build_seed.py)
@@ -138,7 +140,7 @@ assets/PROMPTS.md every AI Studio prompt we used (for Devpost)
 | `DATABRICKS_TOKEN` | Vercel + `.env.local` | personal access token for Genie only, Step 13 |
 | `GENIE_SPACE_ID` | Vercel + `.env.local` | from the Genie space URL, Step 13. If unset, the Ask tab is hidden. |
 | `GEMINI_IMAGE_MODEL` | `.env.local` only | `gemini-3.1-flash-image`, for `scripts/generate-stickers.mjs`. Image generation through the API usually needs billing, which we don't use, so expect to make stickers in the AI Studio website instead. |
-| `ORS_API_KEY` | Vercel + `.env.local` | free OpenRouteService key (openrouteservice.org, no card). If unset, "Walk here" draws a straight dashed line with the estimated minutes. |
+| `ORS_API_KEY` | `.env.local` only | free OpenRouteService key (openrouteservice.org, no card), only for running `scripts/build-walk-matrix.mjs` once. The app never uses it. |
 | `AUTH0_*`, `APP_BASE_URL` | Vercel + `.env.local` | names exactly as the Auth0 SDK README says, Step 12. If unset, the app runs anonymous. |
 
 `.env*` is in `.gitignore`.
@@ -284,7 +286,7 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
 **Location (`src/lib/geo.ts`)**
 - Ask for browser location on the first search or tile tap, not on page load. Timeout 8 s.
 - If allowed: `watchPosition` while the page is visible (stopped when it's hidden), so the dot moves and walk times stay current. Re-sort results only when the student has moved more than 30 m, so the list doesn't jump.
-- Location is never stored. It's sent to our API only as rounded coordinates (4 decimals, about 11 m) to sort prices and get routes.
+- Location is never stored. It's sent to our API only as rounded coordinates (4 decimals, about 11 m) to sort prices.
 - If denied, unavailable or timed out: measure from the AMS Nest (49.2666, -123.2499) and show one line: "Using the AMS Nest as your starting point. Turn on location for walk times from where you are."
 - Walk minutes = haversine metres x 1.3 / 80 m per min, rounded up. Always labelled "about N min walk". The pipeline uses the same formula for outlet to outlet distances (section 10), so both numbers agree.
 
@@ -315,19 +317,19 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
   - **Projection:** "If you buy it [4 ▾] times a week for a [term ▾]: $41.60 saved · 1.7 h walking · net +$10.40" (52 purchases × $0.80, × 2 min, × $0.20). The student picks the frequency (1 to 14 a week, no default assumption: the control starts empty and the line appears once they pick) and the horizon (term 13 weeks, year 26, degree 104, from `app_config`). Every projection ends with "if prices hold".
   - **Your time** is set to the BC minimum wage from `app_config` and the student can change it ("My time is worth [$__]/h"). Kept on the device only (localStorage), never sent.
   - **Optional savings line:** "Put the weekly saving aside at [__]% a year → $X after a degree". Hidden until the student types a rate. We never pick a rate for them. Over a term, interest on a few dollars is close to zero, so this line only appears for the year and degree horizons.
-  - **Walk here** button on the card and on every row: draws the route (below).
+  - **Directions** button on the card and on every row: opens Google Maps (below).
   - Never uses estimated prices (G13). Hidden when the closest outlet is already the cheapest: then the decision line says so.
   - Read aloud includes the verdict and the three numbers.
 
-**Walk here (in-app route)**
-- Tapping **Walk here** calls `/api/route?from=<lat,lng>&to=<location_id>`. The map draws the walking route as an ink line on the paper map, with the total ("about 4 min · 290 m") in a bottom sheet and the turn list as text below it (`RouteSteps`), so screen readers and Read aloud get the route too.
-- The live dot moves along it. If the student is more than 30 m off the route, fetch a new one, at most once every 20 s (the free OpenRouteService quota is about 2,000 routes a day and 40 a minute).
-- No route available (no key, quota hit, error): a straight dashed line with "about N min walk (straight line)" and the outlet's address. Never an error screen.
-- Arrival: within 25 m of the outlet, the sheet switches to "You're here. Bought it?" with the I bought it button.
-- No hand-off to Google Maps or any other app.
+**Directions (hand-off to Google Maps)**
+- A **Directions** button (on Results rows, the Worth the walk card and the Outlet page) is a plain link to `https://www.google.com/maps/dir/?api=1&destination=<lat>,<lng>&travelmode=walking`, built in `src/lib/directions.ts` from the outlet's coordinates. It opens the Google Maps app if installed, else Google Maps in the browser, in a new tab.
+- No `origin` in the link: Google Maps starts from the phone's own location, so the student's position is never put in the URL.
+- That hand-off is the only routing we do. The app never draws a route, gives turn-by-turn directions, reroutes or detects arrival. Walk times in the app stay the section 7 estimate ("about N min walk").
+- Accessible name: "Directions to Mercante in Google Maps (opens another app)". At least 48 px tall.
 
 **Outlet `/outlet/[id]`**
 - Name, today's hours, items grouped by category.
+- A **Directions** button under the name (section 7, Directions).
 - Each item: PriceTag, PriceBand, plus its `chip` from `price_comparisons`, with a link to `nearest_cheaper_location_id` ("$0.35 less at Mercante, about 3 min from here"), the pending line as on Results, and a Sold out button. Chips and links are hidden when the pipeline isn't available.
 - Under each item with a cheaper option, the Databricks verdict for standing at this outlet: "Walk to Mercante? ✗ Not worth it for the money · saves $0.35, costs 6 extra minutes". This line is read straight from `price_comparisons.walk_*` (section 10), with no maths in the app.
 - No single score for the whole outlet on this page.
@@ -373,7 +375,6 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
 | `POST /api/stock` | writer | `{ item_id, location_id, status, device_id }` | `{ stock }` |
 | `POST /api/ask` | none (server token) | `{ question }` | `{ text, columns, rows }` |
 | `GET /api/config` | reader | | `app_config` as `{ bc_min_wage, weeks_term, weeks_year, weeks_degree, even_band, round_trip, worth_max_extra_min }` |
-| `GET /api/route` | none (server key) | `from` (lat,lng, rounded to 4 decimals), `to` (location_id) | `{ source: "ors" \| "straight", minutes, meters, line: [[lat,lng]…], steps: [{ text, meters }] }` |
 | `GET /api/barcode` | none | `code` (8 to 14 digits) | `{ status: "matched" \| "known" \| "unknown", item_id?, product_name?, quantity? }` |
 
 - `device_id`: random UUID created on first visit, kept in `localStorage` (wrap in try/catch). After Step 12, write routes also store the Auth0 user id from the server session. Never store name or email. Clearing storage makes a new device, which is why Auth0 matters for honest confirmations.
@@ -385,7 +386,6 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
   - Otherwise: official prices from live `current_prices`, bands from `pricing.ts` using the live `item_medians` view, no chip, no nearest cheaper, no StatCan line. `price_source_used: "live"`. Log the reason once per cold start.
   - Pending, stock and just confirmed always come from the live views.
 - `/api/ask`: `POST {DATABRICKS_HOST}/api/2.0/genie/spaces/{GENIE_SPACE_ID}/start-conversation` with `{ content: question }`, then poll the message every 1.5 s until it's completed (max 40 s), then fetch the query result. `export const maxDuration = 60`. Questions over 200 characters rejected. Check that the Genie Conversation API works on our workspace edition before building the page.
-- `/api/route`: OpenRouteService `GET /v2/directions/foot-walking` with the key from `ORS_API_KEY`. Cache by (rounded from, to) for 10 minutes. Timeout 5 s, then return the straight-line answer (`source: "straight"`, minutes from the section 7 formula). The `ORS_API_KEY` never reaches the browser.
 - `/api/barcode`: look in the bundled `data/barcodes.csv` first. If it's not there, call `https://world.openfoodfacts.org/api/v2/product/<code>.json?fields=product_name,brands,quantity` with an app-name User-Agent and a 4 s timeout, and cache the answer in memory. A live result is only ever "known" or "unknown", never auto-matched to an item.
 - Errors return `{ error: "plain sentence for the user" }` with the right status code.
 
@@ -863,7 +863,7 @@ Figma file: (add link). Screens: Home, Results (with a pending row and a just co
 | G11 | Accessibility rules in section 11 apply to every screen. |
 | G12 | Only code written after 12 PM Sat Nov 7. Public repo. Both teammates on Devpost. |
 | G14 | Worth the walk never hides the numbers behind the verdict: saving, extra minutes and time cost are always shown. Projections use the student's own frequency and end with "if prices hold". No interest rate is ever assumed. The wage is the student's to change and stays on the device. |
-| G15 | Location: requested on first search, watched only while the page is visible, rounded to about 11 m before leaving the phone, never stored or logged. OpenRouteService receives the rounded start and the outlet only. |
+| G15 | Location: requested on first search, watched only while the page is visible, rounded to about 11 m before leaving the phone, never stored or logged. The Google Maps directions link carries the outlet's coordinates only, never the student's location. |
 | G16 | Open Food Facts data stays under the ODbL with attribution. A live barcode lookup never auto-maps to an item. |
 | G13 | Model estimates are never shown as a price: no PriceTag, never ranked, never in chips, stamps, savings or Read aloud. Always the word "estimated" plus a range. Shown only when the validation gate in section 10 passed. Outlets with no prices get `?`, never a tier from their type alone. |
 
@@ -871,7 +871,7 @@ Figma file: (add link). Screens: Home, Results (with a pending row and a just co
 
 Skip steps that are already done. Step numbers are labels; **run them in this order:** 1, 2, 3, 4, 5, 6, 7, 14, 15, 10, 11, 8, 9, 16, 12, 13.
 
-If behind, cut in this order: Step 13, D7, Step 16 (scanner), Step 12, D6, Step 9, the receipt part of Step 8, Step 15 (the straight-line fallback stays), D5. Never cut D1 to D4, D8 or Step 14: Worth the walk and the Databricks engine are the submission.
+If behind, cut in this order: Step 13, D7, Step 16 (scanner), Step 12, D6, Step 9, the receipt part of Step 8, Step 15, D5. Never cut D1 to D4, D8 or Step 14: Worth the walk and the Databricks engine are the submission.
 
 Before Step 2, Sergio: create a free OpenRouteService key, put it in `.env.local` as `ORS_API_KEY`, and run `node --env-file=.env.local scripts/build-walk-matrix.mjs` once (21 outlets is one matrix call). It writes `data/walk_matrix.csv`, which the seed loads. Without it everything falls back to straight-line estimates.
 
@@ -881,7 +881,7 @@ App track (Sebastian, Claude Code):
 2. **Database.** (Done, see section 6.) "Do Step 2: write `db/schema.sql`, `db/views.sql`, `db/roles.sql`, `scripts/build_seed.py` and `db/seed.sql` exactly as section 6. Don't run anything against the database; show me the SQL." **Show me:** the SQL. (We run it in the Lakebase SQL editor, then `npm run seed`.)
 3. **Prove the pipe.** "Do Step 3: `src/lib/db.ts` as section 5 and `GET /api/health` (pipeline field `null` until D3). Then tell me which env vars to add in Vercel." **Show me:** the Vercel link `/api/health` on a phone returning 5 outlet names. If Lakebase refuses the connection from Vercel for 30 minutes, stop and tell us; we ask the Databricks booth.
 4. **Read API and search.** "Do Step 4: `/api/items`, `/api/locations`, `/api/prices` with the source selection in section 8, `src/lib/geo.ts` with `watchPosition` and the live dot, `src/lib/pricing.ts`, `src/lib/search.ts` with its tests, switch the map to the API, add search, tiles and the Results page (section 7) with the Nest fallback and WakingUp." **Show me:** "Redbull" and "rdbull" both find Red Bull, nearby outlets first, cheapest first, walk times, `price_source_used: "live"`.
-5. **Outlet page.** "Do Step 5: `/api/outlet/[id]` and the Outlet page. Chips and nearest cheaper links come from `serving.price_comparisons` and are hidden if it's missing." **Show me:** tapping a pin opens it; with D3 done, chips show.
+5. **Outlet page.** "Do Step 5: `/api/outlet/[id]` and the Outlet page. Chips and nearest cheaper links come from `serving.price_comparisons` and are hidden if it's missing. Add `src/lib/directions.ts` and the DirectionsButton (section 7, Directions) to the page." **Show me:** tapping a pin opens it; with D3 done, chips show; Directions opens Google Maps.
 6. **Snap with Gemini.** "Do Step 6: `src/lib/image.ts` compression, `/api/read-photo` exactly as section 9a with rate limits, `/api/save-price`, and the Snap flow." **Show me:** 5 photos from the price walk read correctly.
 7. **Pending vs Official.** "Do Step 7: pending lines with Yes / No / Not sure, `/api/vote`, statuses from the views, freshness labels, the just confirmed line, and the `PRICE_SOURCE` switch with the stale and missing fallback." **Show me:** a price goes pending, then official after a second device confirms; in pipeline mode it shows as just confirmed until the Job runs.
 8. **I bought it.** "Do Step 8: the I bought it sheet with optional receipt photo." **Show me:** a receipt photo prefills the price.
@@ -904,7 +904,7 @@ Databricks track (Sergio, in parallel, after app Step 2 has seeded Lakebase). Cl
 App steps added in version 5:
 
 14. **Worth the walk.** "Do Step 14: `/api/config`, `src/lib/walkworth.ts` exactly as section 10, its parity test against `tests/fixtures/walk_worth.json`, the WorthTheWalk card on Results and the Databricks verdict line on the Outlet page (section 7)." **Show me:** the parity test passing, and the card on a phone for Red Bull with frequency 4 a week and a term.
-15. **Walk here.** "Do Step 15: `/api/route` with OpenRouteService and the straight-line fallback, RouteLayer, RouteSteps, reroute when 30 m off, arrival sheet (section 7)." **Show me:** a drawn route from the Nest to the cheapest Red Bull, and the fallback with `ORS_API_KEY` removed.
+15. **Directions.** "Do Step 15: `src/lib/directions.ts` and the DirectionsButton (section 7, Directions) on Results rows and the Worth the walk card. The Outlet page already has one from Step 5." **Show me:** tapping Directions on the cheapest Red Bull opens Google Maps with walking directions to it.
 16. **Scanner (lowest priority, needs the two decisions in section 6).** "Do Step 16: `scripts/build-barcodes.mjs`, `data/barcodes.csv` with its licence file, `/api/barcode`, and the full-screen `/scan` page (section 7)." **Show me:** a Red Bull can scanned on an iPhone opens its Results.
 
 Databricks step added in version 5:
@@ -913,7 +913,7 @@ Databricks step added in version 5:
 
 ## 14. Out of scope
 
-Google Maps APIs and hand-offs to other map apps, turn-by-turn voice navigation, indoor routing through buildings, reading prices from barcodes, assuming an interest rate or a purchase frequency for the student, live image or sound generation, Genie in the live path, an outlet-wide score on the Outlet page, storing photos, storing names or emails, dark mode, route-based "on your way" (we'd need the student's destination).
+Google Maps APIs (keyed APIs, embedded Google maps), drawing routes in the app or any routing beyond the Google Maps directions link, turn-by-turn voice navigation, indoor routing through buildings, reading prices from barcodes, assuming an interest rate or a purchase frequency for the student, live image or sound generation, Genie in the live path, an outlet-wide score on the Outlet page, storing photos, storing names or emails, dark mode, route-based "on your way" (we'd need the student's destination).
 
 ## 15. Credits (app footer and Devpost)
 
@@ -921,7 +921,7 @@ Google Maps APIs and hand-offs to other map apps, turn-by-turn voice navigation,
 - Contains information licensed under the Open Government Licence – Canada (Statistics Canada).
 - Prices reported by UBC students and the team's price walk, Nov 7, 2026.
 - Illustrations made with Google Gemini in Google AI Studio.
-- Walking routes © openrouteservice.org by HeiGIT, map data © OpenStreetMap contributors.
+- Outlet to outlet walking times © openrouteservice.org by HeiGIT (only if `data/walk_matrix.csv` was built), map data © OpenStreetMap contributors.
 - Product data from Open Food Facts, available under the Open Database License (ODbL).
 
 ## 16. Prizes

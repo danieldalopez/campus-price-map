@@ -54,6 +54,7 @@ We don't ask anyone to make a long trip. Results start with outlets a short walk
 4. **Outlet page.** Hours and every tracked item it sells, each with its own comparison ("Cheapest on campus", "40 cents above campus average"). There's no single cheap or expensive score for a whole outlet, because a place can have the cheapest coffee and the priciest Red Bull.
 5. **"vs BC average" badge.** Where a campus item truly matches Statistics Canada's provincial price data, a small badge compares the two, clearly labelled as a BC average.
 6. **Sold out button.** Saves the next student a wasted trip.
+7. **Directions in Google Maps.** Tap "Directions" on any outlet and the app opens Google Maps with walking directions to it. That hand-off is the only routing the app does: it doesn't draw routes or give turn-by-turn directions itself. Distances in the app stay approximate.
 
 ### Where it's going
 
@@ -109,6 +110,7 @@ flowchart LR
 |---|---|
 | App | Next.js (App Router, TypeScript) and React, written with Claude Code |
 | Map | Leaflet + OpenStreetMap |
+| Walking directions | Hand-off to Google Maps (a link that opens it); no routing in the app |
 | Hosting and secrets | Vercel (every push to `main` deploys) |
 | App database | Databricks Lakebase (managed Postgres) |
 | Analytics | Databricks notebooks, Delta tables, Unity Catalog, synced tables, Jobs |
@@ -241,6 +243,7 @@ We're keeping ourselves honest about what's evidence and what's still a guess.
 - Map data © OpenStreetMap contributors
 - Contains information licensed under the Open Government Licence – Canada (Statistics Canada)
 - Prices reported by UBC students
+- Product data from Open Food Facts, available under the Open Database License (ODbL). See `data/barcodes.LICENSE.md`
 
 Built from a fresh repository during HackCamp 2026 (hacking began 12:00 PM, November 7), with the app written using Claude Code.
 

@@ -174,9 +174,14 @@ export default function HomeScreen() {
               <span aria-hidden="true">☰</span> List
             </Button>
           </div>
-          <Link href="/snap" className={buttonClasses("primary", "lg", "mt-2 w-full")}>
-            <span aria-hidden="true">📷</span> Snap a price
-          </Link>
+          <div className="mt-2 flex gap-2">
+            <Link href="/scan" className={buttonClasses("secondary", "lg", "shrink-0 px-4")}>
+              <span aria-hidden="true">▥</span> Scan
+            </Link>
+            <Link href="/snap" className={buttonClasses("primary", "lg", "min-w-0 flex-1")}>
+              <span aria-hidden="true">📷</span> Snap a price
+            </Link>
+          </div>
         </div>
       </div>
 

@@ -10,10 +10,12 @@ import {
   type ChangeEvent,
   type FormEvent,
   type ReactNode,
+  type RefObject,
 } from "react";
 import { getDeviceId } from "@/lib/device";
 import { formatPrice } from "@/lib/format";
 import { compressPhoto, PhotoDecodeError } from "@/lib/image";
+import { useCamera, videoHasFrame } from "@/lib/use-camera";
 import {
   parsePriceInput,
   priceInRange,
@@ -27,8 +29,9 @@ import {
 } from "@/lib/snap";
 import { Button, buttonClasses } from "./Button";
 
-// Snap a price (SPEC section 7): camera → compress → Gemini reads it → one confirm card per item → nothing is
-// saved until the student taps Looks right (G1) → "Your report: $3.25 · waiting for a second student".
+// Snap a price (SPEC section 7): live camera → shutter → compress → Gemini reads it → one confirm card per item →
+// nothing is saved until the student taps Looks right (G1) → "Your report: $3.25 · waiting for a second student".
+// No camera, or no permission: the file input ("Upload a photo instead") takes over as the way in.
 
 type Phase = "start" | "reading" | "confirm" | "pick";
 
@@ -195,8 +198,16 @@ export function SnapShell({ error }: { error?: string }) {
   );
 }
 
-/** The camera: a real file input inside a big label, so it works with a keyboard and a screen reader. */
-function CameraButton({ onPhoto, label, variant }: { onPhoto: (e: ChangeEvent<HTMLInputElement>) => void; label: string; variant: "primary" | "secondary" }) {
+type CameraButtonProps = {
+  onPhoto: (e: ChangeEvent<HTMLInputElement>) => void;
+  label: string;
+  variant: "primary" | "secondary";
+  /** Hint phones to open the camera app (true) or let the student pick a saved photo (false). */
+  capture?: boolean;
+};
+
+/** A photo from a file: a real file input inside a big label, so it works with a keyboard and a screen reader. */
+function CameraButton({ onPhoto, label, variant, capture = true }: CameraButtonProps) {
   return (
     <label
       className={buttonClasses(
@@ -205,9 +216,67 @@ function CameraButton({ onPhoto, label, variant }: { onPhoto: (e: ChangeEvent<HT
         "w-full cursor-pointer focus-within:outline-[3px] focus-within:outline-offset-2 focus-within:outline-focus",
       )}
     >
-      <span aria-hidden="true">📷</span> {label}
-      <input type="file" accept="image/*" capture="environment" className="sr-only" onChange={onPhoto} />
+      <span aria-hidden="true">{capture ? "📷" : "🖼️"}</span> {label}
+      <input
+        type="file"
+        accept="image/*"
+        capture={capture ? "environment" : undefined}
+        className="sr-only"
+        onChange={onPhoto}
+      />
     </label>
+  );
+}
+
+/** The live back camera with a big shutter button. The picture is decorative; the button says what it does. */
+function LiveViewfinder({
+  videoRef,
+  ready,
+  slow,
+  onShutter,
+}: {
+  videoRef: RefObject<HTMLVideoElement | null>;
+  ready: boolean;
+  /** Still waiting after a few seconds (usually the permission question). */
+  slow: boolean;
+  onShutter: () => void;
+}) {
+  return (
+    <div className="mt-4">
+      <div className="relative aspect-[3/4] max-h-[50dvh] w-full overflow-hidden rounded-tag border-2 border-ink bg-ink shadow-ink">
+        <video
+          ref={videoRef}
+          aria-hidden="true"
+          playsInline
+          muted
+          autoPlay
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {ready ? null : (
+          <p className="absolute inset-0 grid place-items-center px-4 text-center font-bold text-card">
+            {slow
+              ? "Waiting for the camera. Allow camera access if your browser asks, or upload a photo instead."
+              : "Starting the camera…"}
+          </p>
+        )}
+      </div>
+      <div className="mt-4 flex justify-center">
+        <button
+          type="button"
+          onClick={onShutter}
+          disabled={!ready}
+          className="group flex min-h-12 flex-col items-center gap-1 rounded-tag px-3 font-heading text-lg font-extrabold disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          <span
+            aria-hidden="true"
+            className="grid h-20 w-20 place-items-center rounded-full border-[3px] border-ink bg-tag shadow-ink transition-transform group-active:translate-x-[2px] group-active:translate-y-[2px] group-active:shadow-ink-sm"
+          >
+            <span className="h-14 w-14 rounded-full border-2 border-ink bg-card" />
+          </span>
+          Take the photo
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -543,6 +612,9 @@ export default function SnapFlow({ items, outlets }: { items: SnapItem[]; outlet
   const firstPhase = useRef(true);
   const readAbort = useRef<AbortController | null>(null);
   const keySeq = useRef(0);
+  const shooting = useRef(false);
+  // The live camera runs only on the start screen: it stops after the shutter and when the student leaves.
+  const { videoRef, status: cameraStatus, problem: cameraIssue, slow: cameraSlow } = useCamera(phase === "start");
 
   const itemById = useMemo(() => new Map(items.map((i) => [i.id, i])), [items]);
   const nearest = useMemo(() => {
@@ -610,10 +682,42 @@ export default function SnapFlow({ items, outlets }: { items: SnapItem[]; outlet
     setAnnouncement(reason);
   }
 
-  async function onPhoto(e: ChangeEvent<HTMLInputElement>) {
+  function onPhoto(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     e.target.value = ""; // so the same photo can be picked again
-    if (!file) return;
+    if (file) void readPhoto(file);
+  }
+
+  /** The shutter: the current camera frame onto a canvas, then the same path as a picked photo. */
+  async function shoot() {
+    const video = videoRef.current;
+    if (shooting.current || !videoHasFrame(video)) return;
+    shooting.current = true;
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        toPick(COULDNT_READ);
+        return;
+      }
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      // The frame is ours now: leave the start screen, which turns the camera off.
+      setPhase("reading");
+      setAnnouncement("Reading the price…");
+      const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.92));
+      if (!blob) {
+        toPick(COULDNT_READ);
+        return;
+      }
+      await readPhoto(blob);
+    } finally {
+      shooting.current = false;
+    }
+  }
+
+  async function readPhoto(file: Blob) {
     locate();
     readAbort.current?.abort();
     setDraft(null);
@@ -746,10 +850,38 @@ export default function SnapFlow({ items, outlets }: { items: SnapItem[]; outlet
           Take a photo of the price
         </h2>
         <p className="mt-2">A price tag, a menu board or a receipt. We read it, you check it, then it&apos;s saved.</p>
-        <div className="mt-5">
-          <CameraButton onPhoto={onPhoto} label="Take a photo" variant="primary" />
+        {/* Why there's no live camera, announced when it turns out that way. */}
+        <div role="status" aria-live="polite">
+          {cameraIssue ? (
+            <p className="mt-4 rounded-tag border-2 border-ink bg-card px-3 py-2 leading-snug shadow-ink">
+              <span aria-hidden="true">⚠ </span>
+              {cameraIssue} Use your phone&apos;s camera app or a saved photo instead.
+            </p>
+          ) : null}
         </div>
+        {cameraIssue ? (
+          <div className="mt-4">
+            <CameraButton onPhoto={onPhoto} label="Take or upload a photo" variant="primary" />
+          </div>
+        ) : (
+          <>
+            <LiveViewfinder
+              videoRef={videoRef}
+              ready={cameraStatus === "on"}
+              slow={cameraSlow}
+              onShutter={() => void shoot()}
+            />
+            <div className="mt-4">
+              <CameraButton onPhoto={onPhoto} label="Upload a photo instead" variant="secondary" capture={false} />
+            </div>
+          </>
+        )}
         <p className="mt-3 rounded-tag border-2 border-dashed border-ink bg-paper-2 px-3 py-2 leading-snug">{PRIVACY}</p>
+        {cards.length > 0 ? (
+          <Button className="mt-5 w-full" onClick={() => setPhase("confirm")}>
+            Back to your report
+          </Button>
+        ) : null}
         <Button className="mt-5 w-full" onClick={() => toPick("Pick your item")}>
           No photo? Pick your item
         </Button>
@@ -789,7 +921,9 @@ export default function SnapFlow({ items, outlets }: { items: SnapItem[]; outlet
               Back to your report
             </Button>
           ) : null}
-          <CameraButton onPhoto={onPhoto} label="Try another photo" variant="secondary" />
+          <Button className="w-full" onClick={() => setPhase("start")}>
+            <span aria-hidden="true">📷</span> Try another photo
+          </Button>
         </div>
       </section>
     );
@@ -829,7 +963,9 @@ export default function SnapFlow({ items, outlets }: { items: SnapItem[]; outlet
         </ul>
         <Unmatched draft={draft} />
         <div className="mt-6 flex flex-col gap-3">
-          <CameraButton onPhoto={onPhoto} label="Snap another photo" variant={editing === 0 ? "primary" : "secondary"} />
+          <Button variant={editing === 0 ? "primary" : "secondary"} className="w-full" onClick={() => setPhase("start")}>
+            <span aria-hidden="true">📷</span> Snap another photo
+          </Button>
           <Button className="w-full" onClick={() => toPick("Pick another item")}>
             Add an item by hand
           </Button>
