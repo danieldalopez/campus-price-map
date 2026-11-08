@@ -80,8 +80,9 @@ function drawViewfinder(video: HTMLVideoElement, box: HTMLElement, canvas: HTMLC
   const scale = Math.max(vr.width / vw, vr.height / vh);
   const offX = (vr.width - vw * scale) / 2;
   const offY = (vr.height - vh * scale) / 2;
+  // The box is square, so a barcode held either way up fits; the margin forgives a slightly off aim.
   const marginX = br.width * 0.15;
-  const marginY = br.height * 0.25;
+  const marginY = br.height * 0.15;
   const sx = Math.max(0, (br.left - marginX - vr.left - offX) / scale);
   const sy = Math.max(0, (br.top - marginY - vr.top - offY) / scale);
   const sw = Math.min(vw - sx, (br.width + 2 * marginX) / scale);
@@ -314,13 +315,15 @@ export default function ScanScreen() {
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
             <div
               ref={boxRef}
-              className="relative aspect-[8/5] w-[min(82vw,22rem)] rounded-tag shadow-[0_0_0_100vmax_rgba(26,26,26,0.62)]"
+              className="relative aspect-square w-[min(72vw,18rem)] rounded-tag shadow-[0_0_0_100vmax_rgba(26,26,26,0.62)]"
             >
               <span className="absolute -top-1 -left-1 h-8 w-8 rounded-tl-tag border-t-[5px] border-l-[5px] border-tag" />
               <span className="absolute -top-1 -right-1 h-8 w-8 rounded-tr-tag border-t-[5px] border-r-[5px] border-tag" />
               <span className="absolute -bottom-1 -left-1 h-8 w-8 rounded-bl-tag border-b-[5px] border-l-[5px] border-tag" />
               <span className="absolute -right-1 -bottom-1 h-8 w-8 rounded-br-tag border-r-[5px] border-b-[5px] border-tag" />
-              <span className="absolute inset-x-4 top-1/2 h-0.5 -translate-y-1/2 bg-tag/80 motion-safe:animate-pulse" />
+              {/* A cross, not one horizontal line: the barcode can be held either way up. */}
+              <span className="absolute inset-x-6 top-1/2 h-0.5 -translate-y-1/2 bg-tag/70 motion-safe:animate-pulse" />
+              <span className="absolute inset-y-6 left-1/2 w-0.5 -translate-x-1/2 bg-tag/70 motion-safe:animate-pulse" />
               {/* Under the box: what's happening, in words (announced by the status line above). */}
               <p className={`${CHIP} absolute top-full left-1/2 mt-6 w-max max-w-[90vw] -translate-x-1/2`}>
                 {phase.kind === "looking" ? (
