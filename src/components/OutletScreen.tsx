@@ -9,6 +9,7 @@ import { isApproximate } from "@/lib/outlet";
 import { freshness } from "@/lib/pricing";
 import type { MenuCategory, MenuLine, Outlet, OutletItemRow, OutletResponse } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { VERDICT_WORDS } from "@/lib/walkworth";
 import { useNow } from "@/lib/use-now";
 import { Button, buttonClasses } from "./Button";
 import { DirectionsButton } from "./DirectionsButton";
@@ -74,6 +75,25 @@ function OutletFacts({ outlet, now }: { outlet: Outlet; now: number }) {
 // Tracked items: compared across campus
 // ---------------------------------------------------------------------------------------------------------
 
+/** "Walk to Mercante? ✗ Not worth it for the money · saves $0.35, costs 6 extra minutes" (section 7). */
+function WalkVerdictLine({ walk }: { walk: NonNullable<OutletItemRow["walk"]> }) {
+  const v = VERDICT_WORDS[walk.verdict];
+  const minutes = Math.round(walk.extra_min);
+  return (
+    <p className="mt-1">
+      Walk to{" "}
+      <OutletLink id={walk.location_id} className="font-bold">
+        {walk.name ?? "the cheaper outlet"}
+      </OutletLink>
+      ?{" "}
+      <span className="font-bold">
+        <span aria-hidden="true">{v.symbol}</span> {v.words}
+      </span>{" "}
+      · saves {formatPrice(walk.saving)}, costs {minutes} extra {minutes === 1 ? "minute" : "minutes"}
+    </p>
+  );
+}
+
 function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: string; now: number }) {
   const fresh = freshness(row, now);
   const soldOut = row.stock === "sold_out";
@@ -134,6 +154,9 @@ function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: str
           {nearest.walk_min !== null ? `, about ${nearest.walk_min} min from here` : ""}
         </p>
       ) : null}
+
+      {/* Pipeline only: Databricks' Worth the walk verdict for standing here (section 7). No maths in the app. */}
+      {row.walk ? <WalkVerdictLine walk={row.walk} /> : null}
 
       {row.just_confirmed ? (
         <p className="mt-1">
