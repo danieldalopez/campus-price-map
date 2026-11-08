@@ -7,6 +7,7 @@ import { isApproximate, HOME_ZOOM, MAX_ZOOM, tierLabel, tierWords, UBC_CENTRE } 
 import type { Outlet } from "@/lib/types";
 import { useLocation } from "@/lib/use-location";
 import { ClusterLayer, type MapPoint } from "./ClusterLayer";
+import { LocateControl } from "./LocateControl";
 import { LocationDot } from "./LocationDot";
 import { outletHref } from "./OutletLink";
 
@@ -70,6 +71,7 @@ export default function HomeMap({ outlets }: Props) {
         maxZoom={MAX_ZOOM}
       />
       <ZoomControl position="bottomright" />
+      <LocateControl />
       <ClusterLayer points={points} overlayInsets={overlayInsets} />
       {location.position ? <LocationDot position={location.position} accuracy={location.accuracy} /> : null}
     </MapContainer>

@@ -20,6 +20,7 @@ import { PendingLine, PricesRefresh } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
 import { PriceTag } from "./PriceTag";
 import { Stamp } from "./Stamp";
+import { StockButtons } from "./StockButtons";
 import { WakingUp } from "./WakingUp";
 import { WalkConfigContext } from "./WorthTheWalk";
 
@@ -193,7 +194,7 @@ function TrackedItem({
           className="mt-2"
         />
       ) : null}
-      {/* Step 9: the Sold out button goes here (POST /api/stock). */}
+      <StockButtons outlet={{ id: outletId, name: outletName }} item={row.item} stock={row.stock} />
     </li>
   );
 }
