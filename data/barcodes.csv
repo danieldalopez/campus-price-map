@@ -1,0 +1,118 @@
+barcode,product_name,brand,quantity,item_id,mapped_by
+0060383653293,Natural Spring Water,PC,500ml,I06,exact
+0889392607215,Celsius SPARKLING KIWI GUAVA FLAVOUR ENERGY DRINK,CELSIUS,355 mL,I03,flavour_variant
+0889392610314,Sparkling Orange Flavour Caffeinated Energy Drink,CELSIUS,355 mL,I03,flavour_variant
+0889392607239,Tropical Vibe Sparkling Starfruit Pineapple Flavour Caffeinated Energy Drink,CELSIUS,355 mL,I03,flavour_variant
+0886551607277,,Celsius energy,355 ml,I03,flavour_variant
+0889392607277,Energy Drink,CELSIUS ENERGY,355 mL,I03,flavour_variant
+0889392607253,Sunset Vibe Energy Drink,CELSIUS,355 mL,I03,flavour_variant
+0889392001518,Sparkling Green Apple Cherry,Celsius,,I03,brand_size_unverified
+1886633614314,Celsius Orange,Celsius Energy,,I03,brand_size_unverified
+0889392001907,Sparkling Watermelon Lemonade Flavour,CELSIUS,,I03,brand_size_unverified
+0889392001839,COSMIC VIBE Sparkling Fruit Punch Edition,CELSIUS,,I03,brand_size_unverified
+0889392001877,ARCTIC Vibe Sparkling Frozen Energy,CELSIUS,,I03,brand_size_unverified
+0889392002287,Celsius Energy Drink,Celsius,,I03,brand_size_unverified
+0889392002430,Sparkling Snowball Frost Edition,Celsius,,I03,brand_size_unverified
+0889392002515,Blue Razz Lemonade,Celsius,,I03,brand_size_unverified
+0889392002492,Peach Mango + Green Tea,Celsius,,I03,brand_size_unverified
+0722252120229,Chocolate Almond Fudge Energy Bar,CLIF,68 g,I23,flavour_variant
+0722252126092,White Chocolate Macadamia Nut Flavour Energy Bars,Clif Bar,68 g,I23,flavour_variant
+0722252069474,Cookies & Creme Energy Bar,Clif Bar,68 g,I23,flavour_variant
+0722252124043,Barre clif aux brisures de chocolat,Clif,,I23,brand_size_unverified
+0722252869135,CLIF BAR,Clif Bar,,I23,brand_size_unverified
+0722252126023,Bar Chocolate Almond Fudge,Clif,,I23,brand_size_unverified
+0722252124098,Bar clif,Clif,,I23,brand_size_unverified
+0722252187994,Bar clif,Clif,,I23,brand_size_unverified
+0722252302700,Barre clif gruau raisins secs et noix,Clif,,I23,brand_size_unverified
+0722252342973,Clif Bar,Clif,,I23,brand_size_unverified
+0722252321060,Bar clif,Clif,,I23,brand_size_unverified
+0722252342942,Clif bar,Clif,,I23,brand_size_unverified
+0722252069245,Chocolate Brownie Energy Bar,CLIFF BAR,,I23,brand_size_unverified
+0722252069320,Chocolate Chip Energy Bar,Clif Bar,,I23,brand_size_unverified
+0722252069221,cliff bar biscuit et crème,Clif,,I23,brand_size_unverified
+0722252121479,CLIFF BAR BLUEBERRY ALMOND CRISP,CLIFF,,I23,brand_size_unverified
+0722252069405,Clif Bar Chocolat Almond Fudge,Clif,,I23,brand_size_unverified
+0722252069276,CLIF BAR,CLIF,,I23,brand_size_unverified
+0722252071026,White Chocolate Energy Bar,Clif Bar,,I23,brand_size_unverified
+06782900,Coca-Cola Original Taste,Coca-Cola,355 ml,I04,exact
+0067000011054,Dark Blend Coca-Cola with Coffee,Coca-Cola,355 mL,I04,flavour_variant
+0067000012754,Coca cola spiced,Coke,355ml,I04,flavour_variant
+0067000013560,Coca Cola Zero Sugar,Coke,355 mL,I04,flavour_variant
+0067000103568,Dasani Mineralized Treated Water,Dasani,500 mL,I06,exact
+06717605,Dasani Eau Reminéralisée,Dasani,,,not_tracked
+0060410001622,Classic Potato Chips,Lay's,40 g,I19,exact
+0070847811190,Energy Drink,Monster,473 ml,I02,exact
+0070847002901,Monster Energy Zero Sugar,Monster,473 mL,I02,flavour_variant
+0070847015208,Monster Energy Zero Ultra,Monster Energy,473 ml,I02,flavour_variant
+0070847021100,Ultra Sunrise Energy Drink,Monster Energy,473 mL,I02,flavour_variant
+0070847028604,Ultra Violet Energy Drink,Monster Energy,473 mL,I02,flavour_variant
+0070847811787,Assault Energy Drink,Monster Energy,473 mL,I02,flavour_variant
+0070847018902,Ultra Blue Energy Drink,Monster Energy,473 mL,I02,flavour_variant
+0070847811251,Lo-Cal Energy Drink,Monster Energy,473 mL,I02,flavour_variant
+0070847033769,Ultra Paradise,Monster Energy,473 mL,I02,flavour_variant
+0070847034629,Ultra Fiesta Mango,Monster Energy,16 Fl. Oz.,I02,flavour_variant
+0070847023982,Punch Monster Energy,Monster,473mL,I02,flavour_variant
+0070847036807,Ultra Fiesta Mango Energy Drink,Monster Energy,473 mL,I02,flavour_variant
+0070847038450,Ultra Watermelon Energy Drink,Monster Energy,473 mL,I02,flavour_variant
+0070847030539,Watermelon Reserve Energy Drink,Monster Energy,473 mL,I02,flavour_variant
+0070847030386,White Pineapple Reserve Energy Drink,Monster Energy,473 mL,I02,flavour_variant
+0070847890720,ULTRA PEACHY KEEN,MONSTER ENERGY,473 mL,I02,flavour_variant
+0070847401520,Monster energy zero ultra,Monster Energy,473ml,I02,flavour_variant
+0070847900177,Ultra Blue Hawaiian Energy Drink,Monster Energy,473mL,I02,flavour_variant
+0070847029724,Punch Monster Energy,Monster,,I02,brand_size_unverified
+0070847035824,Monster Ultra Rosá,Monster,,I02,brand_size_unverified
+0070847033042,MTN PUNCH™ MONSTER Energy Drink / Boisson énergisante,Monster,,I02,brand_size_unverified
+0070847037613,Monster Papillon,Monster,,I02,brand_size_unverified
+0070847037507,Boisson rénergisante,Monster Energy,,I02,brand_size_unverified
+0070847038559,Punch Monster,Monster,,I02,brand_size_unverified
+0070847038955,Monster energy,Monster Energy,,I02,brand_size_unverified
+0070847034063,Punch Monster,Monster,,I02,brand_size_unverified
+0070847018827,Zero Ultra,Monster,,I02,brand_size_unverified
+08867827,Energy drink,Monster Energy,,I02,brand_size_unverified
+0070847030102,Monster - Ultra Paradise (Zero Sugar),Monster,,I02,brand_size_unverified
+0070847890607,Monters energy drinks,Monster,,I02,brand_size_unverified
+1076231877857,Monster Energy lo-cal,Monster,,I02,brand_size_unverified
+0070847898832,Rio Punch,Monster,,I02,brand_size_unverified
+0070847900313,Monster Punch,Monster,,I02,brand_size_unverified
+0070847895039,Monster Energy Zero Sugar,Monster,,I02,brand_size_unverified
+0070847901464,Bad Apple,Monster Energy,,I02,brand_size_unverified
+4897036694640,Ultra Peachy Keen,Monster Energy,,I02,brand_size_unverified
+0888849001491,Barre de proteines,Quest Nutrition,60 g,I18,flavour_variant
+0888849000173,Cookies & Cream Protein Bar,QUEST,60 g,I18,flavour_variant
+0888849002214,WHITE CHOCOLATE RASPBERRY FLAVOUR PROTEIN BAR,QUEST,60 g,I18,flavour_variant
+0888849011056,Quest Protein Bar,Quest,,I18,brand_size_unverified
+0888849002276,Quest barre protéines beurre arachides et chocolat,Quest,,I18,brand_size_unverified
+0888849002290,PROTEIN BAR,QUEST,,I18,brand_size_unverified
+0888849010394,Barre proteine,Quest,,I18,brand_size_unverified
+0888849006618,"Birthday cake, protein bar",Quest Nutrition,,I18,brand_size_unverified
+0888849004904,Oatmeal Chocolate Chip Flavour Protein Bar,Quest,,I18,brand_size_unverified
+0888849002238,Protein Bar,Quest,,I18,brand_size_unverified
+0888849009039,Barre de protéine beignet au chocolat,Quest,,I18,brand_size_unverified
+0888849000180,Protein Bar,Quest,,I18,brand_size_unverified
+0888849004911,Oatmeal chocolate chip protein bar,Quest,,I18,brand_size_unverified
+0888849006571,Barre de protéines,Quest,,I18,brand_size_unverified
+0888849008438,Birthday Cake Protein Bar,Quest,,I18,brand_size_unverified
+0888849006670,White Chocolate Raspberry Protein Bar,Quest,,I18,brand_size_unverified
+0888849012855,Barre de proteine,Quest,,I18,brand_size_unverified
+0888849002306,Chocolate brownie protein bar,Quest,,I18,brand_size_unverified
+0888849013777,Dipped cookies and cream protein bar,Quest,,I18,brand_size_unverified
+0822249002290,Chocolate Brownie Protein Bar,Quest,,I18,brand_size_unverified
+0822249002238,Quest protein bar,Quest,,I18,brand_size_unverified
+0822249002306,Chocolate Brownie Quest Protein Bar,Quest,,I18,brand_size_unverified
+0822249012251,Dipped Chocolate Chip Cookie Dough Flavor Protein Bar,Quest,,I18,brand_size_unverified
+0888849016624,protein bar peanut - chocolate,Quest,,I18,brand_size_unverified
+0822249012848,Chocolate Chip Cookie Dough Bar,Quest,,I18,brand_size_unverified
+0180854000101,Red Bull Energy Drink,Red Bull,250 mL,I01,exact
+90448478,Red Bull Energy Drink,Red Bull,250 ml,I01,exact
+0629071000414,Red Bull The Red Edition,Red Bull,250 mL,I01,flavour_variant
+0180854000231,Blueberry Energy Drink,Red Bull,250 mL,I01,flavour_variant
+0629071000285,Peach-Nectarine Energy Drink,Red Bull,250 mL,I01,flavour_variant
+0629071000629,Red Bull Zero,Red Bull,250 mL,I01,flavour_variant
+0629071001053,Juneberry Energy Drink,Red Bull,250 mL,I01,flavour_variant
+0629071001206,The Summer Edition Energy Drink,Red Bull,250 mL,I01,flavour_variant
+0180854000507,Energy Drink,Red Bull,355mL,I22,exact
+0180854000347,redbull,Red Bull,355 mL,I22,exact
+0180854000606,Red Bull Sugarfree,Red Bull,355 mL,I22,flavour_variant
+0629071001084,Juneberry Redbull 355ml,Redbull,,I22,flavour_variant
+0629071001374,Sugarfree Apricot-Strawberry Energy Drink,Red Bull,355 mL,I22,flavour_variant
+0629071000650,Red Bull Zero,Red Bull,473 mL,,not_tracked

@@ -1,0 +1,1705 @@
+location_id,category,item,variant,price,source,reported_on,item_ids
+blue-chip-cafe,UBC's Favourite Cookie,Chocolate Chunk Cookie,,3.19,menu,2026-11-07,
+blue-chip-cafe,UBC's Favourite Cookie,Marbelous Cookie,,3.19,menu,2026-11-07,
+blue-chip-cafe,UBC's Favourite Cookie,Smartie Cookie,,3.19,menu,2026-11-07,
+blue-chip-cafe,UBC's Favourite Cookie,Java Cookie,,3.19,menu,2026-11-07,
+blue-chip-cafe,UBC's Favourite Cookie,Ranger Cookie,,3.19,menu,2026-11-07,
+blue-chip-cafe,UBC's Favourite Cookie,Black Sesame Cookie (Vegan),,3.19,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Drip Coffee,12oz,3.19,menu,2026-11-07,I08
+blue-chip-cafe,Coffee Drinks,Drip Coffee,16oz,3.49,menu,2026-11-07,I09
+blue-chip-cafe,Coffee Drinks,Espresso,Sgl,3.29,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Espresso,Dbl,4.19,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Espresso,Qdl,5.49,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Cappuccino,12oz,4.99,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Cappuccino,16oz,5.99,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Latte,12oz,4.99,menu,2026-11-07,I10
+blue-chip-cafe,Coffee Drinks,Latte,16oz,5.99,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Caramel Macchiato,12oz,5.99,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Caramel Macchiato,16oz,6.99,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Traditional Macchiato,Sgl,3.99,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Traditional Macchiato,Dbl,4.49,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Traditional Macchiato,Qdl,5.75,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Americano,12oz,4.19,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Americano,16oz,4.19,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Mocha,12oz,5.99,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,Mocha,16oz,6.99,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,White Mocha,12oz,5.99,menu,2026-11-07,
+blue-chip-cafe,Coffee Drinks,White Mocha,16oz,6.99,menu,2026-11-07,
+blue-chip-cafe,Specialty Tea,London Fog,12oz,4.79,menu,2026-11-07,
+blue-chip-cafe,Specialty Tea,London Fog,16oz,5.99,menu,2026-11-07,
+blue-chip-cafe,Specialty Tea,Turmeric Fog,12oz,4.79,menu,2026-11-07,
+blue-chip-cafe,Specialty Tea,Turmeric Fog,16oz,5.99,menu,2026-11-07,
+blue-chip-cafe,Specialty Tea,Chamomile Fog,12oz,4.75,menu,2026-11-07,
+blue-chip-cafe,Specialty Tea,Chamomile Fog,16oz,5.75,menu,2026-11-07,
+blue-chip-cafe,Seasonal Favourites,Strawberry Matcha,12oz,6.79,menu,2026-11-07,
+blue-chip-cafe,Seasonal Favourites,Strawberry Matcha,16oz,8.49,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,Matcha Latte,12oz,5.99,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,Matcha Latte,16oz,7.49,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,Chai Latte,12oz,4.79,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,Chai Latte,16oz,5.99,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,Hot Chocolate,12oz,4.49,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,Hot Chocolate,16oz,5.49,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,White Hot Chocolate,12oz,4.49,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,White Hot Chocolate,16oz,5.49,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,Steamed Milk,12oz,3.29,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,Steamed Milk,16oz,3.99,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,Peach Mango Refresher,12oz,6.89,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,Peach Mango Refresher,16oz,8.49,menu,2026-11-07,
+blue-chip-cafe,Specialty Drinks,Cold Brew,12oz,5.79,menu,2026-11-07,I12
+blue-chip-cafe,Specialty Drinks,Cold Brew,16oz,6.79,menu,2026-11-07,
+blue-chip-cafe,Genuine Tea Co.,Lemon Ginger Rooibos,,3.19,menu,2026-11-07,
+blue-chip-cafe,Genuine Tea Co.,Assam Breakfast Tea,,3.19,menu,2026-11-07,
+blue-chip-cafe,Genuine Tea Co.,Masala Chai,,3.19,menu,2026-11-07,
+blue-chip-cafe,Genuine Tea Co.,Chamomile Lemongrass,,3.19,menu,2026-11-07,
+blue-chip-cafe,Genuine Tea Co.,Jasmine Green Tea,,3.19,menu,2026-11-07,
+blue-chip-cafe,Genuine Tea Co.,Cream of Earl Grey,,3.19,menu,2026-11-07,
+blue-chip-cafe,Genuine Tea Co.,Moringa Mint,,3.19,menu,2026-11-07,
+blue-chip-cafe,Sandwiches & Wraps,Vegan T-Bird Muffin,,6.99,menu,2026-11-07,I14
+blue-chip-cafe,Sandwiches & Wraps,T Bird Muffin,,6.49,menu,2026-11-07,I14
+blue-chip-cafe,Sandwiches & Wraps,Bacon Wrap,,10.99,menu,2026-11-07,
+blue-chip-cafe,Sandwiches & Wraps,Ham and Cheese Croissant,,10.99,menu,2026-11-07,
+blue-chip-cafe,Sandwiches & Wraps,Vegan Falafel Wrap,,8.49,menu,2026-11-07,
+blue-chip-cafe,Sandwiches & Wraps,Chicken Salad Sandwich,,8.99,menu,2026-11-07,
+blue-chip-cafe,Sandwiches & Wraps,Greek Chicken Protein Wrap,,11.99,menu,2026-11-07,
+blue-chip-cafe,Panini Sandwiches,Turkey & Cheddar,,10.99,menu,2026-11-07,
+blue-chip-cafe,Breakfast Pastries,Butter Croissant,,3.99,menu,2026-11-07,
+blue-chip-cafe,Breakfast Pastries,Chocolate Croissant,,3.99,menu,2026-11-07,
+blue-chip-cafe,Treats and Snacks,Banana Loaf,,4.49,menu,2026-11-07,
+blue-chip-cafe,Treats and Snacks,Ube Mochi (per piece),,1.79,menu,2026-11-07,
+blue-chip-cafe,Treats and Snacks,Vegan Banana Bread,,3.49,menu,2026-11-07,
+blue-chip-cafe,Muffin,Muffin - Apple Cinnamon,,3.59,menu,2026-11-07,I14
+blue-chip-cafe,Muffin,Muffin - Summer Berries,,3.59,menu,2026-11-07,I14
+blue-chip-cafe,Muffin,Muffin - Double Chocolate,,3.59,menu,2026-11-07,I14
+blue-chip-cafe,Muffin,Muffin - Lemon Cranberry,,3.59,menu,2026-11-07,I14
+blue-chip-cafe,Sweet and Savory Scones,Scone - Lemon Blueberry,,3.49,menu,2026-11-07,
+blue-chip-cafe,Sweet and Savory Scones,Scone - Cheddar and Chive,,3.79,menu,2026-11-07,
+blue-chip-cafe,Protein Filled Items,Protein Bar,,3.49,menu,2026-11-07,
+blue-chip-cafe,Fall Specials,Salted Maple Latte,12oz,5.49,menu,2026-11-07,
+blue-chip-cafe,Fall Specials,Salted Maple Latte,16oz,6.29,menu,2026-11-07,
+blue-chip-cafe,Fall Specials,Apple Pie Chai,12oz,4.79,menu,2026-11-07,
+blue-chip-cafe,Fall Specials,Apple Pie Chai,16oz,5.29,menu,2026-11-07,
+blue-chip-cafe,Fall Specials,Apple Cider,12oz,3.49,menu,2026-11-07,
+blue-chip-cafe,Fall Specials,Apple Cider,16oz,3.99,menu,2026-11-07,
+blue-chip-cafe,Fall Specials,Pumpkin Cold Brew,12oz,5.79,menu,2026-11-07,
+blue-chip-cafe,Fall Specials,Pumpkin Cold Brew,16oz,6.75,menu,2026-11-07,
+blue-chip-cafe,Fall Specials,Pumpkin Loaf (1 Loaf),,4.49,menu,2026-11-07,
+blue-chip-cafe,Fall Specials,Pumpkin Pie Tart(1 tartlet),,6.89,menu,2026-11-07,
+el-cartel,Mexican,Burrito (Chicken),,13.95,seed,2026-11-07,
+el-cartel,Mexican,Burrito (Carnitas),,14.45,seed,2026-11-07,
+el-cartel,Mexican,Tacos (3),,12.95,seed,2026-11-07,
+el-cartel,Mexican,Burrito Bowl,,13.95,seed,2026-11-07,
+el-cartel,Mexican,Quesadilla,,11.45,seed,2026-11-07,
+el-cartel,Mexican,Chips & Salsa,,4.95,seed,2026-11-07,
+el-cartel,Mexican,Horchata,16 oz,4.75,seed,2026-11-07,
+el-cartel,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+el-cartel,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+gallery-patio-lounge,Salads,Power Punch Salad,,18.99,menu,2026-11-07,
+gallery-patio-lounge,Salads,Vegan Chick’n Caesar Salad,,20.49,menu,2026-11-07,
+gallery-patio-lounge,Salads,Grilled Chicken Caesar Salad,,20.49,menu,2026-11-07,
+gallery-patio-lounge,Caught Barehanded,Thunderburger,,18.99,menu,2026-11-07,
+gallery-patio-lounge,Caught Barehanded,Gallery Smash Burger,,19.99,menu,2026-11-07,
+gallery-patio-lounge,Caught Barehanded,Chicken ‘n’ Waffles,,19.99,menu,2026-11-07,
+gallery-patio-lounge,Caught Barehanded,Gallery Chicken Po’boy,,21.99,menu,2026-11-07,
+gallery-patio-lounge,Caught Barehanded,Porchetta Sandwich (Summer Special),,22.99,menu,2026-11-07,
+gallery-patio-lounge,Caught Barehanded,Gallery Footlong Hotdog,,15.99,menu,2026-11-07,
+gallery-patio-lounge,Mains,Penne Marinara,,15.99,menu,2026-11-07,
+gallery-patio-lounge,Mains,Truffle Mushroom Linguini,,20.99,menu,2026-11-07,
+gallery-patio-lounge,Mains,Blackened Chicken Carbonara,,22.99,menu,2026-11-07,
+gallery-patio-lounge,Mains,Fish and Chips,,18.99,menu,2026-11-07,
+gallery-patio-lounge,Mains,Korean BBQ,,19.99,menu,2026-11-07,
+gallery-patio-lounge,Mains,Mac & Cheese,,16.99,menu,2026-11-07,
+gallery-patio-lounge,Mains,Lemongrass Chicken Plate,,20.99,menu,2026-11-07,
+gallery-patio-lounge,Mains,Harissa Chicken,,22.99,menu,2026-11-07,
+gallery-patio-lounge,Mains,Harissa Cauliflower,,22.99,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",Twin Sails Juice Plus Citra IPA - Draft,,8.99,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",Twin Sails Raspberry Wheat Ale - Draft,,8.29,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",33 Acres Lemongrass Lager - Draft,,8.29,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",33 Acres French Blanche - Draft,,8.29,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",Philips Dinosour Stone Fruit - Draft,,8.29,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",Philips Cold Snap Kolsch - Draft,,7.49,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",Parallel 49 Trash Panda IPA - Draft,,7.49,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",Red Truck Big Lager - Draft,,7.49,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",Dageraad Amber Pale Ale - Draft,,7.49,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",Gummy Sour - Draft,,7.49,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",T-Bird Lager - Draft,,6.99,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",T - BIRD Pale Ale - Draft,,6.99,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",Cider House Mango Mint,,9.99,menu,2026-11-07,
+gallery-patio-lounge,"BC Local Craft Beers, Craft Ciders",Cider House Blueberry Limoncello,,9.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Lime Margarita,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Lime Margarita,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Fruit By the Foot,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Fruit By the Foot,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Espresso Martini,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Espresso Martini,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Wreck on the Beach,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Wreck on the Beach,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Warsaw Mule,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Warsaw Mule,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Tropical Sour,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Tropical Sour,Double 2oz,11.00,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Caesar,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Caesar,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Aperol Spritz,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Aperol Spritz,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Purple Dream,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Purple Dream,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Purple Dream,Pitcher 5oz,30.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Mojito - Lime,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Mojito - Lime,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Mojito - Lime,Pitcher 5oz,30.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Blue Dream,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Blue Dream,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Blue Dream,Pitcher 5oz,30.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Long Island Iced Tea,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Long Island Iced Tea,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,Long Island Iced Tea,Pitcher 5oz,30.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,AMS Punch,Single 1oz,7.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,AMS Punch,Double 2oz,11.99,menu,2026-11-07,
+gallery-patio-lounge,Cocktails,AMS Punch,Pitcher 5oz,30.00,menu,2026-11-07,
+gallery-patio-lounge,Craft Cocktails Can 355ML,Strawberry Habanero Margarita,,10.99,menu,2026-11-07,
+gallery-patio-lounge,Craft Cocktails Can 355ML,Verdita Margarita,,10.99,menu,2026-11-07,
+gallery-patio-lounge,Craft Cocktails Can 355ML,"Mango, Coconut & Pandan",,10.99,menu,2026-11-07,
+gallery-patio-lounge,Red Sangria,Glass 1.5Oz Spirits,,7.99,menu,2026-11-07,
+gallery-patio-lounge,Red Sangria,Pitcher 4.5 oz Spirits,,28.99,menu,2026-11-07,
+gallery-patio-lounge,White Sangria,Glass 1.5Oz Spirits,,7.99,menu,2026-11-07,
+gallery-patio-lounge,White Sangria,Pitcher 4.5 oz Spirits,,28.99,menu,2026-11-07,
+gallery-patio-lounge,Slushies,Bellini,,7.99,menu,2026-11-07,
+gallery-patio-lounge,Slushies,Pink Lemonade,,7.99,menu,2026-11-07,
+gallery-patio-lounge,Well Highballs,Bombay Sapphire 40% ABV,Single 1oz,6.00,menu,2026-11-07,
+gallery-patio-lounge,Well Highballs,Bombay Sapphire 40% ABV,Double 2oz,9.00,menu,2026-11-07,
+gallery-patio-lounge,Well Highballs,Alberta Pure Vodka 40%,Single 1oz,6.00,menu,2026-11-07,
+gallery-patio-lounge,Well Highballs,Alberta Pure Vodka 40%,Double 2oz,9.00,menu,2026-11-07,
+gallery-patio-lounge,Well Highballs,Bacardi Superior 40%,Single 1oz,6.00,menu,2026-11-07,
+gallery-patio-lounge,Well Highballs,Bacardi Superior 40%,Double 2oz,9.00,menu,2026-11-07,
+gallery-patio-lounge,Well Highballs,Sauza Tequila 40%,Single 1oz,6.00,menu,2026-11-07,
+gallery-patio-lounge,Well Highballs,Sauza Tequila 40%,Double 2oz,9.00,menu,2026-11-07,
+gallery-patio-lounge,Antares Carmenere 13.5%,6oz glass,,7.99,menu,2026-11-07,
+gallery-patio-lounge,Antares Carmenere 13.5%,750 ml Bottle,,35.99,menu,2026-11-07,
+gallery-patio-lounge,Antares Sauvignon Blanc 12.5%,6oz glass,,7.99,menu,2026-11-07,
+gallery-patio-lounge,Antares Sauvignon Blanc 12.5%,750 ml Bottle,,35.99,menu,2026-11-07,
+gallery-patio-lounge,Mocktails & Non-alcoholic Sips,Shirley Temple,,3.99,menu,2026-11-07,
+gallery-patio-lounge,Mocktails & Non-alcoholic Sips,El Macho,,4.49,menu,2026-11-07,
+gallery-patio-lounge,Mocktails & Non-alcoholic Sips,Fentimans Ginger Beer,,5.99,menu,2026-11-07,
+gallery-patio-lounge,Mocktails & Non-alcoholic Sips,Red Bull Original,,4.49,menu,2026-11-07,
+gallery-patio-lounge,250 ml,Red Bull Sugar-free,,4.49,menu,2026-11-07,
+gallery-patio-lounge,250 ml,Red Bull Watermelon,,4.49,menu,2026-11-07,
+gallery-patio-lounge,250 ml,Lemonade Raspberry,,5.49,menu,2026-11-07,
+gallery-patio-lounge,250 ml,Lemonade Strawberry,,5.49,menu,2026-11-07,
+gallery-patio-lounge,250 ml,Philips Non-alcoholic Beer Pilsner,,5.99,menu,2026-11-07,
+gallery-patio-lounge,355 ml,Philips Non-alcoholic Beer IPA,,5.99,menu,2026-11-07,
+gallery-patio-lounge,Fountain Drink - Pepsi product,Pepsi,,2.49,menu,2026-11-07,
+gallery-patio-lounge,Fountain Drink - Pepsi product,Diet Pepsi,,2.49,menu,2026-11-07,
+gallery-patio-lounge,Fountain Drink - Pepsi product,Ginger Ale,,2.49,menu,2026-11-07,
+gallery-patio-lounge,Fountain Drink - Pepsi product,7Up,,2.49,menu,2026-11-07,
+gallery-patio-lounge,Fountain Drink - Pepsi product,Dr. Pepper,,2.49,menu,2026-11-07,
+gallery-patio-lounge,Fountain Drink - Pepsi product,Lemonade,,2.49,menu,2026-11-07,
+gallery-patio-lounge,Fountain Drink - Pepsi product,Iced tea,,2.49,menu,2026-11-07,
+gallery-patio-lounge,Juices,Orange,,3.49,menu,2026-11-07,
+gallery-patio-lounge,Juices,Pineapple,,3.49,menu,2026-11-07,
+gallery-patio-lounge,Juices,Cranberry,,3.49,menu,2026-11-07,
+grand-noodle-emporium,"Stir fried, wok tossed to perfection.",Chicken Pad Thai,,14.99,menu,2026-11-07,
+grand-noodle-emporium,"Stir fried, wok tossed to perfection.",Tofu Pad Thai,,12.99,menu,2026-11-07,
+grand-noodle-emporium,Ramen and Noodle,"""Grand"" Dan Dan Noodle",,13.99,menu,2026-11-07,
+grand-noodle-emporium,Contains Pork,Miso Roasted Chicken Ramen,,12.99,menu,2026-11-07,
+grocery-checkout,Energy drinks,Red Bull Energy Drink,250 ml,3.59,seed,2026-11-07,I01
+grocery-checkout,Energy drinks,Red Bull Energy Drink,355 ml,4.49,seed,2026-11-07,I22
+grocery-checkout,Energy drinks,Red Bull Energy Drink,473 ml,5.69,seed,2026-11-07,
+grocery-checkout,Energy drinks,Monster Energy,473 ml,3.69,seed,2026-11-07,I02
+grocery-checkout,Soft drinks & water,Coca-Cola,355 ml can,2.19,seed,2026-11-07,I04
+grocery-checkout,Soft drinks & water,Coca-Cola,591 ml bottle,3.19,seed,2026-11-07,I05
+grocery-checkout,Soft drinks & water,Bottled Water,500 ml,2.19,seed,2026-11-07,I06
+grocery-checkout,Snacks,Lay's Classic Chips,40 g,2.19,seed,2026-11-07,I19
+grocery-checkout,Snacks,Clif Bar,68 g,2.79,seed,2026-11-07,I23
+grocery-checkout,Snacks,Quest Protein Bar,60 g,3.89,seed,2026-11-07,I18
+grocery-checkout,Grab & go,Pre-made Sandwich,,8.00,seed,2026-11-07,I15
+grocery-checkout,Grab & go,Wrap,,8.99,seed,2026-11-07,I16
+grocery-checkout,Grab & go,Sushi Pack (California Roll),8 pcs,8.50,seed,2026-11-07,I17
+grocery-checkout,Grab & go,Bagel with Cream Cheese,,3.74,seed,2026-11-07,I13
+grocery-checkout,Grab & go,Muffin,,3.74,seed,2026-11-07,I14
+grocery-checkout,Grab & go,Cookie,,2.99,seed,2026-11-07,
+grocery-checkout,Snacks,Banana,each,0.69,seed,2026-11-07,I20
+grocery-checkout,Snacks,Apple,each,1.29,seed,2026-11-07,I21
+grocery-checkout,Grocery,Instant Ramen (Shin),cup,2.79,seed,2026-11-07,
+grocery-checkout,Grocery,Greek Yogurt,single,2.29,seed,2026-11-07,
+grocery-checkout,Grocery,Oat Milk,946 ml,4.79,seed,2026-11-07,
+honour-roll,Sushi,Salmon & Avocado Roll,,7.99,menu,2026-11-07,
+honour-roll,Sushi,Tuna & Avocado Roll,,7.99,menu,2026-11-07,
+honour-roll,Sushi,Unagi Roll,,7.99,menu,2026-11-07,
+honour-roll,Sushi,Spicy Salmon Roll,,6.99,menu,2026-11-07,
+honour-roll,Sushi,Salmon Maki,,4.59,menu,2026-11-07,
+honour-roll,Sushi,Spicy Tuna Roll,,6.99,menu,2026-11-07,
+honour-roll,Sushi,Tuna Maki,,4.59,menu,2026-11-07,
+honour-roll,Sushi,California Roll,,6.59,menu,2026-11-07,
+honour-roll,Sushi,Spicy Crunch California Roll,,7.99,menu,2026-11-07,
+honour-roll,Sushi,Dynamite Roll,,7.99,menu,2026-11-07,
+honour-roll,Sushi,Chicken Teriyaki Roll,,5.99,menu,2026-11-07,
+honour-roll,Sushi,Salmon Tempura Roll,,7.99,menu,2026-11-07,
+honour-roll,Sushi,Salmon Nigiri,,6.99,menu,2026-11-07,
+honour-roll,Veggie Roll,Spicy Crunch Roll,,4.99,menu,2026-11-07,
+honour-roll,Veggie Roll,Cucumber & Avocado Roll,,5.79,menu,2026-11-07,
+honour-roll,Veggie Roll,Yam & Avocado Roll,,5.79,menu,2026-11-07,
+honour-roll,Veggie Roll,Kappa Maki,,3.59,menu,2026-11-07,
+honour-roll,Veggie Roll,Vegan Beef Roll,,6.59,menu,2026-11-07,
+honour-roll,Veggie Roll,Inari,,5.99,menu,2026-11-07,
+honour-roll,Bento,Crispy Chicken Bento,,13.99,menu,2026-11-07,
+honour-roll,Bento,Roasted Chicken Bento,,13.99,menu,2026-11-07,
+honour-roll,Bento,Pork Katsu Bento,,15.99,menu,2026-11-07,
+honour-roll,Bento,Salmon Bento,,16.99,menu,2026-11-07,
+honour-roll,Bento,Tofu Bento,,11.99,menu,2026-11-07,
+honour-roll,Rice bowl,Crispy Chicken Teriyaki Donburi,,12.99,menu,2026-11-07,
+honour-roll,Rice bowl,Roasted Chicken Teriyaki Donburi,,12.99,menu,2026-11-07,
+honour-roll,Rice bowl,Unagi Teriyaki Donburi,,14.99,menu,2026-11-07,
+honour-roll,Rice bowl,Pork Katsu Teriyaki Donburi,,14.99,menu,2026-11-07,
+honour-roll,Rice bowl,Salmon Teriyaki Donburi,,15.99,menu,2026-11-07,
+honour-roll,Rice bowl,Tofu Teriyaki Donburi,,10.99,menu,2026-11-07,
+honour-roll,Yakisoba Noodles,Crispy Chicken Yakisoba Noodle,,12.99,menu,2026-11-07,
+honour-roll,Yakisoba Noodles,Roasted Chicken Yakisoba Noodle,,12.99,menu,2026-11-07,
+honour-roll,Yakisoba Noodles,Pork Katsu Yakisoba Noodle,,14.99,menu,2026-11-07,
+honour-roll,Yakisoba Noodles,Salmon Yakisoba Noodle,,15.99,menu,2026-11-07,
+honour-roll,Yakisoba Noodles,Tofu Yakisoba Noodle,,10.99,menu,2026-11-07,
+honour-roll,Udon Noodles,Chicken Udon Noodle,,12.99,menu,2026-11-07,
+honour-roll,Udon Noodles,Beef Udon Noodle,,13.99,menu,2026-11-07,
+honour-roll,Udon Noodles,Tofu Udon Noodle,,10.99,menu,2026-11-07,
+honour-roll,Udon Noodles,Kimchi Udon Noodle,,11.99,menu,2026-11-07,
+honour-roll,Korean Menu,Beef Bibimbob,,15.99,menu,2026-11-07,
+honour-roll,Korean Menu,Vegan Beef Bibimbob,,13.99,menu,2026-11-07,
+honour-roll,Korean Menu,Chicken Bibimbob,,14.99,menu,2026-11-07,
+honour-roll,Korean Menu,Veggie Bibimbob,,13.99,menu,2026-11-07,
+honour-roll,Korean Menu,Beef Bulgogi,,16.99,menu,2026-11-07,
+honour-roll,Korean Menu,Kimchi Soup & Rice,,10.99,menu,2026-11-07,
+honour-roll,Dessert,Bean Dorayaki,,3.99,menu,2026-11-07,
+honour-roll,Dessert,Mango Pudding,,3.99,menu,2026-11-07,
+ins-market,Energy drinks,Red Bull Energy Drink,250 ml,3.99,seed,2026-11-07,I01
+ins-market,Energy drinks,Red Bull Energy Drink,355 ml,4.99,seed,2026-11-07,I22
+ins-market,Energy drinks,Red Bull Energy Drink,473 ml,5.50,seed,2026-11-07,
+ins-market,Energy drinks,Monster Energy,473 ml,4.19,seed,2026-11-07,I02
+ins-market,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+ins-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.39,seed,2026-11-07,I05
+ins-market,Soft drinks & water,Bottled Water,500 ml,2.39,seed,2026-11-07,I06
+ins-market,Snacks,Lay's Classic Chips,40 g,2.49,seed,2026-11-07,I19
+ins-market,Snacks,Clif Bar,68 g,2.99,seed,2026-11-07,I23
+ins-market,Snacks,Quest Protein Bar,60 g,4.29,seed,2026-11-07,I18
+ins-market,Grab & go,Pre-made Sandwich,,9.00,seed,2026-11-07,I15
+ins-market,Grab & go,Wrap,,8.99,seed,2026-11-07,I16
+ins-market,Grab & go,Sushi Pack (California Roll),8 pcs,8.74,seed,2026-11-07,I17
+ins-market,Grab & go,Bagel with Cream Cheese,,3.99,seed,2026-11-07,I13
+ins-market,Grab & go,Muffin,,3.75,seed,2026-11-07,I14
+ins-market,Grab & go,Cookie,,3.24,seed,2026-11-07,
+ins-market,Snacks,Banana,each,0.70,seed,2026-11-07,I20
+ins-market,Snacks,Apple,each,1.39,seed,2026-11-07,I21
+ins-market,Grocery,Onigiri,,3.49,seed,2026-11-07,
+ins-market,Grocery,Instant Noodles,cup,2.99,seed,2026-11-07,
+ins-market,Grocery,Gum,pack,2.49,seed,2026-11-07,
+kyros-kitchen,Mediterranean,Chicken Souvlaki Pita,,12.95,seed,2026-11-07,
+kyros-kitchen,Mediterranean,Falafel Pita,,11.45,seed,2026-11-07,
+kyros-kitchen,Mediterranean,Chicken Souvlaki Plate,,16.95,seed,2026-11-07,
+kyros-kitchen,Mediterranean,Lamb Gyro Plate,,17.95,seed,2026-11-07,
+kyros-kitchen,Mediterranean,Greek Salad,,10.45,seed,2026-11-07,
+kyros-kitchen,Mediterranean,Hummus & Pita,,6.95,seed,2026-11-07,
+kyros-kitchen,Mediterranean,Baklava,,3.95,seed,2026-11-07,
+kyros-kitchen,Soft drinks & water,Coca-Cola,355 ml can,2.69,seed,2026-11-07,I04
+kyros-kitchen,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+seoul-hotdog,Hotdogs,Plain Hotdog,,8.20,menu,2026-11-07,
+seoul-hotdog,Hotdogs,Seoul Hotdog,,12.60,menu,2026-11-07,
+seoul-hotdog,Hotdogs,Kimchi Hotdog,,11.34,menu,2026-11-07,
+seoul-hotdog,Hotdogs,Egg Hotdog,,10.71,menu,2026-11-07,
+seoul-hotdog,Hotdogs,Coleslaw Hotdog,,9.45,menu,2026-11-07,
+seoul-hotdog,Hotdogs,Bacon Hotdog,,11.97,menu,2026-11-07,
+seoul-hotdog,Hotdogs,Chipotle Hotdog,,10.08,menu,2026-11-07,
+seoul-hotdog,"Subs, bowls & snacks",Potato Salad Sub,,8.19,menu,2026-11-07,
+seoul-hotdog,"Subs, bowls & snacks",Cup Potato Salad,,6.30,menu,2026-11-07,
+seoul-hotdog,"Subs, bowls & snacks",Chicken Mayo Rice Bowl,,18.90,menu,2026-11-07,
+seoul-hotdog,"Subs, bowls & snacks",Rice Burger,,8.93,menu,2026-11-07,
+seoul-hotdog,"Subs, bowls & snacks",K-Pancake,3 pcs,8.40,menu,2026-11-07,
+teadot,Bubble tea,Classic Milk Tea with Pearls,Regular,6.25,seed,2026-11-07,
+teadot,Bubble tea,Brown Sugar Pearl Milk,Regular,7.25,seed,2026-11-07,
+teadot,Bubble tea,Taro Milk Tea,Regular,6.75,seed,2026-11-07,
+teadot,Bubble tea,Mango Green Tea,Regular,6.25,seed,2026-11-07,
+teadot,Bubble tea,Matcha Latte,Regular,6.95,seed,2026-11-07,
+teadot,Bubble tea,Fruit Tea,Regular,6.45,seed,2026-11-07,
+the-delly,Featured,Shahi Paneer,,12.59,menu,2026-11-07,
+the-delly,Featured,Chicken Pesto Hoagie,,11.44,menu,2026-11-07,
+the-delly,Featured,Smoked Turkey Hoagie,,9.14,menu,2026-11-07,
+the-delly,Featured,Chicken Salad Triangle Sandwich,,8.56,menu,2026-11-07,
+thirstyyy,Energy drinks,Red Bull Energy Drink,250 ml,4.09,seed,2026-11-07,I01
+thirstyyy,Energy drinks,Red Bull Energy Drink,355 ml,4.69,seed,2026-11-07,I22
+thirstyyy,Energy drinks,Red Bull Energy Drink,473 ml,5.89,seed,2026-11-07,
+thirstyyy,Energy drinks,Monster Energy,473 ml,4.29,seed,2026-11-07,I02
+thirstyyy,Soft drinks & water,Coca-Cola,355 ml can,2.39,seed,2026-11-07,I04
+thirstyyy,Soft drinks & water,Coca-Cola,591 ml bottle,3.49,seed,2026-11-07,I05
+thirstyyy,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+thirstyyy,Snacks,Lay's Classic Chips,40 g,2.49,seed,2026-11-07,I19
+thirstyyy,Snacks,Clif Bar,68 g,2.99,seed,2026-11-07,I23
+thirstyyy,Snacks,Quest Protein Bar,60 g,4.29,seed,2026-11-07,I18
+thirstyyy,Grab & go,Pre-made Sandwich,,9.25,seed,2026-11-07,I15
+thirstyyy,Grab & go,Wrap,,9.24,seed,2026-11-07,I16
+thirstyyy,Grab & go,Sushi Pack (California Roll),8 pcs,8.74,seed,2026-11-07,I17
+thirstyyy,Grab & go,Bagel with Cream Cheese,,4.00,seed,2026-11-07,I13
+thirstyyy,Grab & go,Muffin,,3.99,seed,2026-11-07,I14
+thirstyyy,Grab & go,Cookie,,3.24,seed,2026-11-07,
+thirstyyy,Snacks,Banana,each,0.75,seed,2026-11-07,I20
+thirstyyy,Snacks,Apple,each,1.39,seed,2026-11-07,I21
+thirstyyy,Grocery,Instant Noodles,cup,2.99,seed,2026-11-07,
+thirstyyy,Grocery,Candy Bar,,2.29,seed,2026-11-07,
+thirstyyy,Grocery,Gum,pack,2.49,seed,2026-11-07,
+upmeals-the-nest,Grab & go,Teriyaki Chicken Rice Bowl,,11.99,seed,2026-11-07,
+upmeals-the-nest,Grab & go,Beef Bulgogi Bowl,,12.99,seed,2026-11-07,
+upmeals-the-nest,Grab & go,Tofu Veggie Bowl,,10.99,seed,2026-11-07,
+upmeals-the-nest,Grab & go,Chicken Caesar Wrap,,9.49,seed,2026-11-07,I16
+upmeals-the-nest,Grab & go,Pasta Salad,,7.99,seed,2026-11-07,
+upmeals-the-nest,Grab & go,Fruit Cup,,5.49,seed,2026-11-07,
+upmeals-the-nest,Soft drinks & water,Coca-Cola,355 ml can,2.39,seed,2026-11-07,I04
+upmeals-the-nest,Soft drinks & water,Bottled Water,500 ml,2.19,seed,2026-11-07,I06
+upmeals-the-nest,Energy drinks,Red Bull Energy Drink,250 ml,3.79,seed,2026-11-07,I01
+upmeals-the-nest,Snacks,Lay's Classic Chips,40 g,2.29,seed,2026-11-07,I19
+upmeals-the-nest,Snacks,Banana,each,0.71,seed,2026-11-07,I20
+booster-juice-life-building,Smoothies,Strawberry Sunrise Smoothie,Medium 24 oz,8.29,seed,2026-11-07,
+booster-juice-life-building,Smoothies,Mango Hurricane Smoothie,Medium 24 oz,8.29,seed,2026-11-07,
+booster-juice-life-building,Smoothies,Lean Green Smoothie,Medium 24 oz,8.79,seed,2026-11-07,
+booster-juice-life-building,Smoothies,Protein Smoothie (Chocolate Peanut Butter),Medium 24 oz,8.99,seed,2026-11-07,
+booster-juice-life-building,Smoothies,Acai Bowl,,10.49,seed,2026-11-07,
+booster-juice-life-building,Smoothies,Fresh Orange Juice,Medium,7.49,seed,2026-11-07,
+booster-juice-life-building,Grab & go,Breakfast Wrap,,6.49,seed,2026-11-07,
+booster-juice-life-building,Grab & go,Chicken Pesto Panini,,8.49,seed,2026-11-07,
+booster-juice-life-building,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+booster-juice-life-building,Energy drinks,Red Bull Energy Drink,250 ml,3.99,seed,2026-11-07,I01
+booster-juice-life-building,Snacks,Clif Bar,68 g,3.19,seed,2026-11-07,I23
+pacific-poke-life-building,Poke,Regular Poke Bowl (2 proteins),,14.95,seed,2026-11-07,
+pacific-poke-life-building,Poke,Large Poke Bowl (3 proteins),,17.95,seed,2026-11-07,
+pacific-poke-life-building,Poke,Salmon Signature Bowl,,15.95,seed,2026-11-07,
+pacific-poke-life-building,Poke,Tofu Bowl,,13.45,seed,2026-11-07,
+pacific-poke-life-building,Poke,Poke Burrito,,14.45,seed,2026-11-07,
+pacific-poke-life-building,Poke,Miso Soup,,2.95,seed,2026-11-07,
+pacific-poke-life-building,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+pacific-poke-life-building,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+starbucks-life-building,Coffee & tea,Brewed Coffee,Tall 12 oz,3.25,seed,2026-11-07,I08
+starbucks-life-building,Coffee & tea,Caffè Latte,Tall 12 oz,5.45,seed,2026-11-07,I10
+starbucks-life-building,Coffee & tea,Caffè Americano,Tall 12 oz,4.25,seed,2026-11-07,
+starbucks-life-building,Coffee & tea,Cappuccino,Tall 12 oz,5.45,seed,2026-11-07,
+starbucks-life-building,Coffee & tea,Caramel Macchiato,Tall 12 oz,6.25,seed,2026-11-07,
+starbucks-life-building,Coffee & tea,Teavana Hot Tea,Tall 12 oz,3.15,seed,2026-11-07,I11
+starbucks-life-building,Coffee & tea,Iced Shaken Espresso,Grande 16 oz,6.45,seed,2026-11-07,
+starbucks-life-building,Coffee & tea,Strawberry Açaí Refresher,Grande 16 oz,5.95,seed,2026-11-07,
+starbucks-life-building,Grab & go,Plain Bagel with Cream Cheese,,3.95,seed,2026-11-07,I13
+starbucks-life-building,Grab & go,Blueberry Muffin,,3.75,seed,2026-11-07,I14
+starbucks-life-building,Grab & go,Chocolate Chip Cookie,,3.25,seed,2026-11-07,
+starbucks-life-building,Grab & go,Turkey & Havarti Sandwich,,9.25,seed,2026-11-07,I15
+starbucks-life-building,Grab & go,"Egg, Pesto & Mozzarella Sandwich",,7.45,seed,2026-11-07,I15
+starbucks-life-building,Grab & go,Banana,each,0.95,seed,2026-11-07,I20
+starbucks-life-building,Soft drinks & water,Ethos Bottled Water,500 ml,2.95,seed,2026-11-07,I06
+starbucks-life-building,Energy drinks,Red Bull Energy Drink,250 ml,4.25,seed,2026-11-07,I01
+starbucks-life-building,Snacks,Clif Bar,68 g,3.25,seed,2026-11-07,I23
+subway-life-building,Subs,Italian B.M.T.,6 inch,9.99,seed,2026-11-07,
+subway-life-building,Subs,Italian B.M.T.,Footlong,15.99,seed,2026-11-07,
+subway-life-building,Subs,Turkey Breast,6 inch,9.79,seed,2026-11-07,
+subway-life-building,Subs,Chicken Teriyaki,6 inch,10.49,seed,2026-11-07,
+subway-life-building,Subs,Veggie Delite,6 inch,7.99,seed,2026-11-07,
+subway-life-building,Subs,Meatball Marinara,Footlong,13.99,seed,2026-11-07,
+subway-life-building,Subs,Sub Combo add-on (chips + drink),,4.49,seed,2026-11-07,
+subway-life-building,Grab & go,Cookie,,1.59,seed,2026-11-07,
+subway-life-building,Grab & go,Wrap (Chicken Caesar),,11.49,seed,2026-11-07,I16
+subway-life-building,Soft drinks & water,Coca-Cola,591 ml bottle,3.29,seed,2026-11-07,I05
+subway-life-building,Soft drinks & water,Dasani Water,591 ml,2.79,seed,2026-11-07,
+subway-life-building,Snacks,Lay's Classic Chips,40 g,2.19,seed,2026-11-07,I19
+corner-store,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
+corner-store,Energy drinks,Red Bull Energy Drink,355 ml,4.59,seed,2026-11-07,I22
+corner-store,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,
+corner-store,Energy drinks,Monster Energy,473 ml,4.19,seed,2026-11-07,I02
+corner-store,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+corner-store,Soft drinks & water,Coca-Cola,591 ml bottle,3.39,seed,2026-11-07,I05
+corner-store,Soft drinks & water,Bottled Water,500 ml,2.29,seed,2026-11-07,I06
+corner-store,Snacks,Lay's Classic Chips,40 g,2.49,seed,2026-11-07,I19
+corner-store,Snacks,Clif Bar,68 g,2.89,seed,2026-11-07,I23
+corner-store,Snacks,Quest Protein Bar,60 g,3.99,seed,2026-11-07,I18
+corner-store,Grab & go,Pre-made Sandwich,,8.24,seed,2026-11-07,I15
+corner-store,Grab & go,Wrap,,9.25,seed,2026-11-07,I16
+corner-store,Grab & go,Sushi Pack (California Roll),8 pcs,8.49,seed,2026-11-07,I17
+corner-store,Grab & go,Bagel with Cream Cheese,,4.00,seed,2026-11-07,I13
+corner-store,Grab & go,Muffin,,3.75,seed,2026-11-07,I14
+corner-store,Grab & go,Cookie,,3.24,seed,2026-11-07,
+corner-store,Snacks,Banana,each,0.72,seed,2026-11-07,I20
+corner-store,Snacks,Apple,each,1.39,seed,2026-11-07,I21
+corner-store,Grocery,Instant Noodles,cup,2.79,seed,2026-11-07,
+corner-store,Grocery,Trail Mix,,4.99,seed,2026-11-07,
+starbucks-bookstore,Coffee & tea,Brewed Coffee,Tall 12 oz,3.25,seed,2026-11-07,I08
+starbucks-bookstore,Coffee & tea,Caffè Latte,Tall 12 oz,5.45,seed,2026-11-07,I10
+starbucks-bookstore,Coffee & tea,Caffè Americano,Tall 12 oz,4.25,seed,2026-11-07,
+starbucks-bookstore,Coffee & tea,Cappuccino,Tall 12 oz,5.45,seed,2026-11-07,
+starbucks-bookstore,Coffee & tea,Caramel Macchiato,Tall 12 oz,6.25,seed,2026-11-07,
+starbucks-bookstore,Coffee & tea,Teavana Hot Tea,Tall 12 oz,3.15,seed,2026-11-07,I11
+starbucks-bookstore,Coffee & tea,Iced Shaken Espresso,Grande 16 oz,6.45,seed,2026-11-07,
+starbucks-bookstore,Coffee & tea,Strawberry Açaí Refresher,Grande 16 oz,5.95,seed,2026-11-07,
+starbucks-bookstore,Grab & go,Plain Bagel with Cream Cheese,,3.95,seed,2026-11-07,I13
+starbucks-bookstore,Grab & go,Blueberry Muffin,,3.75,seed,2026-11-07,I14
+starbucks-bookstore,Grab & go,Chocolate Chip Cookie,,3.25,seed,2026-11-07,
+starbucks-bookstore,Grab & go,Turkey & Havarti Sandwich,,9.25,seed,2026-11-07,I15
+starbucks-bookstore,Grab & go,"Egg, Pesto & Mozzarella Sandwich",,7.45,seed,2026-11-07,I15
+starbucks-bookstore,Grab & go,Banana,each,0.95,seed,2026-11-07,I20
+starbucks-bookstore,Soft drinks & water,Ethos Bottled Water,500 ml,2.95,seed,2026-11-07,I06
+starbucks-bookstore,Energy drinks,Red Bull Energy Drink,250 ml,4.25,seed,2026-11-07,I01
+starbucks-bookstore,Snacks,Clif Bar,68 g,3.25,seed,2026-11-07,I23
+body-energy-club,Smoothies,Protein Smoothie,24 oz,10.25,seed,2026-11-07,
+body-energy-club,Smoothies,Fruit Smoothie,24 oz,8.75,seed,2026-11-07,
+body-energy-club,Smoothies,Acai Bowl,,11.95,seed,2026-11-07,
+body-energy-club,Snacks,Quest Protein Bar,60 g,4.29,seed,2026-11-07,I18
+body-energy-club,Snacks,Clif Bar,68 g,3.29,seed,2026-11-07,I23
+body-energy-club,Energy drinks,Celsius Energy,355 ml,3.99,seed,2026-11-07,I03
+body-energy-club,Energy drinks,Red Bull Energy Drink,250 ml,4.19,seed,2026-11-07,I01
+body-energy-club,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+browns-crafthouse,Restaurant,Crafthouse Burger,,22.50,seed,2026-11-07,
+browns-crafthouse,Restaurant,Fish Tacos,,19.75,seed,2026-11-07,
+browns-crafthouse,Restaurant,Chicken Strips & Fries,,19.25,seed,2026-11-07,
+browns-crafthouse,Restaurant,Truffle Fries,,11.50,seed,2026-11-07,
+browns-crafthouse,Restaurant,Caesar Salad,,15.25,seed,2026-11-07,
+browns-crafthouse,Restaurant,Rice Bowl,,21.95,seed,2026-11-07,
+browns-crafthouse,Restaurant,Pint of Beer,20 oz,9.50,seed,2026-11-07,
+browns-crafthouse,Soft drinks & water,Coca-Cola (fountain),,3.95,seed,2026-11-07,
+browns-crafthouse,Energy drinks,Red Bull Energy Drink,250 ml,5.25,seed,2026-11-07,I01
+chachi-s,Sandwiches,Vedge Sandwich,focaccia,13.50,menu,2026-11-07,
+chachi-s,Sandwiches,Turkey Ranch,,10.00,menu,2026-11-07,
+chachi-s,Sandwiches,Holiday Turkey,,14.50,menu,2026-11-07,
+chachi-s,Sandwiches,Cali Sandwich,focaccia,15.75,menu,2026-11-07,
+chachi-s,Sandwiches,Chicken Banh Mi,ciabatta,15.25,menu,2026-11-07,
+chachi-s,Sandwiches,Prosciutto Sandwich,focaccia,16.00,menu,2026-11-07,
+chachi-s,Sandwiches,BLT,,10.00,menu,2026-11-07,
+chachi-s,Sandwiches,Cheese Toast,,4.00,menu,2026-11-07,
+chachi-s,Soups & salads,Mac n Cheese Soup,cup,5.50,menu,2026-11-07,
+chachi-s,Soups & salads,Carbonara Soup,cup,6.50,menu,2026-11-07,
+chachi-s,Soups & salads,Spicy Mac Soup,cup,6.50,menu,2026-11-07,
+chachi-s,Soups & salads,Cajun Chicken Caesar Salad,,14.50,menu,2026-11-07,
+chachi-s,Sides & drinks,Chips,bag,2.00,menu,2026-11-07,
+chachi-s,Sides & drinks,Big Pickle,,2.00,menu,2026-11-07,
+chachi-s,Sides & drinks,Cookie,,3.60,menu,2026-11-07,
+chachi-s,Sides & drinks,Pop Shoppe Soda,bottle,4.50,menu,2026-11-07,
+chachi-s,Sandwiches,Clubbin' Sandwich,ciabatta,19.40,menu,2026-11-07,
+chachi-s,Sandwiches,Cran and Brie Sandwich,ciabatta,18.75,menu,2026-11-07,
+chatime,Bubble tea,Pearl Milk Tea,Large,6.75,seed,2026-11-07,
+chatime,Bubble tea,Brown Sugar Pearl Crema,Large,7.45,seed,2026-11-07,
+chatime,Bubble tea,Taro Pearl Milk Tea,Large,6.95,seed,2026-11-07,
+chatime,Bubble tea,Roasted Milk Tea,Large,6.75,seed,2026-11-07,
+chatime,Bubble tea,Mango Green Tea,Large,6.45,seed,2026-11-07,
+chatime,Bubble tea,Grapefruit Green Tea,Large,6.75,seed,2026-11-07,
+chipotle,Mexican,Chicken Burrito,,13.75,seed,2026-11-07,
+chipotle,Mexican,Steak Burrito,,15.45,seed,2026-11-07,
+chipotle,Mexican,Chicken Burrito Bowl,,13.75,seed,2026-11-07,
+chipotle,Mexican,Sofritas Bowl,,13.45,seed,2026-11-07,
+chipotle,Mexican,Chips & Guacamole,,6.15,seed,2026-11-07,
+chipotle,Mexican,Chips,,2.55,seed,2026-11-07,
+chipotle,Mexican,Tacos (3),,13.75,seed,2026-11-07,
+chipotle,Soft drinks & water,Fountain Drink,22 oz,3.45,seed,2026-11-07,
+chipotle,Soft drinks & water,Bottled Water,500 ml,2.95,seed,2026-11-07,I06
+dl-chicken-shack,Fried chicken,Classic Fried Chicken Sandwich,,13.95,seed,2026-11-07,
+dl-chicken-shack,Fried chicken,Hot Chicken Sandwich,,14.45,seed,2026-11-07,
+dl-chicken-shack,Fried chicken,Chicken Tenders (3),,12.95,seed,2026-11-07,
+dl-chicken-shack,Fried chicken,Wings (6),,13.45,seed,2026-11-07,
+dl-chicken-shack,Fried chicken,Fries,,5.45,seed,2026-11-07,
+dl-chicken-shack,Fried chicken,Mac Salad,,4.95,seed,2026-11-07,
+dl-chicken-shack,Soft drinks & water,Coca-Cola,355 ml can,2.69,seed,2026-11-07,I04
+dl-chicken-shack,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+hungry-zus,Bowls & wraps,Crazy Falafel Bowl,,17.50,menu,2026-11-07,
+hungry-zus,Bowls & wraps,Zus' Thunderballs Bowl,,18.50,menu,2026-11-07,
+hungry-zus,Bowls & wraps,Crazy Falafel Wrap,,15.00,menu,2026-11-07,
+hungry-zus,Bowls & wraps,Goddess Dill Sweet Potato Wrap,,15.00,menu,2026-11-07,
+hungry-zus,Bowls & wraps,Lemon Herb Chicken Wrap,,15.50,menu,2026-11-07,
+hungry-zus,Bowls & wraps,Amazing Pork Gyro Wrap,,15.50,menu,2026-11-07,
+hungry-zus,Bowls & wraps,Spartan Chicken Wrap,,16.50,menu,2026-11-07,
+hungry-zus,Bowls & wraps,Zus' Thunderball Wrap,,17.50,menu,2026-11-07,
+hungry-zus,Bowls & wraps,Build Your Own Grain & Salad Bowl,,16.50,menu,2026-11-07,
+jj-bean,Coffee & tea,Drip Coffee,12 oz,3.05,seed,2026-11-07,I08
+jj-bean,Coffee & tea,Latte,12 oz,5.40,seed,2026-11-07,I10
+jj-bean,Coffee & tea,Americano,12 oz,4.10,seed,2026-11-07,
+jj-bean,Coffee & tea,Cappuccino,12 oz,5.20,seed,2026-11-07,
+jj-bean,Coffee & tea,Tea,12 oz,3.25,seed,2026-11-07,I11
+jj-bean,Grab & go,Muffin,,3.95,seed,2026-11-07,I14
+jj-bean,Grab & go,Cookie,,3.25,seed,2026-11-07,
+jj-bean,Grab & go,Croissant,,3.95,seed,2026-11-07,
+jj-bean,Grab & go,Breakfast Sandwich,,7.50,seed,2026-11-07,
+jj-bean,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+kinton-ramen,Ramen / Japanese,Yokai Cream Soda,,7.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Golden Sesame Ramen,,19.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Black Sesame Ramen,,19.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Yuzu Coconut Dirty Coke,,5.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Lychee Cream Tea,,5.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Peach Yuzu Cream Soda,,5.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Mandarin Orange Cream Soda,,5.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Yuzu Coconut Marble Ramune,,7.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Pork Original Ramen,,15.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Pork Shoyu Ramen,,15.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Pork Miso Ramen,,16.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Pork Spicy Garlic Ramen,,16.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Meal For One,,35.00,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Pork Spicy Jalapeno,,16.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Beef Original Ramen,,16.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Beef Shoyu Ramen,,16.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Beef Miso Ramen,,17.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Beef Spicy Garlic Ramen,,17.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Beef Spicy Jalapeno,,17.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Chicken Original Ramen,,15.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Chicken Shoyu Ramen,,15.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Chicken Miso Ramen,,16.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Chicken Spicy Garlic,,16.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Chicken Spicy Jalapeno Ramen,,16.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Veggie Original Ramen,,15.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Veggie Shoyu Ramen,,15.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Veggie Miso Ramen,,16.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Veggie Spicy Garlic Ramen,,16.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Veggie Spicy Jalapeno,,16.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Tokyo Fries,,6.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Meal for Four,,74.00,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Edamame,,5.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Original Karaage,,9.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Hot Karaage,,10.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Takoyaki,,6.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Beef Donburi,,11.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Pork Donburi,,8.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Chicken Donburi,,8.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Pork Gyoza,,6.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Veggie Gyoza,,6.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Rice,,2.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Cheesecake,,5.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Matcha Ice Cream,,5.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Homemade Lemonade,,4.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Coca-Cola Beverages,,2.99,menu,2026-11-07,
+kinton-ramen,Ramen / Japanese,Kinton Ramune,,5.99,menu,2026-11-07,
+loafe-cafe-alumni-centre,Coffee & tea,Drip Coffee,12 oz,3.10,seed,2026-11-07,I08
+loafe-cafe-alumni-centre,Coffee & tea,Latte,12 oz,5.25,seed,2026-11-07,I10
+loafe-cafe-alumni-centre,Coffee & tea,Americano,12 oz,3.95,seed,2026-11-07,
+loafe-cafe-alumni-centre,Coffee & tea,London Fog,12 oz,5.25,seed,2026-11-07,
+loafe-cafe-alumni-centre,Coffee & tea,Tea,12 oz,3.00,seed,2026-11-07,I11
+loafe-cafe-alumni-centre,Grab & go,Cinnamon Bun,,5.25,seed,2026-11-07,
+loafe-cafe-alumni-centre,Grab & go,Muffin,,4.25,seed,2026-11-07,I14
+loafe-cafe-alumni-centre,Grab & go,Cookie,,3.45,seed,2026-11-07,
+loafe-cafe-alumni-centre,Grab & go,Ham & Cheese Croissant,,6.50,seed,2026-11-07,
+loafe-cafe-alumni-centre,Grab & go,Turkey Sandwich,,10.95,seed,2026-11-07,I15
+loafe-cafe-alumni-centre,Grab & go,Soup of the Day,12 oz,6.95,seed,2026-11-07,
+loafe-cafe-alumni-centre,Grab & go,Banana,each,0.95,seed,2026-11-07,I20
+loafe-cafe-alumni-centre,Soft drinks & water,Bottled Water,500 ml,2.75,seed,2026-11-07,I06
+loafe-cafe-alumni-centre,Soft drinks & water,Coca-Cola,355 ml can,2.50,seed,2026-11-07,I04
+nori-bento-udon,Japanese,Chicken Teriyaki Bento,,13.95,seed,2026-11-07,
+nori-bento-udon,Japanese,Salmon Bento,,15.45,seed,2026-11-07,
+nori-bento-udon,Japanese,Tempura Udon,,13.45,seed,2026-11-07,
+nori-bento-udon,Japanese,Beef Udon,,13.95,seed,2026-11-07,
+nori-bento-udon,Japanese,Katsu Curry,,14.45,seed,2026-11-07,
+nori-bento-udon,Japanese,California Roll,8 pcs,6.45,seed,2026-11-07,I17
+nori-bento-udon,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+nori-bento-udon,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+osmow-s-shawarma,Shawarma,Chicken Shawarma Wrap,,12.99,seed,2026-11-07,
+osmow-s-shawarma,Shawarma,Chicken on the Rocks,,16.49,seed,2026-11-07,
+osmow-s-shawarma,Shawarma,Beef Shawarma Wrap,,13.99,seed,2026-11-07,
+osmow-s-shawarma,Shawarma,Falafel Wrap,,11.49,seed,2026-11-07,
+osmow-s-shawarma,Shawarma,Garlic Potatoes,,5.99,seed,2026-11-07,
+osmow-s-shawarma,Shawarma,Fries,,4.99,seed,2026-11-07,
+osmow-s-shawarma,Soft drinks & water,Coca-Cola,355 ml can,2.69,seed,2026-11-07,I04
+osmow-s-shawarma,Soft drinks & water,Bottled Water,500 ml,2.79,seed,2026-11-07,I06
+rain-or-shine,Ice cream,Single Scoop,cup or cone,5.95,seed,2026-11-07,
+rain-or-shine,Ice cream,Double Scoop,cup or cone,7.95,seed,2026-11-07,
+rain-or-shine,Ice cream,Waffle Cone upgrade,,1.50,seed,2026-11-07,
+rain-or-shine,Ice cream,Milkshake,16 oz,8.95,seed,2026-11-07,
+rain-or-shine,Ice cream,Ice Cream Sandwich,,7.50,seed,2026-11-07,
+rosie-s-burgers,Burgers & shakes,Smash Burger (typical),single,12.88,menu,2026-11-07,
+rosie-s-burgers,Burgers & shakes,Milkshake,small,7.50,menu,2026-11-07,
+ryuu-japanese-kitchen,Appetizers & sushi,Chicken Karaage,5 pcs,8.95,menu,2026-11-07,
+ryuu-japanese-kitchen,Appetizers & sushi,Edamame,,5.95,menu,2026-11-07,
+ryuu-japanese-kitchen,Appetizers & sushi,Assorted Tempura,6 pcs,7.25,menu,2026-11-07,
+ryuu-japanese-kitchen,Appetizers & sushi,Kabocha Croquette,2 pcs,6.95,menu,2026-11-07,
+ryuu-japanese-kitchen,Appetizers & sushi,Spring Rolls,6 pcs,6.95,menu,2026-11-07,
+ryuu-japanese-kitchen,Appetizers & sushi,Takoyaki,6 pcs,7.95,menu,2026-11-07,
+ryuu-japanese-kitchen,Appetizers & sushi,Spicy Salmon Roll,8 pcs,7.25,menu,2026-11-07,
+ryuu-japanese-kitchen,Appetizers & sushi,Spicy Tuna Roll,8 pcs,7.25,menu,2026-11-07,
+ryuu-japanese-kitchen,Appetizers & sushi,California Roll,8 pcs,6.25,menu,2026-11-07,I17
+sesame,Asian,General Tso Chicken Rice,,15.95,seed,2026-11-07,
+sesame,Asian,Sesame Beef Rice,,16.95,seed,2026-11-07,
+sesame,Asian,Pad Thai,,15.45,seed,2026-11-07,
+sesame,Asian,Fried Rice,,14.45,seed,2026-11-07,
+sesame,Asian,Spring Rolls (4),,6.95,seed,2026-11-07,
+sesame,Asian,Wonton Soup,,10.95,seed,2026-11-07,
+sesame,Soft drinks & water,Coca-Cola,355 ml can,2.79,seed,2026-11-07,I04
+sesame,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+shoppers-drug-mart-university-blvd,Energy drinks,Red Bull Energy Drink,250 ml,3.59,seed,2026-11-07,I01
+shoppers-drug-mart-university-blvd,Energy drinks,Red Bull Energy Drink,355 ml,4.19,seed,2026-11-07,I22
+shoppers-drug-mart-university-blvd,Energy drinks,Red Bull Energy Drink,473 ml,5.39,seed,2026-11-07,
+shoppers-drug-mart-university-blvd,Energy drinks,Monster Energy,473 ml,3.89,seed,2026-11-07,I02
+shoppers-drug-mart-university-blvd,Soft drinks & water,Coca-Cola,355 ml can,2.29,seed,2026-11-07,I04
+shoppers-drug-mart-university-blvd,Soft drinks & water,Coca-Cola,591 ml bottle,2.99,seed,2026-11-07,I05
+shoppers-drug-mart-university-blvd,Soft drinks & water,Bottled Water,500 ml,2.19,seed,2026-11-07,I06
+shoppers-drug-mart-university-blvd,Snacks,Lay's Classic Chips,40 g,2.19,seed,2026-11-07,I19
+shoppers-drug-mart-university-blvd,Snacks,Clif Bar,68 g,2.59,seed,2026-11-07,I23
+shoppers-drug-mart-university-blvd,Snacks,Quest Protein Bar,60 g,3.89,seed,2026-11-07,I18
+shoppers-drug-mart-university-blvd,Grocery,PC Bottled Water 24-pack,500 ml x 24,4.49,seed,2026-11-07,
+shoppers-drug-mart-university-blvd,Grocery,Instant Noodles,cup,1.99,seed,2026-11-07,
+steve-s-poke-bar,Poke,Mini Steve Bowl,,13.95,seed,2026-11-07,
+steve-s-poke-bar,Poke,Regular Bowl (2 scoops),,16.95,seed,2026-11-07,
+steve-s-poke-bar,Poke,Large Bowl (3 scoops),,19.95,seed,2026-11-07,
+steve-s-poke-bar,Poke,Spam Musubi,,4.25,seed,2026-11-07,
+steve-s-poke-bar,Poke,Tropical Green Tea,,3.95,seed,2026-11-07,
+steve-s-poke-bar,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+steve-s-poke-bar,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+uncle-fatih-s-pizza,Pizza,Cheese Pizza Slice,,3.75,seed,2026-11-07,
+uncle-fatih-s-pizza,Pizza,Pepperoni Pizza Slice,,3.99,seed,2026-11-07,
+uncle-fatih-s-pizza,Pizza,Specialty Pizza Slice,,4.49,seed,2026-11-07,
+uncle-fatih-s-pizza,Pizza,Two Slices + Pop Combo,,9.49,seed,2026-11-07,
+uncle-fatih-s-pizza,Pizza,Whole Pizza (large),,24.99,seed,2026-11-07,
+uncle-fatih-s-pizza,Soft drinks & water,Coca-Cola,355 ml can,2.29,seed,2026-11-07,I04
+uncle-fatih-s-pizza,Soft drinks & water,Bottled Water,500 ml,2.19,seed,2026-11-07,I06
+avenue-c-neville-scarfe,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
+avenue-c-neville-scarfe,Energy drinks,Red Bull Energy Drink,355 ml,4.59,seed,2026-11-07,I22
+avenue-c-neville-scarfe,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,
+avenue-c-neville-scarfe,Energy drinks,Monster Energy,473 ml,4.29,seed,2026-11-07,I02
+avenue-c-neville-scarfe,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+avenue-c-neville-scarfe,Soft drinks & water,Coca-Cola,591 ml bottle,3.59,seed,2026-11-07,I05
+avenue-c-neville-scarfe,Soft drinks & water,Bottled Water,500 ml,2.39,seed,2026-11-07,I06
+avenue-c-neville-scarfe,Snacks,Lay's Classic Chips,40 g,2.29,seed,2026-11-07,I19
+avenue-c-neville-scarfe,Snacks,Clif Bar,68 g,2.99,seed,2026-11-07,I23
+avenue-c-neville-scarfe,Snacks,Quest Protein Bar,60 g,4.29,seed,2026-11-07,I18
+avenue-c-neville-scarfe,Grab & go,Pre-made Sandwich,,8.49,seed,2026-11-07,I15
+avenue-c-neville-scarfe,Grab & go,Wrap,,8.75,seed,2026-11-07,I16
+avenue-c-neville-scarfe,Grab & go,Sushi Pack (California Roll),8 pcs,8.99,seed,2026-11-07,I17
+avenue-c-neville-scarfe,Grab & go,Bagel with Cream Cheese,,4.00,seed,2026-11-07,I13
+avenue-c-neville-scarfe,Grab & go,Muffin,,3.50,seed,2026-11-07,I14
+avenue-c-neville-scarfe,Grab & go,Cookie,,3.24,seed,2026-11-07,
+avenue-c-neville-scarfe,Snacks,Banana,each,0.71,seed,2026-11-07,I20
+avenue-c-neville-scarfe,Snacks,Apple,each,1.39,seed,2026-11-07,I21
+avenue-c-neville-scarfe,Coffee & tea,Drip Coffee,12 oz,2.74,seed,2026-11-07,I08
+avenue-c-neville-scarfe,Coffee & tea,Latte,12 oz,5.25,seed,2026-11-07,I10
+avenue-c-neville-scarfe,Coffee & tea,Americano,12 oz,4.00,seed,2026-11-07,
+avenue-c-neville-scarfe,Coffee & tea,Tea,12 oz,2.74,seed,2026-11-07,I11
+cafe-ami,Coffee & tea,Drip Coffee,12 oz,3.00,seed,2026-11-07,I08
+cafe-ami,Coffee & tea,Latte,12 oz,4.99,seed,2026-11-07,I10
+cafe-ami,Coffee & tea,Americano,12 oz,3.75,seed,2026-11-07,
+cafe-ami,Coffee & tea,Cappuccino,12 oz,5.00,seed,2026-11-07,
+cafe-ami,Coffee & tea,Tea,12 oz,3.24,seed,2026-11-07,I11
+cafe-ami,Coffee & tea,Chai Latte,12 oz,5.25,seed,2026-11-07,
+cafe-ami,Grab & go,Muffin,,3.74,seed,2026-11-07,I14
+cafe-ami,Grab & go,Cookie,,3.50,seed,2026-11-07,
+cafe-ami,Grab & go,Bagel with Cream Cheese,,4.25,seed,2026-11-07,I13
+cafe-ami,Grab & go,Croissant,,4.24,seed,2026-11-07,
+cafe-ami,Grab & go,Pre-made Sandwich,,9.49,seed,2026-11-07,I15
+cafe-ami,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+cafe-ami,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+cafe-ami,Snacks,Banana,each,0.76,seed,2026-11-07,I20
+cedar-cafe-moa,Coffee & tea,Drip Coffee,12 oz,3.25,seed,2026-11-07,I08
+cedar-cafe-moa,Coffee & tea,Latte,12 oz,5.49,seed,2026-11-07,I10
+cedar-cafe-moa,Coffee & tea,Americano,12 oz,4.25,seed,2026-11-07,
+cedar-cafe-moa,Coffee & tea,Cappuccino,12 oz,5.49,seed,2026-11-07,
+cedar-cafe-moa,Coffee & tea,Tea,12 oz,3.24,seed,2026-11-07,I11
+cedar-cafe-moa,Coffee & tea,Chai Latte,12 oz,5.74,seed,2026-11-07,
+cedar-cafe-moa,Grab & go,Muffin,,4.49,seed,2026-11-07,I14
+cedar-cafe-moa,Grab & go,Cookie,,3.75,seed,2026-11-07,
+cedar-cafe-moa,Grab & go,Bagel with Cream Cheese,,4.50,seed,2026-11-07,I13
+cedar-cafe-moa,Grab & go,Croissant,,4.75,seed,2026-11-07,
+cedar-cafe-moa,Grab & go,Pre-made Sandwich,,11.50,seed,2026-11-07,I15
+cedar-cafe-moa,Soft drinks & water,Bottled Water,500 ml,2.39,seed,2026-11-07,I06
+cedar-cafe-moa,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+cedar-cafe-moa,Snacks,Banana,each,0.72,seed,2026-11-07,I20
+cedar-cafe-moa,Lunch,Soup & Bannock,,11.95,seed,2026-11-07,
+cedar-cafe-moa,Lunch,Salmon Chowder,,12.95,seed,2026-11-07,
+corner-cafe,Coffee & tea,Drip Coffee,12 oz,2.74,seed,2026-11-07,I08
+corner-cafe,Coffee & tea,Latte,12 oz,5.00,seed,2026-11-07,I10
+corner-cafe,Coffee & tea,Americano,12 oz,3.75,seed,2026-11-07,
+corner-cafe,Coffee & tea,Cappuccino,12 oz,4.74,seed,2026-11-07,
+corner-cafe,Coffee & tea,Tea,12 oz,3.00,seed,2026-11-07,I11
+corner-cafe,Coffee & tea,Chai Latte,12 oz,5.25,seed,2026-11-07,
+corner-cafe,Grab & go,Muffin,,3.49,seed,2026-11-07,I14
+corner-cafe,Grab & go,Cookie,,3.25,seed,2026-11-07,
+corner-cafe,Grab & go,Bagel with Cream Cheese,,4.25,seed,2026-11-07,I13
+corner-cafe,Grab & go,Croissant,,3.75,seed,2026-11-07,
+corner-cafe,Grab & go,Pre-made Sandwich,,9.50,seed,2026-11-07,I15
+corner-cafe,Soft drinks & water,Bottled Water,500 ml,2.39,seed,2026-11-07,I06
+corner-cafe,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+corner-cafe,Snacks,Banana,each,0.71,seed,2026-11-07,I20
+dabao,Beverages,Fresh Brewed Coffee,12oz,2.60,menu,2026-11-07,I08
+dabao,Beverages,Fresh Brewed Coffee,16oz,2.95,menu,2026-11-07,I09
+dabao,Beverages,Fair Trade Tea,12oz,2.95,menu,2026-11-07,
+dabao,Beverages,Fair Trade Tea,16oz,2.95,menu,2026-11-07,
+dabao,Beverages,Americano,12oz,3.75,menu,2026-11-07,
+dabao,Beverages,Americano,16oz,3.95,menu,2026-11-07,
+dabao,Beverages,Americano Misto,12oz,4.65,menu,2026-11-07,
+dabao,Beverages,Americano Misto,16oz,5.50,menu,2026-11-07,
+dabao,Beverages,Latte,12oz,4.90,menu,2026-11-07,I10
+dabao,Beverages,Latte,16oz,5.70,menu,2026-11-07,
+dabao,Beverages,Cappuccino,12oz,4.90,menu,2026-11-07,
+dabao,Beverages,Cappuccino,16oz,5.70,menu,2026-11-07,
+dabao,Beverages,Mocha,12oz,5.50,menu,2026-11-07,
+dabao,Beverages,Mocha,16oz,5.95,menu,2026-11-07,
+dabao,Beverages,Hot Chocolate,12oz,4.50,menu,2026-11-07,
+dabao,Beverages,Hot Chocolate,16oz,4.75,menu,2026-11-07,
+dabao,Beverages,Tea Latte,12oz,5.20,menu,2026-11-07,
+dabao,Beverages,Tea Latte,16oz,5.95,menu,2026-11-07,
+dabao,Beverages,Taro Latte,12oz,5.50,menu,2026-11-07,
+dabao,Beverages,Taro Latte,16oz,5.95,menu,2026-11-07,
+dabao,Beverages,Sesame Latte,12oz,5.50,menu,2026-11-07,
+dabao,Beverages,Sesame Latte,16oz,5.95,menu,2026-11-07,
+dabao,Beverages,Thai Coconut Latte,12oz,5.50,menu,2026-11-07,
+dabao,Beverages,Thai Coconut Latte,16oz,5.95,menu,2026-11-07,
+dabao,Cold beverages,Iced Caffe Americano,,3.95,menu,2026-11-07,
+dabao,Cold beverages,Iced Caffe Latte,,5.70,menu,2026-11-07,
+dabao,Cold beverages,Iced Caffe Mocha,,5.95,menu,2026-11-07,
+dabao,Beverages,Paper cup surcharge,,0.25,menu,2026-11-07,
+dabao,Bakery,Freshly Baked Pastries (daily specials in display),,2.99,menu,2026-11-07,
+dabao,Onigiri,Smoked Salmon Onigiri,,5.99,menu,2026-11-07,
+dabao,Onigiri,Cooked Spicy Salmon Onigiri,,5.99,menu,2026-11-07,
+dabao,Onigiri,Cooked Spicy Tuna Onigiri,,5.99,menu,2026-11-07,
+dabao,Onigiri,Cooked Tuna Onigiri,,5.99,menu,2026-11-07,
+dabao,Onigiri,Raw Spicy Tuna Onigiri,,5.99,menu,2026-11-07,
+dabao,Onigiri,Vegan Kimchi Onigiri,,5.99,menu,2026-11-07,
+dabao,Bao,Mini BBQ Pork Bao,,3.49,menu,2026-11-07,
+dabao,Bao,Mini Chicken Bao,,3.49,menu,2026-11-07,
+dabao,Bao,Mini Vegan Bao,,3.49,menu,2026-11-07,
+dabao,Bao,Salted Custard Bao,,3.49,menu,2026-11-07,
+dabao,Bao,Black Sesame Bao,,3.49,menu,2026-11-07,
+dabao,Bao,Traditional Birthday Cake Bao,,3.49,menu,2026-11-07,
+dabao,Dim Sum,Ha Gow Shrimp Dumpling,each,1.69,menu,2026-11-07,
+dabao,Dim Sum,Pork Siu Mai,each,1.69,menu,2026-11-07,
+dabao,Dim Sum,Golden Shrimp Pork & Corn Dumpling,each,1.69,menu,2026-11-07,
+dabao,Dim Sum,Vegan Mushroom Dumpling,each,1.69,menu,2026-11-07,
+dabao,Dim Sum,Dim Sum Combo (any 4 pieces),,6.49,menu,2026-11-07,
+dabao,Dim Sum,Malay Cake,,3.99,menu,2026-11-07,
+dabao,Dim Sum,Sticky Lotus Rice Wrap,,5.49,menu,2026-11-07,
+esc-eatery,Coffee & tea,Drip Coffee,12 oz,2.74,seed,2026-11-07,I08
+esc-eatery,Coffee & tea,Latte,12 oz,4.25,seed,2026-11-07,I10
+esc-eatery,Coffee & tea,Americano,12 oz,3.25,seed,2026-11-07,
+esc-eatery,Coffee & tea,Cappuccino,12 oz,4.49,seed,2026-11-07,
+esc-eatery,Coffee & tea,Tea,12 oz,2.50,seed,2026-11-07,I11
+esc-eatery,Coffee & tea,Chai Latte,12 oz,4.74,seed,2026-11-07,
+esc-eatery,Grab & go,Muffin,,3.49,seed,2026-11-07,I14
+esc-eatery,Grab & go,Cookie,,2.75,seed,2026-11-07,
+esc-eatery,Grab & go,Bagel with Cream Cheese,,3.74,seed,2026-11-07,I13
+esc-eatery,Grab & go,Croissant,,3.74,seed,2026-11-07,
+esc-eatery,Grab & go,Pre-made Sandwich,,8.50,seed,2026-11-07,I15
+esc-eatery,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+esc-eatery,Soft drinks & water,Coca-Cola,355 ml can,2.39,seed,2026-11-07,I04
+esc-eatery,Snacks,Banana,each,0.72,seed,2026-11-07,I20
+esc-eatery,Lunch,Hot Dog,,4.50,seed,2026-11-07,
+esc-eatery,Lunch,Instant Noodles,cup,2.50,seed,2026-11-07,
+esc-eatery,Energy drinks,Red Bull Energy Drink,250 ml,3.49,seed,2026-11-07,I01
+esc-eatery,Snacks,Lay's Classic Chips,40 g,2.19,seed,2026-11-07,I19
+firehouse-subs,Subs,Hook & Ladder Sub,Medium,12.49,seed,2026-11-07,
+firehouse-subs,Subs,Smokehouse Beef & Cheddar Brisket,Medium,13.29,seed,2026-11-07,
+firehouse-subs,Subs,Italian Sub,Medium,12.79,seed,2026-11-07,
+firehouse-subs,Subs,Meatball Sub,Medium,12.49,seed,2026-11-07,
+firehouse-subs,Subs,Combo upgrade (chips + drink),,4.49,seed,2026-11-07,
+firehouse-subs,Grab & go,Cookie,,1.99,seed,2026-11-07,
+firehouse-subs,Snacks,Lay's Classic Chips,40 g,2.29,seed,2026-11-07,I19
+firehouse-subs,Soft drinks & water,Fountain Drink,Medium,3.29,seed,2026-11-07,
+firehouse-subs,Soft drinks & water,Bottled Water,500 ml,2.79,seed,2026-11-07,I06
+food-hub-market-cirs,Snacks,Banana,each,0.54,seed,2026-11-07,I20
+food-hub-market-cirs,Snacks,Apple,each,1.09,seed,2026-11-07,I21
+food-hub-market-cirs,Soft drinks & water,Bottled Water,500 ml,1.99,seed,2026-11-07,I06
+food-hub-market-cirs,Snacks,Clif Bar,68 g,2.39,seed,2026-11-07,I23
+food-hub-market-cirs,Snacks,Lay's Classic Chips,40 g,1.89,seed,2026-11-07,I19
+food-hub-market-cirs,Grocery,Rice,2 kg,5.99,seed,2026-11-07,
+food-hub-market-cirs,Grocery,Pasta,900 g,2.49,seed,2026-11-07,
+food-hub-market-cirs,Grocery,Canned Beans,398 ml,1.29,seed,2026-11-07,
+food-hub-market-cirs,Grocery,Eggs,dozen,4.99,seed,2026-11-07,
+food-hub-market-cirs,Grocery,Bread Loaf,,2.99,seed,2026-11-07,
+koerner-s-pub,Pub,Pub Burger,,17.50,seed,2026-11-07,
+koerner-s-pub,Pub,Wings (1 lb),,16.95,seed,2026-11-07,
+koerner-s-pub,Pub,Fries,,7.50,seed,2026-11-07,
+koerner-s-pub,Pub,Nachos,,17.95,seed,2026-11-07,
+koerner-s-pub,Pub,Pint of Beer,20 oz,7.75,seed,2026-11-07,
+koerner-s-pub,Soft drinks & water,Coca-Cola,355 ml can,2.75,seed,2026-11-07,I04
+koerner-s-pub,Energy drinks,Red Bull Energy Drink,250 ml,4.50,seed,2026-11-07,I01
+law-cafe,Coffee & tea,Drip Coffee,12 oz,2.75,seed,2026-11-07,I08
+law-cafe,Coffee & tea,Latte,12 oz,5.25,seed,2026-11-07,I10
+law-cafe,Coffee & tea,Americano,12 oz,4.25,seed,2026-11-07,
+law-cafe,Coffee & tea,Cappuccino,12 oz,4.75,seed,2026-11-07,
+law-cafe,Coffee & tea,Tea,12 oz,3.00,seed,2026-11-07,I11
+law-cafe,Coffee & tea,Chai Latte,12 oz,5.49,seed,2026-11-07,
+law-cafe,Grab & go,Muffin,,3.49,seed,2026-11-07,I14
+law-cafe,Grab & go,Cookie,,3.24,seed,2026-11-07,
+law-cafe,Grab & go,Bagel with Cream Cheese,,4.25,seed,2026-11-07,I13
+law-cafe,Grab & go,Croissant,,3.75,seed,2026-11-07,
+law-cafe,Grab & go,Pre-made Sandwich,,9.49,seed,2026-11-07,I15
+law-cafe,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+law-cafe,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+law-cafe,Snacks,Banana,each,0.71,seed,2026-11-07,I20
+perugia-italian-caffe,Coffee & tea,Drip Coffee,12 oz,2.99,seed,2026-11-07,I08
+perugia-italian-caffe,Coffee & tea,Latte,12 oz,5.00,seed,2026-11-07,I10
+perugia-italian-caffe,Coffee & tea,Americano,12 oz,4.24,seed,2026-11-07,
+perugia-italian-caffe,Coffee & tea,Cappuccino,12 oz,5.50,seed,2026-11-07,
+perugia-italian-caffe,Coffee & tea,Tea,12 oz,2.99,seed,2026-11-07,I11
+perugia-italian-caffe,Coffee & tea,Chai Latte,12 oz,5.25,seed,2026-11-07,
+perugia-italian-caffe,Grab & go,Muffin,,4.25,seed,2026-11-07,I14
+perugia-italian-caffe,Grab & go,Cookie,,3.50,seed,2026-11-07,
+perugia-italian-caffe,Grab & go,Bagel with Cream Cheese,,4.24,seed,2026-11-07,I13
+perugia-italian-caffe,Grab & go,Croissant,,4.00,seed,2026-11-07,
+perugia-italian-caffe,Grab & go,Pre-made Sandwich,,10.50,seed,2026-11-07,I15
+perugia-italian-caffe,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+perugia-italian-caffe,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+perugia-italian-caffe,Snacks,Banana,each,0.73,seed,2026-11-07,I20
+perugia-italian-caffe,Italian,Panini,,10.95,seed,2026-11-07,
+perugia-italian-caffe,Italian,Pasta of the Day,,12.95,seed,2026-11-07,
+perugia-italian-caffe,Italian,Cannoli,,3.95,seed,2026-11-07,
+pho-real,Vietnamese,Beef Pho,Regular,13.45,seed,2026-11-07,
+pho-real,Vietnamese,Chicken Pho,Regular,12.95,seed,2026-11-07,
+pho-real,Vietnamese,Vegetarian Pho,Regular,12.45,seed,2026-11-07,
+pho-real,Vietnamese,Banh Mi,,9.45,seed,2026-11-07,
+pho-real,Vietnamese,Vermicelli Bowl,,13.45,seed,2026-11-07,
+pho-real,Vietnamese,Spring Rolls (2),,5.45,seed,2026-11-07,
+pho-real,Soft drinks & water,Coca-Cola,355 ml can,2.39,seed,2026-11-07,I04
+pho-real,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+starbucks-fred-kaiser,Coffee & tea,Brewed Coffee,Tall 12 oz,3.25,seed,2026-11-07,I08
+starbucks-fred-kaiser,Coffee & tea,Caffè Latte,Tall 12 oz,5.45,seed,2026-11-07,I10
+starbucks-fred-kaiser,Coffee & tea,Caffè Americano,Tall 12 oz,4.25,seed,2026-11-07,
+starbucks-fred-kaiser,Coffee & tea,Cappuccino,Tall 12 oz,5.45,seed,2026-11-07,
+starbucks-fred-kaiser,Coffee & tea,Caramel Macchiato,Tall 12 oz,6.25,seed,2026-11-07,
+starbucks-fred-kaiser,Coffee & tea,Teavana Hot Tea,Tall 12 oz,3.15,seed,2026-11-07,I11
+starbucks-fred-kaiser,Coffee & tea,Iced Shaken Espresso,Grande 16 oz,6.45,seed,2026-11-07,
+starbucks-fred-kaiser,Coffee & tea,Strawberry Açaí Refresher,Grande 16 oz,5.95,seed,2026-11-07,
+starbucks-fred-kaiser,Grab & go,Plain Bagel with Cream Cheese,,3.95,seed,2026-11-07,I13
+starbucks-fred-kaiser,Grab & go,Blueberry Muffin,,3.75,seed,2026-11-07,I14
+starbucks-fred-kaiser,Grab & go,Chocolate Chip Cookie,,3.25,seed,2026-11-07,
+starbucks-fred-kaiser,Grab & go,Turkey & Havarti Sandwich,,9.25,seed,2026-11-07,I15
+starbucks-fred-kaiser,Grab & go,"Egg, Pesto & Mozzarella Sandwich",,7.45,seed,2026-11-07,I15
+starbucks-fred-kaiser,Grab & go,Banana,each,0.95,seed,2026-11-07,I20
+starbucks-fred-kaiser,Soft drinks & water,Ethos Bottled Water,500 ml,2.95,seed,2026-11-07,I06
+starbucks-fred-kaiser,Energy drinks,Red Bull Energy Drink,250 ml,4.25,seed,2026-11-07,I01
+starbucks-fred-kaiser,Snacks,Clif Bar,68 g,3.25,seed,2026-11-07,I23
+starbucks-tef3-agronomy-rd,Coffee & tea,Brewed Coffee,Tall 12 oz,3.25,seed,2026-11-07,I08
+starbucks-tef3-agronomy-rd,Coffee & tea,Caffè Latte,Tall 12 oz,5.45,seed,2026-11-07,I10
+starbucks-tef3-agronomy-rd,Coffee & tea,Caffè Americano,Tall 12 oz,4.25,seed,2026-11-07,
+starbucks-tef3-agronomy-rd,Coffee & tea,Cappuccino,Tall 12 oz,5.45,seed,2026-11-07,
+starbucks-tef3-agronomy-rd,Coffee & tea,Caramel Macchiato,Tall 12 oz,6.25,seed,2026-11-07,
+starbucks-tef3-agronomy-rd,Coffee & tea,Teavana Hot Tea,Tall 12 oz,3.15,seed,2026-11-07,I11
+starbucks-tef3-agronomy-rd,Coffee & tea,Iced Shaken Espresso,Grande 16 oz,6.45,seed,2026-11-07,
+starbucks-tef3-agronomy-rd,Coffee & tea,Strawberry Açaí Refresher,Grande 16 oz,5.95,seed,2026-11-07,
+starbucks-tef3-agronomy-rd,Grab & go,Plain Bagel with Cream Cheese,,3.95,seed,2026-11-07,I13
+starbucks-tef3-agronomy-rd,Grab & go,Blueberry Muffin,,3.75,seed,2026-11-07,I14
+starbucks-tef3-agronomy-rd,Grab & go,Chocolate Chip Cookie,,3.25,seed,2026-11-07,
+starbucks-tef3-agronomy-rd,Grab & go,Turkey & Havarti Sandwich,,9.25,seed,2026-11-07,I15
+starbucks-tef3-agronomy-rd,Grab & go,"Egg, Pesto & Mozzarella Sandwich",,7.45,seed,2026-11-07,I15
+starbucks-tef3-agronomy-rd,Grab & go,Banana,each,0.95,seed,2026-11-07,I20
+starbucks-tef3-agronomy-rd,Soft drinks & water,Ethos Bottled Water,500 ml,2.95,seed,2026-11-07,I06
+starbucks-tef3-agronomy-rd,Energy drinks,Red Bull Energy Drink,250 ml,4.25,seed,2026-11-07,I01
+starbucks-tef3-agronomy-rd,Snacks,Clif Bar,68 g,3.25,seed,2026-11-07,I23
+stir-it-up-cafe,Coffee & tea,Drip Coffee,12 oz,2.99,seed,2026-11-07,I08
+stir-it-up-cafe,Coffee & tea,Latte,12 oz,4.99,seed,2026-11-07,I10
+stir-it-up-cafe,Coffee & tea,Americano,12 oz,4.00,seed,2026-11-07,
+stir-it-up-cafe,Coffee & tea,Cappuccino,12 oz,5.25,seed,2026-11-07,
+stir-it-up-cafe,Coffee & tea,Tea,12 oz,2.99,seed,2026-11-07,I11
+stir-it-up-cafe,Coffee & tea,Chai Latte,12 oz,5.24,seed,2026-11-07,
+stir-it-up-cafe,Grab & go,Muffin,,3.75,seed,2026-11-07,I14
+stir-it-up-cafe,Grab & go,Cookie,,3.25,seed,2026-11-07,
+stir-it-up-cafe,Grab & go,Bagel with Cream Cheese,,4.00,seed,2026-11-07,I13
+stir-it-up-cafe,Grab & go,Croissant,,3.75,seed,2026-11-07,
+stir-it-up-cafe,Grab & go,Pre-made Sandwich,,9.99,seed,2026-11-07,I15
+stir-it-up-cafe,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+stir-it-up-cafe,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+stir-it-up-cafe,Snacks,Banana,each,0.73,seed,2026-11-07,I20
+tim-hortons-forest-sciences,Coffee & tea,Original Blend Coffee,Small 10 oz,2.19,seed,2026-11-07,I08
+tim-hortons-forest-sciences,Coffee & tea,Original Blend Coffee,Medium 14 oz,2.59,seed,2026-11-07,I09
+tim-hortons-forest-sciences,Coffee & tea,Latte,Small 10 oz,4.29,seed,2026-11-07,I10
+tim-hortons-forest-sciences,Coffee & tea,Americano,Small 10 oz,2.99,seed,2026-11-07,
+tim-hortons-forest-sciences,Coffee & tea,Steeped Tea,Small 10 oz,2.09,seed,2026-11-07,I11
+tim-hortons-forest-sciences,Coffee & tea,Iced Capp,Medium,4.29,seed,2026-11-07,
+tim-hortons-forest-sciences,Coffee & tea,Hot Chocolate,Small,2.49,seed,2026-11-07,
+tim-hortons-forest-sciences,Grab & go,Bagel with Cream Cheese,,2.99,seed,2026-11-07,I13
+tim-hortons-forest-sciences,Grab & go,Muffin,,2.09,seed,2026-11-07,I14
+tim-hortons-forest-sciences,Grab & go,Timbits,10 pcs,2.89,seed,2026-11-07,
+tim-hortons-forest-sciences,Grab & go,Donut,,1.89,seed,2026-11-07,
+tim-hortons-forest-sciences,Grab & go,Chocolate Chip Cookie,,1.69,seed,2026-11-07,
+tim-hortons-forest-sciences,Grab & go,Farmer's Breakfast Wrap,,4.99,seed,2026-11-07,
+tim-hortons-forest-sciences,Grab & go,Crispy Chicken Wrap,,5.49,seed,2026-11-07,I16
+tim-hortons-forest-sciences,Soft drinks & water,Coca-Cola,591 ml bottle,3.29,seed,2026-11-07,I05
+tim-hortons-forest-sciences,Soft drinks & water,Bottled Water,500 ml,2.19,seed,2026-11-07,I06
+upmeals-ikb,Grab & go,Teriyaki Chicken Rice Bowl,,11.99,seed,2026-11-07,
+upmeals-ikb,Grab & go,Beef Bulgogi Bowl,,12.99,seed,2026-11-07,
+upmeals-ikb,Grab & go,Tofu Veggie Bowl,,10.99,seed,2026-11-07,
+upmeals-ikb,Grab & go,Chicken Caesar Wrap,,9.49,seed,2026-11-07,I16
+upmeals-ikb,Grab & go,Pasta Salad,,7.99,seed,2026-11-07,
+upmeals-ikb,Grab & go,Fruit Cup,,5.49,seed,2026-11-07,
+upmeals-ikb,Soft drinks & water,Coca-Cola,355 ml can,2.39,seed,2026-11-07,I04
+upmeals-ikb,Soft drinks & water,Bottled Water,500 ml,2.19,seed,2026-11-07,I06
+upmeals-ikb,Energy drinks,Red Bull Energy Drink,250 ml,3.79,seed,2026-11-07,I01
+upmeals-ikb,Snacks,Lay's Classic Chips,40 g,2.29,seed,2026-11-07,I19
+upmeals-ikb,Snacks,Banana,each,0.71,seed,2026-11-07,I20
+bento-sushi-david-lam,Sushi,California Roll,8 pcs,8.49,seed,2026-11-07,I17
+bento-sushi-david-lam,Sushi,Spicy Salmon Roll,8 pcs,9.49,seed,2026-11-07,
+bento-sushi-david-lam,Sushi,Salmon Nigiri Combo,,12.99,seed,2026-11-07,
+bento-sushi-david-lam,Sushi,Chicken Teriyaki Bowl,,12.49,seed,2026-11-07,
+bento-sushi-david-lam,Sushi,Edamame,,4.49,seed,2026-11-07,
+bento-sushi-david-lam,Sushi,Miso Soup,,2.99,seed,2026-11-07,
+bento-sushi-david-lam,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+bento-sushi-david-lam,Soft drinks & water,Bottled Water,500 ml,2.39,seed,2026-11-07,I06
+loafe-cafe-sauder,Coffee & tea,Drip Coffee,12 oz,3.10,seed,2026-11-07,I08
+loafe-cafe-sauder,Coffee & tea,Latte,12 oz,5.25,seed,2026-11-07,I10
+loafe-cafe-sauder,Coffee & tea,Americano,12 oz,3.95,seed,2026-11-07,
+loafe-cafe-sauder,Coffee & tea,London Fog,12 oz,5.25,seed,2026-11-07,
+loafe-cafe-sauder,Coffee & tea,Tea,12 oz,3.00,seed,2026-11-07,I11
+loafe-cafe-sauder,Grab & go,Cinnamon Bun,,5.25,seed,2026-11-07,
+loafe-cafe-sauder,Grab & go,Muffin,,4.25,seed,2026-11-07,I14
+loafe-cafe-sauder,Grab & go,Cookie,,3.45,seed,2026-11-07,
+loafe-cafe-sauder,Grab & go,Ham & Cheese Croissant,,6.50,seed,2026-11-07,
+loafe-cafe-sauder,Grab & go,Turkey Sandwich,,10.95,seed,2026-11-07,I15
+loafe-cafe-sauder,Grab & go,Soup of the Day,12 oz,6.95,seed,2026-11-07,
+loafe-cafe-sauder,Grab & go,Banana,each,0.95,seed,2026-11-07,I20
+loafe-cafe-sauder,Soft drinks & water,Bottled Water,500 ml,2.75,seed,2026-11-07,I06
+loafe-cafe-sauder,Soft drinks & water,Coca-Cola,355 ml can,2.50,seed,2026-11-07,I04
+presto,Pasta,Spaghetti Bolognese,,12.95,seed,2026-11-07,
+presto,Pasta,Penne Arrabbiata,,11.95,seed,2026-11-07,
+presto,Pasta,Chicken Alfredo,,13.95,seed,2026-11-07,
+presto,Pasta,Pesto Pasta,,12.45,seed,2026-11-07,
+presto,Pasta,Garlic Bread,,3.50,seed,2026-11-07,
+presto,Soft drinks & water,Coca-Cola,355 ml can,2.29,seed,2026-11-07,I04
+presto,Soft drinks & water,Bottled Water,500 ml,2.39,seed,2026-11-07,I06
+tim-hortons-david-lam,Coffee & tea,Original Blend Coffee,Small 10 oz,2.19,seed,2026-11-07,I08
+tim-hortons-david-lam,Coffee & tea,Original Blend Coffee,Medium 14 oz,2.59,seed,2026-11-07,I09
+tim-hortons-david-lam,Coffee & tea,Latte,Small 10 oz,4.29,seed,2026-11-07,I10
+tim-hortons-david-lam,Coffee & tea,Americano,Small 10 oz,2.99,seed,2026-11-07,
+tim-hortons-david-lam,Coffee & tea,Steeped Tea,Small 10 oz,2.09,seed,2026-11-07,I11
+tim-hortons-david-lam,Coffee & tea,Iced Capp,Medium,4.29,seed,2026-11-07,
+tim-hortons-david-lam,Coffee & tea,Hot Chocolate,Small,2.49,seed,2026-11-07,
+tim-hortons-david-lam,Grab & go,Bagel with Cream Cheese,,2.99,seed,2026-11-07,I13
+tim-hortons-david-lam,Grab & go,Muffin,,2.09,seed,2026-11-07,I14
+tim-hortons-david-lam,Grab & go,Timbits,10 pcs,2.89,seed,2026-11-07,
+tim-hortons-david-lam,Grab & go,Donut,,1.89,seed,2026-11-07,
+tim-hortons-david-lam,Grab & go,Chocolate Chip Cookie,,1.69,seed,2026-11-07,
+tim-hortons-david-lam,Grab & go,Farmer's Breakfast Wrap,,4.99,seed,2026-11-07,
+tim-hortons-david-lam,Grab & go,Crispy Chicken Wrap,,5.49,seed,2026-11-07,I16
+tim-hortons-david-lam,Soft drinks & water,Coca-Cola,591 ml bottle,3.29,seed,2026-11-07,I05
+tim-hortons-david-lam,Soft drinks & water,Bottled Water,500 ml,2.19,seed,2026-11-07,I06
+triple-o-s,Burgers,Original Triple O Burger,,11.99,seed,2026-11-07,
+triple-o-s,Burgers,Double Double Burger,,14.79,seed,2026-11-07,
+triple-o-s,Burgers,Chicken Burger,,12.99,seed,2026-11-07,
+triple-o-s,Burgers,Fries,Regular,4.89,seed,2026-11-07,
+triple-o-s,Burgers,Milkshake,Regular,6.49,seed,2026-11-07,
+triple-o-s,Burgers,Burger Combo add-on (fries + drink),,6.99,seed,2026-11-07,
+triple-o-s,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+triple-o-s,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+harvest-market,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
+harvest-market,Energy drinks,Red Bull Energy Drink,355 ml,4.39,seed,2026-11-07,I22
+harvest-market,Energy drinks,Red Bull Energy Drink,473 ml,5.59,seed,2026-11-07,
+harvest-market,Energy drinks,Monster Energy,473 ml,3.99,seed,2026-11-07,I02
+harvest-market,Soft drinks & water,Coca-Cola,355 ml can,2.29,seed,2026-11-07,I04
+harvest-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.39,seed,2026-11-07,I05
+harvest-market,Soft drinks & water,Bottled Water,500 ml,2.29,seed,2026-11-07,I06
+harvest-market,Snacks,Lay's Classic Chips,40 g,2.39,seed,2026-11-07,I19
+harvest-market,Snacks,Clif Bar,68 g,2.69,seed,2026-11-07,I23
+harvest-market,Snacks,Quest Protein Bar,60 g,4.09,seed,2026-11-07,I18
+harvest-market,Grab & go,Pre-made Sandwich,,8.00,seed,2026-11-07,I15
+harvest-market,Grab & go,Wrap,,8.49,seed,2026-11-07,I16
+harvest-market,Grab & go,Sushi Pack (California Roll),8 pcs,8.25,seed,2026-11-07,I17
+harvest-market,Grab & go,Bagel with Cream Cheese,,3.75,seed,2026-11-07,I13
+harvest-market,Grab & go,Muffin,,3.49,seed,2026-11-07,I14
+harvest-market,Grab & go,Cookie,,2.99,seed,2026-11-07,
+harvest-market,Snacks,Banana,each,0.69,seed,2026-11-07,I20
+harvest-market,Snacks,Apple,each,1.29,seed,2026-11-07,I21
+harvest-market,Coffee & tea,Drip Coffee,12 oz,3.00,seed,2026-11-07,I08
+harvest-market,Coffee & tea,Latte,12 oz,5.00,seed,2026-11-07,I10
+harvest-market,Coffee & tea,Americano,12 oz,3.99,seed,2026-11-07,
+harvest-market,Coffee & tea,Tea,12 oz,2.50,seed,2026-11-07,I11
+harvest-market,Grocery,Greek Yogurt,single,2.39,seed,2026-11-07,
+harvest-market,Grocery,Hummus & Veggie Snack Pack,,5.49,seed,2026-11-07,
+harvest-market,Grocery,Salad Bowl,,9.99,seed,2026-11-07,
+hero-coffee-market,Coffee & tea,Drip Coffee,12 oz,2.99,seed,2026-11-07,I08
+hero-coffee-market,Coffee & tea,Latte,12 oz,5.25,seed,2026-11-07,I10
+hero-coffee-market,Coffee & tea,Americano,12 oz,3.74,seed,2026-11-07,
+hero-coffee-market,Coffee & tea,Cappuccino,12 oz,4.99,seed,2026-11-07,
+hero-coffee-market,Coffee & tea,Tea,12 oz,2.99,seed,2026-11-07,I11
+hero-coffee-market,Coffee & tea,Chai Latte,12 oz,5.25,seed,2026-11-07,
+hero-coffee-market,Grab & go,Muffin,,3.75,seed,2026-11-07,I14
+hero-coffee-market,Grab & go,Cookie,,3.24,seed,2026-11-07,
+hero-coffee-market,Grab & go,Bagel with Cream Cheese,,4.24,seed,2026-11-07,I13
+hero-coffee-market,Grab & go,Croissant,,3.99,seed,2026-11-07,
+hero-coffee-market,Grab & go,Pre-made Sandwich,,9.75,seed,2026-11-07,I15
+hero-coffee-market,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+hero-coffee-market,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+hero-coffee-market,Snacks,Banana,each,0.72,seed,2026-11-07,I20
+hero-coffee-market,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
+hero-coffee-market,Energy drinks,Red Bull Energy Drink,355 ml,4.99,seed,2026-11-07,I22
+hero-coffee-market,Energy drinks,Red Bull Energy Drink,473 ml,6.19,seed,2026-11-07,
+hero-coffee-market,Energy drinks,Monster Energy,473 ml,4.29,seed,2026-11-07,I02
+hero-coffee-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.29,seed,2026-11-07,I05
+hero-coffee-market,Snacks,Lay's Classic Chips,40 g,2.39,seed,2026-11-07,I19
+hero-coffee-market,Snacks,Clif Bar,68 g,2.89,seed,2026-11-07,I23
+hero-coffee-market,Snacks,Quest Protein Bar,60 g,4.29,seed,2026-11-07,I18
+mercante,Pizza,Margherita Pizza,10 inch,14.95,seed,2026-11-07,
+mercante,Pizza,Pepperoni Pizza,10 inch,16.45,seed,2026-11-07,
+mercante,Pizza,Pizza Slice,,4.75,seed,2026-11-07,
+mercante,Pizza,Caesar Salad,,9.95,seed,2026-11-07,
+mercante,Pizza,Pasta of the Day,,13.95,seed,2026-11-07,
+mercante,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+mercante,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+open-kitchen,All-you-care-to-eat (door price),Breakfast entry,,13.50,seed,2026-11-07,
+open-kitchen,All-you-care-to-eat (door price),Lunch entry,,16.75,seed,2026-11-07,
+open-kitchen,All-you-care-to-eat (door price),Dinner entry,,19.75,seed,2026-11-07,
+open-kitchen,Grab & go,Fruit (apple / banana),each,1.00,seed,2026-11-07,I20|I21
+bean-around-the-world,Coffee & tea,Drip Coffee,12 oz,2.74,seed,2026-11-07,I08
+bean-around-the-world,Coffee & tea,Latte,12 oz,4.74,seed,2026-11-07,I10
+bean-around-the-world,Coffee & tea,Americano,12 oz,4.00,seed,2026-11-07,
+bean-around-the-world,Coffee & tea,Cappuccino,12 oz,4.74,seed,2026-11-07,
+bean-around-the-world,Coffee & tea,Tea,12 oz,2.99,seed,2026-11-07,I11
+bean-around-the-world,Coffee & tea,Chai Latte,12 oz,5.24,seed,2026-11-07,
+bean-around-the-world,Grab & go,Muffin,,3.75,seed,2026-11-07,I14
+bean-around-the-world,Grab & go,Cookie,,3.00,seed,2026-11-07,
+bean-around-the-world,Grab & go,Bagel with Cream Cheese,,4.49,seed,2026-11-07,I13
+bean-around-the-world,Grab & go,Croissant,,3.99,seed,2026-11-07,
+bean-around-the-world,Grab & go,Pre-made Sandwich,,10.25,seed,2026-11-07,I15
+bean-around-the-world,Soft drinks & water,Bottled Water,500 ml,2.39,seed,2026-11-07,I06
+bean-around-the-world,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+bean-around-the-world,Snacks,Banana,each,0.77,seed,2026-11-07,I20
+feast,All-you-care-to-eat (door price),Breakfast entry,,13.50,seed,2026-11-07,
+feast,All-you-care-to-eat (door price),Lunch entry,,16.75,seed,2026-11-07,
+feast,All-you-care-to-eat (door price),Dinner entry,,19.75,seed,2026-11-07,
+feast,Grab & go,Fruit (apple / banana),each,1.00,seed,2026-11-07,I20|I21
+gage-market,Energy drinks,Red Bull Energy Drink,250 ml,3.99,seed,2026-11-07,I01
+gage-market,Energy drinks,Red Bull Energy Drink,355 ml,5.09,seed,2026-11-07,I22
+gage-market,Energy drinks,Red Bull Energy Drink,473 ml,6.29,seed,2026-11-07,
+gage-market,Energy drinks,Monster Energy,473 ml,4.39,seed,2026-11-07,I02
+gage-market,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+gage-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.59,seed,2026-11-07,I05
+gage-market,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+gage-market,Snacks,Lay's Classic Chips,40 g,2.59,seed,2026-11-07,I19
+gage-market,Snacks,Clif Bar,68 g,2.99,seed,2026-11-07,I23
+gage-market,Snacks,Quest Protein Bar,60 g,4.39,seed,2026-11-07,I18
+gage-market,Grab & go,Pre-made Sandwich,,9.00,seed,2026-11-07,I15
+gage-market,Grab & go,Wrap,,9.50,seed,2026-11-07,I16
+gage-market,Grab & go,Sushi Pack (California Roll),8 pcs,9.24,seed,2026-11-07,I17
+gage-market,Grab & go,Bagel with Cream Cheese,,3.99,seed,2026-11-07,I13
+gage-market,Grab & go,Muffin,,3.75,seed,2026-11-07,I14
+gage-market,Grab & go,Cookie,,3.25,seed,2026-11-07,
+gage-market,Snacks,Banana,each,0.71,seed,2026-11-07,I20
+gage-market,Snacks,Apple,each,1.39,seed,2026-11-07,I21
+gage-market,Grocery,Instant Noodles,cup,3.29,seed,2026-11-07,
+gage-market,Grocery,Frozen Pizza,,7.99,seed,2026-11-07,
+gather,All-you-care-to-eat (door price),Breakfast entry,,13.50,seed,2026-11-07,
+gather,All-you-care-to-eat (door price),Lunch entry,,16.75,seed,2026-11-07,
+gather,All-you-care-to-eat (door price),Dinner entry,,19.75,seed,2026-11-07,
+gather,Grab & go,Fruit (apple / banana),each,1.00,seed,2026-11-07,I20|I21
+great-dane-coffee,Coffee & tea,Drip Coffee,12 oz,2.99,seed,2026-11-07,I08
+great-dane-coffee,Coffee & tea,Latte,12 oz,5.25,seed,2026-11-07,I10
+great-dane-coffee,Coffee & tea,Americano,12 oz,3.99,seed,2026-11-07,
+great-dane-coffee,Coffee & tea,Cappuccino,12 oz,5.25,seed,2026-11-07,
+great-dane-coffee,Coffee & tea,Tea,12 oz,2.99,seed,2026-11-07,I11
+great-dane-coffee,Coffee & tea,Chai Latte,12 oz,5.49,seed,2026-11-07,
+great-dane-coffee,Grab & go,Muffin,,3.74,seed,2026-11-07,I14
+great-dane-coffee,Grab & go,Cookie,,3.50,seed,2026-11-07,
+great-dane-coffee,Grab & go,Bagel with Cream Cheese,,4.50,seed,2026-11-07,I13
+great-dane-coffee,Grab & go,Croissant,,4.24,seed,2026-11-07,
+great-dane-coffee,Grab & go,Pre-made Sandwich,,9.49,seed,2026-11-07,I15
+great-dane-coffee,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+great-dane-coffee,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+great-dane-coffee,Snacks,Banana,each,0.78,seed,2026-11-07,I20
+great-dane-coffee,Grab & go,Danish Pastry,,4.50,seed,2026-11-07,
+hero-harvest,Energy drinks,Red Bull Energy Drink,250 ml,3.79,seed,2026-11-07,I01
+hero-harvest,Energy drinks,Red Bull Energy Drink,355 ml,4.79,seed,2026-11-07,I22
+hero-harvest,Energy drinks,Red Bull Energy Drink,473 ml,5.99,seed,2026-11-07,
+hero-harvest,Energy drinks,Monster Energy,473 ml,4.09,seed,2026-11-07,I02
+hero-harvest,Soft drinks & water,Coca-Cola,355 ml can,2.39,seed,2026-11-07,I04
+hero-harvest,Soft drinks & water,Coca-Cola,591 ml bottle,3.19,seed,2026-11-07,I05
+hero-harvest,Soft drinks & water,Bottled Water,500 ml,2.29,seed,2026-11-07,I06
+hero-harvest,Snacks,Lay's Classic Chips,40 g,2.29,seed,2026-11-07,I19
+hero-harvest,Snacks,Clif Bar,68 g,2.69,seed,2026-11-07,I23
+hero-harvest,Snacks,Quest Protein Bar,60 g,3.99,seed,2026-11-07,I18
+hero-harvest,Grab & go,Pre-made Sandwich,,8.74,seed,2026-11-07,I15
+hero-harvest,Grab & go,Wrap,,8.74,seed,2026-11-07,I16
+hero-harvest,Grab & go,Sushi Pack (California Roll),8 pcs,8.25,seed,2026-11-07,I17
+hero-harvest,Grab & go,Bagel with Cream Cheese,,3.74,seed,2026-11-07,I13
+hero-harvest,Grab & go,Muffin,,3.49,seed,2026-11-07,I14
+hero-harvest,Grab & go,Cookie,,3.24,seed,2026-11-07,
+hero-harvest,Snacks,Banana,each,0.69,seed,2026-11-07,I20
+hero-harvest,Snacks,Apple,each,1.29,seed,2026-11-07,I21
+hero-harvest,Coffee & tea,Drip Coffee,12 oz,2.74,seed,2026-11-07,I08
+hero-harvest,Coffee & tea,Latte,12 oz,4.75,seed,2026-11-07,I10
+hero-harvest,Coffee & tea,Americano,12 oz,4.00,seed,2026-11-07,
+hero-harvest,Coffee & tea,Tea,12 oz,2.74,seed,2026-11-07,I11
+hubbards-global-market,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
+hubbards-global-market,Energy drinks,Red Bull Energy Drink,355 ml,4.59,seed,2026-11-07,I22
+hubbards-global-market,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,
+hubbards-global-market,Energy drinks,Monster Energy,473 ml,4.29,seed,2026-11-07,I02
+hubbards-global-market,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+hubbards-global-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.49,seed,2026-11-07,I05
+hubbards-global-market,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+hubbards-global-market,Snacks,Lay's Classic Chips,40 g,2.49,seed,2026-11-07,I19
+hubbards-global-market,Snacks,Clif Bar,68 g,2.99,seed,2026-11-07,I23
+hubbards-global-market,Snacks,Quest Protein Bar,60 g,4.29,seed,2026-11-07,I18
+hubbards-global-market,Grab & go,Pre-made Sandwich,,9.24,seed,2026-11-07,I15
+hubbards-global-market,Grab & go,Wrap,,8.99,seed,2026-11-07,I16
+hubbards-global-market,Grab & go,Sushi Pack (California Roll),8 pcs,8.50,seed,2026-11-07,I17
+hubbards-global-market,Grab & go,Bagel with Cream Cheese,,4.24,seed,2026-11-07,I13
+hubbards-global-market,Grab & go,Muffin,,3.75,seed,2026-11-07,I14
+hubbards-global-market,Grab & go,Cookie,,3.25,seed,2026-11-07,
+hubbards-global-market,Snacks,Banana,each,0.74,seed,2026-11-07,I20
+hubbards-global-market,Snacks,Apple,each,1.39,seed,2026-11-07,I21
+hubbards-global-market,Grocery,Instant Noodles,cup,2.99,seed,2026-11-07,
+hubbards-global-market,Grocery,Ice Cream Pint,,6.99,seed,2026-11-07,
+korean-home-meal,Korean,Bibimbap,,14.95,seed,2026-11-07,
+korean-home-meal,Korean,Bulgogi Rice,,15.45,seed,2026-11-07,
+korean-home-meal,Korean,Kimchi Fried Rice,,13.95,seed,2026-11-07,
+korean-home-meal,Korean,Tteokbokki,,12.95,seed,2026-11-07,
+korean-home-meal,Korean,Japchae,,13.45,seed,2026-11-07,
+korean-home-meal,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+korean-home-meal,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+magda-s-night-market,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
+magda-s-night-market,Energy drinks,Red Bull Energy Drink,355 ml,4.59,seed,2026-11-07,I22
+magda-s-night-market,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,
+magda-s-night-market,Energy drinks,Monster Energy,473 ml,4.19,seed,2026-11-07,I02
+magda-s-night-market,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+magda-s-night-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.69,seed,2026-11-07,I05
+magda-s-night-market,Soft drinks & water,Bottled Water,500 ml,2.39,seed,2026-11-07,I06
+magda-s-night-market,Snacks,Lay's Classic Chips,40 g,2.49,seed,2026-11-07,I19
+magda-s-night-market,Snacks,Clif Bar,68 g,2.89,seed,2026-11-07,I23
+magda-s-night-market,Snacks,Quest Protein Bar,60 g,4.29,seed,2026-11-07,I18
+magda-s-night-market,Grab & go,Pre-made Sandwich,,8.99,seed,2026-11-07,I15
+magda-s-night-market,Grab & go,Wrap,,9.75,seed,2026-11-07,I16
+magda-s-night-market,Grab & go,Sushi Pack (California Roll),8 pcs,8.99,seed,2026-11-07,I17
+magda-s-night-market,Grab & go,Bagel with Cream Cheese,,4.25,seed,2026-11-07,I13
+magda-s-night-market,Grab & go,Muffin,,3.74,seed,2026-11-07,I14
+magda-s-night-market,Grab & go,Cookie,,3.25,seed,2026-11-07,
+magda-s-night-market,Snacks,Banana,each,0.71,seed,2026-11-07,I20
+magda-s-night-market,Snacks,Apple,each,1.49,seed,2026-11-07,I21
+magda-s-night-market,Grocery,Instant Noodles,cup,2.99,seed,2026-11-07,
+magda-s-night-market,Grocery,Microwave Burrito,,3.99,seed,2026-11-07,
+the-beanery,Coffee & tea,Drip Coffee,12 oz,2.99,seed,2026-11-07,I08
+the-beanery,Coffee & tea,Latte,12 oz,5.25,seed,2026-11-07,I10
+the-beanery,Coffee & tea,Americano,12 oz,4.00,seed,2026-11-07,
+the-beanery,Coffee & tea,Cappuccino,12 oz,4.75,seed,2026-11-07,
+the-beanery,Coffee & tea,Tea,12 oz,2.99,seed,2026-11-07,I11
+the-beanery,Coffee & tea,Chai Latte,12 oz,5.25,seed,2026-11-07,
+the-beanery,Grab & go,Muffin,,3.74,seed,2026-11-07,I14
+the-beanery,Grab & go,Cookie,,3.24,seed,2026-11-07,
+the-beanery,Grab & go,Bagel with Cream Cheese,,4.25,seed,2026-11-07,I13
+the-beanery,Grab & go,Croissant,,3.75,seed,2026-11-07,
+the-beanery,Grab & go,Pre-made Sandwich,,9.24,seed,2026-11-07,I15
+the-beanery,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+the-beanery,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+the-beanery,Snacks,Banana,each,0.71,seed,2026-11-07,I20
+tim-hortons-orca-house,Coffee & tea,Original Blend Coffee,Small 10 oz,2.19,seed,2026-11-07,I08
+tim-hortons-orca-house,Coffee & tea,Original Blend Coffee,Medium 14 oz,2.59,seed,2026-11-07,I09
+tim-hortons-orca-house,Coffee & tea,Latte,Small 10 oz,4.29,seed,2026-11-07,I10
+tim-hortons-orca-house,Coffee & tea,Americano,Small 10 oz,2.99,seed,2026-11-07,
+tim-hortons-orca-house,Coffee & tea,Steeped Tea,Small 10 oz,2.09,seed,2026-11-07,I11
+tim-hortons-orca-house,Coffee & tea,Iced Capp,Medium,4.29,seed,2026-11-07,
+tim-hortons-orca-house,Coffee & tea,Hot Chocolate,Small,2.49,seed,2026-11-07,
+tim-hortons-orca-house,Grab & go,Bagel with Cream Cheese,,2.99,seed,2026-11-07,I13
+tim-hortons-orca-house,Grab & go,Muffin,,2.09,seed,2026-11-07,I14
+tim-hortons-orca-house,Grab & go,Timbits,10 pcs,2.89,seed,2026-11-07,
+tim-hortons-orca-house,Grab & go,Donut,,1.89,seed,2026-11-07,
+tim-hortons-orca-house,Grab & go,Chocolate Chip Cookie,,1.69,seed,2026-11-07,
+tim-hortons-orca-house,Grab & go,Farmer's Breakfast Wrap,,4.99,seed,2026-11-07,
+tim-hortons-orca-house,Grab & go,Crispy Chicken Wrap,,5.49,seed,2026-11-07,I16
+tim-hortons-orca-house,Soft drinks & water,Coca-Cola,591 ml bottle,3.29,seed,2026-11-07,I05
+tim-hortons-orca-house,Soft drinks & water,Bottled Water,500 ml,2.19,seed,2026-11-07,I06
+a-w,Burgers,Teen Burger,,8.99,seed,2026-11-07,
+a-w,Burgers,Mama Burger,,6.49,seed,2026-11-07,
+a-w,Burgers,Papa Burger,,9.99,seed,2026-11-07,
+a-w,Burgers,Teen Burger Combo,,14.49,seed,2026-11-07,
+a-w,Burgers,Chicken Buddy Burger,,6.29,seed,2026-11-07,
+a-w,Burgers,Onion Rings,Regular,4.99,seed,2026-11-07,
+a-w,Burgers,Fries,Regular,4.19,seed,2026-11-07,
+a-w,Soft drinks & water,A&W Root Beer,Regular,2.99,seed,2026-11-07,
+a-w,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+agra-tandoori-express,Indian,Butter Chicken with Rice,,14.95,seed,2026-11-07,
+agra-tandoori-express,Indian,Lamb Curry with Rice,,16.45,seed,2026-11-07,
+agra-tandoori-express,Indian,Chana Masala with Rice,,12.95,seed,2026-11-07,
+agra-tandoori-express,Indian,Naan,,2.95,seed,2026-11-07,
+agra-tandoori-express,Indian,Samosas (2),,4.95,seed,2026-11-07,
+agra-tandoori-express,Indian,Mango Lassi,,4.95,seed,2026-11-07,
+agra-tandoori-express,Soft drinks & water,Coca-Cola,355 ml can,2.69,seed,2026-11-07,I04
+agra-tandoori-express,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+bengong-s-tea,Bubble tea,Signature Milk Tea,Regular,6.25,seed,2026-11-07,
+bengong-s-tea,Bubble tea,Brown Sugar Boba Milk,Regular,6.95,seed,2026-11-07,
+bengong-s-tea,Bubble tea,Taro Milk Tea,Regular,6.50,seed,2026-11-07,
+bengong-s-tea,Bubble tea,Passion Fruit Green Tea,Regular,6.25,seed,2026-11-07,
+bengong-s-tea,Bubble tea,Cheese Foam Oolong,Regular,6.95,seed,2026-11-07,
+bento-king,Bento,Chicken Teriyaki Bento,,13.95,seed,2026-11-07,
+bento-king,Bento,Beef Bento,,14.95,seed,2026-11-07,
+bento-king,Bento,Salmon Bento,,15.95,seed,2026-11-07,
+bento-king,Bento,Tofu Bento,,12.45,seed,2026-11-07,
+bento-king,Bento,Gyoza (6),,6.95,seed,2026-11-07,
+bento-king,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+bento-king,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+beyond-bbq,BBQ,Lamb Skewers (5),,12.95,seed,2026-11-07,
+beyond-bbq,BBQ,Beef Skewers (5),,12.95,seed,2026-11-07,
+beyond-bbq,BBQ,Chicken Skewers (5),,10.95,seed,2026-11-07,
+beyond-bbq,BBQ,Grilled Corn,,4.95,seed,2026-11-07,
+beyond-bbq,BBQ,BBQ Combo Platter,,29.95,seed,2026-11-07,
+beyond-bbq,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+beyond-bbq,Soft drinks & water,Bottled Water,500 ml,2.79,seed,2026-11-07,I06
+big-way-hot-pot,Malatang,"Malatang Bowl (by weight, typical)",~500 g,18.50,seed,2026-11-07,
+big-way-hot-pot,Malatang,"Malatang Bowl (by weight, large)",~800 g,27.50,seed,2026-11-07,
+big-way-hot-pot,Malatang,Rice,bowl,2.50,seed,2026-11-07,
+big-way-hot-pot,Soft drinks & water,Coca-Cola,355 ml can,2.69,seed,2026-11-07,I04
+big-way-hot-pot,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+black-pearl-cafe,Bubble tea & snacks,Black Pearl Milk Tea,Regular,6.25,seed,2026-11-07,
+black-pearl-cafe,Bubble tea & snacks,Popcorn Chicken,,8.95,seed,2026-11-07,
+black-pearl-cafe,Bubble tea & snacks,Taiwanese Sausage Rice,,12.95,seed,2026-11-07,
+black-pearl-cafe,Bubble tea & snacks,Fruit Tea,Regular,6.25,seed,2026-11-07,
+black-pearl-cafe,Soft drinks & water,Coca-Cola,355 ml can,2.39,seed,2026-11-07,I04
+black-pearl-cafe,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+booster-juice-university-village,Smoothies,Strawberry Sunrise Smoothie,Medium 24 oz,8.29,seed,2026-11-07,
+booster-juice-university-village,Smoothies,Mango Hurricane Smoothie,Medium 24 oz,8.29,seed,2026-11-07,
+booster-juice-university-village,Smoothies,Lean Green Smoothie,Medium 24 oz,8.79,seed,2026-11-07,
+booster-juice-university-village,Smoothies,Protein Smoothie (Chocolate Peanut Butter),Medium 24 oz,8.99,seed,2026-11-07,
+booster-juice-university-village,Smoothies,Acai Bowl,,10.49,seed,2026-11-07,
+booster-juice-university-village,Smoothies,Fresh Orange Juice,Medium,7.49,seed,2026-11-07,
+booster-juice-university-village,Grab & go,Breakfast Wrap,,6.49,seed,2026-11-07,
+booster-juice-university-village,Grab & go,Chicken Pesto Panini,,8.49,seed,2026-11-07,
+booster-juice-university-village,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+booster-juice-university-village,Energy drinks,Red Bull Energy Drink,250 ml,3.99,seed,2026-11-07,I01
+booster-juice-university-village,Snacks,Clif Bar,68 g,3.19,seed,2026-11-07,I23
+chirpyhut-fried-chicken-ubc,Chicken,Roasted Drumsticks,,8.49,menu,2026-11-07,
+chirpyhut-fried-chicken-ubc,Chicken,Roasted Jumbo Leg,,13.49,menu,2026-11-07,
+chirpyhut-fried-chicken-ubc,Chicken,Popcorn Chicken Combo,with drink and side,14.49,menu,2026-11-07,
+chirpyhut-fried-chicken-ubc,Chicken,Jumbo Leg Combo,with drink and side,15.99,menu,2026-11-07,
+chirpyhut-fried-chicken-ubc,Chicken,Chicken Steak Combo,with drink and side,13.49,menu,2026-11-07,
+donair-town,Plates & wraps,Beef Plate,,12.99,menu,2026-11-07,
+donair-town,Plates & wraps,Donair Pita Wrap,,9.50,menu,2026-11-07,
+donair-town,Plates & wraps,Donair Mixed Pita Wrap,,10.50,menu,2026-11-07,
+donair-town,Plates & wraps,Hawaiian Donair Pita Wrap,,10.00,menu,2026-11-07,
+foodie-power,Rice bowls & drinks,"Rice Bowl, 3 dishes",,16.49,menu,2026-11-07,
+foodie-power,Rice bowls & drinks,"Rice Bowl, 2 dishes",,15.49,menu,2026-11-07,
+foodie-power,Rice bowls & drinks,Steamed Rice,,2.49,menu,2026-11-07,
+foodie-power,Rice bowls & drinks,Iced Lemon Tea,,2.99,menu,2026-11-07,
+foodie-power,Rice bowls & drinks,Ginger Ale,355 ml can,2.49,menu,2026-11-07,
+foodie-power,Rice bowls & drinks,Coca-Cola,355 ml can,2.49,menu,2026-11-07,I04
+foodie-power,Coffee,Freshly Brewed Coffee,,2.49,menu,2026-11-07,
+foodie-power,Coffee,Hot Chocolate,,2.99,menu,2026-11-07,
+foodie-power,Coffee,Caffe Mocha,,3.49,menu,2026-11-07,
+foodie-power,Coffee,Caffe Americano,,2.79,menu,2026-11-07,
+freshslice-pizza,Pizza by the Slice,1 Slice,"Choose from our Classic pizza selection, including Beef, Cheese, Hawaiian, Peppe",2.75,menu,2026-11-07,
+freshslice-pizza,Pizza by the Slice,1 Slice,"Choose one of our Feast pizzas, such as BBQ Chicken Bacon, Butter Chicken Feast",3.25,menu,2026-11-07,
+freshslice-pizza,Pizza by the Slice,2 Slices Combo,"Choose any 2 slices from our Classic or Feast pizzas, like BBQ Chicken Bacon, Bu",6.75,menu,2026-11-07,
+freshslice-pizza,Pizza by the Slice,3 Slices Combo,"Elevate your pizza experience with our 3 slices combo, mixing and matching from",8.75,menu,2026-11-07,
+freshslice-pizza,Pizza by the Slice,8 Classic Slices,"Choose any combination of 8 slices from our Classic pizza options, including Bee",17.59,menu,2026-11-07,
+freshslice-pizza,Pizza by the Slice,8 Feast Slices,"Enjoy 8 slices from our Feast pizza selection, like BBQ Chicken Bacon, Butter Ch",21.59,menu,2026-11-07,
+freshslice-pizza,Feast Pizzas,BBQ Chicken Bacon Feast,"A pizza with creamy white garlic sauce base, fresh mozzarella, cheddar, grilled",16.99,menu,2026-11-07,
+freshslice-pizza,Feast Pizzas,Butter Chicken Feast,"Creamy white garlic sauce base, mozzarella and cheddar, grilled chicken breast,",16.99,menu,2026-11-07,
+freshslice-pizza,Feast Pizzas,Combo Feast,"Zesty tomato sauce base, mozzarella cheese, green peppers, red onions, mushrooms",16.99,menu,2026-11-07,
+freshslice-pizza,Feast Pizzas,Italian Feast,"Tomato sauce base, mozzarella cheese, pepperoni, bacon, and ham.",16.99,menu,2026-11-07,
+freshslice-pizza,Feast Pizzas,Meat Lovers Feast,"Tomato sauce base, mozzarella cheese, pepperoni, sausage, bacon, beef, and ham.",16.99,menu,2026-11-07,
+freshslice-pizza,Feast Pizzas,Mediterranean Feast,"Tomato sauce base, mozzarella, green peppers, red onions, grape tomatoes, black",16.99,menu,2026-11-07,
+freshslice-pizza,Feast Pizzas,Fiesta Pesto Feast,"Tomato sauce, mozzarella, onion, red pepper, corn, jalapeno, green olive, pesto",16.99,menu,2026-11-07,
+freshslice-pizza,Feast Pizzas,Veggie Feast,"Tomato sauce base, mozzarella, spinach, red onions, mushrooms, grape tomatoes, a",16.99,menu,2026-11-07,
+freshslice-pizza,Classic Pizzas,Classic Pepperoni,"Zesty tomato sauce, mozzarella, and pepperoni.",15.99,menu,2026-11-07,
+freshslice-pizza,Classic Pizzas,Classic Veggie,"Zesty tomato sauce, mozzarella, and up to 2 veggie toppings of your choice.",15.99,menu,2026-11-07,
+freshslice-pizza,Classic Pizzas,Classic Hawaiian,"Zesty tomato sauce, mozzarella, ham, and pineapple.",15.99,menu,2026-11-07,
+freshslice-pizza,Classic Pizzas,Classic Beef,"Zesty tomato sauce, mozzarella, beef, and cheddar.",15.99,menu,2026-11-07,
+freshslice-pizza,Classic Pizzas,Classic Cheese,"Your choice of creamy white garlic sauce or zesty tomato sauce, with mozzarella",15.99,menu,2026-11-07,
+freshslice-pizza,Extras,Cheesy Bread,"Fresh baked multi-grain dough topped with cheese, served with marinara sauce.",6.99,menu,2026-11-07,
+freshslice-pizza,Extras,Chicken Wings,"Delicious chicken wings, baked to perfection, available in Hot, BBQ, or Plain.",9.99,menu,2026-11-07,
+freshslice-pizza,Extras,Freshslice Cares Brownie,A sweet treat where 100% of the proceeds go to the Freshslice Cares Association.,0.69,menu,2026-11-07,
+freshslice-pizza,Extras,Dips,"Choose from Ranch, Marinara, Classics Ranch, Cheesy Jalapeno, Roasted Garlic, An",0.99,menu,2026-11-07,
+granville-island-produce,Snacks,Banana,each,0.54,seed,2026-11-07,I20
+granville-island-produce,Snacks,Apple,each,1.09,seed,2026-11-07,I21
+granville-island-produce,Soft drinks & water,Bottled Water,500 ml,1.89,seed,2026-11-07,I06
+granville-island-produce,Soft drinks & water,Coca-Cola,355 ml can,1.99,seed,2026-11-07,I04
+granville-island-produce,Snacks,Lay's Classic Chips,40 g,1.99,seed,2026-11-07,I19
+granville-island-produce,Snacks,Clif Bar,68 g,2.39,seed,2026-11-07,I23
+granville-island-produce,Produce,Bananas,per lb,0.79,seed,2026-11-07,I20
+granville-island-produce,Produce,Gala Apples,per lb,1.99,seed,2026-11-07,I21
+granville-island-produce,Produce,Grapes,per lb,3.99,seed,2026-11-07,
+granville-island-produce,Produce,Strawberries,1 lb,4.99,seed,2026-11-07,
+granville-island-produce,Produce,Avocado,each,1.69,seed,2026-11-07,
+h-mart,Energy drinks,Red Bull Energy Drink,250 ml,3.19,seed,2026-11-07,I01
+h-mart,Energy drinks,Red Bull Energy Drink,355 ml,3.89,seed,2026-11-07,I22
+h-mart,Energy drinks,Red Bull Energy Drink,473 ml,5.09,seed,2026-11-07,
+h-mart,Energy drinks,Monster Energy,473 ml,3.19,seed,2026-11-07,I02
+h-mart,Soft drinks & water,Coca-Cola,355 ml can,1.89,seed,2026-11-07,I04
+h-mart,Soft drinks & water,Coca-Cola,591 ml bottle,2.79,seed,2026-11-07,I05
+h-mart,Soft drinks & water,Bottled Water,500 ml,1.89,seed,2026-11-07,I06
+h-mart,Snacks,Lay's Classic Chips,40 g,1.89,seed,2026-11-07,I19
+h-mart,Snacks,Clif Bar,68 g,2.29,seed,2026-11-07,I23
+h-mart,Snacks,Quest Protein Bar,60 g,3.29,seed,2026-11-07,I18
+h-mart,Snacks,Banana,each,0.56,seed,2026-11-07,I20
+h-mart,Snacks,Apple,each,1.09,seed,2026-11-07,I21
+h-mart,Grab & go,Sushi Pack (California Roll),8 pcs,6.75,seed,2026-11-07,I17
+h-mart,Grab & go,Pre-made Sandwich,,6.74,seed,2026-11-07,I15
+h-mart,Grocery,Shin Ramyun,cup,2.29,seed,2026-11-07,
+h-mart,Grocery,Kimbap,roll,7.99,seed,2026-11-07,
+h-mart,Grocery,Onigiri,,2.99,seed,2026-11-07,
+h-mart,Grocery,Banana Milk,200 ml,1.79,seed,2026-11-07,
+h-mart,Grocery,Asian Pear,each,2.49,seed,2026-11-07,
+kung-fu-noodle-ubc,Breakfast & dim sum,Beef Congee,,9.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Breakfast & dim sum,Veg Congee,,9.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Breakfast & dim sum,Mushroom and Chicken Congee,,9.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Breakfast & dim sum,Fish Congee,,9.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Breakfast & dim sum,Chinese Donut,,5.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Breakfast & dim sum,Xiaolong Bao,6 pcs,9.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Breakfast & dim sum,BBQ Pork Buns,2 pcs,7.75,menu,2026-11-07,
+kung-fu-noodle-ubc,Breakfast & dim sum,Custard Buns,2 pcs,7.35,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Wonton Soup,,9.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Wonton Soup with Noodles,,13.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Sausage Fried Rice,,14.75,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Veg Fried Rice,,14.75,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Assorted Fried Rice,,15.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Braised Pork on Rice,,13.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Spicy Beef Noodles,,15.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Lamb Noodles,,15.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Noodles with Meat Sauce,,13.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Dandan Noodles,,13.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Large Pork Dumplings,12 pcs,15.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Beef Chow Mein,,15.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Veg Chow Mein,,14.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Chicken Chow Mein,,15.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Yangzhou Fried Rice,,14.75,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Shrimp Fried Rice,,14.75,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Cumin Beef Chow Mein,,15.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Spicy Beef Soup with Dumplings,,15.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Spicy Beef Soup with Wontons,,15.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Mains,Lamb Soup,,11.45,menu,2026-11-07,
+kung-fu-noodle-ubc,Combos,Yangzhou Fried Rice Combo,,22.49,menu,2026-11-07,
+kung-fu-noodle-ubc,Combos,Spicy Beef Noodles Combo,,23.25,menu,2026-11-07,
+kung-fu-noodle-ubc,Combos,Lamb Noodle Soup Combo,,23.20,menu,2026-11-07,
+kung-fu-noodle-ubc,Combos,Noodle with Meat Sauce Combo,,21.25,menu,2026-11-07,
+kung-fu-noodle-ubc,Combos,Dandan Noodle Combo,,20.49,menu,2026-11-07,
+kung-fu-noodle-ubc,Combos,Braised Pork on Rice Combo,,20.75,menu,2026-11-07,
+kung-fu-noodle-ubc,Combos,Beef Chow Mein Combo,,22.75,menu,2026-11-07,
+kung-fu-noodle-ubc,Combos,Hot Soy Milk with Chinese Donut,,7.90,menu,2026-11-07,
+kung-fu-noodle-ubc,Combos,Cold Soy Milk with Chinese Donut,,7.90,menu,2026-11-07,
+kung-fu-noodle-ubc,Sides,Fried Chicken,,8.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Sides,Lamb Skewers,2 pcs,6.99,menu,2026-11-07,
+kung-fu-noodle-ubc,Sides,Crispy Spring Rolls,5 pcs,7.25,menu,2026-11-07,
+kung-fu-noodle-ubc,Sides,Fried Buns with Condensed Milk,,7.25,menu,2026-11-07,
+kung-fu-noodle-ubc,Sides,Taiwanese Sausage,1 pc,3.99,menu,2026-11-07,
+kung-fu-noodle-ubc,Sides,Crispy Popcorn Chicken,,11.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Sides,Blanched Greens,,6.99,menu,2026-11-07,
+kung-fu-noodle-ubc,Drinks,Wanglaoji Herbal Tea,can,2.99,menu,2026-11-07,
+kung-fu-noodle-ubc,Drinks,Cold Soy Milk,,2.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Drinks,Hot Soy Milk,,2.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Drinks,"Pop (Coke, Diet Coke, Canada Dry, Fanta, Sprite, Iced Tea)",can,2.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Bento,Crispy Chicken Bento,,16.95,menu,2026-11-07,
+kung-fu-noodle-ubc,Bento,Taiwanese Sausage Bento,,15.50,menu,2026-11-07,
+kung-fu-noodle-ubc,Bento,Salt and Pepper Chicken Bento,,14.95,menu,2026-11-07,
+mcdonald-s,Meals & wraps,Double Cheeseburger Extra Value Meal,,12.29,menu,2026-11-07,
+mcdonald-s,Meals & wraps,Double Hamburger Extra Value Meal,,8.59,menu,2026-11-07,
+mcdonald-s,Meals & wraps,Chicken & Bacon McWrap (grilled) Extra Value Meal,,17.39,menu,2026-11-07,
+mcdonald-s,Meals & wraps,Spicy Habanero McChicken Extra Value Meal,,12.49,menu,2026-11-07,
+mcdonald-s,Meals & wraps,10 McNuggets Extra Value Meal,,16.89,menu,2026-11-07,
+mcdonald-s,Meals & wraps,Filet-O-Fish Extra Value Meal,,12.19,menu,2026-11-07,
+mcdonald-s,Meals & wraps,Sweet Chili Fish McWrap Extra Value Meal,,16.28,menu,2026-11-07,
+mcdonald-s,Meals & wraps,Sweet Chili McWrap with Crispy Chicken,,9.59,menu,2026-11-07,
+meet-night-izakaya-japanese-restaurant,Izakaya,Chicken Karaage,,9.95,seed,2026-11-07,
+meet-night-izakaya-japanese-restaurant,Izakaya,Tonkotsu Ramen,,16.95,seed,2026-11-07,
+meet-night-izakaya-japanese-restaurant,Izakaya,Salmon Don,,18.95,seed,2026-11-07,
+meet-night-izakaya-japanese-restaurant,Izakaya,Takoyaki (6),,8.95,seed,2026-11-07,
+meet-night-izakaya-japanese-restaurant,Izakaya,Gyoza (6),,8.45,seed,2026-11-07,
+meet-night-izakaya-japanese-restaurant,Izakaya,Sapporo Beer,,7.50,seed,2026-11-07,
+meet-night-izakaya-japanese-restaurant,Soft drinks & water,Coca-Cola,355 ml can,2.69,seed,2026-11-07,I04
+meet-night-izakaya-japanese-restaurant,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+miyamae-sushi,Menu,Gyoza,,5.70,menu,2026-11-07,
+miyamae-sushi,Menu,Ton Katsu,,11.50,menu,2026-11-07,
+miyamae-sushi,Menu,BBQ Salmon Steak,with rice and salad,10.35,menu,2026-11-07,
+miyamae-sushi,Menu,Beef Udon,,8.65,menu,2026-11-07,
+my-home-cuisine,Chinese,Kung Pao Chicken with Rice,,15.95,seed,2026-11-07,
+my-home-cuisine,Chinese,Mapo Tofu with Rice,,14.45,seed,2026-11-07,
+my-home-cuisine,Chinese,Beef Noodle Soup,,15.95,seed,2026-11-07,
+my-home-cuisine,Chinese,Pork Dumplings (12),,13.95,seed,2026-11-07,
+my-home-cuisine,Chinese,Fried Rice,,13.95,seed,2026-11-07,
+my-home-cuisine,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+my-home-cuisine,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+only-u-cafe,Cafe (Asian fusion),Baked Pork Chop Rice,,15.95,seed,2026-11-07,
+only-u-cafe,Cafe (Asian fusion),HK Milk Tea,,4.75,seed,2026-11-07,
+only-u-cafe,Cafe (Asian fusion),Curry Beef Brisket Rice,,16.45,seed,2026-11-07,
+only-u-cafe,Cafe (Asian fusion),French Toast,,7.95,seed,2026-11-07,
+only-u-cafe,Cafe (Asian fusion),Club Sandwich,,13.95,seed,2026-11-07,
+only-u-cafe,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+only-u-cafe,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+pho-with-us,Vietnamese,Beef Pho,Regular,14.95,seed,2026-11-07,
+pho-with-us,Vietnamese,Chicken Pho,Regular,14.45,seed,2026-11-07,
+pho-with-us,Vietnamese,Banh Mi,,10.45,seed,2026-11-07,
+pho-with-us,Vietnamese,Vermicelli with Grilled Pork,,15.45,seed,2026-11-07,
+pho-with-us,Vietnamese,Vietnamese Iced Coffee,,5.95,seed,2026-11-07,
+pho-with-us,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+pho-with-us,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+pita-pit,Pitas,Chicken Souvlaki Pita,Regular,11.79,seed,2026-11-07,
+pita-pit,Pitas,Philly Steak Pita,Regular,12.49,seed,2026-11-07,
+pita-pit,Pitas,Falafel Pita,Regular,10.49,seed,2026-11-07,
+pita-pit,Pitas,Chicken Caesar Pita,Regular,11.29,seed,2026-11-07,
+pita-pit,Pitas,Pita Combo add-on (chips + drink),,4.29,seed,2026-11-07,
+pita-pit,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+pita-pit,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+pizza-garden,Pizza,Cheese Pizza Slice,,3.95,seed,2026-11-07,
+pizza-garden,Pizza,Pepperoni Pizza Slice,,4.25,seed,2026-11-07,
+pizza-garden,Pizza,Specialty Pizza Slice,,4.95,seed,2026-11-07,
+pizza-garden,Pizza,Slice + Pop Combo,,6.49,seed,2026-11-07,
+pizza-garden,Pizza,Large Pizza,,24.95,seed,2026-11-07,
+pizza-garden,Soft drinks & water,Coca-Cola,355 ml can,2.29,seed,2026-11-07,I04
+pizza-garden,Soft drinks & water,Bottled Water,500 ml,2.29,seed,2026-11-07,I06
+prime-news,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
+prime-news,Energy drinks,Red Bull Energy Drink,355 ml,4.79,seed,2026-11-07,I22
+prime-news,Energy drinks,Red Bull Energy Drink,473 ml,5.99,seed,2026-11-07,
+prime-news,Energy drinks,Monster Energy,473 ml,4.19,seed,2026-11-07,I02
+prime-news,Soft drinks & water,Coca-Cola,355 ml can,2.39,seed,2026-11-07,I04
+prime-news,Soft drinks & water,Coca-Cola,591 ml bottle,3.39,seed,2026-11-07,I05
+prime-news,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+prime-news,Snacks,Lay's Classic Chips,40 g,2.39,seed,2026-11-07,I19
+prime-news,Snacks,Clif Bar,68 g,3.09,seed,2026-11-07,I23
+prime-news,Snacks,Quest Protein Bar,60 g,4.29,seed,2026-11-07,I18
+prime-news,Snacks,Banana,each,0.75,seed,2026-11-07,I20
+prime-news,Snacks,Apple,each,1.39,seed,2026-11-07,I21
+prime-news,Grocery,Candy Bar,,2.29,seed,2026-11-07,
+prime-news,Grocery,Gum,pack,2.49,seed,2026-11-07,
+ramen-danbo-express,Ramen,Classic Tonkotsu Ramen,,17.25,seed,2026-11-07,
+ramen-danbo-express,Ramen,Spicy Tonkotsu Ramen,,18.25,seed,2026-11-07,
+ramen-danbo-express,Ramen,Vegan Ramen,,17.25,seed,2026-11-07,
+ramen-danbo-express,Ramen,Extra Noodles (Kaedama),,3.25,seed,2026-11-07,
+ramen-danbo-express,Ramen,Gyoza (5),,8.25,seed,2026-11-07,
+ramen-danbo-express,Ramen,Chashu Rice Bowl,,8.95,seed,2026-11-07,
+ramen-danbo-express,Soft drinks & water,Coca-Cola,355 ml can,2.89,seed,2026-11-07,I04
+ramen-danbo-express,Soft drinks & water,Bottled Water,500 ml,2.79,seed,2026-11-07,I06
+sahel,African / Middle Eastern,Jollof Rice with Chicken,,16.95,seed,2026-11-07,
+sahel,African / Middle Eastern,Beef Suya Plate,,17.95,seed,2026-11-07,
+sahel,African / Middle Eastern,Lentil Stew,,13.95,seed,2026-11-07,
+sahel,African / Middle Eastern,Plantains,,5.95,seed,2026-11-07,
+sahel,African / Middle Eastern,Mint Tea,,3.95,seed,2026-11-07,
+sahel,Soft drinks & water,Coca-Cola,355 ml can,2.79,seed,2026-11-07,I04
+sahel,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+starbucks-university-village,Coffee & tea,Brewed Coffee,Tall 12 oz,3.25,seed,2026-11-07,I08
+starbucks-university-village,Coffee & tea,Caffè Latte,Tall 12 oz,5.45,seed,2026-11-07,I10
+starbucks-university-village,Coffee & tea,Caffè Americano,Tall 12 oz,4.25,seed,2026-11-07,
+starbucks-university-village,Coffee & tea,Cappuccino,Tall 12 oz,5.45,seed,2026-11-07,
+starbucks-university-village,Coffee & tea,Caramel Macchiato,Tall 12 oz,6.25,seed,2026-11-07,
+starbucks-university-village,Coffee & tea,Teavana Hot Tea,Tall 12 oz,3.15,seed,2026-11-07,I11
+starbucks-university-village,Coffee & tea,Iced Shaken Espresso,Grande 16 oz,6.45,seed,2026-11-07,
+starbucks-university-village,Coffee & tea,Strawberry Açaí Refresher,Grande 16 oz,5.95,seed,2026-11-07,
+starbucks-university-village,Grab & go,Plain Bagel with Cream Cheese,,3.95,seed,2026-11-07,I13
+starbucks-university-village,Grab & go,Blueberry Muffin,,3.75,seed,2026-11-07,I14
+starbucks-university-village,Grab & go,Chocolate Chip Cookie,,3.25,seed,2026-11-07,
+starbucks-university-village,Grab & go,Turkey & Havarti Sandwich,,9.25,seed,2026-11-07,I15
+starbucks-university-village,Grab & go,"Egg, Pesto & Mozzarella Sandwich",,7.45,seed,2026-11-07,I15
+starbucks-university-village,Grab & go,Banana,each,0.95,seed,2026-11-07,I20
+starbucks-university-village,Soft drinks & water,Ethos Bottled Water,500 ml,2.95,seed,2026-11-07,I06
+starbucks-university-village,Energy drinks,Red Bull Energy Drink,250 ml,4.25,seed,2026-11-07,I01
+starbucks-university-village,Snacks,Clif Bar,68 g,3.25,seed,2026-11-07,I23
+subway-university-village,Subs,Italian B.M.T.,6 inch,9.99,seed,2026-11-07,
+subway-university-village,Subs,Italian B.M.T.,Footlong,15.99,seed,2026-11-07,
+subway-university-village,Subs,Turkey Breast,6 inch,9.79,seed,2026-11-07,
+subway-university-village,Subs,Chicken Teriyaki,6 inch,10.49,seed,2026-11-07,
+subway-university-village,Subs,Veggie Delite,6 inch,7.99,seed,2026-11-07,
+subway-university-village,Subs,Meatball Marinara,Footlong,13.99,seed,2026-11-07,
+subway-university-village,Subs,Sub Combo add-on (chips + drink),,4.49,seed,2026-11-07,
+subway-university-village,Grab & go,Cookie,,1.59,seed,2026-11-07,
+subway-university-village,Grab & go,Wrap (Chicken Caesar),,11.49,seed,2026-11-07,I16
+subway-university-village,Soft drinks & water,Coca-Cola,591 ml bottle,3.29,seed,2026-11-07,I05
+subway-university-village,Soft drinks & water,Dasani Water,591 ml,2.79,seed,2026-11-07,
+subway-university-village,Snacks,Lay's Classic Chips,40 g,2.19,seed,2026-11-07,I19
+vera-s-burger-shack,Burgers & family packs,Family Protein Basket,,83.00,menu,2026-11-07,
+vera-s-burger-shack,Burgers & family packs,"6 Vera Patties, 6 Buns, Vera’s Sauce",,25.00,menu,2026-11-07,
+vera-s-burger-shack,Burgers & family packs,"6 Veggie Patties, 6 Buns, Vera’s Sauce",,20.00,menu,2026-11-07,
+vera-s-burger-shack,Burgers & family packs,"6 Natural Patties, 6 Buns, Vera’s Sauce",,34.00,menu,2026-11-07,
+vera-s-burger-shack,Burgers & family packs,"6 Lamb Patties, 6 Buns, Vera’s Sauce",,36.00,menu,2026-11-07,
+vera-s-burger-shack,Burgers & family packs,"6 All beef Hot Dogs, 6 Buns, Vera’s Sauce",,12.00,menu,2026-11-07,
+vera-s-burger-shack,Burgers & family packs,6 Chicken Breasts,,14.00,menu,2026-11-07,
+vera-s-burger-shack,Burgers & family packs,6 Spicy Breaded Chicken Breasts,,12.00,menu,2026-11-07,
+vera-s-burger-shack,Burgers & family packs,6 Chicken Fingers,,8.00,menu,2026-11-07,
+vera-s-burger-shack,Burgers & family packs,24 Chicken Wings,,24.00,menu,2026-11-07,
+vera-s-burger-shack,Burgers & family packs,"6 Buns, Vera’s Sauce",,4.00,menu,2026-11-07,
+vera-s-burger-shack,Burgers & family packs,1lb Bacon,,12.00,menu,2026-11-07,
+want-want-hot-spicy-house,Sichuan,Spicy Hot Pot (Mala Xiang Guo),,22.95,seed,2026-11-07,
+want-want-hot-spicy-house,Sichuan,Chongqing Chicken,,18.95,seed,2026-11-07,
+want-want-hot-spicy-house,Sichuan,Dan Dan Noodles,,13.95,seed,2026-11-07,
+want-want-hot-spicy-house,Sichuan,Boiled Fish in Chili Oil,,24.95,seed,2026-11-07,
+want-want-hot-spicy-house,Sichuan,Steamed Rice,,2.50,seed,2026-11-07,
+want-want-hot-spicy-house,Soft drinks & water,Coca-Cola,355 ml can,2.69,seed,2026-11-07,I04
+want-want-hot-spicy-house,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+yang-s-braised-chicken-rice,Chinese,Braised Chicken Rice,Regular,14.95,seed,2026-11-07,
+yang-s-braised-chicken-rice,Chinese,Braised Chicken Rice,Large,16.95,seed,2026-11-07,
+yang-s-braised-chicken-rice,Chinese,Braised Pork Ribs Rice,,16.45,seed,2026-11-07,
+yang-s-braised-chicken-rice,Chinese,Extra Potato,,2.50,seed,2026-11-07,
+yang-s-braised-chicken-rice,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+yang-s-braised-chicken-rice,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+yunshang-rice-noodle-ubc,Rice noodle,Original Rice Noodle Soup,,15.95,seed,2026-11-07,
+yunshang-rice-noodle-ubc,Rice noodle,Spicy Rice Noodle Soup,,16.45,seed,2026-11-07,
+yunshang-rice-noodle-ubc,Rice noodle,Tomato Rice Noodle Soup,,16.45,seed,2026-11-07,
+yunshang-rice-noodle-ubc,Rice noodle,Sour & Spicy Beef Noodle,,17.45,seed,2026-11-07,
+yunshang-rice-noodle-ubc,Rice noodle,Marinated Egg,,2.00,seed,2026-11-07,
+yunshang-rice-noodle-ubc,Soft drinks & water,Coca-Cola,355 ml can,2.69,seed,2026-11-07,I04
+yunshang-rice-noodle-ubc,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+biercraft-wesbrook,Appetizers,Kettle Chips,,6.00,menu,2026-11-07,
+biercraft-wesbrook,Appetizers,Belgian Frites,,8.50,menu,2026-11-07,
+biercraft-wesbrook,Appetizers,Yam Fries,,9.25,menu,2026-11-07,
+biercraft-wesbrook,Appetizers,Poutine,,12.25,menu,2026-11-07,
+biercraft-wesbrook,Appetizers,Black and Blue Poutine,,15.00,menu,2026-11-07,
+biercraft-wesbrook,Appetizers,Spinach Artichoke Dip,,16.00,menu,2026-11-07,
+biercraft-wesbrook,Appetizers,Chicken Wings,,16.75,menu,2026-11-07,
+biercraft-wesbrook,Appetizers,Beyond Bratwurst,,9.75,menu,2026-11-07,
+big-star-sandwich-co,Sandwiches,Big Star Club,,15.95,seed,2026-11-07,
+big-star-sandwich-co,Sandwiches,Meatball Sub,,14.95,seed,2026-11-07,
+big-star-sandwich-co,Sandwiches,Veggie Sandwich,,13.45,seed,2026-11-07,
+big-star-sandwich-co,Sandwiches,Soup of the Day,,6.95,seed,2026-11-07,
+big-star-sandwich-co,Sandwiches,Kettle Chips,,2.75,seed,2026-11-07,
+big-star-sandwich-co,Soft drinks & water,Coca-Cola,355 ml can,2.69,seed,2026-11-07,I04
+big-star-sandwich-co,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+blenz-coffee,Coffee & tea,Brewed Coffee,Small 12 oz,2.95,seed,2026-11-07,I08
+blenz-coffee,Coffee & tea,Latte,Small 12 oz,5.15,seed,2026-11-07,I10
+blenz-coffee,Coffee & tea,Americano,Small 12 oz,3.85,seed,2026-11-07,
+blenz-coffee,Coffee & tea,Tea,Small 12 oz,3.25,seed,2026-11-07,I11
+blenz-coffee,Coffee & tea,Matcha Latte,Small 12 oz,5.75,seed,2026-11-07,
+blenz-coffee,Grab & go,Muffin,,3.65,seed,2026-11-07,I14
+blenz-coffee,Grab & go,Cookie,,2.95,seed,2026-11-07,
+blenz-coffee,Grab & go,Bagel with Cream Cheese,,3.95,seed,2026-11-07,I13
+blenz-coffee,Grab & go,Breakfast Sandwich,,6.95,seed,2026-11-07,
+blenz-coffee,Soft drinks & water,Bottled Water,500 ml,2.49,seed,2026-11-07,I06
+blenz-coffee,Snacks,Banana,each,0.77,seed,2026-11-07,I20
+chef-hung-taiwanese-beef-noodle,Taiwanese,Champion Beef Noodle Soup,,19.95,seed,2026-11-07,
+chef-hung-taiwanese-beef-noodle,Taiwanese,Spicy Beef Noodle Soup,,18.95,seed,2026-11-07,
+chef-hung-taiwanese-beef-noodle,Taiwanese,Braised Pork Rice,,9.95,seed,2026-11-07,
+chef-hung-taiwanese-beef-noodle,Taiwanese,Wontons in Chili Oil,,10.95,seed,2026-11-07,
+chef-hung-taiwanese-beef-noodle,Taiwanese,Taiwanese Pickled Cabbage,,5.95,seed,2026-11-07,
+chef-hung-taiwanese-beef-noodle,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+chef-hung-taiwanese-beef-noodle,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+doughgirls,Bakery,Cinnamon Bun,,5.50,seed,2026-11-07,
+doughgirls,Bakery,Croissant,,4.25,seed,2026-11-07,
+doughgirls,Bakery,Muffin,,4.25,seed,2026-11-07,I14
+doughgirls,Bakery,Cookie,,3.50,seed,2026-11-07,
+doughgirls,Bakery,Breakfast Sandwich,,9.50,seed,2026-11-07,
+doughgirls,Bakery,Drip Coffee,12 oz,3.25,seed,2026-11-07,I08
+doughgirls,Bakery,Latte,12 oz,5.50,seed,2026-11-07,I10
+doughgirls,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+freshii,Bowls & wraps,Teriyaki Twister Bowl,,14.49,seed,2026-11-07,
+freshii,Bowls & wraps,Buddha's Satay Bowl,,14.49,seed,2026-11-07,
+freshii,Bowls & wraps,Cobb Salad,,14.99,seed,2026-11-07,
+freshii,Bowls & wraps,Smoky Chicken Wrap,,12.99,seed,2026-11-07,
+freshii,Bowls & wraps,Pangoa Burrito,,13.49,seed,2026-11-07,
+freshii,Bowls & wraps,Green Machine Smoothie,,8.49,seed,2026-11-07,
+freshii,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
+freshii,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
+neptune-chinese-kitchen,Cantonese,Wonton Noodle Soup,,14.95,seed,2026-11-07,
+neptune-chinese-kitchen,Cantonese,Honey BBQ Pork on Rice,,16.95,seed,2026-11-07,
+neptune-chinese-kitchen,Cantonese,Beef Brisket Noodle Soup,,16.45,seed,2026-11-07,
+neptune-chinese-kitchen,Cantonese,Beef Chow Fun,,18.95,seed,2026-11-07,
+neptune-chinese-kitchen,Cantonese,HK Milk Tea,,4.75,seed,2026-11-07,
+neptune-chinese-kitchen,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+neptune-chinese-kitchen,Soft drinks & water,Bottled Water,500 ml,2.79,seed,2026-11-07,I06
+nicli-pizzeria-bar,Pizza,Margherita Pizza,,21.00,seed,2026-11-07,
+nicli-pizzeria-bar,Pizza,Diavola Pizza,,24.00,seed,2026-11-07,
+nicli-pizzeria-bar,Pizza,Caesar Salad,,15.00,seed,2026-11-07,
+nicli-pizzeria-bar,Pizza,Spaghetti Pomodoro,,22.00,seed,2026-11-07,
+nicli-pizzeria-bar,Pizza,Tiramisu,,11.00,seed,2026-11-07,
+nicli-pizzeria-bar,Soft drinks & water,Coca-Cola,355 ml can,3.75,seed,2026-11-07,I04
+nicli-pizzeria-bar,Soft drinks & water,San Pellegrino,500 ml,4.50,seed,2026-11-07,
+poke-by-ryuu,Poke,Regular Poke Bowl,,15.45,seed,2026-11-07,
+poke-by-ryuu,Poke,Large Poke Bowl,,18.45,seed,2026-11-07,
+poke-by-ryuu,Poke,Salmon Lover Bowl,,16.95,seed,2026-11-07,
+poke-by-ryuu,Poke,Spicy Tuna Bowl,,16.95,seed,2026-11-07,
+poke-by-ryuu,Poke,Miso Soup,,2.95,seed,2026-11-07,
+poke-by-ryuu,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
+poke-by-ryuu,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
+save-on-foods-wesbrook-village,Energy drinks,Red Bull Energy Drink,250 ml,3.09,seed,2026-11-07,I01
+save-on-foods-wesbrook-village,Energy drinks,Red Bull Energy Drink,355 ml,3.79,seed,2026-11-07,I22
+save-on-foods-wesbrook-village,Energy drinks,Red Bull Energy Drink,473 ml,4.99,seed,2026-11-07,
+save-on-foods-wesbrook-village,Energy drinks,Monster Energy,473 ml,3.29,seed,2026-11-07,I02
+save-on-foods-wesbrook-village,Soft drinks & water,Coca-Cola,355 ml can,1.89,seed,2026-11-07,I04
+save-on-foods-wesbrook-village,Soft drinks & water,Coca-Cola,591 ml bottle,2.79,seed,2026-11-07,I05
+save-on-foods-wesbrook-village,Soft drinks & water,Bottled Water,500 ml,1.99,seed,2026-11-07,I06
+save-on-foods-wesbrook-village,Snacks,Lay's Classic Chips,40 g,1.89,seed,2026-11-07,I19
+save-on-foods-wesbrook-village,Snacks,Clif Bar,68 g,2.39,seed,2026-11-07,I23
+save-on-foods-wesbrook-village,Snacks,Quest Protein Bar,60 g,3.39,seed,2026-11-07,I18
+save-on-foods-wesbrook-village,Snacks,Banana,each,0.35,seed,2026-11-07,I20
+save-on-foods-wesbrook-village,Snacks,Apple,each,1.09,seed,2026-11-07,I21
+save-on-foods-wesbrook-village,Grab & go,Sushi Pack (California Roll),8 pcs,7.25,seed,2026-11-07,I17
+save-on-foods-wesbrook-village,Grab & go,Pre-made Sandwich,,6.74,seed,2026-11-07,I15
+save-on-foods-wesbrook-village,Grab & go,Wrap,,7.49,seed,2026-11-07,I16
+save-on-foods-wesbrook-village,Grab & go,Bagel with Cream Cheese,,3.24,seed,2026-11-07,I13
+save-on-foods-wesbrook-village,Grab & go,Muffin,,2.74,seed,2026-11-07,I14
+save-on-foods-wesbrook-village,Grab & go,Cookie,,2.49,seed,2026-11-07,
+save-on-foods-wesbrook-village,Hot food bar,Hot Food Bar,per 100 g,2.79,seed,2026-11-07,
+save-on-foods-wesbrook-village,Hot food bar,Rotisserie Chicken,whole,13.99,seed,2026-11-07,
+save-on-foods-wesbrook-village,Hot food bar,Chicken Strips (4 pc),,9.99,seed,2026-11-07,
+save-on-foods-wesbrook-village,Grocery,Bottled Water 24-pack,500 ml x 24,4.99,seed,2026-11-07,
+save-on-foods-wesbrook-village,Grocery,Coca-Cola 12-pack,355 ml x 12,9.99,seed,2026-11-07,
+save-on-foods-wesbrook-village,Grocery,Red Bull 4-pack,250 ml x 4,11.99,seed,2026-11-07,
+sharetea,Bubble tea,Classic Pearl Milk Tea,Large,6.75,seed,2026-11-07,
+sharetea,Bubble tea,Brown Sugar Pearl Milk,Large,7.45,seed,2026-11-07,
+sharetea,Bubble tea,Taro Pearl Milk Tea,Large,6.95,seed,2026-11-07,
+sharetea,Bubble tea,Mango Green Tea,Large,6.45,seed,2026-11-07,
+sharetea,Bubble tea,Wintermelon Lemonade,Large,6.45,seed,2026-11-07,
+shoppers-drug-mart-wesbrook-village,Energy drinks,Red Bull Energy Drink,250 ml,3.49,seed,2026-11-07,I01
+shoppers-drug-mart-wesbrook-village,Energy drinks,Red Bull Energy Drink,355 ml,4.39,seed,2026-11-07,I22
+shoppers-drug-mart-wesbrook-village,Energy drinks,Red Bull Energy Drink,473 ml,5.59,seed,2026-11-07,
+shoppers-drug-mart-wesbrook-village,Energy drinks,Monster Energy,473 ml,3.79,seed,2026-11-07,I02
+shoppers-drug-mart-wesbrook-village,Soft drinks & water,Coca-Cola,355 ml can,2.19,seed,2026-11-07,I04
+shoppers-drug-mart-wesbrook-village,Soft drinks & water,Coca-Cola,591 ml bottle,3.19,seed,2026-11-07,I05
+shoppers-drug-mart-wesbrook-village,Soft drinks & water,Bottled Water,500 ml,2.29,seed,2026-11-07,I06
+shoppers-drug-mart-wesbrook-village,Snacks,Lay's Classic Chips,40 g,2.19,seed,2026-11-07,I19
+shoppers-drug-mart-wesbrook-village,Snacks,Clif Bar,68 g,2.69,seed,2026-11-07,I23
+shoppers-drug-mart-wesbrook-village,Snacks,Quest Protein Bar,60 g,3.79,seed,2026-11-07,I18
+shoppers-drug-mart-wesbrook-village,Grocery,PC Bottled Water 24-pack,500 ml x 24,4.49,seed,2026-11-07,
+shoppers-drug-mart-wesbrook-village,Grocery,Instant Noodles,cup,1.99,seed,2026-11-07,
+sports-illustrated-clubhouse,Starters,Southern Fried Chicken Tenders,,19.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Campus Wings,,18.75,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Spicy Tuna Smash,,20.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Dragonroll Z,,20.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Sticky Chicken Lettuce Wraps,,21.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Siu Mai,,12.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Sweet & Spicy Crunch Cauliflower,,13.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Mighty Nachos,,25.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Ahi Tuna Nachos,,25.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Chips & Guac,,15.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Brussels + Bellies,,17.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Burrata Caprese,,25.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Brown Sugar Ribs,,18.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Starters,Truffle Fries,,13.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Salads,Ceasar & Cleopatra,,18.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Salads,House Salad,,17.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Salads,Santa Fe Salad,,24.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Salads,Santorini Salad,,18.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Tacos,Carnitas Supreme Tacos,,17.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Tacos,Fuego Tinga Tacos,,17.75,menu,2026-11-07,
+sports-illustrated-clubhouse,Sides & Add-ons,Side Mixed Green Salad,,6.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Sides & Add-ons,Side Cleo,,6.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Sides & Add-ons,Side Truffle Fries,,8.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Sides & Add-ons,Pan Seared 5oz Salmon,,10.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Sides & Add-ons,Grilled 5oz Chicken Breast,,7.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Sides & Add-ons,Pulled Pork,,6.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Bowls,Kung Pao Bowl,,24.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Bowls,Thai Red Curry Bowl,,25.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Bowls,Ahi Tuna Bowl,,25.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Bowls,Maple Chili Salmon Bowl,,26.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Bowls,Wholesome Bowl (vegetarian),,22.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),BLT DLX,,17.75,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),Chicken Satay Banh Mi,,24.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),Crispy Ahi Tuna Club,,24.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),Nashville Chicken Sando,,24.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),Super Smash Burger - Single,,18.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),Super Smash Burger - Double,,21.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),Super Smash Burger - Triple,,24.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),SIC Classic Burger,,21.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),Impossibly Classic Burger,,23.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),Baws Hawg Burger,,24.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),California Club Sandwich,,23.50,menu,2026-11-07,
+sports-illustrated-clubhouse,Handhelds (served with fries),Big Catch Sando,,22.50,menu,2026-11-07,
+sports-illustrated-clubhouse,SI Signatures,Smoked Old Fashioned Salmon,,32.00,menu,2026-11-07,
+sports-illustrated-clubhouse,SI Signatures,12oz Ribeye,,49.00,menu,2026-11-07,
+sports-illustrated-clubhouse,SI Signatures,Thai Coconut Mussels,,27.50,menu,2026-11-07,
+sports-illustrated-clubhouse,SI Signatures,Pappardelle Primavera,,24.00,menu,2026-11-07,
+sports-illustrated-clubhouse,SI Signatures,Big Sugar Ribs,,34.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Dessert,Key Lime Pie,,12.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Dessert,Sizzling Chocolate Brownie,,12.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Kids Menu,Single Smash Burger and Fries,,12.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Kids Menu,Grilled Cheese and Fries,,12.00,menu,2026-11-07,
+sports-illustrated-clubhouse,Kids Menu,Chicken Tenders and Fries,,12.00,menu,2026-11-07,
+starbucks-inside-save-on-foods,Coffee & tea,Brewed Coffee,Tall 12 oz,3.25,seed,2026-11-07,I08
+starbucks-inside-save-on-foods,Coffee & tea,Caffè Latte,Tall 12 oz,5.45,seed,2026-11-07,I10
+starbucks-inside-save-on-foods,Coffee & tea,Caffè Americano,Tall 12 oz,4.25,seed,2026-11-07,
+starbucks-inside-save-on-foods,Coffee & tea,Cappuccino,Tall 12 oz,5.45,seed,2026-11-07,
+starbucks-inside-save-on-foods,Coffee & tea,Caramel Macchiato,Tall 12 oz,6.25,seed,2026-11-07,
+starbucks-inside-save-on-foods,Coffee & tea,Teavana Hot Tea,Tall 12 oz,3.15,seed,2026-11-07,I11
+starbucks-inside-save-on-foods,Coffee & tea,Iced Shaken Espresso,Grande 16 oz,6.45,seed,2026-11-07,
+starbucks-inside-save-on-foods,Coffee & tea,Strawberry Açaí Refresher,Grande 16 oz,5.95,seed,2026-11-07,
+starbucks-inside-save-on-foods,Grab & go,Plain Bagel with Cream Cheese,,3.95,seed,2026-11-07,I13
+starbucks-inside-save-on-foods,Grab & go,Blueberry Muffin,,3.75,seed,2026-11-07,I14
+starbucks-inside-save-on-foods,Grab & go,Chocolate Chip Cookie,,3.25,seed,2026-11-07,
+starbucks-inside-save-on-foods,Grab & go,Turkey & Havarti Sandwich,,9.25,seed,2026-11-07,I15
+starbucks-inside-save-on-foods,Grab & go,"Egg, Pesto & Mozzarella Sandwich",,7.45,seed,2026-11-07,I15
+starbucks-inside-save-on-foods,Grab & go,Banana,each,0.95,seed,2026-11-07,I20
+starbucks-inside-save-on-foods,Soft drinks & water,Ethos Bottled Water,500 ml,2.95,seed,2026-11-07,I06
+starbucks-inside-save-on-foods,Energy drinks,Red Bull Energy Drink,250 ml,4.25,seed,2026-11-07,I01
+starbucks-inside-save-on-foods,Snacks,Clif Bar,68 g,3.25,seed,2026-11-07,I23
+togo-sushi,Sushi combos,California Combo,,15.95,menu,2026-11-07,
+togo-sushi,Sushi combos,Dynamite Combo,,17.35,menu,2026-11-07,
+togo-sushi,Sushi combos,Maki Sushi Combo,,17.35,menu,2026-11-07,
+togo-sushi,Sushi combos,Nigiri Sushi Combo,,20.65,menu,2026-11-07,
+togo-sushi,Sushi combos,Veggie Maki Combo,,16.50,menu,2026-11-07,
+togo-sushi,Sushi combos,Deluxe Sushi Combo,,28.00,menu,2026-11-07,
+togo-sushi,Sushi combos,Spicy Salmon Combo,,22.00,menu,2026-11-07,
+togo-sushi,Sushi combos,Spicy Tuna Combo,,22.00,menu,2026-11-07,
+togo-sushi,Sushi combos,Sashimi & Nigiri Combo,,22.00,menu,2026-11-07,
+togo-sushi,Sushi combos,Deluxe Nigiri Combo,,33.00,menu,2026-11-07,
+ubc-farm-farmers-market,Produce (seasonal),Apples,per lb,3.00,seed,2026-11-07,I21
+ubc-farm-farmers-market,Produce (seasonal),Squash,each,4.00,seed,2026-11-07,
+ubc-farm-farmers-market,Produce (seasonal),Salad Greens,bag,5.00,seed,2026-11-07,
+ubc-farm-farmers-market,Produce (seasonal),Carrots,bunch,4.00,seed,2026-11-07,
+ubc-farm-farmers-market,Produce (seasonal),Kale,bunch,4.00,seed,2026-11-07,
+ubc-farm-farmers-market,Produce (seasonal),Apple,each,1.00,seed,2026-11-07,I21
