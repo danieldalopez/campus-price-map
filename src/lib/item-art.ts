@@ -3,8 +3,8 @@
 
 import type { Item } from "./types";
 
-/** Items without their own sticker borrow a close one: the other Red Bull size, and a second protein bar. */
-const ART_ALIAS: Record<string, string> = { I22: "I01", I23: "I18" };
+/** Items without their own sticker borrow a close one: the other Red Bull sizes, and a second protein bar. */
+const ART_ALIAS: Record<string, string> = { I22: "I01", I23: "I18", I24: "I01" };
 
 export function itemArtSrc(item: Pick<Item, "id">): string {
   return `/items/${ART_ALIAS[item.id] ?? item.id}.webp`;

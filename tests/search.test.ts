@@ -38,6 +38,7 @@ const ITEMS = [
   ["I21", "Apple", "each", "Fruit", "apple"],
   ["I22", "Red Bull", "355 ml can", "Energy drinks", "red bull 355|big red bull"],
   ["I23", "Clif Bar", "68 g", "Snacks", "clif|clif bar|cliff bar|energy bar"],
+  ["I24", "Red Bull", "473 ml can", "Energy drinks", "red bull 473|tall red bull|large red bull"],
 ].map(([id, name, size, category, aliases]) => ({ id, name, size, category, aliases: parseAliases(aliases) }));
 
 const ids = (query: string) => searchItems(query, ITEMS).items.map((i) => i.id);
@@ -75,6 +76,7 @@ describe("searchItems", () => {
     assert.equal(r.kind, "match");
     assert.equal(first("Redbull"), "I01");
     assert.ok(ids("Redbull").includes("I22"), "the 355 ml can is listed too");
+    assert.ok(ids("Redbull").includes("I24"), "and the 473 ml can");
   });
 
   it("red-bull finds Red Bull", () => {

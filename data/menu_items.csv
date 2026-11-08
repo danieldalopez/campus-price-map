@@ -203,7 +203,7 @@ grand-noodle-emporium,Ramen and Noodle,"""Grand"" Dan Dan Noodle",,13.99,menu,20
 grand-noodle-emporium,Contains Pork,Miso Roasted Chicken Ramen,,12.99,menu,2026-11-07,
 grocery-checkout,Energy drinks,Red Bull Energy Drink,250 ml,3.59,seed,2026-11-07,I01
 grocery-checkout,Energy drinks,Red Bull Energy Drink,355 ml,4.49,seed,2026-11-07,I22
-grocery-checkout,Energy drinks,Red Bull Energy Drink,473 ml,5.69,seed,2026-11-07,
+grocery-checkout,Energy drinks,Red Bull Energy Drink,473 ml,5.69,seed,2026-11-07,I24
 grocery-checkout,Energy drinks,Monster Energy,473 ml,3.69,seed,2026-11-07,I02
 grocery-checkout,Soft drinks & water,Coca-Cola,355 ml can,2.19,seed,2026-11-07,I04
 grocery-checkout,Soft drinks & water,Coca-Cola,591 ml bottle,3.19,seed,2026-11-07,I05
@@ -271,7 +271,7 @@ honour-roll,Dessert,Bean Dorayaki,,3.99,menu,2026-11-07,
 honour-roll,Dessert,Mango Pudding,,3.99,menu,2026-11-07,
 ins-market,Energy drinks,Red Bull Energy Drink,250 ml,3.99,seed,2026-11-07,I01
 ins-market,Energy drinks,Red Bull Energy Drink,355 ml,4.99,seed,2026-11-07,I22
-ins-market,Energy drinks,Red Bull Energy Drink,473 ml,5.50,seed,2026-11-07,
+ins-market,Energy drinks,Red Bull Energy Drink,473 ml,5.50,seed,2026-11-07,I24
 ins-market,Energy drinks,Monster Energy,473 ml,4.19,seed,2026-11-07,I02
 ins-market,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
 ins-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.39,seed,2026-11-07,I05
@@ -323,7 +323,7 @@ the-delly,Featured,Smoked Turkey Hoagie,,9.14,menu,2026-11-07,
 the-delly,Featured,Chicken Salad Triangle Sandwich,,8.56,menu,2026-11-07,
 thirstyyy,Energy drinks,Red Bull Energy Drink,250 ml,4.09,seed,2026-11-07,I01
 thirstyyy,Energy drinks,Red Bull Energy Drink,355 ml,4.69,seed,2026-11-07,I22
-thirstyyy,Energy drinks,Red Bull Energy Drink,473 ml,5.89,seed,2026-11-07,
+thirstyyy,Energy drinks,Red Bull Energy Drink,473 ml,5.89,seed,2026-11-07,I24
 thirstyyy,Energy drinks,Monster Energy,473 ml,4.29,seed,2026-11-07,I02
 thirstyyy,Soft drinks & water,Coca-Cola,355 ml can,2.39,seed,2026-11-07,I04
 thirstyyy,Soft drinks & water,Coca-Cola,591 ml bottle,3.49,seed,2026-11-07,I05
@@ -403,7 +403,7 @@ subway-life-building,Soft drinks & water,Dasani Water,591 ml,2.79,seed,2026-11-0
 subway-life-building,Snacks,Lay's Classic Chips,40 g,2.19,seed,2026-11-07,I19
 corner-store,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
 corner-store,Energy drinks,Red Bull Energy Drink,355 ml,4.59,seed,2026-11-07,I22
-corner-store,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,
+corner-store,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,I24
 corner-store,Energy drinks,Monster Energy,473 ml,4.19,seed,2026-11-07,I02
 corner-store,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
 corner-store,Soft drinks & water,Coca-Cola,591 ml bottle,3.39,seed,2026-11-07,I05
@@ -617,7 +617,7 @@ sesame,Soft drinks & water,Coca-Cola,355 ml can,2.79,seed,2026-11-07,I04
 sesame,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
 shoppers-drug-mart-university-blvd,Energy drinks,Red Bull Energy Drink,250 ml,3.59,seed,2026-11-07,I01
 shoppers-drug-mart-university-blvd,Energy drinks,Red Bull Energy Drink,355 ml,4.19,seed,2026-11-07,I22
-shoppers-drug-mart-university-blvd,Energy drinks,Red Bull Energy Drink,473 ml,5.39,seed,2026-11-07,
+shoppers-drug-mart-university-blvd,Energy drinks,Red Bull Energy Drink,473 ml,5.39,seed,2026-11-07,I24
 shoppers-drug-mart-university-blvd,Energy drinks,Monster Energy,473 ml,3.89,seed,2026-11-07,I02
 shoppers-drug-mart-university-blvd,Soft drinks & water,Coca-Cola,355 ml can,2.29,seed,2026-11-07,I04
 shoppers-drug-mart-university-blvd,Soft drinks & water,Coca-Cola,591 ml bottle,2.99,seed,2026-11-07,I05
@@ -643,7 +643,7 @@ uncle-fatih-s-pizza,Soft drinks & water,Coca-Cola,355 ml can,2.29,seed,2026-11-0
 uncle-fatih-s-pizza,Soft drinks & water,Bottled Water,500 ml,2.19,seed,2026-11-07,I06
 avenue-c-neville-scarfe,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
 avenue-c-neville-scarfe,Energy drinks,Red Bull Energy Drink,355 ml,4.59,seed,2026-11-07,I22
-avenue-c-neville-scarfe,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,
+avenue-c-neville-scarfe,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,I24
 avenue-c-neville-scarfe,Energy drinks,Monster Energy,473 ml,4.29,seed,2026-11-07,I02
 avenue-c-neville-scarfe,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
 avenue-c-neville-scarfe,Soft drinks & water,Coca-Cola,591 ml bottle,3.59,seed,2026-11-07,I05
@@ -968,7 +968,7 @@ triple-o-s,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
 triple-o-s,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
 harvest-market,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
 harvest-market,Energy drinks,Red Bull Energy Drink,355 ml,4.39,seed,2026-11-07,I22
-harvest-market,Energy drinks,Red Bull Energy Drink,473 ml,5.59,seed,2026-11-07,
+harvest-market,Energy drinks,Red Bull Energy Drink,473 ml,5.59,seed,2026-11-07,I24
 harvest-market,Energy drinks,Monster Energy,473 ml,3.99,seed,2026-11-07,I02
 harvest-market,Soft drinks & water,Coca-Cola,355 ml can,2.29,seed,2026-11-07,I04
 harvest-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.39,seed,2026-11-07,I05
@@ -1007,7 +1007,7 @@ hero-coffee-market,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07
 hero-coffee-market,Snacks,Banana,each,0.72,seed,2026-11-07,I20
 hero-coffee-market,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
 hero-coffee-market,Energy drinks,Red Bull Energy Drink,355 ml,4.99,seed,2026-11-07,I22
-hero-coffee-market,Energy drinks,Red Bull Energy Drink,473 ml,6.19,seed,2026-11-07,
+hero-coffee-market,Energy drinks,Red Bull Energy Drink,473 ml,6.19,seed,2026-11-07,I24
 hero-coffee-market,Energy drinks,Monster Energy,473 ml,4.29,seed,2026-11-07,I02
 hero-coffee-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.29,seed,2026-11-07,I05
 hero-coffee-market,Snacks,Lay's Classic Chips,40 g,2.39,seed,2026-11-07,I19
@@ -1044,7 +1044,7 @@ feast,All-you-care-to-eat (door price),Dinner entry,,19.75,seed,2026-11-07,
 feast,Grab & go,Fruit (apple / banana),each,1.00,seed,2026-11-07,I20|I21
 gage-market,Energy drinks,Red Bull Energy Drink,250 ml,3.99,seed,2026-11-07,I01
 gage-market,Energy drinks,Red Bull Energy Drink,355 ml,5.09,seed,2026-11-07,I22
-gage-market,Energy drinks,Red Bull Energy Drink,473 ml,6.29,seed,2026-11-07,
+gage-market,Energy drinks,Red Bull Energy Drink,473 ml,6.29,seed,2026-11-07,I24
 gage-market,Energy drinks,Monster Energy,473 ml,4.39,seed,2026-11-07,I02
 gage-market,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
 gage-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.59,seed,2026-11-07,I05
@@ -1083,7 +1083,7 @@ great-dane-coffee,Snacks,Banana,each,0.78,seed,2026-11-07,I20
 great-dane-coffee,Grab & go,Danish Pastry,,4.50,seed,2026-11-07,
 hero-harvest,Energy drinks,Red Bull Energy Drink,250 ml,3.79,seed,2026-11-07,I01
 hero-harvest,Energy drinks,Red Bull Energy Drink,355 ml,4.79,seed,2026-11-07,I22
-hero-harvest,Energy drinks,Red Bull Energy Drink,473 ml,5.99,seed,2026-11-07,
+hero-harvest,Energy drinks,Red Bull Energy Drink,473 ml,5.99,seed,2026-11-07,I24
 hero-harvest,Energy drinks,Monster Energy,473 ml,4.09,seed,2026-11-07,I02
 hero-harvest,Soft drinks & water,Coca-Cola,355 ml can,2.39,seed,2026-11-07,I04
 hero-harvest,Soft drinks & water,Coca-Cola,591 ml bottle,3.19,seed,2026-11-07,I05
@@ -1105,7 +1105,7 @@ hero-harvest,Coffee & tea,Americano,12 oz,4.00,seed,2026-11-07,
 hero-harvest,Coffee & tea,Tea,12 oz,2.74,seed,2026-11-07,I11
 hubbards-global-market,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
 hubbards-global-market,Energy drinks,Red Bull Energy Drink,355 ml,4.59,seed,2026-11-07,I22
-hubbards-global-market,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,
+hubbards-global-market,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,I24
 hubbards-global-market,Energy drinks,Monster Energy,473 ml,4.29,seed,2026-11-07,I02
 hubbards-global-market,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
 hubbards-global-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.49,seed,2026-11-07,I05
@@ -1132,7 +1132,7 @@ korean-home-meal,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I
 korean-home-meal,Soft drinks & water,Bottled Water,500 ml,2.69,seed,2026-11-07,I06
 magda-s-night-market,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
 magda-s-night-market,Energy drinks,Red Bull Energy Drink,355 ml,4.59,seed,2026-11-07,I22
-magda-s-night-market,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,
+magda-s-night-market,Energy drinks,Red Bull Energy Drink,473 ml,5.79,seed,2026-11-07,I24
 magda-s-night-market,Energy drinks,Monster Energy,473 ml,4.19,seed,2026-11-07,I02
 magda-s-night-market,Soft drinks & water,Coca-Cola,355 ml can,2.49,seed,2026-11-07,I04
 magda-s-night-market,Soft drinks & water,Coca-Cola,591 ml bottle,3.69,seed,2026-11-07,I05
@@ -1293,7 +1293,7 @@ granville-island-produce,Produce,Strawberries,1 lb,4.99,seed,2026-11-07,
 granville-island-produce,Produce,Avocado,each,1.69,seed,2026-11-07,
 h-mart,Energy drinks,Red Bull Energy Drink,250 ml,3.19,seed,2026-11-07,I01
 h-mart,Energy drinks,Red Bull Energy Drink,355 ml,3.89,seed,2026-11-07,I22
-h-mart,Energy drinks,Red Bull Energy Drink,473 ml,5.09,seed,2026-11-07,
+h-mart,Energy drinks,Red Bull Energy Drink,473 ml,5.09,seed,2026-11-07,I24
 h-mart,Energy drinks,Monster Energy,473 ml,3.19,seed,2026-11-07,I02
 h-mart,Soft drinks & water,Coca-Cola,355 ml can,1.89,seed,2026-11-07,I04
 h-mart,Soft drinks & water,Coca-Cola,591 ml bottle,2.79,seed,2026-11-07,I05
@@ -1418,7 +1418,7 @@ pizza-garden,Soft drinks & water,Coca-Cola,355 ml can,2.29,seed,2026-11-07,I04
 pizza-garden,Soft drinks & water,Bottled Water,500 ml,2.29,seed,2026-11-07,I06
 prime-news,Energy drinks,Red Bull Energy Drink,250 ml,3.89,seed,2026-11-07,I01
 prime-news,Energy drinks,Red Bull Energy Drink,355 ml,4.79,seed,2026-11-07,I22
-prime-news,Energy drinks,Red Bull Energy Drink,473 ml,5.99,seed,2026-11-07,
+prime-news,Energy drinks,Red Bull Energy Drink,473 ml,5.99,seed,2026-11-07,I24
 prime-news,Energy drinks,Monster Energy,473 ml,4.19,seed,2026-11-07,I02
 prime-news,Soft drinks & water,Coca-Cola,355 ml can,2.39,seed,2026-11-07,I04
 prime-news,Soft drinks & water,Coca-Cola,591 ml bottle,3.39,seed,2026-11-07,I05
@@ -1586,7 +1586,7 @@ poke-by-ryuu,Soft drinks & water,Coca-Cola,355 ml can,2.59,seed,2026-11-07,I04
 poke-by-ryuu,Soft drinks & water,Bottled Water,500 ml,2.59,seed,2026-11-07,I06
 save-on-foods-wesbrook-village,Energy drinks,Red Bull Energy Drink,250 ml,3.09,seed,2026-11-07,I01
 save-on-foods-wesbrook-village,Energy drinks,Red Bull Energy Drink,355 ml,3.79,seed,2026-11-07,I22
-save-on-foods-wesbrook-village,Energy drinks,Red Bull Energy Drink,473 ml,4.99,seed,2026-11-07,
+save-on-foods-wesbrook-village,Energy drinks,Red Bull Energy Drink,473 ml,4.99,seed,2026-11-07,I24
 save-on-foods-wesbrook-village,Energy drinks,Monster Energy,473 ml,3.29,seed,2026-11-07,I02
 save-on-foods-wesbrook-village,Soft drinks & water,Coca-Cola,355 ml can,1.89,seed,2026-11-07,I04
 save-on-foods-wesbrook-village,Soft drinks & water,Coca-Cola,591 ml bottle,2.79,seed,2026-11-07,I05
@@ -1615,7 +1615,7 @@ sharetea,Bubble tea,Mango Green Tea,Large,6.45,seed,2026-11-07,
 sharetea,Bubble tea,Wintermelon Lemonade,Large,6.45,seed,2026-11-07,
 shoppers-drug-mart-wesbrook-village,Energy drinks,Red Bull Energy Drink,250 ml,3.49,seed,2026-11-07,I01
 shoppers-drug-mart-wesbrook-village,Energy drinks,Red Bull Energy Drink,355 ml,4.39,seed,2026-11-07,I22
-shoppers-drug-mart-wesbrook-village,Energy drinks,Red Bull Energy Drink,473 ml,5.59,seed,2026-11-07,
+shoppers-drug-mart-wesbrook-village,Energy drinks,Red Bull Energy Drink,473 ml,5.59,seed,2026-11-07,I24
 shoppers-drug-mart-wesbrook-village,Energy drinks,Monster Energy,473 ml,3.79,seed,2026-11-07,I02
 shoppers-drug-mart-wesbrook-village,Soft drinks & water,Coca-Cola,355 ml can,2.19,seed,2026-11-07,I04
 shoppers-drug-mart-wesbrook-village,Soft drinks & water,Coca-Cola,591 ml bottle,3.19,seed,2026-11-07,I05
