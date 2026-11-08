@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { formatPrice } from "@/lib/format";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { formatPrice, spokenPrice } from "@/lib/format";
 import {
   getLocationSnapshot,
   NEST_MESSAGE,
@@ -27,11 +27,15 @@ import { statcanLine } from "@/lib/statcan";
 import type { PriceRow, PricesResponse } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 import { useLocation } from "@/lib/use-location";
+import { play } from "@/lib/sounds";
 import { useNow } from "@/lib/use-now";
+import { DEFAULT_CONFIG, DEFAULT_PER_WEEK, liveWalk, project } from "@/lib/walkworth";
 import { Button, buttonClasses } from "./Button";
 import { usePricesChanged } from "./BoughtProvider";
 import { OutletRow } from "./OutletRow";
 import { PricesRefresh } from "./PendingLine";
+import { ReadAloud } from "./ReadAloud";
+import { SoundToggle } from "./SoundToggle";
 import { Stamp } from "./Stamp";
 import { WakingUp } from "./WakingUp";
 import { WhileVisible } from "./WhileVisible";
@@ -110,6 +114,36 @@ function Section({ id, title, hint, rows, empty, now, cheapestId, reference, ite
   );
 }
 
+/**
+ * What Read aloud says (SPEC section 7): the decision line, the top 3 outlets with an official price
+ * ("Grocery Checkout, 3 dollars 59, about 1 minute"), and the Worth the walk saving if there is one.
+ */
+function readAloudText(itemName: string, decisionLine: string, ordered: PriceRow[]): string {
+  const top = ordered.filter((r) => r.price !== null && r.stock !== "sold_out").slice(0, 3);
+  const parts = [`${itemName}. ${decisionLine}.`];
+  if (top.length > 0) {
+    parts.push(
+      `Cheapest near you: ${top
+        .map((r) => {
+          const walk = r.walk_min === null ? "" : `, about ${r.walk_min} ${r.walk_min === 1 ? "minute" : "minutes"}`;
+          return `${r.outlet.name}, ${spokenPrice(r.price as number)}${walk}`;
+        })
+        .join(". ")}.`,
+    );
+  }
+  const walk = liveWalk(
+    ordered.map((r) => ({ id: r.outlet.id, name: r.outlet.name, price: r.price, walk_min: r.walk_min, sold_out: r.stock === "sold_out" })),
+    DEFAULT_CONFIG,
+  );
+  if (walk) {
+    const term = project(walk.best, DEFAULT_PER_WEEK, DEFAULT_CONFIG.weeks_term);
+    parts.push(
+      `Worth the walk: ${Math.round(walk.best.extra_min)} extra minutes to ${walk.best.row.name} saves ${spokenPrice(walk.best.saving)} every time, about ${spokenPrice(term.saved)} a term if you buy it ${DEFAULT_PER_WEEK} times a week.`,
+    );
+  }
+  return parts.join(" ");
+}
+
 /** Results for one item: decision line, small map, Near you, Farther. SPEC section 7. */
 export default function ResultsScreen({ itemId }: { itemId: string }) {
   const location = useLocation();
@@ -128,6 +162,18 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
   const rows = useMemo(() => (data ? withWalkFrom(data.rows, location.origin) : []), [data, location.origin]);
   const sections = useMemo(() => splitSections(rows), [rows]);
   const decision = useMemo(() => decide(rows), [rows]);
+  // "Cha-ching" once, when the results that a tap opened show a cheaper spot (SPEC section 9c).
+  const chimed = useRef(false);
+  useEffect(() => {
+    if (!chimed.current && data && decision.kind === "save") {
+      chimed.current = true;
+      play("chaching");
+    }
+  }, [data, decision]);
+  const spoken = useMemo(
+    () => (data ? readAloudText(data.item.name, decisionText(decision), [...sections.near, ...sections.farther]) : null),
+    [data, decision, sections],
+  );
   const cheapest = useMemo(() => cheapestRow(rows), [rows]);
   const reference = referencePrice(decision);
   const bestPrice = decision.kind === "save" ? decision.at.price : decision.kind === "none" ? null : decision.closest.price;
@@ -153,6 +199,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
             {api.error ? "Prices" : "Loading prices…"}
           </h1>
         )}
+        <SoundToggle className="ml-auto" />
       </header>
 
       <div className="mt-3 flex flex-col gap-3 px-4">
@@ -178,6 +225,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
           {data ? (
             <>
               <p className="font-heading text-xl font-extrabold leading-snug">{decisionText(decision)}</p>
+              <ReadAloud text={spoken} className="mt-3" />
               <p className="sr-only">
                 {rows.length === 1 ? "1 outlet" : `${rows.length} outlets`} on campus sell it.
               </p>

@@ -84,10 +84,12 @@ export function OutletRow({ row, now, cheapest, dimmed, saves, item }: Props) {
       ) : null}
       <PendingLine pending={row.pending} what={`at ${row.outlet.name}`} />
       {row.stock === "maybe_sold_out" ? <p className="mt-1">A student said it may be sold out.</p> : null}
-      {row.price !== null ? (
-        <BoughtButton outlet={row.outlet} item={item} price={row.price} className="mt-2" />
-      ) : null}
-      <StockButtons outlet={row.outlet} item={item} stock={row.stock} />
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        {row.price !== null ? (
+          <BoughtButton outlet={row.outlet} item={item} price={row.price} className="w-full text-center" />
+        ) : null}
+        <StockButtons outlet={row.outlet} item={item} stock={row.stock} />
+      </div>
     </li>
   );
 }

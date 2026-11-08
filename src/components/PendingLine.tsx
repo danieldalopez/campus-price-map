@@ -4,6 +4,7 @@ import { createContext, useContext, useState } from "react";
 import { getDeviceId } from "@/lib/device";
 import { formatPrice, spokenPrice } from "@/lib/format";
 import type { PriceFields, Vote, VoteResult } from "@/lib/types";
+import { play } from "@/lib/sounds";
 import { Button } from "./Button";
 import { Stamp } from "./Stamp";
 
@@ -62,6 +63,7 @@ export function PendingLine({ pending, what }: Props) {
       }
       const result = body as VoteResult;
       setVoted(vote);
+      play(result.status === "official" ? "chime" : result.status === "rejected" ? "thud" : "slap");
       setMessage({ text: thanks(result, vote), error: false });
       if (result.status !== "pending") refresh();
     } catch {

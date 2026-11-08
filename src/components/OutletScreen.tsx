@@ -20,6 +20,7 @@ import { PendingLine, PricesRefresh } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
 import { PriceTag } from "./PriceTag";
 import { Stamp } from "./Stamp";
+import { SoundToggle } from "./SoundToggle";
 import { StockButtons } from "./StockButtons";
 import { WakingUp } from "./WakingUp";
 import { WalkConfigContext } from "./WorthTheWalk";
@@ -193,15 +194,17 @@ function TrackedItem({
       <PendingLine pending={row.pending} what={row.item.name} />
 
       {row.stock === "maybe_sold_out" ? <p className="mt-1">A student said it may be sold out.</p> : null}
-      {row.price !== null ? (
-        <BoughtButton
-          outlet={{ id: outletId, name: outletName }}
-          item={{ id: row.item.id, name: row.item.name, size: row.item.size }}
-          price={row.price}
-          className="mt-2"
-        />
-      ) : null}
-      <StockButtons outlet={{ id: outletId, name: outletName }} item={row.item} stock={row.stock} />
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        {row.price !== null ? (
+          <BoughtButton
+            outlet={{ id: outletId, name: outletName }}
+            item={{ id: row.item.id, name: row.item.name, size: row.item.size }}
+            price={row.price}
+            className="w-full"
+          />
+        ) : null}
+        <StockButtons outlet={{ id: outletId, name: outletName }} item={row.item} stock={row.stock} />
+      </div>
     </li>
   );
 }
@@ -328,6 +331,7 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
         <h1 className="min-w-0 font-heading text-2xl font-extrabold leading-tight">
           {data ? data.outlet.name : api.error ? "Outlet" : "Loading outlet…"}
         </h1>
+        <SoundToggle className="ml-auto" />
       </header>
 
       <div className="mt-3 flex flex-col gap-3 px-4">

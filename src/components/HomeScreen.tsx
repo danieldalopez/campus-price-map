@@ -15,6 +15,7 @@ import { Button, buttonClasses } from "./Button";
 import { ItemTiles } from "./ItemTiles";
 import { OutletLink } from "./OutletLink";
 import { SearchResults, searchSummary } from "./SearchResults";
+import { SoundToggle } from "./SoundToggle";
 import { WakingUp } from "./WakingUp";
 import { WhileVisible } from "./WhileVisible";
 
@@ -76,10 +77,11 @@ export default function HomeScreen() {
       <div className="pointer-events-none absolute inset-0 z-[1100] flex flex-col">
         {/* Floating on top: title, search and item tiles. */}
         <div data-map-overlay="top" className="pt-[max(env(safe-area-inset-top),12px)]">
-          <header className="px-4">
+          <header className="flex items-center justify-between gap-2 px-4">
             <h1 className="pointer-events-auto inline-flex -rotate-1 items-center gap-2 rounded-tag border-2 border-ink bg-tag px-3 py-1.5 font-heading text-xl font-extrabold leading-none shadow-ink">
               Campus Price Map
             </h1>
+            <SoundToggle className="pointer-events-auto" />
           </header>
 
           <form role="search" onSubmit={submit} className="pointer-events-auto mx-4 mt-2 flex gap-2">
