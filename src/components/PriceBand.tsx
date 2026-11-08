@@ -1,4 +1,6 @@
-export type Band = "good" | "average" | "high";
+import type { Band } from "@/lib/types";
+
+export type { Band };
 
 const BANDS: Record<Band, { icon: string; word: string }> = {
   good: { icon: "✓", word: "Good price" },

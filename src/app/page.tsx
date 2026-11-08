@@ -1,10 +1,9 @@
 import HomeScreen from "@/components/HomeScreen";
-import { loadOutlets } from "@/lib/local-outlets";
 
-/** Home: the map is the app (SPEC section 7). */
+/**
+ * Home: the map is the app (SPEC section 7). The page is a static shell; items and outlets load in the
+ * browser from /api/items and /api/locations (rule 4: the browser only talks to our API).
+ */
 export default function Home() {
-  // Step 1: read data/outlets.csv straight from the repo (placeholder if it's missing).
-  // Step 4 switches this to /api/locations.
-  const { outlets, source } = loadOutlets();
-  return <HomeScreen outlets={outlets} source={source} />;
+  return <HomeScreen />;
 }

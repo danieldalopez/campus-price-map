@@ -1,10 +1,13 @@
 "use client";
 
 // Loaded only through dynamic(() => import("./HomeMap"), { ssr: false }) (SPEC rule 9).
-import { useState, type CSSProperties } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
-import { HOME_ZOOM, UBC_CENTRE, type Outlet } from "@/lib/outlet";
-import { Pin } from "./Pin";
+import { isApproximate, HOME_ZOOM, MAX_ZOOM, tierLabel, tierWords, UBC_CENTRE } from "@/lib/outlet";
+import type { Outlet } from "@/lib/types";
+import { useLocation } from "@/lib/use-location";
+import { ClusterLayer, type MapPoint } from "./ClusterLayer";
+import { LocationDot } from "./LocationDot";
 
 type Props = { outlets: Outlet[] };
 
@@ -21,19 +24,39 @@ function measureOverlays(): [number, number] {
   return [Math.ceil(topPx) + 8, Math.ceil(bottomPx) + 8];
 }
 
-function describe(o: Outlet): string {
-  return o.isBenchmark
-    ? `${o.name}, grocery baseline`
-    : `${o.name}, no price tier yet`;
+function toPoint(o: Outlet): MapPoint {
+  const words = tierWords(o);
+  const approx = isApproximate(o.location_precision) ? " · approximate location" : "";
+  return {
+    id: o.id,
+    lat: o.lat,
+    lng: o.lng,
+    label: o.is_benchmark ? "" : tierLabel(o),
+    kind: o.is_benchmark ? "grocery" : "outlet",
+    estimated: o.tier_basis === "estimated",
+    description: `${o.name}, ${words}`,
+    summary: `${o.name}: ${o.is_benchmark ? "grocery baseline" : tierLabel(o)}`,
+    popup: (
+      <>
+        <p className="m-0 font-heading text-lg font-extrabold leading-tight">{o.name}</p>
+        {o.area ? <p className="m-0 mt-1 text-ink-2">{o.area}</p> : null}
+        <p className="m-0 mt-1">
+          {words}
+          {approx}
+        </p>
+        {o.hours ? <p className="m-0 mt-1 text-ink-2">{o.hours}</p> : null}
+      </>
+    ),
+  };
 }
 
-/** Full-screen paper-tinted map with a tag pin per outlet. */
+/** Full-screen paper-tinted map: a tag pin per outlet (grouped when zoomed out) and the live location dot. */
 export default function HomeMap({ outlets }: Props) {
   // No zoom or fade animation for people who asked for reduced motion.
-  const [animate] = useState(
-    () => !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-  );
+  const [animate] = useState(() => !window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const [overlayInsets] = useState(measureOverlays);
+  const location = useLocation();
+  const points = useMemo(() => outlets.map(toPoint), [outlets]);
   // Keeps the zoom buttons and the OSM attribution visible above the bottom bar.
   const style = { "--home-bottom-ui": `${overlayInsets[1]}px` } as CSSProperties;
 
@@ -41,6 +64,7 @@ export default function HomeMap({ outlets }: Props) {
     <MapContainer
       center={UBC_CENTRE}
       zoom={HOME_ZOOM}
+      maxZoom={MAX_ZOOM}
       zoomControl={false}
       zoomAnimation={animate}
       fadeAnimation={animate}
@@ -51,27 +75,11 @@ export default function HomeMap({ outlets }: Props) {
       <TileLayer
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        maxZoom={19}
+        maxZoom={MAX_ZOOM}
       />
       <ZoomControl position="bottomright" />
-      {outlets.map((o) => (
-        <Pin
-          key={o.id}
-          id={o.id}
-          position={[o.lat, o.lng]}
-          // No outlet_scores yet (D5), so every outlet shows "?".
-          label={o.isBenchmark ? "" : "?"}
-          kind={o.isBenchmark ? "grocery" : "outlet"}
-          description={describe(o)}
-          overlayInsets={overlayInsets}
-        >
-          <p className="m-0 font-heading text-lg font-extrabold leading-tight">{o.name}</p>
-          {o.area ? <p className="m-0 mt-1 text-ink-2">{o.area}</p> : null}
-          <p className="m-0 mt-1">
-            {o.isBenchmark ? "Grocery baseline, for comparison only" : "No price tier yet"}
-          </p>
-        </Pin>
-      ))}
+      <ClusterLayer points={points} overlayInsets={overlayInsets} />
+      {location.position ? <LocationDot position={location.position} accuracy={location.accuracy} /> : null}
     </MapContainer>
   );
 }
