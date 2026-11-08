@@ -7,6 +7,8 @@ const eslintConfig = defineConfig([
   ...nextTs,
   globalIgnores([
     ".next/**",
+    // Claude Code session files, including leftover worktrees with their own copies of the app.
+    ".claude/**",
     "out/**",
     "build/**",
     "next-env.d.ts",

@@ -22,3 +22,6 @@ next-env.d.ts
 
 # Full-size sticker PNGs (32 MB); the app uses the WebPs in public/
 /assets/raw/
+
+# Claude Code session files and leftover worktrees
+.claude/

@@ -31,7 +31,9 @@ On a single purchase the gap is small. For something you buy most school days, i
 
 ## What we're building
 
-A mobile web app with a campus map that shows the price of 21 everyday items at the outlets we track. Search an item and see where it's cheapest **near you**, closest outlets first. Prices come from students: snap a photo of a price tag, Gemini reads it, you confirm, and it lands on the map.
+A mobile web app with a campus map that shows the price of 24 everyday items at the 125 outlets we track. Search an item and see where it's cheapest **near you**, closest outlets first. Students keep the prices current: snap a photo of a price tag, Gemini reads it, you confirm, and it lands on the map.
+
+> **Proof of concept data.** Of the 617 prices in the engine today, 10 were read off online menus on Nov 7, 7 came from students during the hackathon, and 600 are AI-estimated prototype prices (source `seed`, shown as "Our price"). Every number below that they contribute to carries that note. Student reports replace them as prices get confirmed.
 
 > **Find where the exact coffee or energy drink you buy every day is cheapest near you, right now, from prices students share.**
 
@@ -66,15 +68,15 @@ We don't ask anyone to make a long trip. Results start with outlets a short walk
 
 ## The items we track
 
-21 items in 9 categories, chosen because they're sold at several outlets, come in fixed sizes so prices compare fairly, and are things students buy daily. A sample:
+24 items in 9 categories, chosen because they're sold at several outlets, come in fixed sizes so prices compare fairly, and are things students buy daily. A sample:
 
-- **Energy drinks:** Red Bull 250 ml, Monster 473 ml, Celsius 355 ml
+- **Energy drinks:** Red Bull 250, 355 and 473 ml, Monster 473 ml, Celsius 355 ml
 - **Soft drinks and water:** Coca‑Cola can and bottle, bottled water 500 ml, sparkling water
 - **Coffee and tea:** drip coffee small and medium, latte, iced coffee, tea
 - **Grab and go:** bagel with cream cheese, muffin, premade sandwich, wrap, sushi pack
-- **Snacks:** protein bar, chips, banana or apple
+- **Snacks:** Quest and Clif bars, chips, banana or apple
 
-Different sizes are compared per 100 ml.
+Each item is one fixed size, so prices compare like for like. The pipeline also computes a price per 100 ml for drinks (`price_per_100ml`), which the app doesn't show yet.
 
 ## Architecture
 
@@ -136,8 +138,8 @@ A full run takes about 30 minutes, mostly serverless start-up, and emails us if 
 | Table | What's in it | Source |
 |---|---|---|
 | `locations` | Outlet name, area, operator, hours, lat, lng | UBC Food Services and AMS pages; coordinates from OpenStreetMap |
-| `items` | 23 tracked items, size, category | Chosen by the team |
-| `prices` | Price per item per outlet, time, `source` (walk, menu, seed, photo, typed...) | Our price walk, online menus, then students |
+| `items` | 24 tracked items, size, category | Chosen by the team |
+| `prices` | Price per item per outlet, time, `source` (walk, menu, seed, photo, typed...) | Online menus (10), AI-estimated prototype prices (600), then students |
 | `price_votes` | Students confirming or disputing a price | Students |
 | `stock_reports` | Sold out reports | Students |
 | `serving.price_comparisons` | Every official price with its campus comparison, nearest cheaper outlet, Worth the walk, model estimate and StatCan match | Synced from Databricks |
@@ -173,12 +175,12 @@ log price(item, outlet) = item + outlet type + operator + outlet + outlet × cat
 | Output | Where it goes |
 |---|---|
 | Outlet tier: `$`, `$$` or `$$$` (cheaper, within 5%, or pricier than campus average) | Synced as `serving.outlet_scores` and shown on the map. "Measured" when the outlet has enough of its own prices, "estimated" when it leans on similar outlets, and "?" when the model isn't confident. |
-| Estimated price for items an outlet carries but nobody has priced yet, with an 80% interval | Fed back into the next pipeline run and shown as an estimate, never as a real price. |
+| Estimated price for items an outlet carries but nobody has priced yet, with an 80% interval | Fed back into the next pipeline run and shown as an estimate, never as a real price. Today every carried pair already has a price, so the live app shows no estimates yet; they appear once students add new items to an outlet. |
 | Model metrics | `gold_model_metrics`: method, fitted priors, leave-one-out error and interval coverage. |
 
 ### Keeping it honest
 
-- **It has to beat the obvious baseline.** Each run predicts every known price from all the others (leave-one-out). If the model doesn't beat each item's campus median, only measured tiers are published and no estimates are. On today's data it does: error 0.21 against 0.30.
+- **It has to beat the obvious baseline.** Each run predicts every known price from all the others (leave-one-out). If the model doesn't beat each item's campus median, only measured tiers are published and no estimates are. On today's data it does: leave-one-out error $0.21 against $0.30 for the median, and the calibrated 80% intervals cover 81% of held-out prices.
 - **Calibrated intervals.** Estimate intervals are rescaled so that 80% intervals really contain about 80% of held-out prices.
 - **Descriptive, not causal.** We say an outlet charges more for the same item, never why. It's a snapshot from a small sample.
 - **StatCan stays separate.** Only a few items match, in different units, so the BC comparison is a per unit ratio outside the model, labelled as a provincial average that lags a couple of months.
@@ -247,7 +249,7 @@ We're keeping ourselves honest about what's evidence and what's still a guess.
 - **Superlatives:** Best Problem‑Solution Fit and Most Accessible Design (beginner stream), with Community Impact as a backup
 - **Best Use of Databricks:** Lakebase as the app database, a Lakeflow pipeline and Bayesian price model on serverless, synced tables back into Lakebase, a scheduled Job, StatCan benchmarks, and a Genie space, all deployed as one bundle
 - **Best Use of Gemini API (MLH):** reading price tag photos
-- **GoDaddy Registry domain (MLH)**, plus Entire and Auth0 if time allows
+- **GoDaddy Registry domain (MLH)** only if we register one before the deadline; Auth0 and the Genie "Ask" page were not built
 
 ## Credits
 
@@ -256,7 +258,7 @@ We're keeping ourselves honest about what's evidence and what's still a guess.
 - Prices reported by UBC students
 - Product data from Open Food Facts, available under the Open Database License (ODbL). See `data/barcodes.LICENSE.md`
 
-Built from a fresh repository during HackCamp 2026 (hacking began 12:00 PM, November 7), with the app written using Claude Code.
+Built from a fresh repository during HackCamp 2026 (hacking began 12:00 PM, November 7), with the app written using Claude Code. Test it locally with `npm test` (126 tests, including the Worth the walk parity test against a Databricks fixture and the verification rules on a throwaway Postgres).
 
 ## Team
 
