@@ -5,6 +5,7 @@ import { getDeviceId } from "@/lib/device";
 import type { Stock, StockResult } from "@/lib/types";
 import { play } from "@/lib/sounds";
 import { PRICES_CHANGED } from "./BoughtProvider";
+import { QUIET_BUTTON } from "./BoughtButton";
 import { Button } from "./Button";
 
 type Props = {
@@ -107,32 +108,34 @@ export function StockButtons({ outlet, item, stock }: Props) {
             <Button variant="primary" className="w-full" disabled={busy} onClick={() => report("sold_out")}>
               {busy ? "Saving…" : "Yes, it's sold out"}
             </Button>
-            <Button className="w-full" disabled={busy} onClick={() => setConfirming(false)}>
+            <button type="button" className={`${QUIET_BUTTON} w-full`} disabled={busy} onClick={() => setConfirming(false)}>
               Cancel
-            </Button>
+            </button>
           </div>
         </div>
       ) : (
         <>
           {showSoldOut ? (
-            <Button
-              className="w-full text-center"
+            <button
+              type="button"
+              className={`${QUIET_BUTTON} w-full`}
               disabled={busy}
               onClick={() => setConfirming(true)}
               aria-label={`${stock === "maybe_sold_out" ? "Sold out here too" : "Sold out here"}? ${item.name} at ${outlet.name}`}
             >
               {stock === "maybe_sold_out" ? "Sold out here too?" : "Sold out here?"}
-            </Button>
+            </button>
           ) : null}
           {showBack ? (
-            <Button
-              className="w-full"
+            <button
+              type="button"
+              className={`${QUIET_BUTTON} w-full`}
               disabled={busy}
               onClick={() => report("back")}
               aria-label={`It's back: ${item.name} at ${outlet.name}`}
             >
               It&apos;s back
-            </Button>
+            </button>
           ) : null}
         </>
       )}

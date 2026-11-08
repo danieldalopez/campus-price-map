@@ -16,6 +16,9 @@ type Props = {
   className?: string;
 };
 
+/** Overrides the chunky .price-band chip (globals.css) down to a small label. */
+const LABEL = "min-h-0 rounded border-0 px-1.5 py-0.5 text-sm";
+
 function spokenPct(pct: number): string {
   const p = Math.round(Math.abs(pct));
   if (p === 0) return ", at the campus median";
@@ -23,15 +26,15 @@ function spokenPct(pct: number): string {
 }
 
 /**
- * Small flat chip beside the PriceTag, never replacing it. Always icon plus
- * word, never colour alone. Screen readers hear e.g. "Good price, 15% below
- * the campus median".
+ * Small flat label beside the PriceTag, never replacing it: no border, no shadow, so it reads as a note on the
+ * price rather than a button. Always icon plus word, never colour alone. Screen readers hear e.g. "Good price,
+ * 15% below the campus median".
  */
 export function PriceBand({ band, pctVsMedian = null, className = "" }: Props) {
   if (!band) return null;
   const { icon, word } = BANDS[band];
   return (
-    <span className={`price-band price-band--${band} ${className}`}>
+    <span className={`price-band price-band--${band} ${LABEL} ${className}`}>
       <span aria-hidden="true">{icon}</span>
       {word}
       {pctVsMedian !== null && <span className="sr-only">{spokenPct(pctVsMedian)}</span>}

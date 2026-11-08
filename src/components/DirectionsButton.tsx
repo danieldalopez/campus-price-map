@@ -11,6 +11,8 @@ type Props = {
   item?: BoughtIntent["item"];
   /** The official price shown for that item there. */
   price?: number | null;
+  /** "primary" where Directions is the page's main action (the Outlet page); secondary elsewhere. */
+  variant?: "primary" | "secondary";
   className?: string;
 };
 
@@ -19,13 +21,13 @@ type Props = {
  * works without JavaScript and hands off to the Google Maps app when it's installed. Tapping it also
  * remembers the trip on this phone, so the app can ask "Did you buy it?" later (src/lib/bought.ts).
  */
-export function DirectionsButton({ outlet, item = null, price = null, className = "" }: Props) {
+export function DirectionsButton({ outlet, item = null, price = null, variant = "secondary", className = "" }: Props) {
   return (
     <a
       href={directionsUrl(outlet)}
       target="_blank"
       rel="noopener noreferrer"
-      className={buttonClasses("secondary", "md", className)}
+      className={buttonClasses(variant, "md", className)}
       aria-label={`Directions to ${outlet.name} in Google Maps (opens another app)`}
       onClick={() =>
         noteIntent({
