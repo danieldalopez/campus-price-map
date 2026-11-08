@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/*.test.ts"
+    "test": "node --import ./tests/helpers/register.ts --test --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/*.test.ts"
   },
   "dependencies": {
     "@google/genai": "^3.0.0",
