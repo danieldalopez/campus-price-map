@@ -123,6 +123,7 @@ describe("pending report sent to the client", () => {
     pending_device_id: "00000000-0000-0000-0000-000000000001",
     pending_my_vote: null,
     stock: "in_stock",
+    last_confirmed_at: null,
   };
 
   it("marks it as mine only for the device that reported it, and never sends the reporter's id", () => {
