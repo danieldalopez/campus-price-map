@@ -14,11 +14,11 @@ returns boolean language sql immutable as $$
 $$;
 
 -- One row per price with its status.
---  1. official  if the source is team or prototype data (walk, menu, grocery, seed)
+--  1. official  if the source is team data (walk, menu, grocery, seed)
 --  2. rejected  if no >= 1 and no > yes
 --  3. official  if (yes > no and yes >= 1) or a matching report exists, with at least
 --               1 confirmation (2 when needs_review). Matching report: a different student reported
---               the same item and outlet within $0.10 and 48 h.
+--               the same item and outlet within $0.10 and 48 h, and that report wasn't voted down.
 --  4. pending   otherwise. 'unsure' votes never count.
 create or replace view price_status as
 with votes as (
@@ -44,7 +44,9 @@ matches as (
    and abs(q.price - p.price) <= 0.10
    and q.reported_at between p.reported_at - interval '48 hours' and p.reported_at + interval '48 hours'
    and different_student(q.user_id, q.device_id, p.user_id, p.device_id)
+  left join votes qv on qv.price_id = q.id
   where p.source in ('photo', 'receipt', 'typed')
+    and not (coalesce(qv.no, 0) >= 1 and coalesce(qv.no, 0) > coalesce(qv.yes, 0))  -- a voted-down report confirms nothing
   group by p.id
 )
 select p.id                                    as price_id,

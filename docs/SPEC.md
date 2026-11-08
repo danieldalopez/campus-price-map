@@ -185,7 +185,7 @@ StatCan matches (I08, I09, I11, I20, I21) live in `data/statcan_map.csv`, sectio
 
 `data/outlets.csv`, built by `scripts/build_seed.py`: 124 outlets with slug IDs (`blue-chip-cafe`, `harvest-market`). 95 have exact coordinates from UBC's food outlet points (`poi_id`). 29 had none, so they sit at their building's centroid (`location_precision = building`) or their area's (`area`, e.g. University Village), spread a few metres apart so pins don't stack. The app labels those "approximate location". Popeyes (Lelem Village) is skipped until it has coordinates. `save-on-foods-wesbrook-village` is the grocery baseline: `is_benchmark = true`, never ranked and never shown as "cheapest on campus". It's used for the "vs grocery" comparison only.
 
-`type` is one of cafe, convenience, quick_service, restaurant, dining_hall, grocery (from the vendor type). `operator` is one of ams, ubc_food_services, chain, independent (name rules in the build script; review by hand). The price model (section 10) uses both to estimate outlets with few prices.
+`type` is one of cafe, convenience, quick_service, restaurant, dining_hall, grocery (from the vendor type). `operator` is one of ams, ubc_food_services, chain, independent (name rules in the build script; review by hand). Franchise outlets that food.ubc.ca lists as run by UBC Food Services (the Tim Hortons, Starbucks and Subway on campus, Triple O's, Pacific Poké) are `ubc_food_services`; those in University Village and inside Save-On-Foods are `chain`. The price model (section 10) uses both to estimate outlets with few prices.
 
 ### Where the prices come from
 
@@ -236,7 +236,7 @@ Two copies of the same rules can drift apart. The pipeline guards against that w
 Rules for each price row. Votes and matching reports count only when they come from a different student than the reporter.
 1. `official` if source is `walk`, `menu`, `grocery` (team data) or `seed` (prototype data).
 2. `rejected` if `no` votes ≥ 1 and `no` > `yes`.
-3. `official` if `yes` > `no` and `yes` ≥ 1, or if a different student reported a price within $0.10 for the same item and outlet within 48 h of this row (matching reports confirm each other). A row with `needs_review` needs 2 confirmations (yes votes plus matching reports).
+3. `official` if `yes` > `no` and `yes` ≥ 1, or if a different student reported a price within $0.10 for the same item and outlet within 48 h of this row (matching reports confirm each other; a report rejected by rule 2 confirms nothing). A row with `needs_review` needs 2 confirmations (yes votes plus matching reports).
 4. Otherwise `pending`. `unsure` votes never count either way.
 
 Views:

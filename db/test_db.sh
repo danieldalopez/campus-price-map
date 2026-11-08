@@ -65,6 +65,13 @@ vote $p5 $C yes;             echo "needs_review, 2 yes  -> $(st $p5) (expect off
 p6=$(ins I06 1.00 $A false); vote $p6 $B unsure
 echo "only unsure vote     -> $(st $p6) (expect pending)"
 
+p7=$(ins I19 2.00 $A false); vote $p7 $B no
+p8=$(ins I19 2.05 $C false)
+echo "match vs rejected    -> $(st $p7) / $(st $p8) (expect rejected / pending: a voted-down report confirms nothing)"
+
+s1=$(q "select id from prices where source='seed' order by id limit 1")
+vote $s1 $A no;              echo "seed price, 1 no     -> $(q "select status from price_status where price_id=$s1") (expect official: seed is team data)"
+
 echo "== stock"
 so() { as app_writer test-writer-pw "insert into stock_reports(item_id,location_id,status,device_id) values ('I01','corner-store','$2','$1') returning id" >/dev/null; }
 sstat() { q "select coalesce((select stock from stock_status where item_id='I01' and location_id='corner-store'),'in_stock')"; }
