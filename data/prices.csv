@@ -17,7 +17,6 @@ I01,ins-market,3.99,seed,2026-11-07,Red Bull Energy Drink,250 ml
 I01,koerner-s-pub,4.50,seed,2026-11-07,Red Bull Energy Drink,250 ml
 I01,magda-s-night-market,3.89,seed,2026-11-07,Red Bull Energy Drink,250 ml
 I01,prime-news,3.89,seed,2026-11-07,Red Bull Energy Drink,250 ml
-I01,save-on-foods-wesbrook-village,3.09,seed,2026-11-07,Red Bull Energy Drink,250 ml
 I01,shoppers-drug-mart-university-blvd,3.59,seed,2026-11-07,Red Bull Energy Drink,250 ml
 I01,shoppers-drug-mart-wesbrook-village,3.49,seed,2026-11-07,Red Bull Energy Drink,250 ml
 I01,starbucks-bookstore,4.25,seed,2026-11-07,Red Bull Energy Drink,250 ml
@@ -41,7 +40,6 @@ I02,hubbards-global-market,4.29,seed,2026-11-07,Monster Energy,473 ml
 I02,ins-market,4.19,seed,2026-11-07,Monster Energy,473 ml
 I02,magda-s-night-market,4.19,seed,2026-11-07,Monster Energy,473 ml
 I02,prime-news,4.19,seed,2026-11-07,Monster Energy,473 ml
-I02,save-on-foods-wesbrook-village,3.29,seed,2026-11-07,Monster Energy,473 ml
 I02,shoppers-drug-mart-university-blvd,3.89,seed,2026-11-07,Monster Energy,473 ml
 I02,shoppers-drug-mart-wesbrook-village,3.79,seed,2026-11-07,Monster Energy,473 ml
 I02,thirstyyy,4.29,seed,2026-11-07,Monster Energy,473 ml
@@ -101,7 +99,6 @@ I04,presto,2.29,seed,2026-11-07,Coca-Cola,355 ml can
 I04,prime-news,2.39,seed,2026-11-07,Coca-Cola,355 ml can
 I04,ramen-danbo-express,2.89,seed,2026-11-07,Coca-Cola,355 ml can
 I04,sahel,2.79,seed,2026-11-07,Coca-Cola,355 ml can
-I04,save-on-foods-wesbrook-village,1.89,seed,2026-11-07,Coca-Cola,355 ml can
 I04,sesame,2.79,seed,2026-11-07,Coca-Cola,355 ml can
 I04,shoppers-drug-mart-university-blvd,2.29,seed,2026-11-07,Coca-Cola,355 ml can
 I04,shoppers-drug-mart-wesbrook-village,2.19,seed,2026-11-07,Coca-Cola,355 ml can
@@ -128,7 +125,6 @@ I05,hubbards-global-market,3.49,seed,2026-11-07,Coca-Cola,591 ml bottle
 I05,ins-market,3.39,seed,2026-11-07,Coca-Cola,591 ml bottle
 I05,magda-s-night-market,3.69,seed,2026-11-07,Coca-Cola,591 ml bottle
 I05,prime-news,3.39,seed,2026-11-07,Coca-Cola,591 ml bottle
-I05,save-on-foods-wesbrook-village,2.79,seed,2026-11-07,Coca-Cola,591 ml bottle
 I05,shoppers-drug-mart-university-blvd,2.99,seed,2026-11-07,Coca-Cola,591 ml bottle
 I05,shoppers-drug-mart-wesbrook-village,3.19,seed,2026-11-07,Coca-Cola,591 ml bottle
 I05,subway-life-building,3.29,seed,2026-11-07,Coca-Cola,591 ml bottle
@@ -199,7 +195,6 @@ I06,presto,2.39,seed,2026-11-07,Bottled Water,500 ml
 I06,prime-news,2.49,seed,2026-11-07,Bottled Water,500 ml
 I06,ramen-danbo-express,2.79,seed,2026-11-07,Bottled Water,500 ml
 I06,sahel,2.69,seed,2026-11-07,Bottled Water,500 ml
-I06,save-on-foods-wesbrook-village,1.99,seed,2026-11-07,Bottled Water,500 ml
 I06,sesame,2.59,seed,2026-11-07,Bottled Water,500 ml
 I06,shoppers-drug-mart-university-blvd,2.19,seed,2026-11-07,Bottled Water,500 ml
 I06,shoppers-drug-mart-wesbrook-village,2.29,seed,2026-11-07,Bottled Water,500 ml
@@ -335,7 +330,6 @@ I13,ins-market,3.99,seed,2026-11-07,Bagel with Cream Cheese,
 I13,law-cafe,4.25,seed,2026-11-07,Bagel with Cream Cheese,
 I13,magda-s-night-market,4.25,seed,2026-11-07,Bagel with Cream Cheese,
 I13,perugia-italian-caffe,4.24,seed,2026-11-07,Bagel with Cream Cheese,
-I13,save-on-foods-wesbrook-village,3.24,seed,2026-11-07,Bagel with Cream Cheese,
 I13,starbucks-bookstore,3.95,seed,2026-11-07,Plain Bagel with Cream Cheese,
 I13,starbucks-fred-kaiser,3.95,seed,2026-11-07,Plain Bagel with Cream Cheese,
 I13,starbucks-inside-save-on-foods,3.95,seed,2026-11-07,Plain Bagel with Cream Cheese,
@@ -372,7 +366,6 @@ I14,loafe-cafe-alumni-centre,4.25,seed,2026-11-07,Muffin,
 I14,loafe-cafe-sauder,4.25,seed,2026-11-07,Muffin,
 I14,magda-s-night-market,3.74,seed,2026-11-07,Muffin,
 I14,perugia-italian-caffe,4.25,seed,2026-11-07,Muffin,
-I14,save-on-foods-wesbrook-village,2.74,seed,2026-11-07,Muffin,
 I14,starbucks-bookstore,3.75,seed,2026-11-07,Blueberry Muffin,
 I14,starbucks-fred-kaiser,3.75,seed,2026-11-07,Blueberry Muffin,
 I14,starbucks-inside-save-on-foods,3.75,seed,2026-11-07,Blueberry Muffin,
@@ -406,7 +399,6 @@ I15,loafe-cafe-alumni-centre,10.95,seed,2026-11-07,Turkey Sandwich,
 I15,loafe-cafe-sauder,10.95,seed,2026-11-07,Turkey Sandwich,
 I15,magda-s-night-market,8.99,seed,2026-11-07,Pre-made Sandwich,
 I15,perugia-italian-caffe,10.50,seed,2026-11-07,Pre-made Sandwich,
-I15,save-on-foods-wesbrook-village,6.74,seed,2026-11-07,Pre-made Sandwich,
 I15,starbucks-bookstore,7.45,seed,2026-11-07,"Egg, Pesto & Mozzarella Sandwich",
 I15,starbucks-fred-kaiser,7.45,seed,2026-11-07,"Egg, Pesto & Mozzarella Sandwich",
 I15,starbucks-inside-save-on-foods,7.45,seed,2026-11-07,"Egg, Pesto & Mozzarella Sandwich",
@@ -425,7 +417,6 @@ I16,hero-harvest,8.74,seed,2026-11-07,Wrap,
 I16,hubbards-global-market,8.99,seed,2026-11-07,Wrap,
 I16,ins-market,8.99,seed,2026-11-07,Wrap,
 I16,magda-s-night-market,9.75,seed,2026-11-07,Wrap,
-I16,save-on-foods-wesbrook-village,7.49,seed,2026-11-07,Wrap,
 I16,subway-life-building,11.49,seed,2026-11-07,Wrap (Chicken Caesar),
 I16,subway-university-village,11.49,seed,2026-11-07,Wrap (Chicken Caesar),
 I16,thirstyyy,9.24,seed,2026-11-07,Wrap,
@@ -447,7 +438,6 @@ I17,ins-market,8.74,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
 I17,magda-s-night-market,8.99,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
 I17,nori-bento-udon,6.45,seed,2026-11-07,California Roll,8 pcs
 I17,ryuu-japanese-kitchen,6.25,menu,2026-11-07,California Roll,8 pcs
-I17,save-on-foods-wesbrook-village,7.25,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
 I17,thirstyyy,8.74,seed,2026-11-07,Sushi Pack (California Roll),8 pcs
 I18,avenue-c-neville-scarfe,4.29,seed,2026-11-07,Quest Protein Bar,60 g
 I18,body-energy-club,4.29,seed,2026-11-07,Quest Protein Bar,60 g
@@ -462,7 +452,6 @@ I18,hubbards-global-market,4.29,seed,2026-11-07,Quest Protein Bar,60 g
 I18,ins-market,4.29,seed,2026-11-07,Quest Protein Bar,60 g
 I18,magda-s-night-market,4.29,seed,2026-11-07,Quest Protein Bar,60 g
 I18,prime-news,4.29,seed,2026-11-07,Quest Protein Bar,60 g
-I18,save-on-foods-wesbrook-village,3.39,seed,2026-11-07,Quest Protein Bar,60 g
 I18,shoppers-drug-mart-university-blvd,3.89,seed,2026-11-07,Quest Protein Bar,60 g
 I18,shoppers-drug-mart-wesbrook-village,3.79,seed,2026-11-07,Quest Protein Bar,60 g
 I18,thirstyyy,4.29,seed,2026-11-07,Quest Protein Bar,60 g
@@ -482,7 +471,6 @@ I19,hubbards-global-market,2.49,seed,2026-11-07,Lay's Classic Chips,40 g
 I19,ins-market,2.49,seed,2026-11-07,Lay's Classic Chips,40 g
 I19,magda-s-night-market,2.49,seed,2026-11-07,Lay's Classic Chips,40 g
 I19,prime-news,2.39,seed,2026-11-07,Lay's Classic Chips,40 g
-I19,save-on-foods-wesbrook-village,1.89,seed,2026-11-07,Lay's Classic Chips,40 g
 I19,shoppers-drug-mart-university-blvd,2.19,seed,2026-11-07,Lay's Classic Chips,40 g
 I19,shoppers-drug-mart-wesbrook-village,2.19,seed,2026-11-07,Lay's Classic Chips,40 g
 I19,subway-life-building,2.19,seed,2026-11-07,Lay's Classic Chips,40 g
@@ -518,7 +506,6 @@ I20,magda-s-night-market,0.71,seed,2026-11-07,Banana,each
 I20,open-kitchen,1.00,seed,2026-11-07,Fruit (apple / banana),each
 I20,perugia-italian-caffe,0.73,seed,2026-11-07,Banana,each
 I20,prime-news,0.75,seed,2026-11-07,Banana,each
-I20,save-on-foods-wesbrook-village,0.35,seed,2026-11-07,Banana,each
 I20,starbucks-bookstore,0.95,seed,2026-11-07,Banana,each
 I20,starbucks-fred-kaiser,0.95,seed,2026-11-07,Banana,each
 I20,starbucks-inside-save-on-foods,0.95,seed,2026-11-07,Banana,each
@@ -546,7 +533,6 @@ I21,ins-market,1.39,seed,2026-11-07,Apple,each
 I21,magda-s-night-market,1.49,seed,2026-11-07,Apple,each
 I21,open-kitchen,1.00,seed,2026-11-07,Fruit (apple / banana),each
 I21,prime-news,1.39,seed,2026-11-07,Apple,each
-I21,save-on-foods-wesbrook-village,1.09,seed,2026-11-07,Apple,each
 I21,thirstyyy,1.39,seed,2026-11-07,Apple,each
 I21,ubc-farm-farmers-market,1.00,seed,2026-11-07,Apple,each
 I22,avenue-c-neville-scarfe,4.59,seed,2026-11-07,Red Bull Energy Drink,355 ml
@@ -561,7 +547,6 @@ I22,hubbards-global-market,4.59,seed,2026-11-07,Red Bull Energy Drink,355 ml
 I22,ins-market,4.99,seed,2026-11-07,Red Bull Energy Drink,355 ml
 I22,magda-s-night-market,4.59,seed,2026-11-07,Red Bull Energy Drink,355 ml
 I22,prime-news,4.79,seed,2026-11-07,Red Bull Energy Drink,355 ml
-I22,save-on-foods-wesbrook-village,3.79,seed,2026-11-07,Red Bull Energy Drink,355 ml
 I22,shoppers-drug-mart-university-blvd,4.19,seed,2026-11-07,Red Bull Energy Drink,355 ml
 I22,shoppers-drug-mart-wesbrook-village,4.39,seed,2026-11-07,Red Bull Energy Drink,355 ml
 I22,thirstyyy,4.69,seed,2026-11-07,Red Bull Energy Drink,355 ml
@@ -582,7 +567,6 @@ I23,hubbards-global-market,2.99,seed,2026-11-07,Clif Bar,68 g
 I23,ins-market,2.99,seed,2026-11-07,Clif Bar,68 g
 I23,magda-s-night-market,2.89,seed,2026-11-07,Clif Bar,68 g
 I23,prime-news,3.09,seed,2026-11-07,Clif Bar,68 g
-I23,save-on-foods-wesbrook-village,2.39,seed,2026-11-07,Clif Bar,68 g
 I23,shoppers-drug-mart-university-blvd,2.59,seed,2026-11-07,Clif Bar,68 g
 I23,shoppers-drug-mart-wesbrook-village,2.69,seed,2026-11-07,Clif Bar,68 g
 I23,starbucks-bookstore,3.25,seed,2026-11-07,Clif Bar,68 g

@@ -14,12 +14,14 @@ returns boolean language sql immutable as $$
 $$;
 
 -- One row per price with its status.
---  1. official  if the source is team or prototype data (walk, menu, grocery, seed)
+--  1. official  if the source is observed team data (walk, menu, grocery)
 --  2. rejected  if no >= 1 and no > yes
---  3. official  if (yes > no and yes >= 1) or a matching report exists, with at least
+--  3. official  if the source is seed (AI-estimated prototype data) and rule 2 didn't reject it
+--  4. official  if (yes > no and yes >= 1) or a matching report exists, with at least
 --               1 confirmation (2 when needs_review). Matching report: a different student reported
---               the same item and outlet within $0.10 and 48 h.
---  4. pending   otherwise. 'unsure' votes never count.
+--               the same item and outlet within $0.10 and 48 h, and that report wasn't voted down.
+--  5. pending   otherwise. 'unsure' votes never count.
+-- Votes on team and seed rows (no device, no user) always count: the voter can't be their reporter.
 create or replace view price_status as
 with votes as (
   select v.price_id,
@@ -28,7 +30,8 @@ with votes as (
          max(v.created_at) filter (where v.vote = 'yes')                                   as last_yes_at
   from price_votes v
   join prices p on p.id = v.price_id
-  where different_student(v.user_id, v.device_id, p.user_id, p.device_id)
+  where (p.user_id is null and p.device_id is null)
+     or different_student(v.user_id, v.device_id, p.user_id, p.device_id)
   group by v.price_id
 ),
 matches as (
@@ -44,7 +47,9 @@ matches as (
    and abs(q.price - p.price) <= 0.10
    and q.reported_at between p.reported_at - interval '48 hours' and p.reported_at + interval '48 hours'
    and different_student(q.user_id, q.device_id, p.user_id, p.device_id)
+  left join votes qv on qv.price_id = q.id
   where p.source in ('photo', 'receipt', 'typed')
+    and not (coalesce(qv.no, 0) >= 1 and coalesce(qv.no, 0) > coalesce(qv.yes, 0))  -- a voted-down report confirms nothing
   group by p.id
 )
 select p.id                                    as price_id,
@@ -54,8 +59,9 @@ select p.id                                    as price_id,
        coalesce(m.n, 0)                        as matches,
        coalesce(v.yes, 0) + coalesce(m.n, 0)   as confirmations,
        case
-         when p.source in ('walk', 'menu', 'grocery', 'seed') then 'official'
+         when p.source in ('walk', 'menu', 'grocery') then 'official'
          when coalesce(v.no, 0) >= 1 and coalesce(v.no, 0) > coalesce(v.yes, 0) then 'rejected'
+         when p.source = 'seed' then 'official'
          when ((coalesce(v.yes, 0) > coalesce(v.no, 0) and coalesce(v.yes, 0) >= 1) or coalesce(m.n, 0) >= 1)
               and coalesce(v.yes, 0) + coalesce(m.n, 0) >= case when p.needs_review then 2 else 1 end
            then 'official'

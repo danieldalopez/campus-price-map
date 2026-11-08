@@ -17,6 +17,7 @@ Rules (docs/SPEC.md section 6):
 """
 
 import csv
+import math
 import re
 import unicodedata
 from collections import Counter, defaultdict
@@ -99,7 +100,7 @@ def match_items(item, variant, category):
         out.append("I12")
     if n in ("bagel with cream cheese", "plain bagel with cream cheese"):
         out.append("I13")
-    if "muffin" in n and "loaf" not in n:
+    if re.search(r"\bmuffin\b", n) and not re.search(r"loaf|english|mcmuffin|muffin top|sandwich|egg", n):
         out.append("I14")
     if c == "grab & go" and "sandwich" in n and "breakfast" not in n:
         out.append("I15")
@@ -170,7 +171,18 @@ def outlet_type(vendor_type):
     return "cafe"  # coffee, cafe, bubble tea, smoothies, bakery, ice cream
 
 
+# Franchise outlets run by UBC Food Services, as listed on food.ubc.ca (the data sheet's Outlets tab, L05 to L15).
+# They price like other UBC Food Services outlets, so they're not grouped with the independently run chains.
+UBC_FS_FRANCHISES = {
+    "Tim Hortons (Orca House)", "Starbucks (Life Building)", "Subway (Life Building)",
+    "Pacific Poke (Life Building)", "Starbucks (Bookstore)", "Triple O's", "Tim Hortons (David Lam)",
+    "Tim Hortons (Forest Sciences)", "Starbucks (Fred Kaiser)",
+}
+
+
 def operator(vendor):
+    if vendor.strip() in UBC_FS_FRANCHISES:
+        return "ubc_food_services"
     v = vendor.lower()
     if any(k in v for k in CHAINS):
         return "chain"
@@ -238,9 +250,10 @@ def main():
                 skipped.append(s["vendor"])
                 continue
             lat, lng, prec = APPROX[key]
-        oid = slug(s["vendor"])
+        base = oid = slug(s["vendor"])
+        n = 2
         while oid in used:
-            oid += "-2"
+            oid, n = f"{base}-{n}", n + 1
         used.add(oid)
         by_vendor[s["vendor"]] = oid
         outlets.append({
@@ -261,7 +274,6 @@ def main():
         for k, o in enumerate(pts):
             ring, pos = divmod(k, 6)
             if k:
-                import math
                 ang = pos * math.pi / 3
                 r = 0.00012 * (ring + 1)  # about 13 m per ring
                 o["lat"] = f"{float(o['lat']) + r * math.sin(ang):.6f}"
@@ -294,8 +306,13 @@ def main():
                              "raw_variant": r["variant_or_size"].strip()}
         if not ids and re.search(r"red bull|monster|coke|coca|water|coffee|latte|bagel|muffin", r["item"], re.I):
             unmatched_names[(r["item"].strip(), r["variant_or_size"].strip())] += 1
-    prices = sorted(best.values(), key=lambda x: (x["item_id"], x["location_id"]))
-    carries = sorted({(p["item_id"], p["location_id"]) for p in prices})
+    # The grocery baseline is a factual "vs grocery" comparison, so it only gets observed prices
+    # (menu, walk, grocery), never AI estimates. It still carries those items.
+    benchmark = {o["id"] for o in outlets if o["is_benchmark"] == "true"}
+    carries = sorted({(p["item_id"], p["location_id"]) for p in best.values()})
+    prices = sorted((p for p in best.values() if not (p["location_id"] in benchmark and p["source"] == "seed")),
+                    key=lambda x: (x["item_id"], x["location_id"]))
+    dropped_benchmark = sum(1 for p in best.values() if p["location_id"] in benchmark and p["source"] == "seed")
 
     # barcodes
     bars, dropped = [], Counter()
@@ -384,7 +401,9 @@ def main():
         f"- Menu rows kept: {len(menu)} ({sum(m['source'] == 'menu' for m in menu)} dated menu prices, "
         f"{sum(m['source'] == 'seed' for m in menu)} undated AI-estimated prototype prices, source `seed`).",
         f"- Tracked prices (one per item and outlet, lowest listed): {len(prices)} "
-        f"({sum(p['source'] == 'menu' for p in prices)} menu, {sum(p['source'] == 'seed' for p in prices)} seed).",
+        f"({sum(p['source'] == 'menu' for p in prices)} menu, {sum(p['source'] == 'seed' for p in prices)} seed). "
+        f"Left out: {dropped_benchmark} AI-estimated prices at the grocery baseline (it carries those items, unpriced). "
+        f"Carries: {len(carries)}.",
         f"- Barcodes kept: {len(bars)} ({sum(b['item_id'] != '' for b in bars)} mapped to an item). "
         f"Dropped: {dict(dropped) or 'none'}.", "",
         "| Item | Outlets with a price | of which dated menu prices |", "|---|---|---|",
