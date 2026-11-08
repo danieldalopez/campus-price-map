@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { requestLocation, resumeLocationIfGranted, walkLabel, walkMinutes, type LocationState } from "@/lib/geo";
@@ -10,7 +11,7 @@ import { searchItems } from "@/lib/search";
 import type { ItemsResponse, LocationsResponse, Outlet } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 import { useLocation } from "@/lib/use-location";
-import { Button } from "./Button";
+import { Button, buttonClasses } from "./Button";
 import { ItemTiles } from "./ItemTiles";
 import { SearchResults, searchSummary } from "./SearchResults";
 import { WakingUp } from "./WakingUp";
@@ -172,6 +173,9 @@ export default function HomeScreen() {
               <span aria-hidden="true">☰</span> List
             </Button>
           </div>
+          <Link href="/snap" className={buttonClasses("primary", "lg", "mt-2 w-full")}>
+            <span aria-hidden="true">📷</span> Snap a price
+          </Link>
         </div>
       </div>
 

@@ -527,7 +527,7 @@ Catalog `workspace`, schema `cpm` for everything Databricks computes, schema `se
 
 ### Getting Lakebase data into Databricks (`02_bronze_copy.py`)
 
-Primary route: the notebook connects to Lakebase with `psycopg`, using a 1 hour credential from `WorkspaceClient().postgres.generate_database_credential(...)` for the Job's run-as user (no stored password). It reads `prices`, `price_votes`, `stock_reports`, `items`, `locations`, `carries`, `app_config`, `walk_matrix` and the `current_prices` view, and overwrites `bronze_*` Delta tables. At hackathon scale (hundreds of rows) a full copy takes seconds and keeps the pipeline independent of Lakebase. Start the notebook with `%pip install -U databricks-sdk "psycopg[binary]"` (the `postgres` SDK module needs databricks-sdk 0.81 or newer).
+Primary route: the notebook connects to Lakebase with `pg8000` (pure Python; psycopg's bundled native `libpq` aborts the serverless Python process on import), using a 1 hour credential from `WorkspaceClient().postgres.generate_database_credential(...)` for the Job's run-as user (no stored password). It reads `prices`, `price_votes`, `stock_reports`, `items`, `locations`, `carries`, `app_config`, `walk_matrix` and the `current_prices` view, and overwrites `bronze_*` Delta tables. At hackathon scale (hundreds of rows) a full copy takes seconds and keeps the pipeline independent of Lakebase. Start the notebook with `%pip install -U databricks-sdk pg8000` (the `postgres` SDK module needs databricks-sdk 0.81 or newer).
 
 Optional upgrade: **Lakehouse Sync** (Beta) streams Lakebase changes into `lb_<table>_history` Delta tables without a notebook. It needs `REPLICA IDENTITY FULL` on each table, supports only basic column types (hence `device_id text`), and doesn't work on catalogs with default storage, which Free Edition likely uses. Try it only after everything else works.
 
@@ -748,8 +748,8 @@ databricks postgres create-synced-table workspace.serving.price_comparisons --js
 
 `refresh`: `02_bronze_copy` → `price_engine` → `03_price_model` → refresh both synced tables (pipeline tasks on each synced table's pipeline; get the IDs from `databricks postgres get-synced-table`) → `04_grants`.
 
-- Schedule: every 30 min from Sat night to Sun 12:15 PM, then pause. Plus "Run now" for the demo.
-- Measure one full run in D4 and write the time here: ______. If it's over 3 minutes, don't wait for it live in the demo; show the recorded run.
+- Schedule: **every hour on the hour** (America/Vancouver) until judging ends Sun 12:15 PM, then pause it. Plus "Run now" for the demo. Hourly, not every 30 min, because a run takes about 11 minutes and Free Edition compute is limited. The dev target has no `mode: development`, because development mode pauses every schedule and refuses to unpause it.
+- Measured on Nov 8: **11.4 min** for a full run (bronze copy 4.5 min, mostly serverless start-up and `%pip`; price engine 7 min), plus the snapshot sync. That's over 3 minutes, so don't wait for it live in the demo: show a recorded run.
 - Deploy: `databricks bundle validate`, then `databricks bundle deploy -t dev`, then `databricks bundle run refresh -t dev`, each with `--profile campus-price-map`.
 - Screenshot the Job DAG, the pipeline graph and the data quality panel for Devpost.
 
@@ -895,7 +895,7 @@ Databricks track (Sergio, in parallel, after app Step 2 has seeded Lakebase). Cl
 
 - **D1 Bundle and bronze.** `databricks.yml` with the pipeline and the `refresh` Job, and `02_bronze_copy.py`. **Show me:** `bronze_prices` row count equals `select count(*) from prices` in Lakebase.
 - **D2 Price engine.** `price_engine.py` through `gold_price_comparisons` and `gold_parity`. **Show me:** Red Bull rows ranked 1 to N with chips, zero parity mismatches, the data quality panel.
-- **D3 Serve it.** `create_synced_tables.sh`, `04_grants.py`, then flip `PRICE_SOURCE=pipeline` in Vercel. **Show me:** `/api/health` reports `pipeline.computed_at`, and the Outlet page shows chips.
+- **D3 Serve it.** (Done Nov 8: `serving.price_comparisons` is synced into Lakebase, `app_reader` granted, the refresh Job runs bronze copy → price engine → sync → grants, and the live `/api/health` reports the pipeline. `serving.outlet_scores` waits for D5.) `create_synced_tables.sh`, `04_grants.py`, then flip `PRICE_SOURCE=pipeline` in Vercel. **Show me:** `/api/health` reports `pipeline.computed_at`, and the Outlet page shows chips.
 - **D4 Refresh Job.** Schedule, Run now, timing written into section 10. **Show me:** the demo moment end to end, on a phone.
 - **D5 Price model.** `03_price_model.py` (self-test on simulated data first), `gold_model_metrics`, the `outlet_scores` sync, estimated rows in `price_comparisons`. **Show me:** the self-test passing, the leave-one-out error for the model vs the item median, and home map pins with measured and estimated tiers.
 - **D6 StatCan.** Upload the CSVs to the Volume (ask first), `01_statcan.py` with both parsers, `data/statcan_map.csv`, the statcan columns in `gold_price_comparisons`. **Show me:** row counts per `statcan_*` table, the banana line and the coffee ingredients line on Results, labelled with the right geography.

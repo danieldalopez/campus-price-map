@@ -460,6 +460,23 @@ def main():
     finally:
         BRONZE["bronze_walk_matrix"] = matrix
 
+    print("\nhalf-cent nets round half away from zero, in exact decimals (wage 18.25, Nest → L02 3.0 min)")
+    config, matrix = list(CONFIG), list(BRONZE["bronze_walk_matrix"]["rows"])
+    try:
+        BRONZE["bronze_app_config"]["rows"] = [(k, "18.25" if k == "bc_min_wage" else v) for k, v in CONFIG]
+        BRONZE["bronze_walk_matrix"]["rows"] = [("L01", "L02", 280, 3.0, "ors", False)]
+        ctes_hc, _ = build_ctes(load_engine(), args.schema)
+        sql = ("WITH " + ",\n".join(ctes_hc) + "\nSELECT time_cost, net, verdict, break_even_wage, break_even_min "
+               "FROM gold_walk_worth WHERE item_id = 'I01' AND origin_location_id = 'L01' AND cheaper_location_id = 'L02'")
+        r = run_sql(sql, args.profile, args.warehouse_id)[1][0]
+        # 0.75 - 6.0 * 18.25 / 60 = -1.075 exactly → -1.08; time cost 1.825 → 1.83; 0.75 / 18.25 * 60 = 2.4657… → 2.5
+        c.eq("time_cost, net, verdict, break_even_wage, break_even_min",
+             (r["time_cost"], r["net"], r["verdict"], r["break_even_wage"], r["break_even_min"]),
+             (1.83, -1.08, "not_worth_it", 7.5, 2.5))
+    finally:
+        BRONZE["bronze_app_config"]["rows"] = config
+        BRONZE["bronze_walk_matrix"]["rows"] = matrix
+
     print(f"\n{c.passed} passed, {c.failed} failed")
     sys.exit(1 if c.failed else 0)
 
