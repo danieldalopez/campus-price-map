@@ -23,7 +23,7 @@ import type {
   StatcanInfo,
   Stock,
 } from "./types";
-import { iso, num, text } from "./validate";
+import { isVote, iso, num, text } from "./validate";
 
 type Options = { item: Item; origin: LatLng | null; deviceId: string | undefined };
 
@@ -36,6 +36,8 @@ export type LiveExtraCols = {
   pending_price_id: string | null;
   pending_price: string | null;
   pending_device_id: string | null;
+  /** This device's vote on the pending report, if any (`$2` is the device id). */
+  pending_my_vote: string | null;
   stock: Stock;
 };
 
@@ -68,6 +70,11 @@ export type PipelinePriceCols = {
   est_high: string | null;
   live_price: string | null;
   live_updated_at: Date | null;
+  walk_best_location_id: string | null;
+  walk_best_name: string | null;
+  walk_best_stock: string | null;
+  walk_saving: string | null;
+  walk_extra_min: string | null;
 };
 
 /** Live CTE bodies, filtered by `$1` on `key` ("item_id" for Results, "location_id" for the Outlet page). */
@@ -79,9 +86,10 @@ export function liveCtes(key: "item_id" | "location_id"): string {
   st as (select ${other} as k, stock from stock_status where ${key} = $1)`;
 }
 
-/** Pending and stock columns; needs `pp` and `st` from liveCtes joined on `k`. */
+/** Pending and stock columns; needs `pp` and `st` from liveCtes joined on `k`, and the device id (or null) as `$2`. */
 export const LIVE_EXTRA_COLUMNS = `
   pp.price_id as pending_price_id, pp.price as pending_price, pp.device_id as pending_device_id,
+  (select v.vote from price_votes v where v.price_id = pp.price_id and v.device_id = $2::text) as pending_my_vote,
   coalesce(st.stock, 'in_stock') as stock`;
 
 /** The pipeline columns PipelinePriceCols reads; needs `pc`, `nl` (nearest cheaper outlet) and `cp`. */
@@ -91,7 +99,11 @@ export const PIPELINE_COLUMNS = `
   pc.nearest_cheaper_location_id, nl.name as nearest_cheaper_name,
   pc.nearest_cheaper_price, pc.nearest_cheaper_walk_min,
   pc.est_low, pc.est_high,
-  cp.price as live_price, cp.updated_at as live_updated_at`;
+  cp.price as live_price, cp.updated_at as live_updated_at,
+  pc.walk_best_location_id, pc.walk_saving, pc.walk_extra_min,
+  (select l.name from locations l where l.id = pc.walk_best_location_id) as walk_best_name,
+  (select s.stock from stock_status s
+    where s.item_id = pc.item_id and s.location_id = pc.walk_best_location_id) as walk_best_stock`;
 
 /** Pending report (whether this device made it is decided here, so other devices' ids never leave) and stock. */
 export function liveExtras(r: LiveExtraCols, deviceId: string | undefined): Pick<PriceFields, "stock" | "pending"> {
@@ -101,7 +113,12 @@ export function liveExtras(r: LiveExtraCols, deviceId: string | undefined): Pick
     stock: r.stock,
     pending:
       pendingPrice !== null && pendingId !== null
-        ? { price_id: pendingId, price: pendingPrice, mine: deviceId !== undefined && r.pending_device_id === deviceId }
+        ? {
+            price_id: pendingId,
+            price: pendingPrice,
+            mine: deviceId !== undefined && r.pending_device_id === deviceId,
+            my_vote: isVote(r.pending_my_vote) ? r.pending_my_vote : null,
+          }
         : null,
   };
 }
@@ -125,6 +142,7 @@ export function liveFields(r: LivePriceCols, median: number | null, nOutlets: nu
     nearest_cheaper: null,
     just_confirmed: null,
     estimate: null,
+    walk: null,
   };
 }
 
@@ -169,7 +187,20 @@ export function pipelineFields(r: PipelinePriceCols): PriceOnly {
         : null,
     just_confirmed: newer && livePrice !== null && liveAt !== null ? { price: livePrice, updated_at: liveAt } : null,
     estimate: price === null && estLow !== null && estHigh !== null ? { low: estLow, high: estHigh } : null,
+    walk: walkFields(r, price),
   };
+}
+
+/**
+ * Databricks' Worth the walk suggestion for someone standing at this outlet: the cheaper outlet within reach,
+ * what it saves each time and the extra minutes. Hidden if that outlet is sold out (section 10).
+ */
+function walkFields(r: PipelinePriceCols, price: number | null): PriceFields["walk"] {
+  const saving = num(r.walk_saving);
+  const extra = num(r.walk_extra_min);
+  if (price === null || !r.walk_best_location_id || saving === null || extra === null || saving <= 0) return null;
+  if (r.walk_best_stock === "sold_out") return null;
+  return { location_id: r.walk_best_location_id, name: text(r.walk_best_name), saving, extra_min: extra };
 }
 
 /** Log why a pipeline read failed (the code only), then the caller falls back to live (rule 10). */
@@ -235,7 +266,7 @@ async function livePrices({ item, origin, deviceId }: Options): Promise<PricesRe
        left join cp on cp.k = l.id
        ${BASE_JOINS}
        where cp.k is not null or pp.k is not null`,
-      [item.id],
+      [item.id, deviceId ?? null],
     ),
     query<{ n_outlets: string; campus_median: string | null }>(
       "reader",
@@ -298,7 +329,7 @@ async function pipelinePrices({ item, origin, deviceId }: Options, computedAt: s
      left join cp on cp.k = l.id
      ${BASE_JOINS}
      where pc.location_id is not null or cp.k is not null or pp.k is not null`,
-    [item.id],
+    [item.id, deviceId ?? null],
   );
 
   let nOutlets = 0;

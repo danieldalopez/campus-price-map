@@ -1,6 +1,9 @@
 /** "$3.25". Every price in the app goes through this. */
 export function formatPrice(price: number): string {
-  return `$${price.toFixed(2)}`;
+  // "$1,456.00" for big projections; below 1,000 nothing changes.
+  return Math.abs(price) < 1000
+    ? `$${price.toFixed(2)}`
+    : `$${price.toLocaleString("en-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 /** "3 dollars 25", for screen readers and Read aloud. */

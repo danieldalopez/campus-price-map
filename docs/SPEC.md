@@ -6,6 +6,9 @@ Built at HackCamp 2026 (nwPlus, UBC Vancouver) by Sergio Lopez and Sebastian Sal
 
 > **Claude Code: this file is the spec.** Read it fully before every task. Work through section 13 one step at a time. If a request conflicts with this file, ask before building.
 
+Version 7, Sun Nov 8, morning. Changes from version 6:
+- **Worth the walk is about the money, not the student's time.** The point is that a few extra minutes, repeated every time you buy it, add up: "6 extra minutes there and back saves $1.00 every time: $65 a term, $520 over a degree." No wage, no time cost, no net, no "not worth it" verdict, and no break-even wage in the app. The best option is the **biggest saving** within `worth_max_extra_min`, not the highest net. Savings under `even_band` ($0.10) each time aren't suggested. The card starts at 5 purchases a week (once every school day), shown and changeable. Section 7 card, section 10, G14, Step 14, D8.
+
 Version 6, Sun Nov 8, early morning. Changes from version 5:
 - **Walking directions open in Google Maps.** A **Directions** button opens Google Maps with walking directions to the outlet. The app no longer draws routes: no `/api/route`, no OpenRouteService calls from the app, no RouteLayer or RouteSteps, no rerouting or arrival sheet. Distances in the app stay the section 7 estimate. (`scripts/build-walk-matrix.mjs` can still use OpenRouteService once, offline, for outlet to outlet walking times in Databricks.) Section 7 "Directions", Step 15.
 
@@ -307,19 +310,21 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
 - Small map: pins show this item's official price; the cheapest pin gets a CHEAPEST stamp.
 - "vs grocery" line if the grocery baseline has the item: "$1.10 more than Save-On-Foods Wesbrook".
 - StatCan line, only if `price_comparisons.statcan_kind` is set. For same_item: STATCAN stamp plus "5.7x the BC grocery price · StatCan, BC, Sep 2026 · assuming a 120 g banana". For ingredients, a plain line with no stamp: "Brewing it yourself costs about $0.28 a cup · StatCan ground coffee, BC, Sep 2026". The geography and month come from the data.
-- **Worth the walk? card** (`WorthTheWalk`, maths in `src/lib/walkworth.ts`, section 10 has the formula). Example, at an example wage of $18/h:
+- **Worth the walk card** (`WorthTheWalk`, maths in `src/lib/walkworth.ts`, section 10 has the formula). It sells the walk with what it adds up to:
 
-  > **Worth the walk? ✓ Worth it**
-  > $0.80 cheaper at Harvest Market · 2 extra minutes there and back (about $0.60 of your time at $18/h)
-  > **Net +$0.20 each time** · worth it if your time is worth less than $24/h
+  > **Worth the walk: save $65.00 a term**
+  > 6 extra minutes there and back to Tim Hortons instead of Blue Chip Cafe saves **$1.00 every time**.
+  > I buy it [5 times a week ▾]
+  > **$65.00** saved a term · **$130.00** saved a year · **$520.00** saved a degree
+  > 65 purchases a term (13 weeks), if prices hold.
 
-  The card always shows the three numbers that decide it: money saved, extra minutes, what those minutes are worth. Then the verdict in words: "✓ Worth it", "≈ About even" or "✗ Not worth it for the money", and the break-even wage in plain words.
-  - **Projection:** "If you buy it [4 ▾] times a week for a [term ▾]: $41.60 saved · 1.7 h walking · net +$10.40" (52 purchases × $0.80, × 2 min, × $0.20). The student picks the frequency (1 to 14 a week, no default assumption: the control starts empty and the line appears once they pick) and the horizon (term 13 weeks, year 26, degree 104, from `app_config`). Every projection ends with "if prices hold".
-  - **Your time** is set to the BC minimum wage from `app_config` and the student can change it ("My time is worth [$__]/h"). Kept on the device only (localStorage), never sent.
-  - **Optional savings line:** "Put the weekly saving aside at [__]% a year → $X after a degree". Hidden until the student types a rate. We never pick a rate for them. Over a term, interest on a few dollars is close to zero, so this line only appears for the year and degree horizons.
+  - The option shown is the **biggest saving** within `worth_max_extra_min` extra minutes (ties: the shorter walk). Savings under `even_band` ($0.10) each time aren't suggested: "16 minutes to save 6 cents" isn't a pitch.
+  - Time is shown as minutes only. It is **never** turned into money: no wage, no time cost, no net, no "not worth it" verdict.
+  - **Frequency:** starts at 5 a week (once every school day), always visible and changeable from 1 to 14. Horizons are term, year and degree from `app_config`, shown side by side. Every projection ends with "if prices hold".
+  - **Optional savings line:** "Put the savings aside at [__]% a year → $X after a degree". Hidden until the student types a rate. We never pick a rate for them.
   - **Directions** button on the card and on every row: opens Google Maps (below).
-  - Never uses estimated prices (G13). Hidden when the closest outlet is already the cheapest: then the decision line says so.
-  - Read aloud includes the verdict and the three numbers.
+  - Never uses estimated prices (G13). Hidden when nothing cheaper is within reach, including when the closest outlet is already the cheapest: then the decision line says so.
+  - Read aloud includes the saving each time, the extra minutes and the term total.
 
 **Directions (hand-off to Google Maps)**
 - A **Directions** button (on Results rows, the Worth the walk card and the Outlet page) is a plain link to `https://www.google.com/maps/dir/?api=1&destination=<lat>,<lng>&travelmode=walking`, built in `src/lib/directions.ts` from the outlet's coordinates. It opens the Google Maps app if installed, else Google Maps in the browser, in a new tab.
@@ -331,7 +336,7 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
 - Name, today's hours, items grouped by category.
 - A **Directions** button under the name (section 7, Directions).
 - Each item: PriceTag, PriceBand, plus its `chip` from `price_comparisons`, with a link to `nearest_cheaper_location_id` ("$0.35 less at Mercante, about 3 min from here"), the pending line as on Results, and a Sold out button. Chips and links are hidden when the pipeline isn't available.
-- Under each item with a cheaper option, the Databricks verdict for standing at this outlet: "Walk to Mercante? ✗ Not worth it for the money · saves $0.35, costs 6 extra minutes". This line is read straight from `price_comparisons.walk_*` (section 10), with no maths in the app.
+- Under each item with a cheaper option, Databricks' Worth the walk suggestion for standing at this outlet: "Worth the walk: 8 extra minutes to Tim Hortons saves $1.00 each time · $65.00 a term if you buy it 5 times a week". Read from `price_comparisons.walk_best_location_id`, `walk_saving` and `walk_extra_min` (section 10); the app only multiplies out the term total. Hidden under `even_band` or when that outlet is sold out.
 - No single score for the whole outlet on this page.
 
 **Snap `/snap`**
@@ -546,7 +551,7 @@ All tables are materialized views: full recompute every run, fine at this size.
 | `gold_item_stats` | Per item, over non benchmark outlets: n_outlets, min, median, max, spread, cheapest outlet, grocery baseline price. |
 | `gold_price_comparisons` | One row per item and outlet with an official price, plus estimated rows from `model_price_estimates` (columns below). This is the table the app serves. |
 | `gold_parity` | Compares `gold_official_prices` with `bronze_current_prices` (the live view). One row per mismatch. Expect zero; a non-zero count fails an `expect` and shows in the data quality panel. Reports newer than the bronze copy are excluded. |
-| `gold_pitch_numbers` | Proof-of-concept numbers for the Devpost (every official price, `seed` included and labelled in the detail): biggest same item gap between outlets; share of cheaper options that are worth the walk at the BC minimum wage; median net per term at 4 purchases a week among worthwhile switches; number of reports and confirmations. Never synced. |
+| `gold_pitch_numbers` | Proof-of-concept numbers for the Devpost (every official price, `seed` included and labelled in the detail): biggest same item gap between outlets; median and biggest saving per term at 5 purchases a week for a walk within `worth_max_extra_min` (`median_saved_per_term_5_a_week`, `biggest_saved_per_term_5_a_week`; version 7: money only, no wage); number of reports and confirmations. Never synced. |
 
 `gold_price_comparisons` columns (become `serving.price_comparisons`):
 
@@ -569,12 +574,10 @@ statcan_value                        StatCan price for one item's amount, e.g. $
 statcan_geo, statcan_ref_month       e.g. "British Columbia", "2026-09"; the app's label comes from here
 statcan_ratio                        price / statcan_value, same_item only
 statcan_note                         the assumption sentence shown in the app
-walk_best_location_id                if you're standing at this outlet, the cheaper outlet with the highest net (from gold_walk_worth)
+walk_best_location_id                if you're standing at this outlet, the cheaper outlet with the biggest saving within reach (from gold_walk_worth)
 walk_saving, walk_extra_min          its saving and extra minutes (there and back)
-walk_time_cost, walk_net             at bc_min_wage
-walk_verdict                         "worth_it" | "about_even" | "not_worth_it"; null if nothing cheaper within reach
-walk_break_even_wage                 worth it if your time is worth less than this, $/h
-walk_net_term_per_weekly             walk_net × weeks_term: net per term for each weekly purchase (×4 for 4 a week)
+walk_time_cost, walk_net, walk_verdict, walk_break_even_wage, walk_net_term_per_weekly
+                                     version 5 wage maths; the app no longer reads them (version 7, section 10)
 minutes_of_work                      price ÷ bc_min_wage × 60
 chip                                 ready to show: "Cheapest on campus", "2nd cheapest of 6", "$0.40 above campus average"
 est_price, est_low, est_high         set only on rows with no official price, from model_price_estimates; price, rank and chip are null on those rows
@@ -595,32 +598,31 @@ It uses the median and a percentage rather than a standard deviation: with 3 to 
 
 ### Worth the walk: the economics (`gold_walk_worth`)
 
-For item *i*, an origin *o* (where you are) and a cheaper outlet *c*, with `w` = `bc_min_wage` and the other constants from `app_config` (read through `bronze_app_config`):
+The point: a few extra minutes, repeated every time you buy it, add up to real money over a term, a year and a degree. So it's about the money saved. Time is shown as minutes and **never priced** (no wage).
+
+For item *i*, an origin *o* (where you are) and a cheaper outlet *c*, with the constants from `app_config` (read through `bronze_app_config`):
 
 ```
 saving        = price(i, o) − price(i, c)                       only official prices; c must be cheaper; c ≠ grocery baseline
 extra_min     = walk(o, c) × (2 if round_trip else 1)           walk(o, c) from silver_outlet_distances
-time_cost     = extra_min / 60 × w
-net           = saving − time_cost
-verdict       = worth_it if net > even_band; not_worth_it if net < −even_band; else about_even
-break_even_wage = saving / (extra_min / 60)                     $/h; "worth it if your time is worth less than this"
-break_even_min  = saving / w × 60                               the most extra minutes the saving pays for
 per horizon H in {weeks_term, weeks_year, weeks_degree}, per weekly purchase:
-  saved_H = saving × H,  minutes_H = extra_min × H,  net_H = net × H
+  saved_H = saving × H,  minutes_H = extra_min × H
 ```
 
 Rules:
 - Skip pairs where `extra_min > worth_max_extra_min`: nobody walks 25 minutes for a cheaper Red Bull.
-- The best option is the one with the highest `net`, **not** the cheapest price. A cheaper outlet far away can lose to a slightly cheaper one next door. That choice is the point of the feature, so it's what `walk_best_location_id` stores.
+- Skip pairs where `saving < even_band` ($0.10): a few cents isn't worth suggesting.
+- The best option is the **biggest saving** within reach (ties: the shorter walk). That's what `walk_best_location_id`, `walk_saving` and `walk_extra_min` store.
 - Sold out isn't known here (stock is live only), so the app hides a suggestion whose outlet is marked sold out.
 - Compounding with interest is **not** computed in Databricks, because the rate is the student's own input. The app applies it (below).
+- **D8 follow-up (done in version 7):** `gold_walk_worth` has a `saving_rank` column (biggest saving first, savings under `even_band` last), and `gold_price_comparisons.walk_*` come from `saving_rank = 1 AND saving >= even_band`. The old wage columns (`time_cost`, `net`, `verdict`, `break_even_*`, `net_rank`, and `walk_net`, `walk_verdict` etc. in `price_comparisons`) are still computed so the synced table keeps its shape, but nothing reads them. The pitch numbers are `median_saved_per_term_5_a_week` and `biggest_saved_per_term_5_a_week`.
 
 **Live version in the app (`src/lib/walkworth.ts`).** The student is rarely standing exactly at an outlet, so the app runs the same formula with their position as the origin:
 - *near* = the closest in-stock outlet with an official price for the item (the one they'd buy at without the app).
 - For each cheaper *c*: `extra_min = (walk(you, c) − walk(you, near)) × (2 if round_trip else 1)`, floored at 0. The rest is identical.
-- Projection for the student's own frequency `f` per week: `saved = saving × f × H`, and so on.
-- Optional savings at the student's rate `r`: weekly deposit `S = net × f` (only if positive), `i = r / 52`, `future value = S × ((1 + i)^H − 1) / i`.
-- **Parity test:** D8 exports 30 rows of `gold_walk_worth` as `tests/fixtures/walk_worth.json`. `tests/walkworth.test.ts` puts the student exactly at the origin outlet and must reproduce `saving`, `extra_min`, `net`, `verdict` and `break_even_wage` to the cent. One formula, two implementations, checked against each other.
+- Projection for the student's frequency `f` per week (starts at 5): `saved = saving × f × H`.
+- Optional savings at the student's rate `r`: weekly deposit `S = saving × f`, `i = r / 52`, `future value = S × ((1 + i)^H − 1) / i`.
+- **Parity test:** D8 exports 30 rows of `gold_walk_worth` as `tests/fixtures/walk_worth.json`. `tests/walkworth.test.ts` puts the student exactly at the origin outlet and must reproduce `saving`, `extra_min`, `saved_term`, `minutes_term`, `saved_year`, `saved_degree` and `minutes_degree` to the cent. One formula, two implementations, checked against each other.
 
 ### Price model (`03_price_model.py`, notebook): estimating from sparse data
 
@@ -761,7 +763,7 @@ Tables: `gold_price_comparisons`, `gold_item_stats`, `gold_outlet_scores`, `gold
 - "Which outlet is most expensive for coffee?"
 - "How much more does bottled water cost on campus than at Save-On-Foods?"
 - "Which items have the biggest price gap between outlets?"
-- "From the Nest, which cheaper options are worth the walk at minimum wage?" (add `gold_walk_worth` to the Genie tables)
+- "From the Nest, which cheaper options save the most over a term?" (add `gold_walk_worth` to the Genie tables)
 
 Genie reads the last refresh, not live data, so don't ask it about pending prices.
 
@@ -862,7 +864,7 @@ Figma file: (add link). Screens: Home, Results (with a pending row and a just co
 | G10 | Notebooks, pipeline, Job and Genie never in the live request path. The app works if all of Databricks is down except Lakebase (live prices, no comparisons). Turn Lakebase scale to zero off before judging. |
 | G11 | Accessibility rules in section 11 apply to every screen. |
 | G12 | Only code written after 12 PM Sat Nov 7. Public repo. Both teammates on Devpost. |
-| G14 | Worth the walk never hides the numbers behind the verdict: saving, extra minutes and time cost are always shown. Projections use the student's own frequency and end with "if prices hold". No interest rate is ever assumed. The wage is the student's to change and stays on the device. |
+| G14 | Worth the walk always shows the saving each time and the extra minutes behind every total. Time is never turned into money. The frequency is shown and the student can change it; projections end with "if prices hold". No interest rate is ever assumed. |
 | G15 | Location: requested on first search, watched only while the page is visible, rounded to about 11 m before leaving the phone, never stored or logged. The Google Maps directions link carries the outlet's coordinates only, never the student's location. |
 | G16 | Open Food Facts data stays under the ODbL with attribution. A live barcode lookup never auto-maps to an item. |
 | G13 | Model estimates are never shown as a price: no PriceTag, never ranked, never in chips, stamps, savings or Read aloud. Always the word "estimated" plus a range. Shown only when the validation gate in section 10 passed. Outlets with no prices get `?`, never a tier from their type alone. |
@@ -903,13 +905,13 @@ Databricks track (Sergio, in parallel, after app Step 2 has seeded Lakebase). Cl
 
 App steps added in version 5:
 
-14. **Worth the walk.** "Do Step 14: `/api/config`, `src/lib/walkworth.ts` exactly as section 10, its parity test against `tests/fixtures/walk_worth.json`, the WorthTheWalk card on Results and the Databricks verdict line on the Outlet page (section 7)." **Show me:** the parity test passing, and the card on a phone for Red Bull with frequency 4 a week and a term.
+14. **Worth the walk.** "Do Step 14: `/api/config`, `src/lib/walkworth.ts` exactly as section 10, its parity test against `tests/fixtures/walk_worth.json`, the WorthTheWalk card on Results and the Databricks Worth the walk line on the Outlet page (section 7)." **Show me:** the parity test passing, and the card on a phone for small drip coffee at 5 a week: the term, year and degree totals.
 15. **Directions.** "Do Step 15: `src/lib/directions.ts` and the DirectionsButton (section 7, Directions) on Results rows and the Worth the walk card. The Outlet page already has one from Step 5." **Show me:** tapping Directions on the cheapest Red Bull opens Google Maps with walking directions to it.
 16. **Scanner (lowest priority, needs the two decisions in section 6).** "Do Step 16: `scripts/build-barcodes.mjs`, `data/barcodes.csv` with its licence file, `/api/barcode`, and the full-screen `/scan` page (section 7)." **Show me:** a Red Bull can scanned on an iPhone opens its Results.
 
 Databricks step added in version 5:
 
-- **D8 Worth the walk in Databricks.** `gold_walk_worth` in `price_engine.py`, the `walk_*` columns in `gold_price_comparisons`, the new pitch numbers, and the 30-row fixture export for the app's parity test. Do it right after D2. **Show me:** for Red Bull from the Nest, every cheaper outlet with saving, extra minutes, net and verdict, and the share of options worth it at minimum wage.
+- **D8 Worth the walk in Databricks.** `gold_walk_worth` in `price_engine.py`, the `walk_*` columns in `gold_price_comparisons`, the new pitch numbers, and the 30-row fixture export for the app's parity test. Do it right after D2. **Show me:** for Red Bull from the Nest, every cheaper outlet with saving, extra minutes and saved per term. (Version 7: see the D8 follow-up in section 10.)
 
 ## 14. Out of scope
 

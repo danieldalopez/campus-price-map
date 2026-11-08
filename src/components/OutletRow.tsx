@@ -55,7 +55,7 @@ export function OutletRow({ row, now, cheapest, dimmed, saves }: Props) {
           <PriceBand band={row.band} pctVsMedian={row.pct_vs_median} />
           {row.chip ? <span className="chip">{row.chip}</span> : null}
         </div>
-      ) : (
+      ) : row.just_confirmed ? null : (
         <p className="mt-2">
           <span className="font-bold">No confirmed price yet</span>
           {row.estimate ? (
@@ -76,7 +76,7 @@ export function OutletRow({ row, now, cheapest, dimmed, saves }: Props) {
           on the next refresh
         </p>
       ) : null}
-      {row.pending ? <PendingLine pending={row.pending} /> : null}
+      <PendingLine pending={row.pending} what={`at ${row.outlet.name}`} />
       {row.stock === "maybe_sold_out" ? <p className="mt-1">A student said it may be sold out.</p> : null}
     </li>
   );

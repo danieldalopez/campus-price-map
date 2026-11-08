@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { formatPrice } from "@/lib/format";
 import { todayHoursText } from "@/lib/hours";
 import { itemEmoji } from "@/lib/item-art";
@@ -9,15 +9,17 @@ import { isApproximate } from "@/lib/outlet";
 import { freshness } from "@/lib/pricing";
 import type { MenuCategory, MenuLine, Outlet, OutletItemRow, OutletResponse } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { DEFAULT_CONFIG, DEFAULT_PER_WEEK, project, type WalkConfig } from "@/lib/walkworth";
 import { useNow } from "@/lib/use-now";
 import { Button, buttonClasses } from "./Button";
 import { DirectionsButton } from "./DirectionsButton";
 import { OutletLink } from "./OutletLink";
-import { PendingLine } from "./PendingLine";
+import { PendingLine, PricesRefresh } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
 import { PriceTag } from "./PriceTag";
 import { Stamp } from "./Stamp";
 import { WakingUp } from "./WakingUp";
+import { WalkConfigContext } from "./WorthTheWalk";
 
 const CARD = "rounded-tag border-2 border-ink bg-card p-3 shadow-ink";
 
@@ -74,6 +76,29 @@ function OutletFacts({ outlet, now }: { outlet: Outlet; now: number }) {
 // Tracked items: compared across campus
 // ---------------------------------------------------------------------------------------------------------
 
+/**
+ * Databricks' Worth the walk suggestion for standing here (section 7), money first: "Walk 8 extra minutes to
+ * Tim Hortons and save $1.00 each time: $65.00 a term if you buy it 5 times a week". No maths beyond the total.
+ */
+function WalkLine({ walk }: { walk: NonNullable<OutletItemRow["walk"]> }) {
+  const config = useContext(WalkConfigContext);
+  const minutes = Math.round(walk.extra_min);
+  const term = project(walk, DEFAULT_PER_WEEK, config.weeks_term);
+  if (Math.round(walk.saving * 100) < Math.round(config.even_band * 100)) return null;
+  return (
+    <p className="mt-1">
+      <span className="font-bold">Worth the walk:</span> {minutes === 0 ? "no extra walking" : `${minutes} extra ${minutes === 1 ? "minute" : "minutes"}`}{" "}
+      to{" "}
+      <OutletLink id={walk.location_id} className="font-bold">
+        {walk.name ?? "a cheaper outlet"}
+      </OutletLink>{" "}
+      saves {formatPrice(walk.saving)} each time ·{" "}
+      <span className="font-bold text-cheap">{formatPrice(term.saved)} a term</span> if you buy it{" "}
+      {DEFAULT_PER_WEEK} times a week
+    </p>
+  );
+}
+
 function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: string; now: number }) {
   const fresh = freshness(row, now);
   const soldOut = row.stock === "sold_out";
@@ -110,7 +135,7 @@ function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: str
           <PriceBand band={row.band} pctVsMedian={row.pct_vs_median} />
           {row.chip ? <span className="chip">{row.chip}</span> : null}
         </div>
-      ) : (
+      ) : row.just_confirmed ? null : (
         <p className="mt-2">
           <span className="font-bold">No confirmed price yet</span>
           {row.estimate ? (
@@ -135,6 +160,9 @@ function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: str
         </p>
       ) : null}
 
+      {/* Pipeline only: Databricks' Worth the walk suggestion for standing here (section 7). */}
+      {row.walk ? <WalkLine walk={row.walk} /> : null}
+
       {row.just_confirmed ? (
         <p className="mt-1">
           <span className="font-bold">Just confirmed: </span>
@@ -143,8 +171,7 @@ function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: str
         </p>
       ) : null}
 
-      {/* Step 7: the pending line gets Yes / No / Not sure inside PendingLine. */}
-      {row.pending ? <PendingLine pending={row.pending} /> : null}
+      <PendingLine pending={row.pending} what={row.item.name} />
 
       {row.stock === "maybe_sold_out" ? <p className="mt-1">A student said it may be sold out.</p> : null}
       {/* Step 9: the Sold out button goes here (POST /api/stock). */}
@@ -252,6 +279,7 @@ function BackToMap() {
 export default function OutletScreen({ outletId }: { outletId: string }) {
   const now = useNow(60_000);
   const api = useApi<OutletResponse>(`/api/outlet/${encodeURIComponent(outletId)}`);
+  const configApi = useApi<WalkConfig>("/api/config");
   const data = api.data;
   const menuCount = data ? data.menu.reduce((n, c) => n + c.lines.length, 0) : 0;
 
@@ -309,7 +337,11 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
 
       {data ? (
         <>
-          <TrackedSection rows={data.items} outletId={data.outlet.id} now={now} />
+          <PricesRefresh.Provider value={api.retry}>
+            <WalkConfigContext.Provider value={configApi.data ?? DEFAULT_CONFIG}>
+            <TrackedSection rows={data.items} outletId={data.outlet.id} now={now} />
+            </WalkConfigContext.Provider>
+          </PricesRefresh.Provider>
           <FullMenu menu={data.menu} now={now} />
           <p className="mt-8 px-4 text-ink-2">
             {data.price_source_used === "pipeline"
