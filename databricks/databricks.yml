@@ -76,7 +76,7 @@ resources:
       description: Lakebase → bronze → price engine → price model → synced tables → grants (docs/SPEC.md, section 10, "Refresh Job").
       max_concurrent_runs: 1
       performance_target: ${var.refresh_performance_target}
-      # A healthy run takes 25-35 minutes (mostly serverless start-up per task). Cap it well under the 3 hour
+      # A healthy run takes 25-35 minutes (mostly serverless start-up per task). Cap it well under the 2 hour
       # interval so a stuck run can't hold the queue.
       timeout_seconds: 3600
       email_notifications:
@@ -85,12 +85,13 @@ resources:
       tags:
         project: campus-price-map
         aidevkit_project: ai-dev-kit
-      # D4: every 3 hours at :30 (2:30, 5:30, 8:30, 11:30 ...). Was hourly, but a run measured 25-35 minutes on
-      # Nov 8 (each task waits ~3 min for serverless start-up), which kept serverless busy half of every hour and
-      # ran into the Free Edition quota. The 11:30 run lands just before judging. Pause it after judging
+      # D4: every 2 hours on the hour (10:00, 12:00 ...). Was hourly, but a run measured 25-35 minutes on Nov 8
+      # (each task waits ~3 min for serverless start-up), which kept serverless busy half of every hour. Not every
+      # 3 hours: the app drops to live prices when serving.price_comparisons is 3 h old (PIPELINE_MAX_AGE_MS in
+      # src/lib/serving.ts), and computed_at lands ~10 min into a run. Pause it after judging
       # (Sun Nov 8, 12:15 PM): the Devpost checklist says so.
       schedule:
-        quartz_cron_expression: "0 30 2/3 * * ?"
+        quartz_cron_expression: "0 0 0/2 * * ?"
         timezone_id: America/Vancouver
         pause_status: UNPAUSED
       tasks:
