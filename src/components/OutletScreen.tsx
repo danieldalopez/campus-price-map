@@ -88,17 +88,47 @@ function WalkLine({ walk }: { walk: NonNullable<OutletItemRow["walk"]> }) {
   const config = useContext(WalkConfigContext);
   const minutes = Math.round(walk.extra_min);
   const term = project(walk, DEFAULT_PER_WEEK, config.weeks_term);
-  if (Math.round(walk.saving * 100) < Math.round(config.even_band * 100)) return null;
+  const year = project(walk, DEFAULT_PER_WEEK, config.weeks_year);
+  const degree = project(walk, DEFAULT_PER_WEEK, config.weeks_degree);
+  if (!walkShown(walk, config.even_band)) return null;
   return (
-    <p className="mt-1">
-      <span className="font-bold">Worth the walk:</span> {minutes === 0 ? "no extra walking" : `${minutes} extra ${minutes === 1 ? "minute" : "minutes"}`}{" "}
-      to{" "}
-      <OutletLink id={walk.location_id} className="font-bold">
-        {walk.name ?? "a cheaper outlet"}
-      </OutletLink>{" "}
-      saves {formatPrice(walk.saving)} each time ·{" "}
-      <span className="font-bold text-cheap">{formatPrice(term.saved)} a term</span> if you buy it{" "}
-      {DEFAULT_PER_WEEK} times a week
+    <div className="mt-2 rounded-tag border-2 border-ink bg-paper p-2">
+      <p className="font-heading text-xl font-extrabold leading-tight">
+        Worth the walk: <span className="text-cheap">save {formatPrice(term.saved)} a term</span>
+      </p>
+      <p className="mt-1">
+        Buy it at{" "}
+        <OutletLink id={walk.location_id} className="font-bold">
+          {walk.name ?? "a cheaper outlet"}
+        </OutletLink>{" "}
+        instead ({minutes === 0 ? "no extra walking" : `${minutes} extra ${minutes === 1 ? "minute" : "minutes"}`}
+        ). Small each time, but it adds up every time you buy it:{" "}
+        <span className="font-bold text-cheap">{formatPrice(year.saved)} a year</span>,{" "}
+        <span className="font-bold text-cheap">{formatPrice(degree.saved)} over a degree</span>.
+      </p>
+      <p className="mt-1 text-ink-2">
+        {formatPrice(walk.saving)} × {DEFAULT_PER_WEEK} a week × {config.weeks_term} weeks, if prices hold.
+      </p>
+    </div>
+  );
+}
+
+function walkShown(walk: OutletItemRow["walk"], evenBand: number): boolean {
+  return !!walk && Math.round(walk.saving * 100) >= Math.round(evenBand * 100);
+}
+
+/** The closest cheaper outlet, as money over a term (shown only when there's no Worth the walk line). */
+function NearestLine({ nearest, saving }: { nearest: NonNullable<OutletItemRow["nearest_cheaper"]>; saving: number }) {
+  const config = useContext(WalkConfigContext);
+  const term = project({ saving, extra_min: 0 }, DEFAULT_PER_WEEK, config.weeks_term);
+  return (
+    <p className="mt-2">
+      <span className="font-bold text-cheap">{formatPrice(term.saved)} a term</span> less at{" "}
+      <OutletLink id={nearest.location_id} className="font-bold">
+        {nearest.name ?? "another outlet"}
+      </OutletLink>
+      {nearest.walk_min !== null ? `, about ${nearest.walk_min} min from here` : ""} (
+      {formatPrice(saving)} × {DEFAULT_PER_WEEK} a week × {config.weeks_term} weeks)
     </p>
   );
 }
@@ -114,6 +144,7 @@ function TrackedItem({
   outletName: string;
   now: number;
 }) {
+  const walkConfig = useContext(WalkConfigContext);
   const fresh = freshness(row, now);
   const soldOut = row.stock === "sold_out";
   const nearest = row.nearest_cheaper;
@@ -170,14 +201,8 @@ function TrackedItem({
       ) : null}
 
       {/* Pipeline only: the closest outlet that sells it for less, from serving.price_comparisons. */}
-      {nearest && saving !== null && saving > 0 ? (
-        <p className="mt-2">
-          <span className="font-mono font-bold">{formatPrice(saving)}</span> less at{" "}
-          <OutletLink id={nearest.location_id} className="font-bold">
-            {nearest.name ?? "another outlet"}
-          </OutletLink>
-          {nearest.walk_min !== null ? `, about ${nearest.walk_min} min from here` : ""}
-        </p>
+      {nearest && saving !== null && saving > 0 && !walkShown(row.walk, walkConfig.even_band) ? (
+        <NearestLine nearest={nearest} saving={saving} />
       ) : null}
 
       {/* Pipeline only: Databricks' Worth the walk suggestion for standing here (section 7). */}
