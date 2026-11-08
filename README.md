@@ -7,8 +7,6 @@ Built in 24 hours at [HackCamp 2026](https://hackcamp-2026.devpost.com/) (nwPlus
 | | |
 |---|---|
 | Live app | [campus-price-map.vercel.app](https://campus-price-map.vercel.app) |
-| Demo video | _add link_ |
-| Figma | _add link_ |
 | Devpost | _add link_ |
 
 > **📋 Master plan:** [`docs/SPEC.md`](docs/SPEC.md) is the build spec we work from: product, data, the Databricks
@@ -129,7 +127,7 @@ A full run takes about 30 minutes, mostly serverless start-up, and emails us if 
 | Analytics | Databricks Lakeflow Jobs and Declarative Pipelines on serverless, Delta tables in Unity Catalog, synced tables, Genie, Declarative Automation Bundles |
 | Price tag reading | Gemini API |
 | Public data | Statistics Canada via the `stats_can` Python library |
-| Design | Figma |
+| Design | Designed in code: tokens and components in `src/app/globals.css` and `src/components/` (no Figma file) |
 
 ## Data
 
@@ -264,5 +262,5 @@ Built from a fresh repository during HackCamp 2026 (hacking began 12:00 PM, Nove
 
 Sergio Lopez and Sebastian Salomon Wong, UBC Vancouver.
 
-- **Product and Data:** research, interviews, Figma, Databricks and StatCan, Devpost and pitch
+- **Product and Data:** research, interviews, Databricks and StatCan, Devpost and pitch
 - **Builder:** the app with Claude Code, the map, Gemini photo logging, GitHub and Vercel

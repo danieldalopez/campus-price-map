@@ -880,7 +880,7 @@ Sticker slap on save (scale 1.12 → 1, rotate 4 → 0 degrees, 180 ms). Tags wi
 
 ### Figma
 
-Figma file: (add link). Screens: Home, Results (with a pending row and a just confirmed row), Outlet, Snap (3 states), I bought it. Built from the tokens above, so code and Figma match.
+No Figma file was made: the design lives in code (the tokens above in `src/app/globals.css` and the components in `src/components/`). Screens: Home, Results (with a pending row and a just confirmed row), Outlet, Snap (3 states), I bought it.
 
 ## 12. Guardrails
 
@@ -1023,7 +1023,7 @@ Best Hardware (no hardware), n8n, DeepSpace, Maritime agents, Lovable (we build 
 - [ ] Opt into Databricks and Gemini, plus Auth0, GoDaddy, Entire and Freebuff only if they actually shipped
 - [ ] Enter the MLH prizes the way mlh.link/hackcamp says
 - [ ] Problem statement and solution description
-- [ ] Accessibility notes and the Figma link (section 11 still says "add link")
+- [ ] Accessibility notes (no Figma link: the design is in code, section 11)
 - [ ] Screenshots of the Job DAG, the pipeline graph, the data quality panel and the parity check at zero
 - [ ] Pause the refresh Job schedule after judging
 - [ ] Demo video, 4 minutes max
