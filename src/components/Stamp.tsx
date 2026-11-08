@@ -1,10 +1,11 @@
-export type StampKind = "cheapest" | "sold-out" | "pending" | "statcan";
+export type StampKind = "cheapest" | "sold-out" | "pending" | "statcan" | "deal";
 
 const WORDS: Record<StampKind, string> = {
   cheapest: "CHEAPEST",
   "sold-out": "SOLD OUT",
   pending: "PENDING",
   statcan: "STATCAN",
+  deal: "DEAL",
 };
 
 /**

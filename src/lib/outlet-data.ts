@@ -11,6 +11,7 @@
 
 import { loadOutlet } from "./catalog";
 import { query } from "./db";
+import { dealFor, hasDeal } from "./deals";
 import { groupByCategory, loadCampusMenu } from "./menu";
 import {
   LIVE_EXTRA_COLUMNS,
@@ -107,6 +108,22 @@ async function pipelineItems(outlet: Outlet, deviceId: string | undefined): Prom
   return rows.map((r) => ({ item: toItem(r), ...pipelineFields(r), ...liveExtras(r, deviceId) }));
 }
 
+/** Multi-buy deals (data/deals.csv), each compared with the cheapest single price at any other outlet. */
+async function addDeals(locationId: string, items: OutletItemRow[]): Promise<OutletItemRow[]> {
+  return Promise.all(
+    items.map(async (row) => {
+      if (!(await hasDeal(row.item.id, locationId))) return { ...row, deal: null };
+      const [m] = await query<{ min: string | null }>(
+        "reader",
+        `select min(c.price) as min from current_prices c join locations l on l.id = c.location_id
+         where c.item_id = $1 and c.location_id <> $2 and not l.is_benchmark`,
+        [row.item.id, locationId],
+      );
+      return { ...row, deal: await dealFor(row.item.id, locationId, row.price, num(m?.min)) };
+    }),
+  );
+}
+
 /** The outlet page, or null if there is no outlet with this id. */
 export async function loadOutletPage(id: string, deviceId: string | undefined): Promise<OutletResponse | null> {
   const outlet = await loadOutlet(id);
@@ -127,6 +144,7 @@ export async function loadOutletPage(id: string, deviceId: string | undefined): 
   }
   const source = items === null ? "live" : "pipeline";
   items ??= await liveItems(outlet, deviceId);
+  items = await addDeals(outlet.id, items);
 
   return {
     outlet,
