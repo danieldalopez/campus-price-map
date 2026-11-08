@@ -24,7 +24,6 @@ import type {
   Stock,
 } from "./types";
 import { isVote, iso, num, text } from "./validate";
-import type { Verdict } from "./walkworth";
 
 type Options = { item: Item; origin: LatLng | null; deviceId: string | undefined };
 
@@ -76,8 +75,6 @@ export type PipelinePriceCols = {
   walk_best_stock: string | null;
   walk_saving: string | null;
   walk_extra_min: string | null;
-  walk_net: string | null;
-  walk_verdict: string | null;
 };
 
 /** Live CTE bodies, filtered by `$1` on `key` ("item_id" for Results, "location_id" for the Outlet page). */
@@ -103,7 +100,7 @@ export const PIPELINE_COLUMNS = `
   pc.nearest_cheaper_price, pc.nearest_cheaper_walk_min,
   pc.est_low, pc.est_high,
   cp.price as live_price, cp.updated_at as live_updated_at,
-  pc.walk_best_location_id, pc.walk_saving, pc.walk_extra_min, pc.walk_net, pc.walk_verdict,
+  pc.walk_best_location_id, pc.walk_saving, pc.walk_extra_min,
   (select l.name from locations l where l.id = pc.walk_best_location_id) as walk_best_name,
   (select s.stock from stock_status s
     where s.item_id = pc.item_id and s.location_id = pc.walk_best_location_id) as walk_best_stock`;
@@ -190,27 +187,20 @@ export function pipelineFields(r: PipelinePriceCols): PriceOnly {
         : null,
     just_confirmed: newer && livePrice !== null && liveAt !== null ? { price: livePrice, updated_at: liveAt } : null,
     estimate: price === null && estLow !== null && estHigh !== null ? { low: estLow, high: estHigh } : null,
-    walk: walkVerdict(r, price),
+    walk: walkFields(r, price),
   };
 }
 
-const VERDICTS: readonly string[] = ["worth_it", "about_even", "not_worth_it"];
-
-/** Databricks' Worth the walk verdict for standing at this outlet; hidden if that outlet is sold out (section 10). */
-function walkVerdict(r: PipelinePriceCols, price: number | null): PriceFields["walk"] {
+/**
+ * Databricks' Worth the walk suggestion for someone standing at this outlet: the cheaper outlet within reach,
+ * what it saves each time and the extra minutes. Hidden if that outlet is sold out (section 10).
+ */
+function walkFields(r: PipelinePriceCols, price: number | null): PriceFields["walk"] {
   const saving = num(r.walk_saving);
   const extra = num(r.walk_extra_min);
-  const net = num(r.walk_net);
-  if (price === null || !r.walk_best_location_id || saving === null || extra === null || net === null) return null;
-  if (r.walk_verdict === null || !VERDICTS.includes(r.walk_verdict) || r.walk_best_stock === "sold_out") return null;
-  return {
-    location_id: r.walk_best_location_id,
-    name: text(r.walk_best_name),
-    saving,
-    extra_min: extra,
-    net,
-    verdict: r.walk_verdict as Verdict,
-  };
+  if (price === null || !r.walk_best_location_id || saving === null || extra === null || saving <= 0) return null;
+  if (r.walk_best_stock === "sold_out") return null;
+  return { location_id: r.walk_best_location_id, name: text(r.walk_best_name), saving, extra_min: extra };
 }
 
 /** Log why a pipeline read failed (the code only), then the caller falls back to live (rule 10). */
