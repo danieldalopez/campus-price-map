@@ -4,21 +4,24 @@ type Variant = "primary" | "secondary";
 type Size = "md" | "lg";
 
 const BASE =
-  "inline-flex items-center justify-center gap-2 rounded-tag border-2 border-ink " +
-  "font-heading font-extrabold leading-tight shadow-ink select-none " +
-  "transition-transform active:translate-x-[2px] active:translate-y-[2px] active:shadow-ink-sm " +
+  "inline-flex items-center justify-center gap-2 rounded-tag " +
+  "font-heading leading-tight select-none transition-transform " +
   "disabled:cursor-not-allowed disabled:opacity-60 " +
   "aria-pressed:bg-ink aria-pressed:text-card";
 
 const VARIANTS: Record<Variant, string> = {
-  primary: "bg-tag text-tag-ink",
-  secondary: "bg-card text-ink",
+  // The one loud control: yellow, ink border, hard offset shadow (the sticker look).
+  primary:
+    "bg-tag text-tag-ink border-2 border-ink shadow-ink font-extrabold " +
+    "active:translate-x-[2px] active:translate-y-[2px] active:shadow-ink-sm",
+  // Everything else is quieter: thin edge, no shadow (design pass).
+  secondary: "bg-card text-ink border border-line font-bold hover:border-ink active:bg-paper-2",
 };
 
-// 48 px tall minimum; lg is the 64 px "Snap a price" size.
+// 48 px tall minimum (tap target rule); lg is the 52 px "Snap a price" size.
 const SIZES: Record<Size, string> = {
   md: "min-h-12 px-4 text-base",
-  lg: "min-h-16 px-6 text-xl",
+  lg: "min-h-[52px] px-5 text-lg",
 };
 
 /** Classes for anything that should look like a Button (e.g. a Link). */
@@ -35,7 +38,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: Size;
 };
 
-/** Chunky button: ink border, offset shadow, 48 px minimum; primary is yellow. */
+/** Button, 48 px minimum. Primary: yellow, ink border, offset shadow. Secondary: quiet, thin edge. */
 export function Button({
   variant = "secondary",
   size = "md",
