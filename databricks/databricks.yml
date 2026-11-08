@@ -38,7 +38,7 @@ variables:
     default: public
   refresh_performance_target:
     description: >-
-      Serverless mode for the refresh Job. STANDARD keeps the Free Edition quota safe on a 30 minute
+      Serverless mode for the refresh Job. STANDARD keeps the Free Edition quota safe on the hourly
       schedule. D4 measures a run; switch to PERFORMANCE_OPTIMIZED only if Run now is too slow for the demo.
     default: STANDARD
   # Pipeline IDs of the synced tables (databricks/create_synced_tables.sh creates them; read an ID with
@@ -46,9 +46,9 @@ variables:
   price_comparisons_sync_pipeline_id:
     description: Pipeline behind the synced table serving.price_comparisons (D3).
     default: d9a629a0-523c-4fb6-936e-28dd57bfca1d
-  # D5 adds, once gold_outlet_scores exists and is synced:
-  # outlet_scores_sync_pipeline_id:
-  #   description: Pipeline behind the synced table serving.outlet_scores.
+  outlet_scores_sync_pipeline_id:
+    description: Pipeline behind the synced table serving.outlet_scores (D5).
+    default: 4fe63306-de30-4eb7-9ff3-bfc06c558cba
 
 resources:
   pipelines:
@@ -105,34 +105,37 @@ resources:
             pipeline_id: ${resources.pipelines.price_engine.id}
             full_refresh: false
 
-        # D5 adds the price model (outlet tiers and estimated prices):
-        # - task_key: price_model
-        #   depends_on:
-        #     - task_key: price_engine
-        #   notebook_task:
-        #     notebook_path: ./src/03_price_model.py
-        #     base_parameters:
-        #       catalog: ${var.catalog}
-        #       schema: ${var.schema}
-
-        # D3: snapshot refresh of the synced table the app reads (serving.price_comparisons in Lakebase).
-        # Until D5 lands it depends on price_engine; then on price_model.
-        - task_key: sync_price_comparisons
+        # D5: the price model (outlet tiers, estimated prices, model metrics). Its estimates reach
+        # gold_price_comparisons on the next price_engine run.
+        - task_key: price_model
           depends_on:
             - task_key: price_engine
+          notebook_task:
+            notebook_path: ./src/03_price_model.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+          timeout_seconds: 900
+
+        # D3: snapshot refresh of the synced table the app reads (serving.price_comparisons in Lakebase).
+        - task_key: sync_price_comparisons
+          depends_on:
+            - task_key: price_model
           pipeline_task:
             pipeline_id: ${var.price_comparisons_sync_pipeline_id}
-        # D5 adds the outlet_scores sync. If Free Edition refuses two sync pipelines at once, chain them.
-        # - task_key: sync_outlet_scores
-        #   depends_on:
-        #     - task_key: price_model
-        #   pipeline_task:
-        #     pipeline_id: ${var.outlet_scores_sync_pipeline_id}
+        # D5: snapshot refresh of serving.outlet_scores (the map's $ tiers), after the price_comparisons sync
+        # (Free Edition may refuse two sync pipelines at once).
+        - task_key: sync_outlet_scores
+          depends_on:
+            - task_key: sync_price_comparisons
+          pipeline_task:
+            pipeline_id: ${var.outlet_scores_sync_pipeline_id}
 
         # D3: re-grant app_reader on the serving schema after every sync (a snapshot refresh can drop grants).
         - task_key: grants
           depends_on:
             - task_key: sync_price_comparisons
+            - task_key: sync_outlet_scores
           notebook_task:
             notebook_path: ./src/04_grants.py
             base_parameters:
