@@ -370,7 +370,7 @@ def main():
         f"{q(m['source'])}, {q(m['reported_on'])}, '{m['item_ids']}')" for m in menu) + ";\n")
     out.append("insert into app_config (key, value, source) values")
     out.append(",\n".join([
-        "  ('bc_min_wage', '17.85', 'BC general minimum wage from June 1, 2025. Check gov.bc.ca for the June 2026 rate and update.')",
+        "  ('bc_min_wage', '18.25', 'BC general minimum wage from June 1, 2026 (news.gov.bc.ca/releases/2026LBR0021-000581)')",
         "  ('weeks_term', '13', 'UBC term: 13 teaching weeks')",
         "  ('weeks_year', '26', 'two terms')",
         "  ('weeks_degree', '104', 'four years of two terms')",
