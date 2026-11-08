@@ -11,7 +11,13 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
 import { BARCODE_PATTERN, barcodeKeys, type BarcodeResult } from "./gtin";
-import { familyCandidates, itemForVariant } from "./variant-match";
+import { familyCandidates, itemForVariant, sizeInMl } from "./variant-match";
+
+/** The first text a size can be read from (`quantity`, the numeric quantity, the serving size, the names). */
+function firstSize(texts: (string | null | undefined)[]): string | null {
+  for (const t of texts) if (t && sizeInMl(t) !== null) return t;
+  return null;
+}
 
 export const barcodeQuerySchema = z.object({
   code: z
@@ -135,8 +141,15 @@ const offSchema = z.object({
   product: z
     .object({
       product_name: z.string().nullish(),
+      product_name_en: z.string().nullish(),
+      product_name_fr: z.string().nullish(),
+      generic_name: z.string().nullish(),
       brands: z.string().nullish(),
       quantity: z.string().nullish(),
+      // Many entries leave `quantity` blank but fill these in.
+      product_quantity: z.union([z.number(), z.string()]).nullish(),
+      product_quantity_unit: z.string().nullish(),
+      serving_size: z.string().nullish(),
     })
     .nullish(),
 });
@@ -157,7 +170,18 @@ function remember(key: string, result: BarcodeResult) {
  * cached, so the next scan tries again.
  */
 async function fetchOpenFoodFacts(code: string): Promise<BarcodeResult | null> {
-  const url = `https://world.openfoodfacts.org/api/v2/product/${code}.json?fields=product_name,brands,quantity`;
+  const fields = [
+    "product_name",
+    "product_name_en",
+    "product_name_fr",
+    "generic_name",
+    "brands",
+    "quantity",
+    "product_quantity",
+    "product_quantity_unit",
+    "serving_size",
+  ].join(",");
+  const url = `https://world.openfoodfacts.org/api/v2/product/${code}.json?fields=${fields}`;
   let res: Response;
   try {
     res = await fetch(url, {
@@ -183,9 +207,19 @@ async function fetchOpenFoodFacts(code: string): Promise<BarcodeResult | null> {
   // A product with no name or brand can't be shown as "That's …", so it's no better than unknown.
   if (!name) return { status: "unknown" };
   const quantity = product.quantity?.trim();
-  const itemId = itemForVariant(product.product_name ?? null, product.brands ?? null, quantity ?? null);
+  // The size can be in any of these; the first one we can read wins.
+  const sizeText = firstSize([
+    product.quantity,
+    product.product_quantity != null ? `${product.product_quantity} ${product.product_quantity_unit ?? "ml"}` : null,
+    product.serving_size,
+    product.product_name,
+    product.product_name_en,
+    product.product_name_fr,
+    product.generic_name,
+  ]);
+  const itemId = itemForVariant(product.product_name ?? null, product.brands ?? null, sizeText ?? quantity ?? null);
   if (itemId) return { status: "matched", item_id: itemId, product_name: name, ...(quantity ? { quantity } : {}) };
-  const candidates = familyCandidates(product.product_name ?? null, product.brands ?? null, quantity ?? null);
+  const candidates = familyCandidates(product.product_name ?? null, product.brands ?? null, sizeText ?? quantity ?? null);
   return {
     status: "known",
     product_name: name,
