@@ -106,7 +106,7 @@ export function WorthTheWalk({ rows, item }: { rows: PriceRow[]; item: Pick<Item
         ))}
       </ul>
       <p className="mt-2 text-sm text-ink-2">
-        {term.purchases} purchases a term ({config.weeks_term} weeks), if prices hold.
+        {term.purchases} purchases a term ({config.weeks_term} weeks).
       </p>
 
       <div className="mt-3">
@@ -125,7 +125,7 @@ export function WorthTheWalk({ rows, item }: { rows: PriceRow[]; item: Pick<Item
         {fv !== null ? (
           <p className="mt-1" aria-live="polite">
             <span aria-hidden="true">→ </span>
-            <span className="font-bold">{formatPrice(fv)}</span> after a degree, if prices hold
+            <span className="font-bold">{formatPrice(fv)}</span> after a degree
           </p>
         ) : null}
       </div>

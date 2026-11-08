@@ -117,7 +117,7 @@ export function horizonWeeks(config: WalkConfig, h: Horizon): number {
 
 export type Projection = { purchases: number; saved: number; minutes: number };
 
-/** `perWeek` purchases a week for `weeks` weeks, "if prices hold". */
+/** `perWeek` purchases a week for `weeks` weeks. */
 export function project(option: WalkSaving, perWeek: number, weeks: number): Projection {
   const purchases = perWeek * weeks;
   return {

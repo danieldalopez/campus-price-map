@@ -108,7 +108,7 @@ function WalkLine({ walk }: { walk: NonNullable<OutletItemRow["walk"]> }) {
         <span className="font-bold text-cheap">{formatPrice(degree.saved)} over a degree</span>.
       </p>
       <p className="mt-1 text-ink-2">
-        {formatPrice(walk.saving)} × {DEFAULT_PER_WEEK} a week × {config.weeks_term} weeks, if prices hold.
+        {formatPrice(walk.saving)} × {DEFAULT_PER_WEEK} a week × {config.weeks_term} weeks.
       </p>
     </div>
   );

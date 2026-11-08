@@ -337,11 +337,11 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
   > 6 extra minutes there and back to Tim Hortons instead of Blue Chip Cafe saves **$1.00 every time**.
   > I buy it [5 times a week ▾]
   > **$65.00** saved a term · **$130.00** saved a year · **$520.00** saved a degree
-  > 65 purchases a term (13 weeks), if prices hold.
+  > 65 purchases a term (13 weeks).
 
   - The option shown is the **biggest saving** within `worth_max_extra_min` extra minutes (ties: the shorter walk). Savings under `even_band` ($0.10) each time aren't suggested: "16 minutes to save 6 cents" isn't a pitch.
   - Time is shown as minutes only. It is **never** turned into money: no wage, no time cost, no net, no "not worth it" verdict.
-  - **Frequency:** starts at 5 a week (once every school day), always visible and changeable from 1 to 14. Horizons are term, year and degree from `app_config`, shown side by side. Every projection ends with "if prices hold".
+  - **Frequency:** starts at 5 a week (once every school day), always visible and changeable from 1 to 14. Horizons are term, year and degree from `app_config`, shown side by side.
   - **Optional savings line:** "Put the savings aside at [__]% a year → $X after a degree". Hidden until the student types a rate. We never pick a rate for them.
   - **Directions** button on the card: opens Google Maps (below).
   - Never uses estimated prices (G13). Hidden when nothing cheaper is within reach, including when the closest outlet is already the cheapest: then the decision line says so.
@@ -890,7 +890,7 @@ Figma file: (add link). Screens: Home, Results (with a pending row and a just co
 | G10 | Notebooks, pipeline, Job and Genie never in the live request path. The app works if all of Databricks is down except Lakebase (live prices, no comparisons). Turn Lakebase scale to zero off before judging. |
 | G11 | Accessibility rules in section 11 apply to every screen. |
 | G12 | Only code written after 12 PM Sat Nov 7. Public repo. Both teammates on Devpost. |
-| G14 | Worth the walk always shows the saving each time and the extra minutes behind every total. Time is never turned into money. The frequency is shown and the student can change it; projections end with "if prices hold". No interest rate is ever assumed. |
+| G14 | Worth the walk always shows the saving each time and the extra minutes behind every total. Time is never turned into money. The frequency is shown and the student can change it. Projections carry no "if prices hold" caveat. No interest rate is ever assumed. |
 | G15 | Location: requested on first search, watched only while the page is visible, rounded to about 11 m before leaving the phone, never stored or logged. The Google Maps directions link carries the outlet's coordinates only, never the student's location. |
 | G16 | Open Food Facts data stays under the ODbL with attribution. A live barcode lookup never auto-maps to an item. |
 | G13 | Model estimates are never shown as a price: no PriceTag, never ranked, never in chips, stamps, savings or Read aloud. Always the word "estimated" plus a range. Shown only when the validation gate in section 10 passed. Outlets with no prices get `?`, never a tier from their type alone. |
