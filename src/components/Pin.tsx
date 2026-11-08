@@ -2,7 +2,8 @@
 
 // Leaflet touches `window` when imported. Only import this file from a map
 // component loaded with dynamic(() => import(...), { ssr: false }) (SPEC rule 9).
-import L from "leaflet";
+import L, { type LeafletKeyboardEvent } from "leaflet";
+import { useRouter } from "next/navigation";
 import { useMemo, type ReactNode } from "react";
 import { Marker, Popup } from "react-leaflet";
 import { tiltFor } from "@/lib/format";
@@ -97,8 +98,10 @@ export function pinIcon({
 
 type PinProps = PinIconOptions & {
   position: [number, number];
-  /** Popup content shown on tap or Enter. */
+  /** Popup content shown on tap or Enter. Ignored when `href` is set. */
   children?: ReactNode;
+  /** Tap, Enter or Space opens this page (the outlet page) instead of a popup. */
+  href?: string;
   /**
    * Space the popup must keep clear of UI floating over the map
    * ([top, bottom] in px), so auto-pan never hides it under an overlay.
@@ -107,16 +110,39 @@ type PinProps = PinIconOptions & {
 };
 
 /** A tag-shaped map pin. Keyboard focusable (Leaflet gives it role="button"). */
-export function Pin({ position, children, overlayInsets = [16, 16], ...icon }: PinProps) {
+export function Pin({ position, children, href, overlayInsets = [16, 16], ...icon }: PinProps) {
   const { id, label, description, estimated, kind, band, cheapest, soldOut } = icon;
+  const router = useRouter();
   const divIcon = useMemo(
     () => pinIcon({ id, label, description, estimated, kind, band, cheapest, soldOut }),
     [id, label, description, estimated, kind, band, cheapest, soldOut],
   );
+  // Leaflet makes the pin a focusable role="button"; Enter and Space work like a tap, as on a real button.
+  const handlers = useMemo(
+    () =>
+      href
+        ? {
+            click: () => router.push(href),
+            keypress: (e: LeafletKeyboardEvent) => {
+              if (e.originalEvent.key !== "Enter" && e.originalEvent.key !== " ") return;
+              e.originalEvent.preventDefault();
+              router.push(href);
+            },
+          }
+        : undefined,
+    [href, router],
+  );
   const [top, bottom] = overlayInsets;
   return (
-    <Marker position={position} icon={divIcon} keyboard riseOnHover zIndexOffset={cheapest ? 500 : 0}>
-      {children ? (
+    <Marker
+      position={position}
+      icon={divIcon}
+      keyboard
+      riseOnHover
+      zIndexOffset={cheapest ? 500 : 0}
+      eventHandlers={handlers}
+    >
+      {children && !href ? (
         <Popup
           minWidth={180}
           autoPanPaddingTopLeft={[16, top]}

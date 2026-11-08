@@ -1,78 +1,103 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { formatPrice } from "@/lib/format";
-import { walkLabel } from "@/lib/geo";
+import { todayHoursText } from "@/lib/hours";
 import { itemEmoji } from "@/lib/item-art";
-import { isApproximate, tierLabel, tierWords } from "@/lib/outlet";
+import { isApproximate } from "@/lib/outlet";
 import { freshness } from "@/lib/pricing";
-import type { OutletItemRow, OutletResponse } from "@/lib/types";
+import type { MenuCategory, MenuLine, Outlet, OutletItemRow, OutletResponse } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { useNow } from "@/lib/use-now";
 import { Button, buttonClasses } from "./Button";
 import { DirectionsButton } from "./DirectionsButton";
+import { OutletLink } from "./OutletLink";
+import { PendingLine } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
 import { PriceTag } from "./PriceTag";
 import { Stamp } from "./Stamp";
 import { WakingUp } from "./WakingUp";
 
-/** Re-render freshness ("20 min ago") once a minute. */
-function useNow(intervalMs: number): number {
-  const [now, setNow] = useState(() => Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), intervalMs);
-    return () => clearInterval(id);
-  }, [intervalMs]);
-  return now;
-}
-
 const CARD = "rounded-tag border-2 border-ink bg-card p-3 shadow-ink";
 
-/** Items grouped by category, in the order categories first appear (items come in id order). */
-function byCategory(items: OutletItemRow[]): [string, OutletItemRow[]][] {
+/** "Hot drinks" -> "hot-drinks-0": ids that tie each list to its heading. */
+function slug(text: string, i: number): string {
+  return `${text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "section"}-${i}`;
+}
+
+/** Tracked items in their categories, in the order the items come (by id). */
+function byCategory(rows: OutletItemRow[]): { category: string; rows: OutletItemRow[] }[] {
   const groups = new Map<string, OutletItemRow[]>();
-  for (const row of items) {
+  for (const row of rows) {
     const list = groups.get(row.item.category);
     if (list) list.push(row);
     else groups.set(row.item.category, [row]);
   }
-  return [...groups];
+  return [...groups].map(([category, list]) => ({ category, rows: list }));
 }
 
-/** "$0.35 less at Mercante, about 3 min from here". */
-function NearestCheaper({ row }: { row: OutletItemRow }) {
-  const nc = row.nearest_cheaper;
-  if (!nc || row.price === null) return null;
-  const saving = Math.round((row.price - nc.price) * 100) / 100;
-  if (saving <= 0) return null;
+function menuFreshness(line: MenuLine, now: number) {
+  return freshness({ source: line.source, confirmations: 0, updated_at: line.reported_on }, now);
+}
+
+// ---------------------------------------------------------------------------------------------------------
+// Header card: area, today's hours, address
+// ---------------------------------------------------------------------------------------------------------
+
+function OutletFacts({ outlet, now }: { outlet: Outlet; now: number }) {
+  const today = todayHoursText(outlet.hours, new Date(now));
+  const where = [outlet.area, isApproximate(outlet.location_precision) ? "approximate location" : null].filter(Boolean);
   return (
-    <p className="mt-1">
-      <Link href={`/outlet/${encodeURIComponent(nc.location_id)}`} className="font-bold text-ink underline">
-        {formatPrice(saving)} less at {nc.name ?? "another outlet"}
-      </Link>
-      {nc.walk_min !== null ? <span className="text-ink-2">, {walkLabel(nc.walk_min)} from here</span> : null}
-    </p>
+    <>
+      {where.length > 0 ? <p className="font-bold">{where.join(" · ")}</p> : null}
+      {outlet.address ? <p className="text-ink-2">{outlet.address}</p> : null}
+      <p className="mt-1">
+        {today ?? (outlet.hours ? `Hours: ${outlet.hours}` : "Hours not listed")}
+      </p>
+      {today && outlet.hours ? (
+        <details className="mt-1">
+          <summary className="inline-flex min-h-12 cursor-pointer items-center font-bold underline decoration-2 underline-offset-4">
+            All hours
+          </summary>
+          <p className="text-ink-2">{outlet.hours}</p>
+        </details>
+      ) : null}
+      {outlet.is_benchmark ? (
+        <p className="mt-1">Grocery baseline: used for the &ldquo;vs grocery&rdquo; line, never ranked.</p>
+      ) : null}
+    </>
   );
 }
 
-/** One item at this outlet. The official price is the only price shown big (SPEC section 7). */
-function ItemCard({ row, now }: { row: OutletItemRow; now: number }) {
+// ---------------------------------------------------------------------------------------------------------
+// Tracked items: compared across campus
+// ---------------------------------------------------------------------------------------------------------
+
+function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: string; now: number }) {
   const fresh = freshness(row, now);
   const soldOut = row.stock === "sold_out";
-  const card = fresh?.stale ? "border-dashed bg-paper-2" : "bg-card shadow-ink";
+  const nearest = row.nearest_cheaper;
+  const saving = nearest && row.price !== null ? Math.round((row.price - nearest.price) * 100) / 100 : null;
+
   return (
-    <li className={`rounded-tag border-2 border-ink p-3 ${card}`}>
+    <li className={`rounded-tag border-2 border-ink p-3 ${fresh?.stale ? "border-dashed bg-paper-2" : "bg-card shadow-ink"}`}>
       <div className="flex items-start justify-between gap-2">
-        <div className="flex min-w-0 items-center gap-2">
-          <span aria-hidden="true" className="text-3xl leading-none">
+        <div className="flex min-w-0 items-start gap-2">
+          <span aria-hidden="true" className="text-2xl leading-none">
             {itemEmoji(row.item)}
           </span>
           <div className="min-w-0">
-            <h3 className="font-heading text-lg font-extrabold leading-tight">
-              <Link href={`/item/${row.item.id}`} className="underline decoration-2 underline-offset-2">
+            <h4 className="font-heading text-lg font-extrabold leading-tight">
+              <Link
+                href={`/item/${row.item.id}`}
+                prefetch={false}
+                className="relative underline decoration-2 underline-offset-4 before:absolute before:-inset-x-1 before:-inset-y-3.5 before:content-['']"
+              >
                 {row.item.name}
+                <span className="sr-only">, compare across campus</span>
               </Link>
-            </h3>
+            </h4>
             <p className="leading-tight text-ink-2">{row.item.size}</p>
           </div>
         </div>
@@ -81,7 +106,7 @@ function ItemCard({ row, now }: { row: OutletItemRow; now: number }) {
 
       {row.price !== null ? (
         <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
-          <PriceTag price={row.price} tiltId={row.item.id} size="lg" />
+          <PriceTag price={row.price} tiltId={`${outletId}:${row.item.id}`} size="lg" />
           <PriceBand band={row.band} pctVsMedian={row.pct_vs_median} />
           {row.chip ? <span className="chip">{row.chip}</span> : null}
         </div>
@@ -98,7 +123,18 @@ function ItemCard({ row, now }: { row: OutletItemRow; now: number }) {
       )}
 
       {fresh ? <p className="mt-1 text-ink-2">{fresh.text}</p> : null}
-      <NearestCheaper row={row} />
+
+      {/* Pipeline only: the closest outlet that sells it for less, from serving.price_comparisons. */}
+      {nearest && saving !== null && saving > 0 ? (
+        <p className="mt-2">
+          <span className="font-mono font-bold">{formatPrice(saving)}</span> less at{" "}
+          <OutletLink id={nearest.location_id} className="font-bold">
+            {nearest.name ?? "another outlet"}
+          </OutletLink>
+          {nearest.walk_min !== null ? `, about ${nearest.walk_min} min from here` : ""}
+        </p>
+      ) : null}
+
       {row.just_confirmed ? (
         <p className="mt-1">
           <span className="font-bold">Just confirmed: </span>
@@ -106,22 +142,105 @@ function ItemCard({ row, now }: { row: OutletItemRow; now: number }) {
           on the next refresh
         </p>
       ) : null}
-      {row.pending ? (
-        <p className="mt-2 flex flex-wrap items-center gap-2">
-          <Stamp kind="pending" />
-          <span>
-            {row.pending.mine ? "Your report" : "New report"}:{" "}
-            <span className="font-mono font-bold">{formatPrice(row.pending.price)}</span> · waiting for a second
-            student
-          </span>
-        </p>
-      ) : null}
+
+      {/* Step 7: the pending line gets Yes / No / Not sure inside PendingLine. */}
+      {row.pending ? <PendingLine pending={row.pending} /> : null}
+
       {row.stock === "maybe_sold_out" ? <p className="mt-1">A student said it may be sold out.</p> : null}
+      {/* Step 9: the Sold out button goes here (POST /api/stock). */}
     </li>
   );
 }
 
-function BackLink() {
+function TrackedSection({ rows, outletId, now }: { rows: OutletItemRow[]; outletId: string; now: number }) {
+  const groups = useMemo(() => byCategory(rows), [rows]);
+  return (
+    <section aria-labelledby="tracked-heading" className="mt-6 px-4">
+      <h2 id="tracked-heading" className="font-heading text-2xl font-extrabold leading-tight">
+        Prices we compare
+      </h2>
+      <p className="text-ink-2">The same item at every outlet. Tap one to see where it&apos;s cheapest.</p>
+      {rows.length === 0 ? (
+        <p className="mt-2">None of the items we compare has a price here yet.</p>
+      ) : (
+        groups.map((g, i) => {
+          const id = slug(`tracked-${g.category}`, i);
+          return (
+            <div key={g.category} className="mt-4">
+              <h3 id={id} className="font-heading text-lg font-extrabold leading-tight">
+                {g.category}
+              </h3>
+              <ul aria-labelledby={id} className="mt-2 flex flex-col gap-3">
+                {g.rows.map((row) => (
+                  <TrackedItem key={row.item.id} row={row} outletId={outletId} now={now} />
+                ))}
+              </ul>
+            </div>
+          );
+        })
+      )}
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------------------------------------
+// Full menu: every line as listed, not compared
+// ---------------------------------------------------------------------------------------------------------
+
+function MenuSection({ category, index, now }: { category: MenuCategory; index: number; now: number }) {
+  const id = slug(`menu-${category.category}`, index);
+  const texts = category.lines.map((l) => menuFreshness(l, now)?.text ?? null);
+  // One freshness line under the heading when every line shares it ("Menu price · Nov 7").
+  const shared = texts.every((t) => t === texts[0]) ? texts[0] : null;
+  return (
+    <div className="mt-4">
+      <h3 id={id} className="font-heading text-lg font-extrabold leading-tight">
+        {category.category}
+      </h3>
+      {shared ? <p className="text-ink-2">{shared}</p> : null}
+      <ul aria-labelledby={id} className="mt-2 divide-y-2 divide-paper-2 rounded-tag border-2 border-ink bg-card">
+        {category.lines.map((line, i) => (
+          <li key={line.id} className="flex items-baseline justify-between gap-3 px-3 py-2">
+            <span className="min-w-0 leading-snug">
+              {line.item}
+              {line.variant ? <span className="text-ink-2"> · {line.variant}</span> : null}
+              {!shared && texts[i] ? <span className="block text-ink-2">{texts[i]}</span> : null}
+            </span>
+            <span className="shrink-0 font-mono font-bold tabular-nums">{formatPrice(line.price)}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function FullMenu({ menu, now }: { menu: MenuCategory[]; now: number }) {
+  const count = menu.reduce((n, c) => n + c.lines.length, 0);
+  return (
+    <section aria-labelledby="menu-heading" className="mt-8 px-4">
+      <h2 id="menu-heading" className="scroll-mt-24 font-heading text-2xl font-extrabold leading-tight">
+        Full menu
+      </h2>
+      {count === 0 ? (
+        <p className="mt-1">We don&apos;t have this outlet&apos;s menu yet.</p>
+      ) : (
+        <p className="text-ink-2">
+          {count === 1 ? "1 item" : `${count} items`} as listed. These aren&apos;t compared: sizes and recipes
+          differ from place to place.
+        </p>
+      )}
+      {menu.map((c, i) => (
+        <MenuSection key={c.category} category={c} index={i} now={now} />
+      ))}
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------------------------------------
+// Page
+// ---------------------------------------------------------------------------------------------------------
+
+function BackToMap() {
   return (
     <Link href="/" className={buttonClasses("secondary", "md", "shrink-0 px-3")} aria-label="Back to the map">
       <span aria-hidden="true">←</span> Map
@@ -129,21 +248,19 @@ function BackLink() {
   );
 }
 
-/** One outlet: hours, Directions, and every tracked item it sells, grouped by category. SPEC section 7. */
+/** One outlet: today's hours, the tracked items compared across campus, then its full menu. SPEC section 7. */
 export default function OutletScreen({ outletId }: { outletId: string }) {
   const now = useNow(60_000);
   const api = useApi<OutletResponse>(`/api/outlet/${encodeURIComponent(outletId)}`);
   const data = api.data;
-  const outlet = data?.outlet ?? null;
-  const groups = useMemo(() => (data ? byCategory(data.items) : []), [data]);
-  const priced = data ? data.items.filter((r) => r.price !== null).length : 0;
+  const menuCount = data ? data.menu.reduce((n, c) => n + c.lines.length, 0) : 0;
 
   return (
     <main className="mx-auto min-h-dvh max-w-xl bg-paper pb-[max(env(safe-area-inset-bottom),24px)]">
       <header className="sticky top-0 z-[1200] flex items-center gap-3 border-b-2 border-ink bg-paper px-4 pt-[max(env(safe-area-inset-top),12px)] pb-3">
-        <BackLink />
+        <BackToMap />
         <h1 className="min-w-0 font-heading text-2xl font-extrabold leading-tight">
-          {outlet ? outlet.name : api.error ? "Outlet" : "Loading outlet…"}
+          {data ? data.outlet.name : api.error ? "Outlet" : "Loading outlet…"}
         </h1>
       </header>
 
@@ -164,62 +281,43 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
           </div>
         ) : null}
 
-        {outlet ? (
-          <section aria-label="About this outlet" className={`${CARD} flex flex-col gap-1`}>
-            {outlet.area ? <p className="font-bold">{outlet.area}</p> : null}
-            {outlet.address || isApproximate(outlet.location_precision) ? (
-              <p className="text-ink-2">
-                {[outlet.address, isApproximate(outlet.location_precision) ? "approximate location" : null]
-                  .filter(Boolean)
-                  .join(" · ")}
+        {/* Announced when the outlet arrives (section 11). */}
+        <section aria-live="polite" aria-busy={api.loading} className={data ? CARD : "sr-only"}>
+          {data ? (
+            <>
+              <OutletFacts outlet={data.outlet} now={now} />
+              <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2">
+                <DirectionsButton outlet={data.outlet} />
+                {menuCount > 0 ? (
+                  <a
+                    href="#menu-heading"
+                    className="inline-flex min-h-12 items-center font-bold underline decoration-2 underline-offset-4"
+                  >
+                    Full menu · {menuCount === 1 ? "1 item" : `${menuCount} items`}
+                    <span aria-hidden="true">&nbsp;↓</span>
+                  </a>
+                ) : null}
+              </div>
+              <p className="sr-only">
+                {data.items.length === 1 ? "1 price we compare" : `${data.items.length} prices we compare`} and{" "}
+                {menuCount === 1 ? "1 menu item" : `${menuCount} menu items`}.
               </p>
-            ) : null}
-            <p>
-              <span className="font-bold">Hours: </span>
-              {outlet.hours ?? "not listed"}
-            </p>
-            {outlet.is_benchmark ? (
-              <p>Grocery baseline, for comparison only.</p>
-            ) : outlet.tier ? (
-              <p>
-                <span className="font-mono font-bold">{tierLabel(outlet)} · </span>
-                {tierWords(outlet)}
-              </p>
-            ) : null}
-            <DirectionsButton outlet={outlet} className="mt-2 self-start" />
-          </section>
-        ) : null}
+            </>
+          ) : null}
+        </section>
       </div>
 
-      {/* Announced when the items arrive (section 11). */}
-      <div aria-live="polite" aria-busy={api.loading}>
-        {data ? (
-          <>
-            <p className="mt-6 px-4">
-              {data.items.length === 0
-                ? "We don't have any tracked items for this outlet yet."
-                : `${data.items.length} tracked ${data.items.length === 1 ? "item" : "items"}, ${priced} with a confirmed price. Each comparison is for that item only.`}
-            </p>
-            {groups.map(([category, rows], i) => (
-              <section key={category} aria-labelledby={`cat-${i}`} className="mt-6 px-4">
-                <h2 id={`cat-${i}`} className="font-heading text-2xl font-extrabold leading-tight">
-                  {category}
-                </h2>
-                <ul className="mt-3 flex flex-col gap-3">
-                  {rows.map((row) => (
-                    <ItemCard key={row.item.id} row={row} now={now} />
-                  ))}
-                </ul>
-              </section>
-            ))}
-            <p className="mt-6 px-4 text-ink-2">
-              {data.price_source_used === "pipeline"
-                ? "Prices and comparisons from the last Databricks refresh."
-                : "Live prices from the campus database."}
-            </p>
-          </>
-        ) : null}
-      </div>
+      {data ? (
+        <>
+          <TrackedSection rows={data.items} outletId={data.outlet.id} now={now} />
+          <FullMenu menu={data.menu} now={now} />
+          <p className="mt-8 px-4 text-ink-2">
+            {data.price_source_used === "pipeline"
+              ? "Compared prices from the last Databricks refresh."
+              : "Live prices from the campus database."}
+          </p>
+        </>
+      ) : null}
     </main>
   );
 }
@@ -229,7 +327,7 @@ export function OutletSkeleton() {
   return (
     <main className="mx-auto min-h-dvh max-w-xl bg-paper">
       <header className="flex items-center gap-3 border-b-2 border-ink px-4 pt-[max(env(safe-area-inset-top),12px)] pb-3">
-        <BackLink />
+        <BackToMap />
         <h1 className="font-heading text-2xl font-extrabold leading-tight">Loading outlet…</h1>
       </header>
     </main>

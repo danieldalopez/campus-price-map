@@ -29,6 +29,21 @@ export const pricesQuerySchema = z
     message: "Send both lat and lng, or neither.",
   });
 
+/** GET /api/menu-search?q=ramen&lat=49.2666&lng=-123.2499. lat and lng come together or not at all. */
+export const menuSearchQuerySchema = z
+  .object({
+    q: z
+      .string({ error: "Type what you want to find." })
+      .trim()
+      .min(1, "Type what you want to find.")
+      .max(60, "That search is too long. Try a word or two."),
+    lat: coordinate(-90, 90).optional(),
+    lng: coordinate(-180, 180).optional(),
+  })
+  .refine((q) => (q.lat === undefined) === (q.lng === undefined), {
+    message: "Send both lat and lng, or neither.",
+  });
+
 /** The device's random id (src/lib/device.ts, Step 6), sent as a header so it never sits in a URL. */
 export const deviceIdSchema = z
   .string()

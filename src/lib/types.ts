@@ -52,16 +52,16 @@ export type RowOutlet = Pick<
   "id" | "name" | "area" | "address" | "hours" | "lat" | "lng" | "location_precision"
 >;
 
-/** One outlet that sells the item: an official price, a pending report, or (pipeline) an estimate. */
-export type PriceRow = {
-  outlet: RowOutlet;
+/**
+ * One item at one outlet: an official price, a pending report, or (pipeline) an estimate. Shared by Results
+ * (one item at every outlet, `PriceRow`) and the Outlet page (every item at one outlet, `OutletItemRow`).
+ */
+export type PriceFields = {
   /** The official price. Null when the outlet has only a pending report or an estimate. */
   price: number | null;
   source: PriceSource | null;
   confirmations: number;
   updated_at: string | null;
-  /** About N minutes from the origin the request gave (haversine x 1.3 / 80 m per min, rounded up). */
-  walk_min: number | null;
   stock: Stock;
   band: Band | null;
   pct_vs_median: number | null;
@@ -73,6 +73,76 @@ export type PriceRow = {
   /** Pipeline only, and only when `price` is null: the model's 80% interval. Never shown as a price. */
   estimate: { low: number; high: number } | null;
   pending: { price_id: number; price: number; mine: boolean } | null;
+};
+
+/** One outlet that sells the item (Results). */
+export type PriceRow = PriceFields & {
+  outlet: RowOutlet;
+  /** About N minutes from the origin the request gave (haversine x 1.3 / 80 m per min, rounded up). */
+  walk_min: number | null;
+};
+
+/** One tracked item at the outlet (Outlet page). */
+export type OutletItemRow = PriceFields & { item: Item };
+
+/** One line of an outlet's menu (`menu_items`), tracked or not. */
+export type MenuLine = {
+  id: number;
+  item: string;
+  variant: string | null;
+  price: number;
+  /** `menu` (read off the menu, dated) or `seed` (AI-estimated prototype price, shown as real). */
+  source: PriceSource;
+  /** The day it was read, as noon in Vancouver (ISO), so it formats as the same date everywhere. */
+  reported_on: string;
+  /** The tracked items this line counts as (e.g. ["I08"]); empty for most lines. */
+  item_ids: string[];
+};
+
+export type MenuCategory = { category: string; lines: MenuLine[] };
+
+/** GET /api/outlet/[id]. */
+export type OutletResponse = {
+  outlet: Outlet;
+  /** Tracked items with a price, pending report or estimate here; compared across campus. */
+  items: OutletItemRow[];
+  /** Every menu line, grouped by the menu's own categories, in the order the menu lists them. */
+  menu: MenuCategory[];
+  price_source_used: "live" | "pipeline";
+  computed_at: string | null;
+};
+
+/** One menu line that matched a search, with its outlet. */
+export type MenuHit = {
+  id: number;
+  location_id: string;
+  outlet_name: string;
+  area: string | null;
+  /** The grocery baseline: labelled, never called cheapest. */
+  is_benchmark: boolean;
+  approximate: boolean;
+  category: string;
+  item: string;
+  variant: string | null;
+  price: number;
+  source: PriceSource;
+  reported_on: string;
+  /** About N minutes from the lat/lng the request gave, or null without one. */
+  walk_min: number | null;
+};
+
+/** GET /api/menu-search?q=&lat=&lng=. */
+export type MenuSearchResponse = {
+  /** "match": item names matched. "typo": only near misses (see did_you_mean). "category": only menu
+   *  sections matched. "none": nothing. "empty": the query is too short to search menus. */
+  kind: "empty" | "match" | "typo" | "category" | "none";
+  did_you_mean: string | null;
+  /** Matching lines grouped by item name; cheapest first. */
+  groups: { name: string; lines: MenuHit[] }[];
+  /** Lines shown (capped) and lines that matched in total. */
+  shown: number;
+  total: number;
+  origin: { lat: number; lng: number } | null;
 };
 
 /** StatCan comparison for the item (pipeline only). */
@@ -101,16 +171,3 @@ export type PricesResponse = {
 
 /** Every error response: one plain sentence for the user. */
 export type ApiError = { error: string };
-
-/** One item on the Outlet page: the same price fields as a Results row, keyed by item instead of outlet. */
-/** `nearest_cheaper.walk_min` is measured from this outlet. */
-export type OutletItemRow = Omit<PriceRow, "outlet" | "walk_min"> & { item: Item };
-
-/** GET /api/outlet/[id]: the outlet and every tracked item it sells (SPEC section 8). */
-export type OutletResponse = {
-  outlet: Outlet;
-  /** Items in id order; the page groups them by category. */
-  items: OutletItemRow[];
-  price_source_used: "live" | "pipeline";
-  computed_at: string | null;
-};

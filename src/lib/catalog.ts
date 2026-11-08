@@ -71,32 +71,41 @@ async function loadTiers(): Promise<Map<string, ScoreRow>> {
   }
 }
 
+const LOCATION_COLUMNS =
+  "id, name, area, operator, type, address, hours, lat, lng, is_benchmark, location_precision";
+
+function toOutlet(r: LocationRow, score: ScoreRow | undefined): Outlet {
+  const tier = score && isTier(score.tier) && !r.is_benchmark ? score.tier : null;
+  return {
+    id: r.id,
+    name: r.name,
+    area: text(r.area),
+    operator: r.operator,
+    type: r.type,
+    address: text(r.address),
+    hours: text(r.hours),
+    lat: Number(r.lat),
+    lng: Number(r.lng),
+    is_benchmark: r.is_benchmark,
+    location_precision: r.location_precision,
+    tier,
+    tier_basis: tier && score && isBasis(score.tier_basis) ? score.tier_basis : null,
+  };
+}
+
 export async function loadOutlets(): Promise<Outlet[]> {
   const [rows, tiers] = await Promise.all([
-    query<LocationRow>(
-      "reader",
-      `select id, name, area, operator, type, address, hours, lat, lng, is_benchmark, location_precision
-       from locations order by name`,
-    ),
+    query<LocationRow>("reader", `select ${LOCATION_COLUMNS} from locations order by name`),
     loadTiers(),
   ]);
-  return rows.map((r) => {
-    const score = tiers.get(r.id);
-    const tier = score && isTier(score.tier) && !r.is_benchmark ? score.tier : null;
-    return {
-      id: r.id,
-      name: r.name,
-      area: text(r.area),
-      operator: r.operator,
-      type: r.type,
-      address: text(r.address),
-      hours: text(r.hours),
-      lat: Number(r.lat),
-      lng: Number(r.lng),
-      is_benchmark: r.is_benchmark,
-      location_precision: r.location_precision,
-      tier,
-      tier_basis: tier && score && isBasis(score.tier_basis) ? score.tier_basis : null,
-    };
-  });
+  return rows.map((r) => toOutlet(r, tiers.get(r.id)));
+}
+
+/** One outlet by its slug id, or null if there is no such outlet. */
+export async function loadOutlet(id: string): Promise<Outlet | null> {
+  const [[row], tiers] = await Promise.all([
+    query<LocationRow>("reader", `select ${LOCATION_COLUMNS} from locations where id = $1`, [id]),
+    loadTiers(),
+  ]);
+  return row ? toOutlet(row, tiers.get(row.id)) : null;
 }

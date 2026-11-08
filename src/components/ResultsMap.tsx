@@ -12,6 +12,7 @@ import { compareRows, isComparable } from "@/lib/pricing";
 import type { Band, PriceRow } from "@/lib/types";
 import { ClusterLayer, type MapPoint } from "./ClusterLayer";
 import { LocationDot } from "./LocationDot";
+import { outletHref } from "./OutletLink";
 
 const BAND_WORD: Record<Band, string> = { good: "Good price", average: "Average", high: "High" };
 
@@ -57,22 +58,9 @@ function toPoint(row: PriceRow & { price: number }, cheapestId: string | null): 
     band: row.band,
     cheapest,
     soldOut,
-    description: parts.join(", "),
+    description: `${parts.join(", ")}. Opens the outlet's page.`,
     summary: `${row.outlet.name}: ${price}${soldOut ? " (sold out)" : ""}`,
-    popup: (
-      <>
-        <p className="m-0 font-heading text-lg font-extrabold leading-tight">{row.outlet.name}</p>
-        <p className="m-0 mt-1 font-mono font-bold">{price}</p>
-        {row.band ? <p className="m-0 mt-1">{BAND_WORD[row.band]}</p> : null}
-        {walk ? <p className="m-0 mt-1 text-ink-2">{walk}</p> : null}
-        {soldOut ? <p className="m-0 mt-1 font-bold">Sold out</p> : null}
-        <p className="m-0 mt-2">
-          <a href={`/outlet/${encodeURIComponent(row.outlet.id)}`} className="font-bold text-ink underline">
-            Everything at {row.outlet.name}
-          </a>
-        </p>
-      </>
-    ),
+    href: outletHref(row.outlet.id),
   };
 }
 
