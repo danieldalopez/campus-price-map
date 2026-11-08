@@ -14,8 +14,10 @@ const VARIANTS: Record<Variant, string> = {
   primary:
     "bg-tag text-tag-ink border-2 border-ink shadow-ink font-extrabold " +
     "active:translate-x-[2px] active:translate-y-[2px] active:shadow-ink-sm",
-  // Everything else is quieter: thin edge, no shadow (design pass).
-  secondary: "bg-card text-ink border border-line font-bold hover:border-ink active:bg-paper-2",
+  // Everything else is the same sticker one step down: cream, ink border, small (2 px) shadow, same press.
+  secondary:
+    "bg-card text-ink border-2 border-ink shadow-ink-sm font-bold hover:bg-tag-pale " +
+    "active:translate-x-[2px] active:translate-y-[2px] active:shadow-none",
 };
 
 // 48 px tall minimum (tap target rule); lg is the 52 px "Snap a price" size.
@@ -38,7 +40,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: Size;
 };
 
-/** Button, 48 px minimum. Primary: yellow, ink border, offset shadow. Secondary: quiet, thin edge. */
+/** Chunky button, 48 px minimum: ink border and offset shadow. Primary is yellow (3 px), secondary cream (2 px). */
 export function Button({
   variant = "secondary",
   size = "md",

@@ -23,8 +23,8 @@
   --radius: 6px;
   --border: 2px solid var(--ink);
   --shadow: 3px 3px 0 var(--ink);
-  /* Shadow ladder (sticker look): 3 px on the logo and the primary action, 2 px (--shadow-sm) on cards,
-     map markers and the Map / List switch, none on supporting controls. --line keeps 3:1 against --card. */
+  /* Shadow ladder (sticker look): 3 px on the logo and the primary action, 2 px (--shadow-sm) on secondary
+     buttons, cards, map markers and the Map / List switch. --line keeps 3:1 against --card. */
   --shadow-sm: 2px 2px 0 var(--ink);
   --control-radius: 8px;
   --line: #8c8475;
