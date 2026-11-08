@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import SnapFlow, { SnapShell } from "@/components/SnapFlow";
 import { DbConfigError } from "@/lib/db";
+import { shownSize } from "@/lib/item-size";
 import { loadSnapItems, loadSnapOutlets } from "@/lib/snap-data";
 
 export const metadata: Metadata = { title: "Snap a price · Campus Price Map" };
@@ -28,5 +29,7 @@ async function SnapLoader() {
   });
   if (!lists) return <SnapShell error="The price database isn't reachable right now. Try again in a minute." />;
   const [items, outlets] = lists;
-  return <SnapFlow items={items} outlets={outlets} />;
+  // The Gemini prompt keeps the stored sizes; people read the harmonized ones.
+  const shown = items.map((i) => ({ ...i, size: shownSize(i.id, i.size) }));
+  return <SnapFlow items={shown} outlets={outlets} />;
 }
