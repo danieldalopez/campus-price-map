@@ -31,7 +31,8 @@ export function ItemTiles({ items, layout, trailing, onSelect, className = "" }:
     layout === "row"
       ? "flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pt-1 pb-3 scroll-px-4 [scrollbar-width:none]"
       : "grid grid-cols-3 gap-3";
-  const cell = layout === "row" ? "h-[6.75rem] w-[7rem] shrink-0 snap-start" : "min-w-0";
+  // Tall enough for the art, two lines of name and one line of size, so nothing is ever cut mid-line.
+  const cell = layout === "row" ? "h-[7.5rem] w-[7rem] shrink-0 snap-start" : "min-w-0";
 
   return (
     <ul className={`${list} ${className}`}>
@@ -44,9 +45,18 @@ export function ItemTiles({ items, layout, trailing, onSelect, className = "" }:
             style={{ rotate: `${tiltFor(item.id) / 2}deg` } as CSSProperties}
             onClick={() => onSelect?.(item)}
           >
-            <ItemArt item={item} size={48} />
-            <span className={`font-bold leading-tight ${layout === "row" ? "line-clamp-2" : ""}`}>{item.name}</span>
-            <span className={`leading-tight text-ink-2 ${layout === "row" ? "line-clamp-1" : ""}`}>
+            <ItemArt item={item} size={44} />
+            {/* Long names get two whole lines and an ellipsis; the full name is in the title and on Results. */}
+            <span
+              title={item.name}
+              className={`w-full font-bold leading-tight ${layout === "row" ? "line-clamp-2 text-[0.95rem]" : ""}`}
+            >
+              {item.name}
+            </span>
+            <span
+              title={item.size}
+              className={`w-full leading-tight text-ink-2 ${layout === "row" ? "truncate text-sm" : ""}`}
+            >
               {item.size}
             </span>
           </Link>
