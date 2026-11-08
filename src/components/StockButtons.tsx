@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { getDeviceId } from "@/lib/device";
 import type { Stock, StockResult } from "@/lib/types";
+import { play } from "@/lib/sounds";
 import { PRICES_CHANGED } from "./BoughtProvider";
 import { Button } from "./Button";
 
@@ -66,6 +67,7 @@ export function StockButtons({ outlet, item, stock }: Props) {
         return;
       }
       const result = body as StockResult;
+      play(status === "back" ? "chime" : "thud");
       remember(item.id, outlet.id, status === "sold_out");
       setMine(status === "sold_out");
       setConfirming(false);
@@ -89,26 +91,32 @@ export function StockButtons({ outlet, item, stock }: Props) {
   const showBack = stock !== "in_stock" || mine;
   const showSoldOut = stock !== "sold_out" && !mine;
 
+  // Rendered inside the row's 2-column action grid: the buttons are grid cells, the rest spans both columns.
   return (
-    <div className="mt-2">
+    <>
       {confirming ? (
-        <div role="group" aria-label={`Is ${item.name} sold out at ${outlet.name}?`} className="flex flex-col gap-2">
+        <div
+          role="group"
+          aria-label={`Is ${item.name} sold out at ${outlet.name}?`}
+          className="col-span-2 flex flex-col gap-2"
+        >
           <p className="font-bold">
             Mark {item.name} sold out at {outlet.name}?
           </p>
-          <div className="flex flex-wrap gap-2">
-            <Button variant="primary" disabled={busy} onClick={() => report("sold_out")}>
+          <div className="grid grid-cols-2 gap-2">
+            <Button variant="primary" className="w-full" disabled={busy} onClick={() => report("sold_out")}>
               {busy ? "Saving…" : "Yes, it's sold out"}
             </Button>
-            <Button disabled={busy} onClick={() => setConfirming(false)}>
+            <Button className="w-full" disabled={busy} onClick={() => setConfirming(false)}>
               Cancel
             </Button>
           </div>
         </div>
       ) : (
-        <div className="flex flex-wrap gap-2">
+        <>
           {showSoldOut ? (
             <Button
+              className="w-full text-center"
               disabled={busy}
               onClick={() => setConfirming(true)}
               aria-label={`${stock === "maybe_sold_out" ? "Sold out here too" : "Sold out here"}? ${item.name} at ${outlet.name}`}
@@ -118,6 +126,7 @@ export function StockButtons({ outlet, item, stock }: Props) {
           ) : null}
           {showBack ? (
             <Button
+              className="w-full"
               disabled={busy}
               onClick={() => report("back")}
               aria-label={`It's back: ${item.name} at ${outlet.name}`}
@@ -125,14 +134,14 @@ export function StockButtons({ outlet, item, stock }: Props) {
               It&apos;s back
             </Button>
           ) : null}
-        </div>
+        </>
       )}
       {mine && stock !== "sold_out" && !message ? (
-        <p className="mt-1 text-ink-2">You reported it sold out. Waiting for a second student.</p>
+        <p className="col-span-2 text-ink-2">You reported it sold out. Waiting for a second student.</p>
       ) : null}
-      <p role="status" className={message ? `mt-1 font-bold ${message.error ? "text-pricey" : ""}` : "sr-only"}>
+      <p role="status" className={message ? `col-span-2 font-bold ${message.error ? "text-pricey" : ""}` : "sr-only"}>
         {message?.text ?? ""}
       </p>
-    </div>
+    </>
   );
 }

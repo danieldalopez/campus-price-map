@@ -6,6 +6,11 @@ Built at HackCamp 2026 (nwPlus, UBC Vancouver) by Sergio Lopez and Sebastian Sal
 
 > **Claude Code: this file is the spec.** Read it fully before every task. Work through section 13 one step at a time. If a request conflicts with this file, ask before building.
 
+Version 13, Sun Nov 8. Changes from version 12:
+- **Step 10 finished.** `src/lib/sounds.ts` synthesises the five sounds with Web Audio: snap (shutter), slap (report saved), cha-ching (results show a cheaper spot), thud (sold out, or a report voted down) and chime (a price confirmed, or "It's back"). The sound on/off button (`SoundToggle`) is in the home, Results and Outlet headers, remembered on the phone, and off by default when the phone asks for reduced motion. Read aloud (`src/lib/speech.ts`, `ReadAloud`) on Results reads the decision line, the top 3 outlets and the Worth the walk saving. Every sound comes with text on screen.
+- **Location button, blocked:** a tap while off always asks again (the phone shows a prompt if it still may). If the phone has blocked the site, a note gives that phone's steps (iPhone, Android or other), fades after 8 s or on ✕, and location turns on by itself once it's allowed and the student comes back. Browsers never let a site show the prompt again after "Don't Allow"; that's why the note exists.
+- **Row actions tidied:** "Wrong price?" is its own line under the price details, and "I bought it here" and "Sold out here?" sit side by side as two equal buttons.
+
 Version 12, Sun Nov 8. Changes from version 11:
 - **Build status** added at the top of section 13, so sessions skip finished work. Section 7 rows now list "Wrong price?", "I bought it here" and the Sold out buttons as built.
 
@@ -896,9 +901,9 @@ Skip steps that are already done. Step numbers are labels; **run them in this or
 
 **Build status (Sun Nov 8, version 12).** Merged on `main`:
 - App: Steps 1, 2, 3, 4, 5 (Outlet page, full menus, Directions), 6 (Snap), 7 (voting), 8 (I bought it, last-confirmed times), 9 (Sold out, plus the location button), 14 (Worth the walk, money first), 16 (scanner), and "Wrong price?" (version 11).
-- Step 10: **partly done.** The sticker art is in `public/items` and `public/stickers`. Sounds (`sounds.ts`), the mute toggle and Read aloud (`speech.ts`) aren't built.
+- Step 10: done (version 13). The sticker art, synthesised sounds, the sound on/off button and Read aloud.
 - Databricks: D1 to D8 merged. D8 uses the version 7 money-first ranking (`saving_rank`). Sergio deploys the bundle and runs the refresh Job to pick up code changes; merging alone doesn't update the workspace.
-- **Left:** the rest of Step 10 (sounds, Read aloud), Step 12 (Auth0, optional), Step 13 (Ask with Genie, optional). Steps 11 and 15 are dropped.
+- **Left:** Step 12 (Auth0, optional) and Step 13 (Ask with Genie, optional). Steps 11 and 15 are dropped.
 - **Data:** almost every live price is an AI-estimated `seed` price (about 11 are from menus). Label it as proof of concept in the demo and on Devpost, and load real price-walk prices if the team has them.
 
 If behind, cut in this order: Step 13, D7, Step 16 (scanner), Step 12, D6, Step 9, the receipt part of Step 8, D5. Never cut D1 to D4, D8 or Step 14: Worth the walk and the Databricks engine are the submission.

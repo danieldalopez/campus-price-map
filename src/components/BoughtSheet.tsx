@@ -8,6 +8,7 @@ import { compressPhoto, PhotoDecodeError } from "@/lib/image";
 import { parsePriceInput, priceInRange, PRICE_MAX, PRICE_MIN, type PhotoDraft, type SaveResult } from "@/lib/snap";
 import type { OutletResponse } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { play } from "@/lib/sounds";
 import { Button, buttonClasses } from "./Button";
 
 export type BoughtTarget = {
@@ -211,6 +212,7 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
       }
       const result = body as SaveResult;
       const confirms = shown !== null && Math.abs(price - shown) <= CONFIRM_BAND + 1e-9;
+      play(confirms || result.status === "official" ? "chime" : "slap");
       setDone(
         confirms || result.status === "official"
           ? wrong

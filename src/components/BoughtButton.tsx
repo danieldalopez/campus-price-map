@@ -36,7 +36,7 @@ export function WrongPriceButton({ outlet, item, price }: Omit<Props, "className
     <button
       type="button"
       onClick={() => open({ outlet, item, price, mode: "wrong" })}
-      className="mt-1 min-h-12 py-2 text-left font-bold underline decoration-2 underline-offset-2"
+      className="flex min-h-12 items-center text-left font-bold underline decoration-2 underline-offset-4"
       aria-label={`Wrong price? Report the price of ${item.name} at ${outlet.name}`}
     >
       Wrong price?

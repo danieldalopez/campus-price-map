@@ -16,6 +16,7 @@ import { getDeviceId } from "@/lib/device";
 import { formatPrice } from "@/lib/format";
 import { compressPhoto, PhotoDecodeError } from "@/lib/image";
 import { useCamera, videoHasFrame } from "@/lib/use-camera";
+import { play } from "@/lib/sounds";
 import {
   parsePriceInput,
   priceInRange,
@@ -690,6 +691,7 @@ export default function SnapFlow({ items, outlets }: { items: SnapItem[]; outlet
 
   /** The shutter: the current camera frame onto a canvas, then the same path as a picked photo. */
   async function shoot() {
+    play("snap");
     const video = videoRef.current;
     if (shooting.current || !videoHasFrame(video)) return;
     shooting.current = true;
@@ -821,6 +823,7 @@ export default function SnapFlow({ items, outlets }: { items: SnapItem[]; outlet
         updateCard(card.key, { state: "editing", slow: false, error: errorText(data) ?? "Couldn't save. Try again in a moment." });
         return;
       }
+      play(data.status === "official" ? "chime" : "slap");
       updateCard(card.key, { state: "saved", slow: false, saved: { price, status: data.status } });
       setAnnouncement(`Saved. ${savedLine(price, data.status)}.`);
     } catch {
