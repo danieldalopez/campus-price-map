@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@google/genai": "^3.0.0",
+    "@zxing/browser": "^0.2.1",
+    "@zxing/library": "^0.23.0",
     "leaflet": "^1.9.4",
     "next": "16.4.5",
     "pg": "^8.23.1",

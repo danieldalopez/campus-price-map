@@ -241,6 +241,7 @@ We're keeping ourselves honest about what's evidence and what's still a guess.
 - Map data © OpenStreetMap contributors
 - Contains information licensed under the Open Government Licence – Canada (Statistics Canada)
 - Prices reported by UBC students
+- Product data from Open Food Facts, available under the Open Database License (ODbL). See `data/barcodes.LICENSE.md`
 
 Built from a fresh repository during HackCamp 2026 (hacking began 12:00 PM, November 7), with the app written using Claude Code.
 
