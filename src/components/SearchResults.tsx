@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import { walkLabel } from "@/lib/geo";
-import { itemEmoji } from "@/lib/item-art";
+import { ItemArt } from "@/components/ItemArt";
 import type { SearchResult } from "@/lib/search";
 import type { Item, MenuHit, MenuSearchResponse } from "@/lib/types";
 import { useMenuSearch, type MenuSearchState } from "@/lib/use-menu-search";
@@ -50,9 +50,7 @@ function menuSummary(menu: MenuSearchState): string {
 function ResultLink({ item, onPick, lead }: { item: Item; onPick: (item: Item) => void; lead?: string }) {
   return (
     <Link href={`/item/${item.id}`} prefetch={false} className={ROW} onClick={() => onPick(item)}>
-      <span aria-hidden="true" className="text-2xl leading-none">
-        {itemEmoji(item)}
-      </span>
+      <ItemArt item={item} size={40} />
       <span className="min-w-0">
         {lead ? <span className="block font-heading font-extrabold leading-tight">{lead}</span> : null}
         <span className={`block leading-tight ${lead ? "" : "font-bold"}`}>{item.name}</span>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { tiltFor } from "@/lib/format";
-import { itemEmoji } from "@/lib/item-art";
+import { ItemArt } from "@/components/ItemArt";
 import type { Item } from "@/lib/types";
 
 type Props = {
@@ -44,9 +44,7 @@ export function ItemTiles({ items, layout, trailing, onSelect, className = "" }:
             style={{ rotate: `${tiltFor(item.id) / 2}deg` } as CSSProperties}
             onClick={() => onSelect?.(item)}
           >
-            <span aria-hidden="true" className="text-[1.75rem] leading-none">
-              {itemEmoji(item)}
-            </span>
+            <ItemArt item={item} size={48} />
             <span className={`font-bold leading-tight ${layout === "row" ? "line-clamp-2" : ""}`}>{item.name}</span>
             <span className={`leading-tight text-ink-2 ${layout === "row" ? "line-clamp-1" : ""}`}>
               {item.size}

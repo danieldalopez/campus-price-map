@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useContext, useMemo } from "react";
 import { formatPrice } from "@/lib/format";
 import { todayHoursText } from "@/lib/hours";
-import { itemEmoji } from "@/lib/item-art";
+import { ItemArt } from "@/components/ItemArt";
 import { isApproximate } from "@/lib/outlet";
 import { freshness } from "@/lib/pricing";
 import type { MenuCategory, MenuLine, Outlet, OutletItemRow, OutletResponse } from "@/lib/types";
@@ -109,9 +109,7 @@ function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: str
     <li className={`rounded-tag border-2 border-ink p-3 ${fresh?.stale ? "border-dashed bg-paper-2" : "bg-card shadow-ink"}`}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex min-w-0 items-start gap-2">
-          <span aria-hidden="true" className="text-2xl leading-none">
-            {itemEmoji(row.item)}
-          </span>
+          <ItemArt item={row.item} size={40} />
           <div className="min-w-0">
             <h4 className="font-heading text-lg font-extrabold leading-tight">
               <Link

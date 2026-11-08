@@ -1,36 +1,13 @@
-// Placeholder art until the AI Studio stickers land in public/items (Step 10). Decorative only: every tile
-// and header also shows the item's name and size as text, and these are always aria-hidden.
+// Sticker art made in Google AI Studio (SPEC section 9b), converted by scripts/optimize-assets.mjs.
+// Decorative only: every tile and header also shows the item's name and size as text, so the art is aria-hidden.
 
 import type { Item } from "./types";
 
-const BY_WORD: [RegExp, string][] = [
-  [/sparkling/i, "🫧"],
-  [/\btea\b/i, "🍵"],
-  [/iced|cold brew/i, "🧊"],
-  [/bagel/i, "🥯"],
-  [/muffin/i, "🧁"],
-  [/wrap/i, "🌯"],
-  [/sushi/i, "🍣"],
-  [/chips/i, "🥔"],
-  [/banana/i, "🍌"],
-  [/apple/i, "🍎"],
-];
+/** Items without their own sticker borrow a close one: the other Red Bull size, and a second protein bar. */
+const ART_ALIAS: Record<string, string> = { I22: "I01", I23: "I18" };
 
-const BY_CATEGORY: Record<string, string> = {
-  "Energy drinks": "⚡",
-  "Soft drinks": "🥤",
-  Water: "💧",
-  "Hot drinks": "☕",
-  "Cold coffee": "🧊",
-  "Breakfast and bakery": "🥐",
-  "Lunch grab and go": "🥪",
-  Snacks: "🍫",
-  Fruit: "🍎",
-};
-
-export function itemEmoji(item: Pick<Item, "name" | "category">): string {
-  for (const [pattern, emoji] of BY_WORD) if (pattern.test(item.name)) return emoji;
-  return BY_CATEGORY[item.category] ?? "🏷️";
+export function itemArtSrc(item: Pick<Item, "id">): string {
+  return `/items/${ART_ALIAS[item.id] ?? item.id}.webp`;
 }
 
 /** Home tile order: most bought first (SPEC section 7), then the rest in id order. */
