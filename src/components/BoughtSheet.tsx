@@ -16,6 +16,11 @@ export type BoughtTarget = {
   item: { id: string; name: string; size: string } | null;
   /** The official price on screen, to prefill and to compare with. */
   price: number | null;
+  /**
+   * "bought" (Step 8, default): what did you pay, optional receipt. "wrong" ("Wrong price?"): what's the
+   * price here, optional price-tag photo, nothing prefilled. Same save, same safeguards.
+   */
+  mode?: "bought" | "wrong";
 };
 
 type Props = {
@@ -64,7 +69,7 @@ export function BoughtSheet({ target, onClose, onSaved }: Props) {
   }, [target]);
 
   function close() {
-    clearIntent();
+    if (target?.mode !== "wrong") clearIntent();
     onClose();
   }
 
@@ -80,7 +85,7 @@ export function BoughtSheet({ target, onClose, onSaved }: Props) {
     >
       {target ? (
         <SheetBody
-          key={`${target.outlet.id}:${target.item?.id ?? ""}:${target.price ?? ""}`}
+          key={`${target.mode ?? "bought"}:${target.outlet.id}:${target.item?.id ?? ""}:${target.price ?? ""}`}
           target={target}
           close={close}
           onSaved={onSaved}
@@ -94,7 +99,9 @@ export function BoughtSheet({ target, onClose, onSaved }: Props) {
 function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: () => void; onSaved?: () => void }) {
   const ids = useId();
   const [itemId, setItemId] = useState("");
-  const [priceText, setPriceText] = useState(target.price !== null ? target.price.toFixed(2) : "");
+  const wrong = target.mode === "wrong";
+  // "Wrong price?" starts empty: they're telling us the price is different.
+  const [priceText, setPriceText] = useState(!wrong && target.price !== null ? target.price.toFixed(2) : "");
   const [receipt, setReceipt] = useState<Receipt>({ state: "none" });
   const [check, setCheck] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -113,7 +120,7 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
   function pickItem(id: string) {
     setItemId(id);
     const row = choices.find((r) => r.item.id === id);
-    if (row?.price != null && receipt.state !== "read") setPriceText(row.price.toFixed(2));
+    if (!wrong && row?.price != null && receipt.state !== "read") setPriceText(row.price.toFixed(2));
     setCheck(false);
   }
 
@@ -128,14 +135,14 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
       const res = await fetch("/api/read-photo", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ image: photo.base64, hint: "receipt", device_id: getDeviceId() }),
+        body: JSON.stringify({ image: photo.base64, hint: wrong ? "tag" : "receipt", device_id: getDeviceId() }),
       });
       const body: unknown = await res.json().catch(() => null);
       if (!res.ok) {
         const msg =
           body && typeof body === "object" && "error" in body && typeof body.error === "string"
             ? body.error
-            : "Couldn't read the receipt. Type the price instead.";
+            : `Couldn't read the ${wrong ? "photo" : "receipt"}. Type the price instead.`;
         setReceipt({ state: "failed", message: msg });
         return;
       }
@@ -143,7 +150,10 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
       const priced = draft.items.filter((it) => it.price !== null);
       const match = (item ? priced.find((it) => it.item_id === item.id) : null) ?? (item ? null : priced[0]);
       if (!match || match.price === null) {
-        setReceipt({ state: "failed", message: "Couldn't find this item's price on the receipt. Type it instead." });
+        setReceipt({
+          state: "failed",
+          message: `Couldn't find this item's price on the ${wrong ? "photo" : "receipt"}. Type it instead.`,
+        });
         return;
       }
       if (!item) setItemId(match.item_id);
@@ -156,7 +166,7 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
         message:
           err instanceof PhotoDecodeError
             ? "That photo couldn't be opened. Try another, or type the price."
-            : "Couldn't read the receipt. Check your connection, or type the price.",
+            : `Couldn't read the ${wrong ? "photo" : "receipt"}. Check your connection, or type the price.`,
       });
     }
   }
@@ -186,7 +196,7 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
           item_id: item.id,
           location_id: target.outlet.id,
           price,
-          source: fromReceipt ? "receipt" : "typed",
+          source: fromReceipt ? (wrong ? "photo" : "receipt") : "typed",
           device_id: getDeviceId(),
         }),
       });
@@ -203,10 +213,12 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
       const confirms = shown !== null && Math.abs(price - shown) <= CONFIRM_BAND + 1e-9;
       setDone(
         confirms || result.status === "official"
-          ? `Thanks! ${item.name} at ${target.outlet.name} is confirmed at ${formatPrice(price)}, just now.`
+          ? wrong
+            ? `Thanks! ${formatPrice(price)} matches what we show, so it's marked confirmed, just now.`
+            : `Thanks! ${item.name} at ${target.outlet.name} is confirmed at ${formatPrice(price)}, just now.`
           : `Thanks! Your ${formatPrice(price)} report is waiting for a second student before it changes the price.`,
       );
-      clearIntent();
+      if (!wrong) clearIntent();
       onSaved?.();
     } catch {
       setError("Couldn't save. Check your connection and try again.");
@@ -220,7 +232,13 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
   return (
     <div className="max-h-[85dvh] overflow-y-auto px-4 pt-4 pb-[max(env(safe-area-inset-bottom),16px)]">
           <h2 id={`${ids}-h`} className="font-heading text-2xl font-extrabold leading-tight">
-            {done ? "Thank you" : item ? `Did you buy ${item.name}?` : `Did you buy something at ${target.outlet.name}?`}
+            {done
+              ? "Thank you"
+              : wrong
+                ? `Wrong price for ${item?.name ?? "this item"}?`
+                : item
+                  ? `Did you buy ${item.name}?`
+                  : `Did you buy something at ${target.outlet.name}?`}
           </h2>
 
           {done ? (
@@ -235,8 +253,17 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
           ) : (
             <>
               <p className="mt-1">
-                Tell us what you paid at <span className="font-bold">{target.outlet.name}</span>. It shows everyone
-                when this price was last confirmed. Totally optional.
+                {wrong ? (
+                  <>
+                    Tell us the price at <span className="font-bold">{target.outlet.name}</span>. It changes once a
+                    second student agrees, so one typo can&apos;t change it for everyone.
+                  </>
+                ) : (
+                  <>
+                    Tell us what you paid at <span className="font-bold">{target.outlet.name}</span>. It shows
+                    everyone when this price was last confirmed. Totally optional.
+                  </>
+                )}
               </p>
 
               {!target.item ? (
@@ -256,7 +283,7 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
               )}
 
               <label className="mt-3 flex flex-col gap-1 font-bold">
-                What did you pay?
+                {wrong ? "What's the price here?" : "What did you pay?"}
                 <span className="flex items-center gap-2">
                   <span className="font-mono text-2xl" aria-hidden="true">
                     $
@@ -274,7 +301,11 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
                 </span>
               </label>
               <p id={`${ids}-shown`} className="mt-1 text-ink-2">
-                {shown !== null ? `The app shows ${formatPrice(shown)}. If that's what you paid, just tap Save.` : ""}
+                {shown === null
+                  ? ""
+                  : wrong
+                    ? `The app shows ${formatPrice(shown)}.`
+                    : `The app shows ${formatPrice(shown)}. If that's what you paid, just tap Save.`}
               </p>
 
               <div className="mt-3">
@@ -285,8 +316,14 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
                     "w-full cursor-pointer focus-within:outline-[3px] focus-within:outline-offset-2 focus-within:outline-focus",
                   )}
                 >
-                  <span aria-hidden="true">🧾</span>{" "}
-                  {receipt.state === "reading" ? "Reading your receipt…" : "Add a receipt photo (optional)"}
+                  <span aria-hidden="true">{wrong ? "📷" : "🧾"}</span>{" "}
+                  {receipt.state === "reading"
+                    ? wrong
+                      ? "Reading the price tag…"
+                      : "Reading your receipt…"
+                    : wrong
+                      ? "Take a photo of the price tag (optional)"
+                      : "Add a receipt photo (optional)"}
                   <input
                     type="file"
                     accept="image/*"
@@ -298,12 +335,15 @@ function SheetBody({ target, close, onSaved }: { target: BoughtTarget; close: ()
                 </label>
                 <p aria-live="polite" className="mt-1">
                   {receipt.state === "read" ? (
-                    <span className="font-bold">Read {formatPrice(receipt.price)} from your receipt.</span>
+                    <span className="font-bold">
+                      Read {formatPrice(receipt.price)} from your {wrong ? "photo" : "receipt"}.
+                    </span>
                   ) : receipt.state === "failed" ? (
                     receipt.message
                   ) : (
                     <span className="text-sm text-ink-2">
-                      Photos go to Google Gemini to read the price and aren&apos;t stored. Cover any card details.
+                      Photos go to Google Gemini to read the price and aren&apos;t stored.
+                      {wrong ? "" : " Cover any card details."}
                     </span>
                   )}
                 </p>

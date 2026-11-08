@@ -6,6 +6,13 @@ Built at HackCamp 2026 (nwPlus, UBC Vancouver) by Sergio Lopez and Sebastian Sal
 
 > **Claude Code: this file is the spec.** Read it fully before every task. Work through section 13 one step at a time. If a request conflicts with this file, ask before building.
 
+Version 11, Sun Nov 8. Changes from version 10:
+- **"Wrong price?"** under every official price on Results and the Outlet page. It opens the "I bought it" sheet in a second mode: "What's the price here?", empty rather than prefilled, with an optional price-tag photo (`/api/read-photo` with `hint: "tag"`). It has the same save and safeguards: within $0.10 of the shown price it counts as a confirmation; otherwise it's a pending report that only changes the price once a second student confirms it.
+
+Version 10, Sun Nov 8. Changes from version 9:
+- **Sold out (Step 9) is built:** "Sold out here?" with a confirm step, and "It's back", under every item on Results and the Outlet page, through `POST /api/stock`. The rules are unchanged (`stock_status`): one report means "may be sold out" for 2 h, 2 different students in 4 h means SOLD OUT, and one "back" clears it.
+- **Location button on the home map**, above the zoom buttons: tap to turn location on (the browser asks the first time) and centre the map on you; tap again to turn it off. Off is remembered on the phone, so the app doesn't switch it back on by itself. Section 7 "Location".
+
 Version 9, Sun Nov 8. Changes from version 8:
 - **"I bought it" asks, never forces, and keeps a "last confirmed" time on every price.** After a student taps Directions, the app asks once, a few minutes later or when they're at the outlet, "Did you buy it?". They can type what they paid, which is prefilled with the shown price so confirming is one tap, add a receipt photo, or tap "Not now". A report within $0.10 of the official price confirms it: the price shows "✓ Confirmed by a student · 20 min ago" and no pending line. A different price still waits for a second student, as before. Section 7 "I bought it", Step 8.
 
@@ -293,7 +300,7 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
 - Bottom bar: Map / List toggle, **Scan** (barcode, if built), and a big yellow **Snap a price** button (64 px).
 
 **Location (`src/lib/geo.ts`)**
-- Ask for browser location on the first search or tile tap, not on page load. Timeout 8 s.
+- Ask for browser location on the first search or tile tap, or when the student taps the **location button** on the home map (above the zoom buttons), never on page load. Timeout 8 s. The button turns location off again, and off is remembered on the phone (no automatic resume) until they turn it back on.
 - If allowed: `watchPosition` while the page is visible (stopped when it's hidden), so the dot moves and walk times stay current. Re-sort results only when the student has moved more than 30 m, so the list doesn't jump.
 - Location is never stored. It's sent to our API only as rounded coordinates (4 decimals, about 11 m) to sort prices.
 - If denied, unavailable or timed out: measure from the AMS Nest (49.2666, -123.2499) and show one line: "Using the AMS Nest as your starting point. Turn on location for walk times from where you are."

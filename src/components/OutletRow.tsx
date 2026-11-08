@@ -3,7 +3,7 @@ import { walkLabel } from "@/lib/geo";
 import { isApproximate } from "@/lib/outlet";
 import { freshness } from "@/lib/pricing";
 import type { PriceRow } from "@/lib/types";
-import { BoughtButton, ConfirmedLine } from "./BoughtButton";
+import { BoughtButton, ConfirmedLine, WrongPriceButton } from "./BoughtButton";
 import { OutletLink } from "./OutletLink";
 import { PendingLine } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
@@ -73,6 +73,7 @@ export function OutletRow({ row, now, cheapest, dimmed, saves, item }: Props) {
 
       {fresh ? <p className="mt-1 text-ink-2">{fresh.text}</p> : null}
       {row.price !== null ? <ConfirmedLine row={row} now={now} /> : null}
+      {row.price !== null ? <WrongPriceButton outlet={row.outlet} item={item} price={row.price} /> : null}
       {saves !== null ? <p className="mt-1 font-bold text-cheap">Saves {formatPrice(saves)} compared with near you</p> : null}
       {row.just_confirmed ? (
         <p className="mt-1">
