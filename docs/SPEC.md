@@ -6,6 +6,9 @@ Built at HackCamp 2026 (nwPlus, UBC Vancouver) by Sergio Lopez and Sebastian Sal
 
 > **Claude Code: this file is the spec.** Read it fully before every task. Work through section 13 one step at a time. If a request conflicts with this file, ask before building.
 
+Version 8, Sun Nov 8, early morning. Changes from version 7:
+- **Step 11 (polish and accessibility pass) and Step 15 (Directions on every Results row) are dropped** as not a priority. Directions stays on the Outlet page and the Worth the walk card. Section 15's credits still apply (OpenStreetMap attribution is on the map; Open Food Facts and StatCan need crediting wherever their data shows).
+
 Version 7, Sun Nov 8, morning. Changes from version 6:
 - **Worth the walk is about the money, not the student's time.** The point is that a few extra minutes, repeated every time you buy it, add up: "6 extra minutes there and back saves $1.00 every time: $65 a term, $520 over a degree." No wage, no time cost, no net, no "not worth it" verdict, and no break-even wage in the app. The best option is the **biggest saving** within `worth_max_extra_min`, not the highest net. Savings under `even_band` ($0.10) each time aren't suggested. The card starts at 5 purchases a week (once every school day), shown and changeable. Section 7 card, section 10, G14, Step 14, D8.
 
@@ -322,12 +325,12 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
   - Time is shown as minutes only. It is **never** turned into money: no wage, no time cost, no net, no "not worth it" verdict.
   - **Frequency:** starts at 5 a week (once every school day), always visible and changeable from 1 to 14. Horizons are term, year and degree from `app_config`, shown side by side. Every projection ends with "if prices hold".
   - **Optional savings line:** "Put the savings aside at [__]% a year → $X after a degree". Hidden until the student types a rate. We never pick a rate for them.
-  - **Directions** button on the card and on every row: opens Google Maps (below).
+  - **Directions** button on the card: opens Google Maps (below).
   - Never uses estimated prices (G13). Hidden when nothing cheaper is within reach, including when the closest outlet is already the cheapest: then the decision line says so.
   - Read aloud includes the saving each time, the extra minutes and the term total.
 
 **Directions (hand-off to Google Maps)**
-- A **Directions** button (on Results rows, the Worth the walk card and the Outlet page) is a plain link to `https://www.google.com/maps/dir/?api=1&destination=<lat>,<lng>&travelmode=walking`, built in `src/lib/directions.ts` from the outlet's coordinates. It opens the Google Maps app if installed, else Google Maps in the browser, in a new tab.
+- A **Directions** button (on the Worth the walk card and the Outlet page) is a plain link to `https://www.google.com/maps/dir/?api=1&destination=<lat>,<lng>&travelmode=walking`, built in `src/lib/directions.ts` from the outlet's coordinates. It opens the Google Maps app if installed, else Google Maps in the browser, in a new tab.
 - No `origin` in the link: Google Maps starts from the phone's own location, so the student's position is never put in the URL.
 - That hand-off is the only routing we do. The app never draws a route, gives turn-by-turn directions, reroutes or detects arrival. Walk times in the app stay the section 7 estimate ("about N min walk").
 - Accessible name: "Directions to Mercante in Google Maps (opens another app)". At least 48 px tall.
@@ -871,9 +874,9 @@ Figma file: (add link). Screens: Home, Results (with a pending row and a just co
 
 ## 13. Build order (paste one prompt at a time)
 
-Skip steps that are already done. Step numbers are labels; **run them in this order:** 1, 2, 3, 4, 5, 6, 7, 14, 15, 10, 11, 8, 9, 16, 12, 13.
+Skip steps that are already done. Step numbers are labels; **run them in this order:** 1, 2, 3, 4, 5, 6, 7, 14, 10, 8, 9, 16, 12, 13. (Steps 11 and 15 were dropped in version 8.)
 
-If behind, cut in this order: Step 13, D7, Step 16 (scanner), Step 12, D6, Step 9, the receipt part of Step 8, Step 15, D5. Never cut D1 to D4, D8 or Step 14: Worth the walk and the Databricks engine are the submission.
+If behind, cut in this order: Step 13, D7, Step 16 (scanner), Step 12, D6, Step 9, the receipt part of Step 8, D5. Never cut D1 to D4, D8 or Step 14: Worth the walk and the Databricks engine are the submission.
 
 Before Step 2, Sergio: create a free OpenRouteService key, put it in `.env.local` as `ORS_API_KEY`, and run `node --env-file=.env.local scripts/build-walk-matrix.mjs` once (21 outlets is one matrix call). It writes `data/walk_matrix.csv`, which the seed loads. Without it everything falls back to straight-line estimates.
 
@@ -889,7 +892,6 @@ App track (Sebastian, Claude Code):
 8. **I bought it.** "Do Step 8: the I bought it sheet with optional receipt photo." **Show me:** a receipt photo prefills the price.
 9. **Sold out.** "Do Step 9: `/api/stock`, Sold out buttons and stamps, expiry from `stock_status`." **Show me:** two devices mark sold out, the outlet drops below in stock ones.
 10. **Art, sound, read aloud.** "Do Step 10: wire `public/items` and `public/stickers` into the components, `sounds.ts` with Web Audio, the mute toggle, motion, and the Read aloud button (`speech.ts`)." **Show me:** saving a price slaps and plays; Read aloud speaks the top 3.
-11. **Polish.** "Do Step 11: PriceBand chips, StatCan line and vs grocery line from `price_comparisons`, tiers from `outlet_scores`, footer credits (section 15), then an accessibility pass against section 11." **Show me:** a Lighthouse accessibility score and anything below 100.
 12. **Auth0 with Google (Sunday, under 1 hour).** "Do Step 12: add the latest `@auth0/nextjs-auth0` following its README, Google login through Auth0. Browsing stays open; save, vote and stock store the Auth0 user id next to device_id. Never store name or email. If the AUTH0 env vars are missing, the app runs anonymous." **Show me:** log in with Google, submit a price, the row has a user_id.
 13. **Ask with Genie (stretch).** "Do Step 13: `/api/ask` and `src/lib/genie.ts` as section 8, and the Ask page (section 7). Hide it if `GENIE_SPACE_ID` is unset." **Show me:** "Cheapest Red Bull on campus?" answered on a phone.
 
@@ -906,7 +908,6 @@ Databricks track (Sergio, in parallel, after app Step 2 has seeded Lakebase). Cl
 App steps added in version 5:
 
 14. **Worth the walk.** "Do Step 14: `/api/config`, `src/lib/walkworth.ts` exactly as section 10, its parity test against `tests/fixtures/walk_worth.json`, the WorthTheWalk card on Results and the Databricks Worth the walk line on the Outlet page (section 7)." **Show me:** the parity test passing, and the card on a phone for small drip coffee at 5 a week: the term, year and degree totals.
-15. **Directions.** "Do Step 15: `src/lib/directions.ts` and the DirectionsButton (section 7, Directions) on Results rows and the Worth the walk card. The Outlet page already has one from Step 5." **Show me:** tapping Directions on the cheapest Red Bull opens Google Maps with walking directions to it.
 16. **Scanner (lowest priority, needs the two decisions in section 6).** "Do Step 16: `scripts/build-barcodes.mjs`, `data/barcodes.csv` with its licence file, `/api/barcode`, and the full-screen `/scan` page (section 7)." **Show me:** a Red Bull can scanned on an iPhone opens its Results.
 
 Databricks step added in version 5:
