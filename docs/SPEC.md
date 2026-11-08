@@ -551,7 +551,7 @@ All tables are materialized views: full recompute every run, fine at this size.
 | `gold_item_stats` | Per item, over non benchmark outlets: n_outlets, min, median, max, spread, cheapest outlet, grocery baseline price. |
 | `gold_price_comparisons` | One row per item and outlet with an official price, plus estimated rows from `model_price_estimates` (columns below). This is the table the app serves. |
 | `gold_parity` | Compares `gold_official_prices` with `bronze_current_prices` (the live view). One row per mismatch. Expect zero; a non-zero count fails an `expect` and shows in the data quality panel. Reports newer than the bronze copy are excluded. |
-| `gold_pitch_numbers` | Proof-of-concept numbers for the Devpost (every official price, `seed` included and labelled in the detail): biggest same item gap between outlets; median and biggest saving per term at 5 purchases a week for a walk within `worth_max_extra_min` (version 7: money only, no wage); number of reports and confirmations. Never synced. |
+| `gold_pitch_numbers` | Proof-of-concept numbers for the Devpost (every official price, `seed` included and labelled in the detail): biggest same item gap between outlets; median and biggest saving per term at 5 purchases a week for a walk within `worth_max_extra_min` (`median_saved_per_term_5_a_week`, `biggest_saved_per_term_5_a_week`; version 7: money only, no wage); number of reports and confirmations. Never synced. |
 
 `gold_price_comparisons` columns (become `serving.price_comparisons`):
 
@@ -615,7 +615,7 @@ Rules:
 - The best option is the **biggest saving** within reach (ties: the shorter walk). That's what `walk_best_location_id`, `walk_saving` and `walk_extra_min` store.
 - Sold out isn't known here (stock is live only), so the app hides a suggestion whose outlet is marked sold out.
 - Compounding with interest is **not** computed in Databricks, because the rate is the student's own input. The app applies it (below).
-- **D8 follow-up (Sergio):** `gold_walk_worth` still has `time_cost`, `net`, `verdict` and `break_even_*` at `bc_min_wage`, and picks the best option by highest net. The app no longer reads any of them. Switch the best-option choice to the biggest saving, apply the `even_band` floor, and replace the "share worth it at minimum wage" pitch number with money ones (e.g. median saving a term at 5 a week). The parity test only checks `saving`, `extra_min`, `saved_*` and `minutes_*`, so it keeps passing either way.
+- **D8 follow-up (done in version 7):** `gold_walk_worth` has a `saving_rank` column (biggest saving first, savings under `even_band` last), and `gold_price_comparisons.walk_*` come from `saving_rank = 1 AND saving >= even_band`. The old wage columns (`time_cost`, `net`, `verdict`, `break_even_*`, `net_rank`, and `walk_net`, `walk_verdict` etc. in `price_comparisons`) are still computed so the synced table keeps its shape, but nothing reads them. The pitch numbers are `median_saved_per_term_5_a_week` and `biggest_saved_per_term_5_a_week`.
 
 **Live version in the app (`src/lib/walkworth.ts`).** The student is rarely standing exactly at an outlet, so the app runs the same formula with their position as the origin:
 - *near* = the closest in-stock outlet with an official price for the item (the one they'd buy at without the app).

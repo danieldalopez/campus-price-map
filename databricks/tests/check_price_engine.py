@@ -387,7 +387,7 @@ def main():
     print("\ngold_walk_worth (Red Bull from the Nest, then all)")
     ww = query("gold_walk_worth", "item_id, origin_location_id, net_rank")
     cols = ["item_id", "origin_location_id", "cheaper_location_id", "saving", "extra_min", "time_cost", "net",
-            "verdict", "break_even_wage", "net_term", "net_rank"]
+            "verdict", "break_even_wage", "net_term", "net_rank", "saving_rank"]
     show([r for r in ww if r["item_id"] == "I01" and r["origin_location_id"] == "L01"], cols)
     wwk = by_key(ww, "item_id", "origin_location_id", "cheaper_location_id")
     r = wwk[("I01", "L01", "L04")]
@@ -396,6 +396,8 @@ def main():
     c.eq("Nest → L04 break_even_wage", r["break_even_wage"], 21.0)
     r = wwk[("I01", "L01", "L02")]
     c.eq("Nest → L02 (matrix, 3.5 min)", (r["extra_min"], r["net"], r["verdict"]), (7.0, -1.35, "not_worth_it"))
+    c.eq("SPEC v7: the suggestion from the Nest is the biggest saving (L02, $0.75), not the highest net (L04)",
+         [k[2] for k, v in wwk.items() if k[:2] == ("I01", "L01") and v["saving_rank"] == 1], ["L02"])
     r = wwk[("I04", "L01", "L04")]
     c.eq("Coke Nest → L04 (seed price, still compared)", (r["net"], r["verdict"], r["net_term"], r["cheaper_source"]),
          (0.37, "worth_it", 4.81, "seed"))
@@ -413,9 +415,9 @@ def main():
     c.eq("Red Bull bands", [pck[("I01", l)]["band"] for l in ("L02", "L04", "L03", "L01")],
          ["average", "average", "average", "high"])
     r = pck[("I01", "L01")]
-    c.eq("Nest: nearest cheaper, walk best, verdict, net, per term",
-         (r["nearest_cheaper_location_id"], r["walk_best_location_id"], r["walk_verdict"], r["walk_net"],
-          r["walk_net_term_per_weekly"]), ("L04", "L04", "about_even", 0.1, 1.3))
+    c.eq("Nest: nearest cheaper, then the walk suggestion (biggest saving, SPEC v7): outlet, saving, extra minutes",
+         (r["nearest_cheaper_location_id"], r["walk_best_location_id"], r["walk_saving"], r["walk_extra_min"]),
+         ("L04", "L02", 0.75, 7.0))
     c.eq("Nest: gap, pct, vs cheapest, vs grocery, minutes of work",
          (r["gap_vs_median"], r["pct_vs_median"], r["savings_vs_cheapest"], r["premium_vs_grocery"],
           r["minutes_of_work"]), (0.6, 20.7, 0.75, 1.3, 11.7))
@@ -445,8 +447,13 @@ def main():
     c.eq("biggest gap counts seed prices: Coke, $2.95 vs seed $1.98", pnk["biggest_same_item_gap"]["value"], 0.97)
     c.eq("gap detail says it includes AI-estimated prices",
          "AI-estimated" in pnk["biggest_same_item_gap"]["detail"], True)
-    c.eq("worth-the-walk share counts seed prices: 1 of 11", pnk["share_worth_the_walk_at_min_wage"]["value"], 9.1)
-    c.eq("median net per term: the Coke switch, 4.81 x 4", pnk["median_net_per_term_4_a_week"]["value"], 19.24)
+    # SPEC v7: money only, no wage. Exact values depend on the formula distances, so check the shape.
+    med = pnk["median_saved_per_term_5_a_week"]["value"]
+    top = pnk["biggest_saved_per_term_5_a_week"]["value"]
+    c.eq("median and biggest saved per term at 5 a week are positive, biggest >= median",
+         (med > 0, top > 0, top >= med), (True, True, True))
+    c.eq("no minimum wage pitch numbers left",
+         [m for m in pnk if m in ("share_worth_the_walk_at_min_wage", "median_net_per_term_4_a_week")], [])
     c.eq("price reports count seed prices: 24", pnk["price_reports"]["value"], 24.0)
 
     print("\nwithout bronze_walk_matrix (02_bronze_copy skips a missing Lakebase table)")
