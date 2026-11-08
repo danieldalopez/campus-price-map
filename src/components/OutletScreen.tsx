@@ -13,7 +13,7 @@ import { useNow } from "@/lib/use-now";
 import { Button, buttonClasses } from "./Button";
 import { DirectionsButton } from "./DirectionsButton";
 import { OutletLink } from "./OutletLink";
-import { PendingLine } from "./PendingLine";
+import { PendingLine, PricesRefresh } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
 import { PriceTag } from "./PriceTag";
 import { Stamp } from "./Stamp";
@@ -110,7 +110,7 @@ function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: str
           <PriceBand band={row.band} pctVsMedian={row.pct_vs_median} />
           {row.chip ? <span className="chip">{row.chip}</span> : null}
         </div>
-      ) : (
+      ) : row.just_confirmed ? null : (
         <p className="mt-2">
           <span className="font-bold">No confirmed price yet</span>
           {row.estimate ? (
@@ -143,8 +143,7 @@ function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: str
         </p>
       ) : null}
 
-      {/* Step 7: the pending line gets Yes / No / Not sure inside PendingLine. */}
-      {row.pending ? <PendingLine pending={row.pending} /> : null}
+      <PendingLine pending={row.pending} what={row.item.name} />
 
       {row.stock === "maybe_sold_out" ? <p className="mt-1">A student said it may be sold out.</p> : null}
       {/* Step 9: the Sold out button goes here (POST /api/stock). */}
@@ -309,7 +308,9 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
 
       {data ? (
         <>
-          <TrackedSection rows={data.items} outletId={data.outlet.id} now={now} />
+          <PricesRefresh.Provider value={api.retry}>
+            <TrackedSection rows={data.items} outletId={data.outlet.id} now={now} />
+          </PricesRefresh.Provider>
           <FullMenu menu={data.menu} now={now} />
           <p className="mt-8 px-4 text-ink-2">
             {data.price_source_used === "pipeline"

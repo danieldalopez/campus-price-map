@@ -77,7 +77,7 @@ async function liveItems(outlet: Outlet, deviceId: string | undefined): Promise<
      ${ITEM_JOINS}
      where cp.k is not null or pp.k is not null or ca.k is not null
      order by i.id`,
-    [outlet.id],
+    [outlet.id, deviceId ?? null],
   );
   return rows.map((r) => ({
     item: toItem(r),
@@ -101,7 +101,7 @@ async function pipelineItems(outlet: Outlet, deviceId: string | undefined): Prom
      ${ITEM_JOINS}
      where pc.item_id is not null or cp.k is not null or pp.k is not null or ca.k is not null
      order by i.id`,
-    [outlet.id],
+    [outlet.id, deviceId ?? null],
   );
   return rows.map((r) => ({ item: toItem(r), ...pipelineFields(r), ...liveExtras(r, deviceId) }));
 }

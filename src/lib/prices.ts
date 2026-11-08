@@ -23,7 +23,7 @@ import type {
   StatcanInfo,
   Stock,
 } from "./types";
-import { iso, num, text } from "./validate";
+import { isVote, iso, num, text } from "./validate";
 
 type Options = { item: Item; origin: LatLng | null; deviceId: string | undefined };
 
@@ -36,6 +36,8 @@ export type LiveExtraCols = {
   pending_price_id: string | null;
   pending_price: string | null;
   pending_device_id: string | null;
+  /** This device's vote on the pending report, if any (`$2` is the device id). */
+  pending_my_vote: string | null;
   stock: Stock;
 };
 
@@ -79,9 +81,10 @@ export function liveCtes(key: "item_id" | "location_id"): string {
   st as (select ${other} as k, stock from stock_status where ${key} = $1)`;
 }
 
-/** Pending and stock columns; needs `pp` and `st` from liveCtes joined on `k`. */
+/** Pending and stock columns; needs `pp` and `st` from liveCtes joined on `k`, and the device id (or null) as `$2`. */
 export const LIVE_EXTRA_COLUMNS = `
   pp.price_id as pending_price_id, pp.price as pending_price, pp.device_id as pending_device_id,
+  (select v.vote from price_votes v where v.price_id = pp.price_id and v.device_id = $2::text) as pending_my_vote,
   coalesce(st.stock, 'in_stock') as stock`;
 
 /** The pipeline columns PipelinePriceCols reads; needs `pc`, `nl` (nearest cheaper outlet) and `cp`. */
@@ -101,7 +104,12 @@ export function liveExtras(r: LiveExtraCols, deviceId: string | undefined): Pick
     stock: r.stock,
     pending:
       pendingPrice !== null && pendingId !== null
-        ? { price_id: pendingId, price: pendingPrice, mine: deviceId !== undefined && r.pending_device_id === deviceId }
+        ? {
+            price_id: pendingId,
+            price: pendingPrice,
+            mine: deviceId !== undefined && r.pending_device_id === deviceId,
+            my_vote: isVote(r.pending_my_vote) ? r.pending_my_vote : null,
+          }
         : null,
   };
 }
@@ -235,7 +243,7 @@ async function livePrices({ item, origin, deviceId }: Options): Promise<PricesRe
        left join cp on cp.k = l.id
        ${BASE_JOINS}
        where cp.k is not null or pp.k is not null`,
-      [item.id],
+      [item.id, deviceId ?? null],
     ),
     query<{ n_outlets: string; campus_median: string | null }>(
       "reader",
@@ -298,7 +306,7 @@ async function pipelinePrices({ item, origin, deviceId }: Options, computedAt: s
      left join cp on cp.k = l.id
      ${BASE_JOINS}
      where pc.location_id is not null or cp.k is not null or pp.k is not null`,
-    [item.id],
+    [item.id, deviceId ?? null],
   );
 
   let nOutlets = 0;

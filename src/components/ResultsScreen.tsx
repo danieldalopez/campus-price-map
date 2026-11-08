@@ -29,6 +29,7 @@ import { useLocation } from "@/lib/use-location";
 import { useNow } from "@/lib/use-now";
 import { Button, buttonClasses } from "./Button";
 import { OutletRow } from "./OutletRow";
+import { PricesRefresh } from "./PendingLine";
 import { WakingUp } from "./WakingUp";
 import { WhileVisible } from "./WhileVisible";
 
@@ -199,7 +200,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
       ) : null}
 
       {data ? (
-        <>
+        <PricesRefresh.Provider value={api.retry}>
           <Section
             id="near-heading"
             title="Near you"
@@ -239,7 +240,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
               ? "Prices and comparisons from the last Databricks refresh."
               : "Live prices from the campus database."}
           </p>
-        </>
+        </PricesRefresh.Provider>
       ) : null}
     </main>
   );
