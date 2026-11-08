@@ -1,0 +1,22 @@
+id,name,size,volume_ml,category
+I01,Red Bull,250 ml can,250,Energy drinks
+I02,Monster Energy,473 ml can,473,Energy drinks
+I03,Celsius,355 ml can,355,Energy drinks
+I04,"Coca-Cola, can",355 ml can,355,Soft drinks
+I05,"Coca-Cola, bottle",591 ml bottle,591,Soft drinks
+I06,Bottled water,500 ml bottle,500,Water
+I07,Sparkling water,355 ml can,355,Water
+I08,"Drip coffee, small",Small cup,,Hot drinks
+I09,"Drip coffee, medium",Medium cup,,Hot drinks
+I10,"Latte, medium",Medium cup,,Hot drinks
+I11,"Tea, medium",Medium cup,,Hot drinks
+I12,"Iced coffee, medium",Medium cup,,Cold coffee
+I13,Bagel with cream cheese,1 bagel,,Breakfast and bakery
+I14,Muffin,1 muffin,,Breakfast and bakery
+I15,Pre-made sandwich,1 sandwich,,Lunch grab and go
+I16,Pre-made wrap,1 wrap,,Lunch grab and go
+I17,Sushi roll pack,1 pack,,Lunch grab and go
+I18,Protein bar,1 bar,,Snacks
+I19,"Chips, single serve",1 bag,,Snacks
+I20,Banana,1 banana,,Fruit
+I21,Apple,1 apple,,Fruit

@@ -1,0 +1,22 @@
+id,name,area,operator,type,address,hours_weekend,hours_weekday,lat,lng,is_benchmark
+L01,Harvest Market,Ponderosa Commons,ubc_food_services,convenience,"Ponderosa Commons, 6445 University Blvd",7am to 10pm daily,7am to 10pm,49.264021,-123.255715,false
+L02,Mercante,Ponderosa Commons,ubc_food_services,restaurant,"Ponderosa Commons, 6488 University Blvd",12pm to 7pm Sat and Sun,10:30am to 9pm,49.263727,-123.254979,false
+L03,"Avenue C Market, Gage",Walter Gage Residence,ubc_food_services,convenience,"Walter Gage Residence, 5959 Student Union Blvd",24/7,24/7,49.269542,-123.249828,false
+L04,"Avenue C Market, Scarfe",Neville Scarfe Building,ubc_food_services,convenience,"Neville Scarfe Building, 2125 Main Mall",24/7,24/7,49.263977,-123.253078,false
+L05,"Tim Hortons, Orca House",Orca House,ubc_food_services,cafe,"q̓əlɬaləməcən leləm̓ (Orca House), 5955 Student Union Blvd",8am to 8pm Sat and Sun,6:30am to 10pm,49.268696,-123.249902,false
+L06,"Starbucks, UBC Life",UBC Life Building,ubc_food_services,cafe,"UBC Life Building, 6138 Student Union Blvd",8am to 3pm Sat and Sun,8am to 5pm,49.267271,-123.249929,false
+L07,"Subway, UBC Life",UBC Life Building,ubc_food_services,restaurant,"UBC Life Building, 6138 Student Union Blvd",10am to 3pm Sat and Sun,9:30am to 5pm,49.267402,-123.249596,false
+L08,Pacific Poké Life,UBC Life Building,ubc_food_services,restaurant,"UBC Life Building, 6138 Student Union Blvd",Not listed,11am to 3pm,49.267334,-123.24976,false
+L09,"Starbucks, Bookstore",UBC Bookstore,ubc_food_services,cafe,"UBC Bookstore, 6200 University Blvd",10am to 5pm Sat; Sunday not listed,7am to 5pm,49.265218,-123.250782,false
+L10,Triple O's,David Lam Research Centre,ubc_food_services,restaurant,"David Lam Research Centre, 2015 Main Mall",11am to 6pm Sat and Sun,11am to 7pm,49.265856,-123.25444,false
+L11,"Tim Hortons, David Lam",David Lam Research Centre,ubc_food_services,cafe,"David Lam Research Centre, 2015 Main Mall",Not listed,8am to 4pm,49.265628,-123.254358,false
+L12,"Tim Hortons, Forest Sciences",Forest Sciences Centre,ubc_food_services,cafe,"Forest Sciences Centre, 2424 Main Mall",Not listed,7:30am to 3pm,49.260186,-123.248397,false
+L13,Perugia Italian Caffé,Life Sciences Centre,ubc_food_services,cafe,"Life Sciences Centre, 2350 Health Sciences Mall",Not listed,7:30am to 4pm,49.262204,-123.24499,false
+L14,Ike's Cafe,IKB Learning Centre,ubc_food_services,cafe,"IKB Learning Centre, 1961 East Mall",To confirm,To confirm,49.267302,-123.252696,false
+L15,"Starbucks, Kaiser",Fred Kaiser Building,ubc_food_services,cafe,"Fred Kaiser Building, 2332 Main Mall",To confirm,To confirm,49.262187,-123.250135,false
+L16,The Delly,Nest,ams,restaurant,"AMS Student Nest, lower level",Closed Sat and Sun,8am to 7pm,49.266576,-123.249787,false
+L17,Other Nest outlets,Nest,ams,food_court,AMS Student Nest,To confirm,To confirm,,,false
+L18,International Food Village,International Food Village,,food_court,To confirm on the walk,To confirm,To confirm,,,false
+L19,University Village outlets,University Village,,cafe,"University Blvd, University Village",To confirm,To confirm,,,false
+L20,"Save-On-Foods, Wesbrook",Wesbrook Village,,grocery,"Wesbrook Village, exact address to confirm",To confirm,To confirm,,,true
+L21,Other Wesbrook Village shops,Wesbrook Village,,cafe,Wesbrook Village,To confirm,To confirm,,,false
