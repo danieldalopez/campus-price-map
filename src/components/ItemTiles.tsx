@@ -33,8 +33,9 @@ export function ItemTiles({ items, layout, trailing, onSelect, className = "" }:
     layout === "row"
       ? "flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 pt-0.5 pb-3 scroll-px-4 [scrollbar-width:none]"
       : "grid grid-cols-3 gap-3";
-  // Row tiles fit the size on one line, from 120 to 160 px wide; a long name wraps onto its second line.
-  const cell = layout === "row" ? "w-max min-w-[7.5rem] max-w-[10rem] shrink-0 snap-start" : "min-w-0";
+  // Row tiles are all 144 px wide: wide enough for the longest size on one line ("medium, 14 to 16 oz");
+  // a long name wraps onto its second line.
+  const cell = layout === "row" ? "w-36 shrink-0 snap-start" : "min-w-0";
 
   return (
     <ul className={`${list} ${className}`}>
