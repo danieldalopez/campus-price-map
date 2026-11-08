@@ -17,8 +17,9 @@ dbutils.library.restartPython()  # load the upgraded databricks-sdk (the postgre
 # MAGIC - Reads `prices`, `price_votes`, `stock_reports`, `items`, `locations`, `carries`, `app_config`, `walk_matrix`
 # MAGIC   and the `current_prices` view in **one read-only REPEATABLE READ transaction**, so every copy comes from the same
 # MAGIC   snapshot (`gold_parity` compares `bronze_current_prices` with prices rebuilt from the other tables).
-# MAGIC - Overwrites one Delta table per source: `workspace.cpm.bronze_<name>`. Column types follow Postgres;
-# MAGIC   enums (`price_source`) and anything unusual become strings.
+# MAGIC - Overwrites one Delta table per source: `workspace.cpm.bronze_<name>`, with the same columns as the Postgres
+# MAGIC   table or view plus `copied_at` (the snapshot time, one value per run; `gold_parity` skips reports newer than it).
+# MAGIC   Column types follow Postgres; enums (`price_source`) and anything unusual become strings.
 # MAGIC - A source that doesn't exist yet in Lakebase is **skipped with a message**, not an error. Its bronze table,
 # MAGIC   if any, is left as it was.
 # MAGIC - Writes `bronze_copy_log`: one row per source with its status, the Lakebase `count(*)`, the Delta row count and
@@ -63,6 +64,9 @@ SOURCES = [
     "walk_matrix",
     "current_prices",  # view (db/views.sql)
 ]
+
+# Extra column on every bronze table: when this copy's snapshot was taken (UTC).
+COPIED_AT = "copied_at"
 
 # Postgres type name (format_type, without length or precision) → Spark SQL type.
 _SIMPLE_TYPES = {
@@ -234,7 +238,12 @@ for name in SOURCES:
         log.append((name, None, "skipped", None, None, target, snapshot_at, f"{skipped[name]}; {target} {left}"))
         continue
     kind, columns, rows, lakebase_count = fetched[name]
-    df = spark.createDataFrame(rows, schema=spark_ddl(columns))
+    # copied_at: the snapshot time, the same on every row of every bronze table this run.
+    # gold_parity skips reports newer than it.
+    df = spark.createDataFrame(
+        [row + (snapshot_at,) for row in rows],
+        schema=spark_ddl(columns) + f", `{COPIED_AT}` TIMESTAMP",
+    )
     df.write.mode("overwrite").option("overwriteSchema", "true").saveAsTable(target)
     delta_count = spark.table(target).count()
     log.append((name, kind, "copied", lakebase_count, delta_count, target, snapshot_at, None))
