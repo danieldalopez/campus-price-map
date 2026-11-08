@@ -1,0 +1,6 @@
+item_id,statcan_product,amount_per_item,kind,assumption,statcan_table,item_amount,statcan_amount,amount_unit
+I20,"Bananas, per kilogram",0.12 kg,same_item,"a medium banana, about 120 g",18-10-0245-01,0.12,1,kg
+I21,"Apples, per kilogram",0.18 kg,same_item,"a medium apple, about 180 g",18-10-0245-01,0.18,1,kg
+I08,"Roasted or ground coffee, 340 grams",10 g of 340 g,ingredients,about 10 g of ground coffee for a small cup,18-10-0245-01,10,340,g
+I09,"Roasted or ground coffee, 340 grams",15 g of 340 g,ingredients,about 15 g for a medium cup,18-10-0245-01,15,340,g
+I11,Tea (20 bags),1 of 20 bags,ingredients,one tea bag,18-10-0245-01,1,20,bag
