@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { requestLocation, resumeLocationIfGranted, walkLabel, walkMinutes, type LocationState } from "@/lib/geo";
 import { byPopularity } from "@/lib/item-art";
 import { isApproximate, tierLabel, tierWords } from "@/lib/outlet";
@@ -50,6 +50,16 @@ export default function HomeScreen() {
   const [query, setQuery] = useState("");
   const allItems = useRef<HTMLDialogElement>(null);
   const location = useLocation();
+
+  // Height of the floating bottom bar, so the list can scroll its last card clear of it.
+  const [barHeight, setBarHeight] = useState(0);
+  const bar = useCallback((el: HTMLDivElement | null) => {
+    if (!el) return;
+    setBarHeight(el.offsetHeight);
+    const observer = new ResizeObserver(() => setBarHeight(el.offsetHeight));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const itemsApi = useApi<ItemsResponse>("/api/items");
   const outletsApi = useApi<LocationsResponse>("/api/locations");
@@ -189,18 +199,27 @@ export default function HomeScreen() {
           </nav>
         )}
 
-        {/* List view: everything the map shows, in text. The screen reader path. */}
+        {/* List view: everything the map shows, in text. The screen reader path. It runs to the bottom of the
+            screen, under the floating bottom bar, so no strip of map shows between the list and the buttons. */}
         <div className="min-h-0 flex-1">
           {view === "list" ? (
-            <OutletList outlets={outlets} loading={outletsApi.loading} location={location} />
+            <OutletList outlets={outlets} loading={outletsApi.loading} location={location} bottomInset={barHeight} />
           ) : null}
         </div>
 
-        {/* Bottom bar */}
+        {/* Bottom bar: floats over the map, and over the list in List view (a paper fade keeps it readable). */}
         {/* Capped width so the actions don't stretch across a desktop screen. */}
+        {view === "list" ? (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-paper from-60% to-transparent"
+            style={{ height: barHeight + 24 }}
+          />
+        ) : null}
         <div
+          ref={bar}
           data-map-overlay="bottom"
-          className="pointer-events-auto mx-auto w-full max-w-[26rem] px-4 pb-[max(env(safe-area-inset-bottom),12px)]"
+          className="pointer-events-auto absolute inset-x-0 bottom-0 mx-auto w-full max-w-[26rem] px-4 pb-[max(env(safe-area-inset-bottom),12px)]"
         >
           {outletsApi.error ? (
             <div role="alert" className={`${NOTE} mb-2 flex items-center justify-between gap-3`}>
@@ -256,7 +275,9 @@ export default function HomeScreen() {
 }
 
 /** Every outlet the map shows, in text: name, area, tier in words, walk time once location is on. */
-function OutletList({ outlets, loading, location }: { outlets: Outlet[]; loading: boolean; location: LocationState }) {
+type OutletListProps = { outlets: Outlet[]; loading: boolean; location: LocationState; bottomInset: number };
+
+function OutletList({ outlets, loading, location, bottomInset }: OutletListProps) {
   const known = location.status === "on";
   const rows = outlets
     .map((o) => ({ o, walk: walkMinutes(location.origin, o) }))
@@ -264,7 +285,8 @@ function OutletList({ outlets, loading, location }: { outlets: Outlet[]; loading
   return (
     <section
       aria-labelledby="outlets-heading"
-      className="pointer-events-auto h-full overflow-y-auto bg-paper px-4 pt-2 pb-4"
+      className="pointer-events-auto h-full overflow-y-auto bg-paper px-4 pt-2"
+      style={{ paddingBottom: bottomInset + 16 }}
     >
       <h2 id="outlets-heading" className="font-heading text-2xl font-extrabold">
         {loading ? "Loading outlets…" : `${outlets.length} outlets`}
