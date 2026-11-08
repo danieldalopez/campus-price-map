@@ -9,6 +9,7 @@
 // (src/lib/outlet-data.ts), which reads the same views for every item at one outlet.
 
 import { query } from "./db";
+import { withDeals } from "./deals";
 import { walkMinutes, type LatLng } from "./geo";
 import { pctVsMedian, priceBand } from "./pricing";
 import { choosePriceSource } from "./serving";
@@ -410,6 +411,11 @@ async function pipelinePrices({ item, origin, deviceId }: Options, computedAt: s
 
 /** Section 8's source selection, then the rows. A pipeline failure falls back to live (rule 10). */
 export async function loadPrices(options: Options): Promise<PricesResponse> {
+  const body = await loadPricesBody(options);
+  return { ...body, rows: await withDeals(options.item.id, body.rows) };
+}
+
+async function loadPricesBody(options: Options): Promise<PricesResponse> {
   const choice = await choosePriceSource();
   if (choice.use === "pipeline") {
     try {

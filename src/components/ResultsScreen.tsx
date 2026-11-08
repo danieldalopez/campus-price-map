@@ -14,6 +14,7 @@ import {
 } from "@/lib/geo";
 import { ItemArt } from "@/components/ItemArt";
 import {
+  bestDeal,
   cheapestRow,
   decide,
   decisionText,
@@ -35,6 +36,7 @@ import { useNow } from "@/lib/use-now";
 import { DEFAULT_CONFIG, DEFAULT_PER_WEEK, liveWalk, project } from "@/lib/walkworth";
 import { Button, buttonClasses } from "./Button";
 import { usePricesChanged } from "./BoughtProvider";
+import { OutletLink } from "./OutletLink";
 import { OutletRow } from "./OutletRow";
 import { PricesRefresh } from "./PendingLine";
 import { ReadAloud } from "./ReadAloud";
@@ -190,9 +192,44 @@ function Section({ id, title, hint, rows, empty, now, cheapestId, reference, ite
  * What Read aloud says (SPEC section 7): the decision line, the top 3 outlets with an official price
  * ("Grocery Checkout, 3 dollars 59, about 1 minute"), and the Worth the walk saving if there is one.
  */
+/**
+ * "Best deal" at the top of Results: a multi-buy deal that beats every other outlet's single price, so it
+ * shows first even when that outlet is in Farther (data/deals.csv). Hidden when there's none.
+ */
+function BestDeal({ rows }: { rows: PriceRow[] }) {
+  const best = bestDeal(rows);
+  if (!best) return null;
+  const { deal } = best;
+  return (
+    <section
+      aria-label="Best deal"
+      className="flex items-start gap-2 rounded-tag border-2 border-cheap bg-card px-3 py-2"
+    >
+      <Stamp kind="deal" className="mt-0.5 shrink-0" />
+      <p className="min-w-0 flex-1">
+        <span className="font-bold">
+          {deal.qty} for {formatPrice(deal.price)}
+        </span>{" "}
+        at{" "}
+        <OutletLink id={best.outlet.id} className="font-bold">
+          {best.outlet.name}
+        </OutletLink>{" "}
+        · {formatPrice(deal.each)} each,{" "}
+        <span className="font-bold text-cheap">cheapest on campus if you buy {deal.qty}</span>
+      </p>
+    </section>
+  );
+}
+
 function readAloudText(itemName: string, decisionLine: string, ordered: PriceRow[], nearWords: string): string {
   const top = ordered.filter((r) => r.price !== null && r.stock !== "sold_out").slice(0, 3);
   const parts = [`${itemName}. ${decisionLine}.`];
+  const deal = bestDeal(ordered);
+  if (deal) {
+    parts.push(
+      `Best deal: ${deal.deal.qty} for ${spokenPrice(deal.deal.price)} at ${deal.outlet.name}, ${spokenPrice(deal.deal.each)} each, cheapest on campus if you buy ${deal.deal.qty}.`,
+    );
+  }
   if (top.length > 0) {
     parts.push(
       `Cheapest ${nearWords}: ${top
@@ -316,6 +353,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
             </>
           ) : null}
         </section>
+        {data ? <BestDeal rows={rows} /> : null}
         {data ? <WorthTheWalk rows={rows} item={data.item} /> : null}
       </div>
 
@@ -343,7 +381,11 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
           <Section
             id="near-heading"
             title={nearLabel(location.usingNest)}
-            hint="About 3 min walk or less, cheapest first."
+            hint={
+              rows.some((r) => r.deal)
+                ? "About 3 min walk or less, cheapest first. A 2-for deal counts as its price each."
+                : "About 3 min walk or less, cheapest first."
+            }
             rows={sections.near}
             empty="Nothing within about 3 min walk."
             now={now}

@@ -56,6 +56,20 @@ export type RowOutlet = Pick<
  * One item at one outlet: an official price, a pending report, or (pipeline) an estimate. Shared by Results
  * (one item at every outlet, `PriceRow`) and the Outlet page (every item at one outlet, `OutletItemRow`).
  */
+/** A multi-buy deal at one outlet ("2 for $5.99"), from data/deals.csv. Shown beside the price, never instead. */
+export type Deal = {
+  qty: number;
+  /** What `qty` cost together. */
+  price: number;
+  /** price / qty, to the cent. */
+  each: number;
+  /** Versus buying `qty` singles here; null if it isn't cheaper or there's no single price. */
+  saving: number | null;
+  /** Cheaper per item than any other outlet's single price. */
+  cheapest_on_campus: boolean;
+  reported_on: string;
+};
+
 export type PriceFields = {
   /** The official price. Null when the outlet has only a pending report or an estimate. */
   price: number | null;
@@ -79,6 +93,8 @@ export type PriceFields = {
    * it, e.g. from "I bought it" (Step 8). Null if no student has.
    */
   last_confirmed_at: string | null;
+  /** A multi-buy deal here, if any (added after the query; absent means none). */
+  deal?: Deal | null;
   /**
    * Pipeline only: Databricks' Worth the walk suggestion for someone standing at this outlet: the cheaper
    * outlet within reach, its saving each time and the extra minutes (there and back). The Outlet page shows
