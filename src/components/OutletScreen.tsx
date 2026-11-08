@@ -446,7 +446,7 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
           <FullMenu menu={data.menu} now={now} />
           <p className="mt-8 px-4 text-ink-2">
             {data.price_source_used === "pipeline"
-              ? "Compared prices from the last Databricks refresh."
+              ? "Compared prices from our last update."
               : "Live prices from the campus database."}
           </p>
         </>

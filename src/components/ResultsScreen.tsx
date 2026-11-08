@@ -386,7 +386,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
           ) : null}
           <p className="mt-6 px-4 text-ink-2">
             {data.price_source_used === "pipeline"
-              ? "Prices and comparisons from the last Databricks refresh."
+              ? "Prices and comparisons from our last update."
               : "Live prices from the campus database."}
           </p>
         </PricesRefresh.Provider>
