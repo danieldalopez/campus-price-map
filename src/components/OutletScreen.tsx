@@ -16,6 +16,7 @@ import { BoughtButton, ConfirmedLine, WrongPriceButton } from "./BoughtButton";
 import { usePricesChanged } from "./BoughtProvider";
 import { DirectionsButton } from "./DirectionsButton";
 import { OutletLink } from "./OutletLink";
+import { DealLine } from "./DealLine";
 import { PendingLine, PricesRefresh } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
 import { PriceTag } from "./PriceTag";
@@ -189,6 +190,7 @@ function TrackedItem({
           {/* Source and freshness sit right under the tag, as its small print. */}
           {fresh ? <p className="mt-2 text-sm leading-snug text-ink-2">{fresh.text}</p> : null}
           <ConfirmedLine row={row} now={now} />
+          <DealLine deal={row.deal} />
         </div>
       ) : row.just_confirmed ? null : (
         <p className="mt-2">

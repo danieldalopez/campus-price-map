@@ -6,7 +6,7 @@ Built in 24 hours at [HackCamp 2026](https://hackcamp-2026.devpost.com/) (nwPlus
 
 | | |
 |---|---|
-| Live app | _add Vercel link_ |
+| Live app | [campus-price-map.vercel.app](https://campus-price-map.vercel.app) |
 | Demo video | _add link_ |
 | Figma | _add link_ |
 | Devpost | _add link_ |
@@ -91,18 +91,29 @@ flowchart LR
   P --> DB[("Databricks Lakebase<br/>Postgres")]
   SP --> DB
   SHEET["Price walk sheet"] --> DB
-  DB --> NB["Databricks notebook<br/>price model + StatCan benchmarks"]
-  SC["StatCan Web Data Service"] --> NB
-  NB --> DT[("Delta tables")]
-  DT -->|"synced tables"| DB
-  JOB["Monthly Job"] --> NB
+  DB -->|"02_bronze_copy"| BR[("bronze_* Delta")]
+  BR --> PE["price_engine<br/>serverless pipeline"]
+  ST[("statcan_* Delta<br/>loaded once")] --> PE
+  PE --> PM["03_price_model<br/>Bayesian outlet tiers"]
+  PE -->|"synced table"| SV[("serving.price_comparisons")]
+  PM -->|"synced table"| SO[("serving.outlet_scores")]
+  SV --> DB
+  SO --> DB
+  JOB["refresh Job, every 2 h"] -.-> BR
 ```
 
-**Find the cheapest spot:** search calls `/api/prices`, which reads Lakebase with the `app_reader` role and returns outlets sorted closest first, then cheapest. Per item comparisons ("40 cents above campus average") use the typical campus price from our price model (see [Price analysis](#price-analysis)), and fall back to the campus median of current prices until the notebook has run.
+**Find the cheapest spot:** search calls `/api/prices`, which reads Lakebase with the `app_reader` role and returns outlets sorted closest first, then cheapest. When the Databricks results in `serving.price_comparisons` are under 3 hours old, the app serves them, with per item chips ("40 cents above campus average"), the nearest cheaper outlet, Worth the walk and the "vs BC average" badge. Otherwise it falls back to the live `current_prices` view and campus medians, so the app never depends on a job having run.
 
 **Log a price:** the photo goes to `/api/read-tag`, which sends it to Gemini with the key from Vercel environment variables. Gemini returns item, size and price as JSON, the route matches it to our item list, and the student confirms. `/api/save-price` validates it and inserts with the `app_writer` role.
 
-**Data engine:** Lakebase is registered in Unity Catalog, so a Databricks notebook reads `prices` directly. The notebook fits a fixed effects price model to get a fair typical campus price per item, pulls StatCan tables with `stats_can`, and builds BC benchmarks for the items that truly match. Both are Delta tables that sync back into Lakebase as read only synced tables. A monthly Job reruns it when StatCan publishes. Notebooks and Jobs never sit in the live path.
+**Data engine:** one Databricks Job, `refresh`, runs every 2 hours on serverless (defined in [`databricks/databricks.yml`](databricks/databricks.yml) as a Declarative Automation Bundle):
+
+1. `02_bronze_copy` copies the app tables from Lakebase into `workspace.cpm.bronze_*` Delta tables in one consistent snapshot, and fails if any row count differs.
+2. `price_engine`, a Lakeflow Declarative Pipeline, cleans reports, applies the pending/official rules, computes walk distances, and builds `gold_price_comparisons` (the table the app serves) plus a parity check against the live Postgres view.
+3. `03_price_model` fits the price model (see [Price analysis](#price-analysis)) and writes outlet tiers and price estimates.
+4. Two synced tables push `price_comparisons` and `outlet_scores` back into Lakebase's `serving` schema, and `04_grants` re-grants `app_reader` read access.
+
+A full run takes about 30 minutes, mostly serverless start-up, and emails us if it fails. The StatCan tables are loaded once by `01_statcan` (StatCan publishes monthly). A Genie space, "Campus Price Map", answers plain-English questions over the same Delta tables.
 
 ## Tech stack
 
@@ -113,7 +124,7 @@ flowchart LR
 | Walking directions | Hand-off to Google Maps (a link that opens it); no routing in the app |
 | Hosting and secrets | Vercel (every push to `main` deploys) |
 | App database | Databricks Lakebase (managed Postgres) |
-| Analytics | Databricks notebooks, Delta tables, Unity Catalog, synced tables, Jobs |
+| Analytics | Databricks Lakeflow Jobs and Declarative Pipelines on serverless, Delta tables in Unity Catalog, synced tables, Genie, Declarative Automation Bundles |
 | Price tag reading | Gemini API |
 | Public data | Statistics Canada via the `stats_can` Python library |
 | Design | Figma |
@@ -125,11 +136,12 @@ flowchart LR
 | Table | What's in it | Source |
 |---|---|---|
 | `locations` | Outlet name, area, operator, hours, lat, lng | UBC Food Services and AMS pages; coordinates from OpenStreetMap |
-| `items` | 21 tracked items, size, category, StatCan match | Chosen by the team |
-| `prices` | Price per item per outlet, time, `source` (walk, menu, photo) | Our price walk, online menus, then students |
+| `items` | 23 tracked items, size, category | Chosen by the team |
+| `prices` | Price per item per outlet, time, `source` (walk, menu, seed, photo, typed...) | Our price walk, online menus, then students |
+| `price_votes` | Students confirming or disputing a price | Students |
 | `stock_reports` | Sold out reports | Students |
-| `campus_typical_prices` | Typical campus price per item from the price model, with the number of prices behind it | Synced from Databricks |
-| `statcan_benchmarks` | BC average price for matched items, per unit, by month | Synced from Databricks |
+| `serving.price_comparisons` | Every official price with its campus comparison, nearest cheaper outlet, Worth the walk, model estimate and StatCan match | Synced from Databricks |
+| `serving.outlet_scores` | Each outlet's `$` / `$$` / `$$$` tier from the price model, measured or estimated | Synced from Databricks |
 
 ### Statistics Canada tables
 
@@ -145,40 +157,32 @@ StatCan is supporting context, not the headline. We only compare true per unit m
 
 ## Price analysis
 
-A plain average is misleading here. Outlets stock different things, so a café that mostly sells lattes looks expensive next to a store that mostly sells water, even if it charges less for the same items. So the Databricks notebook compares outlets on the **same items** with a fixed effects model:
+A plain average is misleading here. Outlets stock different things, so a café that mostly sells lattes looks expensive next to a store that mostly sells water, even if it charges less for the same items. So [`03_price_model`](databricks/src/03_price_model.py) compares outlets on the **same items** with a Bayesian hierarchical model of log price:
 
 ```
-log(price) = item effect + outlet effect + error
+log price(item, outlet) = item + outlet type + operator + outlet + outlet × category + error
 ```
 
-- The **item effect** absorbs that a sandwich costs more than a banana.
-- The **outlet effect** is what's left: how much more or less an outlet charges for the same thing. Because prices are in logs, `exp(b) - 1` reads as a percentage.
-- We fit it with OLS and robust (HC1) standard errors, and recentre outlet effects on the campus average rather than on one outlet.
-- A mixed model with outlets as random effects runs alongside it, so outlets with only a few prices are pulled toward the average instead of swinging wildly.
-
-```python
-import numpy as np, statsmodels.formula.api as smf
-
-ols = smf.ols("np.log(price) ~ C(item_id) + C(location_id)", data=df).fit(cov_type="HC1")
-shrunk = smf.mixedlm("np.log(price) ~ C(item_id)", df, groups=df["location_id"]).fit()
-```
+- The **item** term absorbs that a sandwich costs more than a banana.
+- The **outlet** term is what's left: how much more or less an outlet charges for the same thing. Because prices are in logs, `exp(b) - 1` reads as a percentage against the campus average.
+- **Partial pooling:** an outlet with few prices is pulled toward outlets of the same type (café, convenience...) and operator (UBC Food Services, AMS, chain...), and its uncertainty says so. The **outlet × category** term lets a place be cheap for coffee and pricey for snacks.
+- Gaussian priors make the posterior closed form, so it runs in NumPy in seconds with no sampling. With enough prices, the prior widths are fitted by empirical Bayes instead of fixed.
 
 ### What the model is used for
 
 | Output | Where it goes |
 |---|---|
-| Typical campus price per item (the model's prediction at an average outlet) | Synced to Lakebase as `campus_typical_prices`. It's the "campus average" behind item labels like "40 cents above campus average", and the campus side of the "vs BC average" badge. It doesn't depend on which outlets we happened to visit. |
-| Outlet effects with 95% intervals | The notebook and the pitch only: "controlling for what they sell, the priciest outlet charges X% more than the cheapest for the same items." |
-
-The app never shows a single cheap or expensive score for a whole outlet. A place can have the cheapest coffee and the priciest Red Bull, so every comparison a student sees is about one item.
+| Outlet tier: `$`, `$$` or `$$$` (cheaper, within 5%, or pricier than campus average) | Synced as `serving.outlet_scores` and shown on the map. "Measured" when the outlet has enough of its own prices, "estimated" when it leans on similar outlets, and "?" when the model isn't confident. |
+| Estimated price for items an outlet carries but nobody has priced yet, with an 80% interval | Fed back into the next pipeline run and shown as an estimate, never as a real price. |
+| Model metrics | `gold_model_metrics`: method, fitted priors, leave-one-out error and interval coverage. |
 
 ### Keeping it honest
 
-- **Enough data first.** Only outlets with 4 or more prices, and only items sold at 2 or more outlets, so every outlet is compared through items it shares with others. Anything thinner shows "not enough data".
-- **Clean inputs.** Walk and photo prices by default. Menu prices can be stale or exclude tax, so they're only included behind a flag.
-- **Descriptive, not causal.** We say an outlet charges more for the same item, never why. It's one snapshot from a small sample.
-- **StatCan stays separate.** Only a few items match, in different units, so the BC comparison is a per unit ratio outside the regression.
-- **Fallback.** If the model won't fit cleanly, the notebook uses a median ratio index (each price divided by that item's campus median, averaged per outlet) and records which method ran.
+- **It has to beat the obvious baseline.** Each run predicts every known price from all the others (leave-one-out). If the model doesn't beat each item's campus median, only measured tiers are published and no estimates are. On today's data it does: error 0.21 against 0.30.
+- **Calibrated intervals.** Estimate intervals are rescaled so that 80% intervals really contain about 80% of held-out prices.
+- **Descriptive, not causal.** We say an outlet charges more for the same item, never why. It's a snapshot from a small sample.
+- **StatCan stays separate.** Only a few items match, in different units, so the BC comparison is a per unit ratio outside the model, labelled as a provincial average that lags a couple of months.
+- **The app survives without it.** If the results are missing, unreadable or over 3 hours old, the app quietly uses live prices and medians instead.
 
 ## Guardrails
 
@@ -201,21 +205,28 @@ cp .env.example .env.local   # then fill in the values below
 npm run dev
 ```
 
-Environment variables (names may change as we build):
+Environment variables (see `.env.example`):
 
 ```
 GEMINI_API_KEY=            # from Google AI Studio
-LAKEBASE_READER_URL=       # Postgres connection string for app_reader, SSL on
-LAKEBASE_WRITER_URL=       # Postgres connection string for app_writer, SSL on
+DATABASE_URL_READER=       # Postgres connection string for app_reader, SSL on
+DATABASE_URL_WRITER=       # Postgres connection string for app_writer, SSL on
+PRICE_SOURCE=pipeline      # pipeline: use Databricks results when fresh; live: Postgres views only
 ```
 
-Free Edition Lakebase scales to zero when idle, so the first request after a quiet stretch can be slow. Open the app a few minutes before a demo.
+The Databricks side deploys from `databricks/` with the Databricks CLI:
+
+```bash
+cd databricks
+databricks bundle validate --profile <your-profile>
+databricks bundle deploy -t dev --profile <your-profile>
+```
 
 ## Repo layout
 
 - `docs/SPEC.md` **master plan**: the build spec both of us (and our Claude Code sessions) work from
 - `data/` seed prices from the campus price walk, the item and outlet lists, and StatCan extracts
-- `notebooks/` Databricks notebooks for the price model and StatCan benchmarks
+- `databricks/` the Databricks bundle: the `refresh` Job, the `price_engine` pipeline, the price model, StatCan loading, and local checks
 - `prompts/` Claude Code and Gemini prompts
 - `first-prototype/` **FIRST PROTOTYPE** (v0.1.0): working Databricks App on Lakebase with sample data
 
@@ -234,7 +245,7 @@ We're keeping ourselves honest about what's evidence and what's still a guess.
 ## Prize tracks we're entering
 
 - **Superlatives:** Best Problem‑Solution Fit and Most Accessible Design (beginner stream), with Community Impact as a backup
-- **Best Use of Databricks:** Lakebase as the app database, a notebook with a fixed effects price model and StatCan benchmarks, synced tables, monthly Job
+- **Best Use of Databricks:** Lakebase as the app database, a Lakeflow pipeline and Bayesian price model on serverless, synced tables back into Lakebase, a scheduled Job, StatCan benchmarks, and a Genie space, all deployed as one bundle
 - **Best Use of Gemini API (MLH):** reading price tag photos
 - **GoDaddy Registry domain (MLH)**, plus Entire and Auth0 if time allows
 

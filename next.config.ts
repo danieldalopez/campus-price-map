@@ -4,9 +4,11 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
-  // /api/barcode reads the bundled Open Food Facts extract at request time: make sure Vercel ships it.
+  // These routes read bundled data files at request time: make sure Vercel ships them.
   outputFileTracingIncludes: {
     "/api/barcode": ["./data/barcodes.csv"],
+    "/api/prices": ["./data/deals.csv"],
+    "/api/outlet/[id]": ["./data/deals.csv"],
   },
   turbopack: {
     rules: {

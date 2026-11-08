@@ -6,6 +6,7 @@ import type { PriceRow } from "@/lib/types";
 import { BoughtButton, ConfirmedLine, WrongPriceButton } from "./BoughtButton";
 import Link from "next/link";
 import { outletHref } from "./OutletLink";
+import { DealLine } from "./DealLine";
 import { PendingLine } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
 import { PriceTag } from "./PriceTag";
@@ -86,6 +87,7 @@ export function OutletRow({ row, now, cheapest, dimmed, saves, nearWords = "near
         </p>
       )}
       {row.price === null && fresh ? <p className="mt-1 text-sm text-ink-2">{fresh.text}</p> : null}
+      {row.price !== null ? <DealLine deal={row.deal} /> : null}
       {row.price !== null ? <ConfirmedLine row={row} now={now} /> : null}
       {row.price !== null ? <WrongPriceButton outlet={row.outlet} item={item} price={row.price} /> : null}
       {saves !== null ? <p className="mt-1 font-bold text-cheap">Saves {formatPrice(saves)} compared with {nearWords}</p> : null}

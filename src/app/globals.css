@@ -321,6 +321,9 @@ body {
   .stamp--statcan {
     color: var(--ink);
   }
+  .stamp--deal {
+    color: var(--cheap);
+  }
 
   /* Comparison chip from price_comparisons.chip (pipeline only). */
   .chip {

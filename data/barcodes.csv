@@ -115,4 +115,4 @@ barcode,product_name,brand,quantity,item_id,mapped_by
 0180854000606,Red Bull Sugarfree,Red Bull,355 mL,I22,flavour_variant
 0629071001084,Juneberry Redbull 355ml,Redbull,,I22,flavour_variant
 0629071001374,Sugarfree Apricot-Strawberry Energy Drink,Red Bull,355 mL,I22,flavour_variant
-0629071000650,Red Bull Zero,Red Bull,473 mL,,not_tracked
+0629071000650,Red Bull Zero,Red Bull,473 mL,I24,flavour_variant
