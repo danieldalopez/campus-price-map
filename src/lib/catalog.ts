@@ -6,7 +6,7 @@ import { servingTableReadable } from "./serving";
 import type { Item, LocationPrecision, Outlet, Tier, TierBasis } from "./types";
 import { num, text } from "./validate";
 
-type ItemRow = {
+export type ItemRow = {
   id: string;
   name: string;
   size: string;
@@ -18,7 +18,7 @@ type ItemRow = {
 
 const ITEM_COLUMNS = "id, name, size, volume_ml, category, image, aliases";
 
-function toItem(r: ItemRow): Item {
+export function toItem(r: ItemRow): Item {
   return {
     id: r.id,
     name: r.name,

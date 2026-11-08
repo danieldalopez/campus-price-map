@@ -89,3 +89,9 @@ export function iso(v: unknown): string | null {
 export function text(v: unknown): string | null {
   return typeof v === "string" && v !== "" ? v : null;
 }
+
+/** An outlet id: the `locations.id` slug, e.g. "blue-chip-cafe". */
+export const locationIdSchema = z
+  .string({ error: "Pick an outlet to see its prices." })
+  .trim()
+  .regex(/^[a-z0-9][a-z0-9-]{0,79}$/, "That isn't an outlet we track.");

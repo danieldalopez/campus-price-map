@@ -45,6 +45,11 @@ function toPoint(o: Outlet): MapPoint {
           {approx}
         </p>
         {o.hours ? <p className="m-0 mt-1 text-ink-2">{o.hours}</p> : null}
+        <p className="m-0 mt-2">
+          <a href={`/outlet/${encodeURIComponent(o.id)}`} className="font-bold text-ink underline">
+            See prices here
+          </a>
+        </p>
       </>
     ),
   };
