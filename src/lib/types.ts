@@ -72,7 +72,8 @@ export type PriceFields = {
   just_confirmed: { price: number; updated_at: string } | null;
   /** Pipeline only, and only when `price` is null: the model's 80% interval. Never shown as a price. */
   estimate: { low: number; high: number } | null;
-  pending: { price_id: number; price: number; mine: boolean } | null;
+  /** The newest pending report. `my_vote` is this device's vote on it, if it voted (Step 7). */
+  pending: { price_id: number; price: number; mine: boolean; my_vote: Vote | null } | null;
 };
 
 /** One outlet that sells the item (Results). */
@@ -171,3 +172,8 @@ export type PricesResponse = {
 
 /** Every error response: one plain sentence for the user. */
 export type ApiError = { error: string };
+
+export type Vote = "yes" | "no" | "unsure";
+
+/** POST /api/vote. `recorded` is false when nothing changed (already voted, or no longer pending). */
+export type VoteResult = { status: "pending" | "official" | "rejected"; confirmations: number; recorded: boolean };

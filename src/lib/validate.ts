@@ -3,7 +3,7 @@
 
 import { z } from "zod";
 import { DbConfigError } from "./db";
-import type { ApiError } from "./types";
+import type { ApiError, Vote } from "./types";
 
 export const itemIdSchema = z
   .string({ error: "Pick an item to see its prices." })
@@ -110,3 +110,6 @@ export const locationIdSchema = z
   .string({ error: "Pick an outlet to see its prices." })
   .trim()
   .regex(/^[a-z0-9][a-z0-9-]{0,79}$/, "That isn't an outlet we track.");
+
+const VOTES: readonly string[] = ["yes", "no", "unsure"];
+export const isVote = (v: unknown): v is Vote => typeof v === "string" && VOTES.includes(v);
