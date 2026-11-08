@@ -18,6 +18,7 @@ import { PendingLine, PricesRefresh } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
 import { PriceTag } from "./PriceTag";
 import { Stamp } from "./Stamp";
+import { StockLine } from "./StockLine";
 import { WakingUp } from "./WakingUp";
 import { WalkConfigContext } from "./WorthTheWalk";
 
@@ -171,8 +172,7 @@ function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: str
 
       <PendingLine pending={row.pending} what={row.item.name} />
 
-      {row.stock === "maybe_sold_out" ? <p className="mt-1">A student said it may be sold out.</p> : null}
-      {/* Step 9: the Sold out button goes here (POST /api/stock). */}
+      <StockLine itemId={row.item.id} locationId={outletId} stock={row.stock} what={row.item.name} />
     </li>
   );
 }

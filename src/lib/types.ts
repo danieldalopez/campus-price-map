@@ -183,3 +183,6 @@ export type Vote = "yes" | "no" | "unsure";
 
 /** POST /api/vote. `recorded` is false when nothing changed (already voted, or no longer pending). */
 export type VoteResult = { status: "pending" | "official" | "rejected"; confirmations: number; recorded: boolean };
+
+/** POST /api/stock. `recorded` is false when nothing changed (this device already said so, or nothing to clear). */
+export type StockResult = { stock: Stock; recorded: boolean };
