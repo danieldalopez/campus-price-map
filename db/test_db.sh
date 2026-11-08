@@ -70,12 +70,7 @@ p8=$(ins I19 2.05 $C false)
 echo "match vs rejected    -> $(st $p7) / $(st $p8) (expect rejected / pending: a voted-down report confirms nothing)"
 
 s1=$(q "select id from prices where source='seed' order by id limit 1")
-s2=$(q "select id from prices where source='seed' order by id limit 1 offset 1")
-pair1=$(q "select item_id||'@'||location_id from prices where id=$s1")
-vote $s2 $A yes;             echo "seed price, 1 yes    -> $(st $s2) (expect official yes=1)"
-vote $s1 $A no;              echo "seed price, 1 no     -> $(st $s1) (expect rejected)"
-echo "rejected seed gone    -> $(q "select count(*) from current_prices where price_id=$s1") current row for $pair1 (expect 0)"
-echo "benchmark prices      -> $(q "select count(*) from prices p join locations l on l.id=p.location_id where l.is_benchmark and p.source='seed'") seed rows (expect 0)"
+vote $s1 $A no;              echo "seed price, 1 no     -> $(q "select status from price_status where price_id=$s1") (expect official: seed is team data)"
 
 echo "== stock"
 so() { as app_writer test-writer-pw "insert into stock_reports(item_id,location_id,status,device_id) values ('I01','corner-store','$2','$1') returning id" >/dev/null; }

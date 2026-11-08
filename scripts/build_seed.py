@@ -306,13 +306,8 @@ def main():
                              "raw_variant": r["variant_or_size"].strip()}
         if not ids and re.search(r"red bull|monster|coke|coca|water|coffee|latte|bagel|muffin", r["item"], re.I):
             unmatched_names[(r["item"].strip(), r["variant_or_size"].strip())] += 1
-    # The grocery baseline is a factual "vs grocery" comparison, so it only gets observed prices
-    # (menu, walk, grocery), never AI estimates. It still carries those items.
-    benchmark = {o["id"] for o in outlets if o["is_benchmark"] == "true"}
-    carries = sorted({(p["item_id"], p["location_id"]) for p in best.values()})
-    prices = sorted((p for p in best.values() if not (p["location_id"] in benchmark and p["source"] == "seed")),
-                    key=lambda x: (x["item_id"], x["location_id"]))
-    dropped_benchmark = sum(1 for p in best.values() if p["location_id"] in benchmark and p["source"] == "seed")
+    prices = sorted(best.values(), key=lambda x: (x["item_id"], x["location_id"]))
+    carries = sorted({(p["item_id"], p["location_id"]) for p in prices})
 
     # barcodes
     bars, dropped = [], Counter()
@@ -401,9 +396,7 @@ def main():
         f"- Menu rows kept: {len(menu)} ({sum(m['source'] == 'menu' for m in menu)} dated menu prices, "
         f"{sum(m['source'] == 'seed' for m in menu)} undated AI-estimated prototype prices, source `seed`).",
         f"- Tracked prices (one per item and outlet, lowest listed): {len(prices)} "
-        f"({sum(p['source'] == 'menu' for p in prices)} menu, {sum(p['source'] == 'seed' for p in prices)} seed). "
-        f"Left out: {dropped_benchmark} AI-estimated prices at the grocery baseline (it carries those items, unpriced). "
-        f"Carries: {len(carries)}.",
+        f"({sum(p['source'] == 'menu' for p in prices)} menu, {sum(p['source'] == 'seed' for p in prices)} seed).",
         f"- Barcodes kept: {len(bars)} ({sum(b['item_id'] != '' for b in bars)} mapped to an item). "
         f"Dropped: {dict(dropped) or 'none'}.", "",
         "| Item | Outlets with a price | of which dated menu prices |", "|---|---|---|",
