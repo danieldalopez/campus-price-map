@@ -158,7 +158,7 @@ PRICES = [
     (22, "I01", "L02", 2.65, "typed", dev("4"), None, False, ago(1, 30)),  # 1 no → rejected
     (23, "I08", "L01", 2.20, "photo", dev("5"), None, False, ago(minutes=5)),  # after the copy started
     (24, "I04", "L01", 2.95, "walk", None, None, False, ago(30)),
-    (25, "I04", "L04", 1.98, "seed", None, None, False, ago(30)),  # prototype price: official, never in the pitch
+    (25, "I04", "L04", 1.98, "seed", None, None, False, ago(30)),  # prototype price: official, counted in the pitch (labelled)
     (26, "I08", "L02", 2.55, "photo", dev("r"), None, False, ago(6)),  # voted down → rejected
     (27, "I08", "L02", 2.50, "photo", dev("s"), None, False, ago(5)),  # matches only 26, which was voted down → pending
 ]
@@ -442,8 +442,12 @@ def main():
     pn = query("gold_pitch_numbers", "metric")
     show(pn, ["metric", "value", "unit", "detail"])
     pnk = by_key(pn, "metric")
-    c.eq("biggest gap leaves seed prices out: Red Bull, $0.75", pnk["biggest_same_item_gap"]["value"], 0.75)
-    c.eq("worth-the-walk share leaves seed prices out", pnk["share_worth_the_walk_at_min_wage"]["value"], 0.0)
+    c.eq("biggest gap counts seed prices: Coke, $2.95 vs seed $1.98", pnk["biggest_same_item_gap"]["value"], 0.97)
+    c.eq("gap detail says it includes AI-estimated prices",
+         "AI-estimated" in pnk["biggest_same_item_gap"]["detail"], True)
+    c.eq("worth-the-walk share counts seed prices: 1 of 11", pnk["share_worth_the_walk_at_min_wage"]["value"], 9.1)
+    c.eq("median net per term: the Coke switch, 4.81 x 4", pnk["median_net_per_term_4_a_week"]["value"], 19.24)
+    c.eq("price reports count seed prices: 24", pnk["price_reports"]["value"], 24.0)
 
     print("\nwithout bronze_walk_matrix (02_bronze_copy skips a missing Lakebase table)")
     matrix = BRONZE.pop("bronze_walk_matrix")

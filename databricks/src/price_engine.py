@@ -895,8 +895,8 @@ def gold_parity():
 @dp.materialized_view(
     name="gold_pitch_numbers",
     comment=(
-        "Real numbers for the Devpost, one row per metric. Prices from real sources only (menu, walk, grocery and "
-        "student reports): seed prototype prices are never quoted as findings (section 6). Never synced."
+        "Numbers for the Devpost, one row per metric. Proof of concept: every official price counts, including the "
+        "AI-estimated prototype (seed) prices, and each detail says so when they contribute (section 6). Never synced."
     ),
 )
 def gold_pitch_numbers():
@@ -905,18 +905,21 @@ def gold_pitch_numbers():
         WITH cfg AS (SELECT * FROM app_config_values),
         loc AS (SELECT CAST(id AS STRING) AS location_id, CAST(name AS STRING) AS name FROM bronze_locations),
         itm AS (SELECT CAST(id AS STRING) AS item_id, CAST(name AS STRING) AS name FROM bronze_items),
-        real_campus AS (
-          SELECT item_id, location_id, price FROM gold_official_prices WHERE NOT is_benchmark AND source <> 'seed'
+        campus AS (
+          SELECT item_id, location_id, price, source FROM gold_official_prices WHERE NOT is_benchmark
         ),
         gap AS (
           SELECT g.item_id, i.name AS item_name, g.spread, g.campus_min, g.campus_max,
-                 lc.name AS cheapest_name, lp.name AS priciest_name
+                 lc.name AS cheapest_name, lp.name AS priciest_name,
+                 g.cheapest_source = 'seed' OR g.priciest_source = 'seed' AS uses_seed
           FROM (
             SELECT item_id, count(*) AS n, min(price) AS campus_min, max(price) AS campus_max,
                    max(price) - min(price) AS spread,
                    min(named_struct('p', price, 'l', location_id)).l AS cheapest_location_id,
-                   max(named_struct('p', price, 'l', location_id)).l AS priciest_location_id
-            FROM real_campus GROUP BY item_id
+                   max(named_struct('p', price, 'l', location_id)).l AS priciest_location_id,
+                   min(named_struct('p', price, 'l', location_id, 's', source)).s AS cheapest_source,
+                   max(named_struct('p', price, 'l', location_id, 's', source)).s AS priciest_source
+            FROM campus GROUP BY item_id
           ) g
           LEFT JOIN itm i ON i.item_id = g.item_id
           LEFT JOIN loc lc ON lc.location_id = g.cheapest_location_id
@@ -925,14 +928,19 @@ def gold_pitch_numbers():
           ORDER BY g.spread DESC, g.item_id
           LIMIT 1
         ),
-        real_walks AS (
-          SELECT * FROM gold_walk_worth
-          WHERE verdict IS NOT NULL AND origin_source <> 'seed' AND cheaper_source <> 'seed'
+        walks AS (
+          SELECT *, origin_source = 'seed' OR cheaper_source = 'seed' AS uses_seed
+          FROM gold_walk_worth
+          WHERE verdict IS NOT NULL
         ),
-        options AS (SELECT count(*) AS n, count_if(verdict = 'worth_it') AS n_worth FROM real_walks),
+        options AS (
+          SELECT count(*) AS n, count_if(verdict = 'worth_it') AS n_worth, count_if(uses_seed) > 0 AS uses_seed
+          FROM walks
+        ),
         worth AS (
-          SELECT count(*) AS n, percentile_cont(0.5) WITHIN GROUP (ORDER BY net_term * 4) AS median_net
-          FROM real_walks WHERE verdict = 'worth_it'
+          SELECT count(*) AS n, percentile_cont(0.5) WITHIN GROUP (ORDER BY net_term * 4) AS median_net,
+                 count_if(uses_seed) > 0 AS uses_seed
+          FROM walks WHERE verdict = 'worth_it'
         ),
         reports AS (
           SELECT count(*) AS n,
@@ -949,22 +957,25 @@ def gold_pitch_numbers():
         votes AS (SELECT count(*) AS n FROM silver_votes)
         SELECT 'biggest_same_item_gap' AS metric, CAST(spread AS DOUBLE) AS value, 'CAD' AS unit,
                concat(item_name, ': $', format_number(campus_min, 2), ' at ', cheapest_name,
-                      ' vs $', format_number(campus_max, 2), ' at ', priciest_name) AS detail
+                      ' vs $', format_number(campus_max, 2), ' at ', priciest_name,
+                      CASE WHEN uses_seed THEN ' · proof of concept: includes AI-estimated prototype prices' ELSE '' END) AS detail
         FROM gap
         UNION ALL
         SELECT 'share_worth_the_walk_at_min_wage', round(try_divide(n_worth * 100.0, n), 1), 'percent',
                concat(n_worth, ' of ', n, ' cheaper options are worth the walk at $',
-                      format_number(cfg.bc_min_wage, 2), '/h')
+                      format_number(cfg.bc_min_wage, 2), '/h',
+                      CASE WHEN options.uses_seed THEN ' · proof of concept: includes AI-estimated prototype prices' ELSE '' END)
         FROM options CROSS JOIN cfg
         UNION ALL
         SELECT 'median_net_per_term_4_a_week', round(median_net, 2), 'CAD',
                concat('median over ', n, ' worthwhile switches, 4 purchases a week for a ',
-                      CAST(cfg.weeks_term AS INT), '-week term, if prices hold')
+                      CAST(cfg.weeks_term AS INT), '-week term, if prices hold',
+                      CASE WHEN worth.uses_seed THEN ' · proof of concept: includes AI-estimated prototype prices' ELSE '' END)
         FROM worth CROSS JOIN cfg
         UNION ALL
-        SELECT 'price_reports', CAST(n - n_seed AS DOUBLE), 'count',
-               concat(n_student, ' from students, ', n - n_seed - n_student, ' from the team; plus ', n_seed,
-                      ' prototype (seed) prices, not counted')
+        SELECT 'price_reports', CAST(n AS DOUBLE), 'count',
+               concat(n_student, ' from students, ', n - n_seed - n_student, ' from the team and menus, ', n_seed,
+                      ' AI-estimated prototype prices (proof of concept)')
         FROM reports
         UNION ALL
         SELECT 'confirmations', CAST(confirms.n AS DOUBLE), 'count',
