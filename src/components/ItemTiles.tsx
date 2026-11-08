@@ -30,8 +30,8 @@ export function ItemTiles({ items, layout, trailing, onSelect, className = "" }:
     layout === "row"
       ? "flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 pt-0.5 pb-3 scroll-px-4 [scrollbar-width:none]"
       : "grid grid-cols-3 gap-3";
-  // Row tiles share one height (the tallest tile's), so a two-line size never gets cut off.
-  const cell = layout === "row" ? "w-[8.5rem] shrink-0 snap-start" : "min-w-0";
+  // Row tiles grow to fit their name and size on one line (never cut, never wrapped), from 136 px up.
+  const cell = layout === "row" ? "min-w-[8.5rem] shrink-0 snap-start" : "min-w-0";
 
   return (
     <ul className={`${list} ${className}`}>
@@ -46,15 +46,15 @@ export function ItemTiles({ items, layout, trailing, onSelect, className = "" }:
             <span className="flex h-14 w-14 shrink-0 items-center justify-center" aria-hidden="true">
               <ItemArt item={item} size={44} />
             </span>
-            {/* Name: a two-line area so the sizes line up; the full name is in the title and on Results. */}
+            {/* Name and size: one line each in the row, in full (the tile widens instead). */}
             <span
-              title={item.name}
-              className={`w-full font-semibold leading-tight ${layout === "row" ? "line-clamp-2 min-h-[2.5em] text-[0.9375rem]" : ""}`}
+              className={`w-full font-semibold leading-tight ${layout === "row" ? "text-[0.9375rem] whitespace-nowrap" : ""}`}
             >
               {item.name}
             </span>
-            {/* Size: always in full, wrapping to a second line rather than cut off. */}
-            <span className="w-full text-sm leading-snug text-ink-2">{item.size}</span>
+            <span className={`w-full text-sm leading-snug text-ink-2 ${layout === "row" ? "whitespace-nowrap" : ""}`}>
+              {item.size}
+            </span>
           </Link>
         </li>
       ))}
