@@ -6,6 +6,9 @@ Built at HackCamp 2026 (nwPlus, UBC Vancouver) by Sergio Lopez and Sebastian Sal
 
 > **Claude Code: this file is the spec.** Read it fully before every task. Work through section 13 one step at a time. If a request conflicts with this file, ask before building.
 
+Version 9, Sun Nov 8. Changes from version 8:
+- **"I bought it" asks, never forces, and keeps a "last confirmed" time on every price.** After a student taps Directions, the app asks once, a few minutes later or when they're at the outlet, "Did you buy it?". They can type what they paid, which is prefilled with the shown price so confirming is one tap, add a receipt photo, or tap "Not now". A report within $0.10 of the official price confirms it: the price shows "✓ Confirmed by a student · 20 min ago" and no pending line. A different price still waits for a second student, as before. Section 7 "I bought it", Step 8.
+
 Version 8, Sun Nov 8, early morning. Changes from version 7:
 - **Step 11 (polish and accessibility pass) and Step 15 (Directions on every Results row) are dropped** as not a priority. Directions stays on the Outlet page and the Worth the walk card. Section 15's credits still apply (OpenStreetMap attribution is on the map; Open Food Facts and StatCan need crediting wherever their data shows).
 
@@ -360,7 +363,12 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
   - Unknown → "We couldn't find that barcode." plus the tiles.
 - Camera denied → straight to the tiles, with one line explaining why.
 
-**I bought it (bottom sheet)**: "What did you pay?" prefilled with the shown price. Confirm or fix, optional receipt photo (same compression, goes through `/api/read-photo`). Saves as `receipt` with a photo, `typed` without.
+**I bought it (bottom sheet, Step 8)**: two ways in, never forced.
+- **Asked:** tapping Directions remembers the trip on the phone only (localStorage). Once, 4 minutes later or as soon as the student is within 40 m of the outlet (and never after 3 hours), the app asks "Did you buy Drip coffee?". "Not now" or closing it ends that trip; it never asks twice.
+- **Tapped:** "I bought it here" under every official price on Results and the Outlet page.
+- The sheet: "What did you pay?" prefilled with the shown price (one tap to confirm), an optional receipt photo read through `/api/read-photo` with `hint: "receipt"` (same compression, never stored, "cover card details"), Save or Not now. Saved as `receipt` when the price is the one read from the receipt, `typed` otherwise.
+- **Safeguards:** $0.25 to $25 (refused otherwise, browser and server); "Are you sure?" when the price is more than 50% (and $1) off the shown one; more than 3x the campus median sets `needs_review` (2 confirmations); and one student never changes a price alone: a different price stays pending until a second student confirms it (section 6).
+- **Last confirmed:** a student report (photo, receipt or typed, not voted down) within $0.10 of the official price confirms it. Every price shows "✓ Confirmed by a student · 20 min ago" from the newest one (`last_confirmed_at` in `/api/prices` and `/api/outlet`), and such a report never shows as a pending line to vote on. Computed live in the read queries; no schema or view change.
 
 **Read aloud (`src/lib/speech.ts`)**: reads the decision line and the top 3 rows, e.g. "Cheapest near you: Harvest Market, 2 dollars 75, about 2 minutes. Mercante, 3 dollars 10, about 4 minutes." Uses `speechSynthesis`; hide the button if the browser doesn't support it. Only starts on a tap.
 
@@ -889,7 +897,7 @@ App track (Sebastian, Claude Code):
 5. **Outlet page.** "Do Step 5: `/api/outlet/[id]` and the Outlet page. Chips and nearest cheaper links come from `serving.price_comparisons` and are hidden if it's missing. Add `src/lib/directions.ts` and the DirectionsButton (section 7, Directions) to the page." **Show me:** tapping a pin opens it; with D3 done, chips show; Directions opens Google Maps.
 6. **Snap with Gemini.** "Do Step 6: `src/lib/image.ts` compression, `/api/read-photo` exactly as section 9a with rate limits, `/api/save-price`, and the Snap flow." **Show me:** 5 photos from the price walk read correctly.
 7. **Pending vs Official.** "Do Step 7: pending lines with Yes / No / Not sure, `/api/vote`, statuses from the views, freshness labels, the just confirmed line, and the `PRICE_SOURCE` switch with the stale and missing fallback." **Show me:** a price goes pending, then official after a second device confirms; in pipeline mode it shows as just confirmed until the Job runs.
-8. **I bought it.** "Do Step 8: the I bought it sheet with optional receipt photo." **Show me:** a receipt photo prefills the price.
+8. **I bought it.** "Do Step 8: the I bought it sheet (section 7) with the Directions-trip prompt, optional receipt photo, the safeguards and the last-confirmed line." **Show me:** a confirmed price shows "✓ Confirmed by a student · just now"; $700 is refused; $9.99 waits for a second student.
 9. **Sold out.** "Do Step 9: `/api/stock`, Sold out buttons and stamps, expiry from `stock_status`." **Show me:** two devices mark sold out, the outlet drops below in stock ones.
 10. **Art, sound, read aloud.** "Do Step 10: wire `public/items` and `public/stickers` into the components, `sounds.ts` with Web Audio, the mute toggle, motion, and the Read aloud button (`speech.ts`)." **Show me:** saving a price slaps and plays; Read aloud speaks the top 3.
 12. **Auth0 with Google (Sunday, under 1 hour).** "Do Step 12: add the latest `@auth0/nextjs-auth0` following its README, Google login through Auth0. Browsing stays open; save, vote and stock store the Auth0 user id next to device_id. Never store name or email. If the AUTH0 env vars are missing, the app runs anonymous." **Show me:** log in with Google, submit a price, the row has a user_id.

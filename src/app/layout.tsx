@@ -8,6 +8,7 @@ import {
 // Leaflet's stylesheet is imported once, here, for every map in the app (SPEC rule 9).
 import "leaflet/dist/leaflet.css";
 import "./globals.css";
+import { BoughtProvider } from "@/components/BoughtProvider";
 
 // Headings and buttons
 const bricolage = Bricolage_Grotesque({
@@ -54,7 +55,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${bricolage.variable} ${sourceSans.variable} ${jetbrains.variable} ${caveat.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-paper font-sans text-ink">{children}</body>
+      <body className="min-h-full bg-paper font-sans text-ink">
+        <BoughtProvider>{children}</BoughtProvider>
+      </body>
     </html>
   );
 }

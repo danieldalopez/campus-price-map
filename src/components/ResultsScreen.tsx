@@ -29,6 +29,7 @@ import { useApi } from "@/lib/use-api";
 import { useLocation } from "@/lib/use-location";
 import { useNow } from "@/lib/use-now";
 import { Button, buttonClasses } from "./Button";
+import { usePricesChanged } from "./BoughtProvider";
 import { OutletRow } from "./OutletRow";
 import { PricesRefresh } from "./PendingLine";
 import { Stamp } from "./Stamp";
@@ -70,9 +71,10 @@ type SectionProps = {
   cheapestId: string | null;
   /** Farther only: the price a row has to beat by $1.00 to stand out. */
   reference?: number | null;
+  item: { id: string; name: string; size: string };
 };
 
-function Section({ id, title, hint, rows, empty, now, cheapestId, reference }: SectionProps) {
+function Section({ id, title, hint, rows, empty, now, cheapestId, reference, item }: SectionProps) {
   const farther = reference !== undefined;
   return (
     <section aria-labelledby={id} className="mt-6 px-4">
@@ -98,6 +100,7 @@ function Section({ id, title, hint, rows, empty, now, cheapestId, reference }: S
                 cheapest={row.outlet.id === cheapestId}
                 dimmed={farther && !standsOut}
                 saves={saves}
+                item={item}
               />
             );
           })}
@@ -119,6 +122,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
   const api = useApi<PricesResponse>(
     `/api/prices?item=${encodeURIComponent(itemId)}&lat=${fetchFrom.lat}&lng=${fetchFrom.lng}`,
   );
+  usePricesChanged(api.retry);
   const data = api.data;
 
   const rows = useMemo(() => (data ? withWalkFrom(data.rows, location.origin) : []), [data, location.origin]);
@@ -180,7 +184,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
             </>
           ) : null}
         </section>
-        {data ? <WorthTheWalk rows={rows} /> : null}
+        {data ? <WorthTheWalk rows={rows} item={data.item} /> : null}
       </div>
 
       {data && rows.some((r) => r.price !== null) ? (
@@ -212,6 +216,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
             empty="Nothing within about 3 min walk."
             now={now}
             cheapestId={cheapest?.outlet.id ?? null}
+            item={data.item}
           />
           <Section
             id="farther-heading"
@@ -222,6 +227,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
             now={now}
             cheapestId={cheapest?.outlet.id ?? null}
             reference={reference}
+            item={data.item}
           />
 
           {data.grocery && bestPrice !== null ? (

@@ -1,5 +1,6 @@
 // POST /api/save-price: a student's price report (docs/SPEC.md section 8). Insert only, as app_writer.
-// In: { item_id, location_id, price, source: "photo" | "typed", device_id }   Out: { id, status }
+// In: { item_id, location_id, price, source: "photo" | "receipt" | "typed", device_id }   Out: { id, status }
+// "receipt" is "I bought it" with a receipt photo (Step 8); "typed" is a price the student typed or fixed.
 //
 // $0.25 to $25 only; `needs_review` when the price is over 3x the item's campus median (G3), which then
 // needs 2 confirmations to go official. 10 inserts per device per minute across prices, votes and stock
@@ -30,7 +31,7 @@ const bodySchema = z.object({
     .number({ error: "Type the price, like 3.25." })
     .transform(roundToCents)
     .pipe(z.number().min(PRICE_MIN, RANGE).max(PRICE_MAX, RANGE)),
-  source: z.enum(["photo", "typed"], { error: "That report type isn't allowed." }),
+  source: z.enum(["photo", "receipt", "typed"], { error: "That report type isn't allowed." }),
   device_id: z
     .string({ error: "Reload the page and try again." })
     .regex(DEVICE_ID_PATTERN, "Reload the page and try again."),
