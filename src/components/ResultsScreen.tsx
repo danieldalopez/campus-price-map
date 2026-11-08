@@ -277,7 +277,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
             {api.error ? "Prices" : "Loading prices…"}
           </h1>
         )}
-        <SoundToggle className="border! border-ink/20! shadow-none!" />
+        <SoundToggle />
       </header>
 
       <div className="mt-3 flex flex-col gap-3 px-4">

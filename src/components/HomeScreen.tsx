@@ -12,6 +12,7 @@ import type { ItemsResponse, LocationsResponse, Outlet } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 import { useLocation } from "@/lib/use-location";
 import { Button, buttonClasses } from "./Button";
+import { Icon } from "./Icon";
 import { ItemTiles } from "./ItemTiles";
 import { OutletLink } from "./OutletLink";
 import { SearchResults, searchSummary } from "./SearchResults";
@@ -28,14 +29,17 @@ const HomeMap = dynamic(() => import("./HomeMap"), {
 type View = "map" | "list";
 
 const SEE_ALL_TILE =
-  "flex h-full w-full flex-col items-center justify-center gap-1 rounded-tag border border-dashed " +
-  "border-ink-2 bg-paper-2 px-2 py-2 text-center font-heading text-[0.9375rem] font-bold leading-tight " +
-  "active:bg-card";
+  "flex h-full w-full flex-col items-center justify-center gap-1 rounded-tag border-2 border-dashed " +
+  "border-ink bg-paper-2 px-2 py-2 text-center font-heading text-[0.9375rem] font-bold leading-tight " +
+  "hover:bg-tag-pale active:bg-tag-pale";
 
 // One half of the Map / List switch: each half is a full-height (48 px) target; the selected half is ink.
 const SEGMENT =
-  "flex h-full flex-1 items-center justify-center rounded-full font-heading text-base font-bold " +
+  "flex h-full flex-1 items-center justify-center font-heading text-base font-bold " +
   "text-ink aria-pressed:bg-ink aria-pressed:text-card";
+
+// Search box and its clear button: 2 px ink outline, 8 px corners; focus turns it yellow.
+const SEARCH_EDGE = "rounded-control border-2 border-ink bg-card";
 
 const NOTE = "rounded-tag border border-ink-2 bg-card px-3 py-2 leading-snug";
 
@@ -91,11 +95,12 @@ export default function HomeScreen() {
         {/* Floating on top: title, search and item tiles. */}
         <div
           data-map-overlay="top"
-          className="pointer-events-auto border-b border-ink/15 bg-paper pt-[env(safe-area-inset-top)]"
+          className="pointer-events-auto border-b-2 border-ink bg-paper pt-[env(safe-area-inset-top)]"
         >
-          <header className="flex h-14 items-center justify-between gap-2 pr-1 pl-4">
-            <h1 className="font-heading text-[1.375rem] font-extrabold leading-none">
-              <span className="bg-[linear-gradient(transparent_55%,var(--tag)_55%)] px-0.5">Campus Price Map</span>
+          <header className="flex h-16 items-center justify-between gap-2 px-4">
+            {/* The logo: a yellow price-sticker badge, with the strongest (3 px) shadow on the screen. */}
+            <h1 className="rounded-control border-2 border-ink bg-tag px-2.5 py-1.5 font-heading text-[1.25rem] font-extrabold leading-none text-tag-ink shadow-ink">
+              Campus Price Map
             </h1>
             <SoundToggle />
           </header>
@@ -105,18 +110,10 @@ export default function HomeScreen() {
               Search products
             </label>
             <div className="relative min-w-0 flex-1">
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-ink-2"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.25"
-                strokeLinecap="round"
-              >
-                <circle cx="11" cy="11" r="6.5" />
-                <path d="M16 16l4.5 4.5" />
-              </svg>
+              <Icon
+                name="search"
+                className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-ink"
+              />
               <input
                 id="item-search"
                 type="search"
@@ -128,14 +125,14 @@ export default function HomeScreen() {
                 spellCheck={false}
                 enterKeyHint="search"
                 aria-describedby="search-status"
-                className="h-[3.125rem] w-full rounded-tag border border-ink-2 bg-card pr-3 pl-10 text-base placeholder:text-ink-2 [&::-webkit-search-cancel-button]:hidden"
+                className={`h-[3.125rem] w-full ${SEARCH_EDGE} pr-3 pl-10 text-base placeholder:text-ink-2 focus:bg-tag-pale focus:shadow-[0_0_0_3px_var(--tag)] focus:outline-none [&::-webkit-search-cancel-button]:hidden`}
               />
             </div>
             {query ? (
               <button
                 type="button"
                 aria-label="Clear search"
-                className="flex h-[3.125rem] w-12 shrink-0 items-center justify-center rounded-tag border border-ink-2 bg-card text-2xl"
+                className={`flex h-[3.125rem] w-12 shrink-0 items-center justify-center ${SEARCH_EDGE} text-2xl hover:bg-tag-pale`}
                 onClick={() => setQuery("")}
               >
                 <span aria-hidden="true">×</span>
@@ -192,7 +189,11 @@ export default function HomeScreen() {
         </div>
 
         {/* Bottom bar */}
-        <div data-map-overlay="bottom" className="pointer-events-auto px-4 pb-[max(env(safe-area-inset-bottom),12px)]">
+        {/* Capped width so the actions don't stretch across a desktop screen. */}
+        <div
+          data-map-overlay="bottom"
+          className="pointer-events-auto mx-auto w-full max-w-[26rem] px-4 pb-[max(env(safe-area-inset-bottom),12px)]"
+        >
           {outletsApi.error ? (
             <div role="alert" className={`${NOTE} mb-2 flex items-center justify-between gap-3`}>
               <span>{outletsApi.error}</span>
@@ -202,7 +203,7 @@ export default function HomeScreen() {
           <div
             role="group"
             aria-label="Show outlets as"
-            className="mx-auto flex h-[3.125rem] w-[11.5rem] rounded-full border border-ink-2 bg-card"
+            className="mx-auto flex h-[3.25rem] w-[11.5rem] overflow-hidden rounded-control border-2 border-ink bg-card shadow-ink-sm"
           >
             <button type="button" aria-pressed={view === "map"} onClick={() => setView("map")} className={SEGMENT}>
               Map
@@ -211,15 +212,18 @@ export default function HomeScreen() {
               List
             </button>
           </div>
-          <div className="mt-2 flex gap-2">
+          <div className="mt-2.5 flex gap-2">
             <Link
               href="/scan"
-              className={buttonClasses("secondary", "md", "min-h-[3.25rem]! shrink-0 border! border-ink-2! px-4 shadow-none!")}
+              className={buttonClasses("secondary", "md", "h-[3.25rem] shrink-0 rounded-control border-2! border-ink! px-4")}
             >
-              <span aria-hidden="true">▥</span> Scan
+              <Icon name="scan" className="h-6 w-6" /> Scan
             </Link>
-            <Link href="/snap" className={buttonClasses("primary", "md", "min-h-[3.25rem]! min-w-0 flex-1 text-lg!")}>
-              <span aria-hidden="true">📷</span> Snap a price
+            <Link
+              href="/snap"
+              className={buttonClasses("primary", "md", "h-[3.25rem] min-w-0 flex-1 rounded-control text-lg!")}
+            >
+              <Icon name="camera" className="h-6 w-6" /> Snap a price
             </Link>
           </div>
         </div>
