@@ -114,7 +114,7 @@ export function LocateControl() {
       {help ? (
         <div
           role="status"
-          className="flex max-w-64 items-start gap-1 rounded-tag border-2 border-ink bg-card p-2 text-sm shadow-ink"
+          className="flex max-w-64 items-start gap-1 rounded-tag border border-ink-2 bg-card p-2 text-sm"
         >
           <p className="m-0">{help}</p>
           <button
@@ -133,7 +133,7 @@ export function LocateControl() {
         aria-pressed={on}
         aria-label={label}
         title={label}
-        className={`flex h-12 w-12 items-center justify-center rounded-tag border-2 border-ink text-2xl shadow-ink ${
+        className={`flex h-12 w-12 items-center justify-center rounded-tag border border-ink-2 text-[1.375rem] ${
           on ? "bg-ink text-card" : "bg-card text-ink"
         }`}
       >
