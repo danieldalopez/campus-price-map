@@ -7,7 +7,7 @@ import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import { formatPrice } from "@/lib/format";
 import type { LatLng } from "@/lib/geo";
 import { walkLabel } from "@/lib/geo";
-import { MAX_ZOOM } from "@/lib/outlet";
+import { MAX_ZOOM, TILE_MAX_ZOOM } from "@/lib/outlet";
 import { compareRows, isComparable } from "@/lib/pricing";
 import type { Band, PriceRow } from "@/lib/types";
 import { ClusterLayer, type MapPoint } from "./ClusterLayer";
@@ -102,6 +102,7 @@ export default function ResultsMap({ rows, cheapestId, origin, usingNest, positi
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         maxZoom={MAX_ZOOM}
+        maxNativeZoom={TILE_MAX_ZOOM}
       />
       {usingNest ? (
         <Marker
