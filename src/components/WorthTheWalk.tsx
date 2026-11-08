@@ -2,7 +2,7 @@
 
 import { createContext, useId, useMemo, useState } from "react";
 import { formatPrice } from "@/lib/format";
-import type { PriceRow } from "@/lib/types";
+import type { Item, PriceRow } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 import {
   DEFAULT_CONFIG,
@@ -37,7 +37,7 @@ function minutesText(min: number): string {
  * Hidden when the closest outlet is already the cheapest or nothing cheaper is within reach. Never uses
  * estimated prices (G13). Rendered only in the browser, after prices load.
  */
-export function WorthTheWalk({ rows }: { rows: PriceRow[] }) {
+export function WorthTheWalk({ rows, item }: { rows: PriceRow[]; item: Pick<Item, "id" | "name" | "size"> }) {
   const ids = useId();
   const configApi = useApi<WalkConfig>("/api/config");
   const config = configApi.data ?? DEFAULT_CONFIG;
@@ -130,7 +130,12 @@ export function WorthTheWalk({ rows }: { rows: PriceRow[] }) {
         ) : null}
       </div>
 
-      <DirectionsButton outlet={best.row} className="mt-3" />
+      <DirectionsButton
+        outlet={best.row}
+        item={{ id: item.id, name: item.name, size: item.size }}
+        price={best.row.price}
+        className="mt-3"
+      />
     </section>
   );
 }

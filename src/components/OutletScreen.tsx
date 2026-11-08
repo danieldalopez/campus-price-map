@@ -12,6 +12,8 @@ import { useApi } from "@/lib/use-api";
 import { DEFAULT_CONFIG, DEFAULT_PER_WEEK, project, type WalkConfig } from "@/lib/walkworth";
 import { useNow } from "@/lib/use-now";
 import { Button, buttonClasses } from "./Button";
+import { BoughtButton, ConfirmedLine } from "./BoughtButton";
+import { usePricesChanged } from "./BoughtProvider";
 import { DirectionsButton } from "./DirectionsButton";
 import { OutletLink } from "./OutletLink";
 import { PendingLine, PricesRefresh } from "./PendingLine";
@@ -99,7 +101,17 @@ function WalkLine({ walk }: { walk: NonNullable<OutletItemRow["walk"]> }) {
   );
 }
 
-function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: string; now: number }) {
+function TrackedItem({
+  row,
+  outletId,
+  outletName,
+  now,
+}: {
+  row: OutletItemRow;
+  outletId: string;
+  outletName: string;
+  now: number;
+}) {
   const fresh = freshness(row, now);
   const soldOut = row.stock === "sold_out";
   const nearest = row.nearest_cheaper;
@@ -146,6 +158,7 @@ function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: str
       )}
 
       {fresh ? <p className="mt-1 text-ink-2">{fresh.text}</p> : null}
+      {row.price !== null ? <ConfirmedLine row={row} now={now} /> : null}
 
       {/* Pipeline only: the closest outlet that sells it for less, from serving.price_comparisons. */}
       {nearest && saving !== null && saving > 0 ? (
@@ -172,12 +185,30 @@ function TrackedItem({ row, outletId, now }: { row: OutletItemRow; outletId: str
       <PendingLine pending={row.pending} what={row.item.name} />
 
       {row.stock === "maybe_sold_out" ? <p className="mt-1">A student said it may be sold out.</p> : null}
+      {row.price !== null ? (
+        <BoughtButton
+          outlet={{ id: outletId, name: outletName }}
+          item={{ id: row.item.id, name: row.item.name, size: row.item.size }}
+          price={row.price}
+          className="mt-2"
+        />
+      ) : null}
       {/* Step 9: the Sold out button goes here (POST /api/stock). */}
     </li>
   );
 }
 
-function TrackedSection({ rows, outletId, now }: { rows: OutletItemRow[]; outletId: string; now: number }) {
+function TrackedSection({
+  rows,
+  outletId,
+  outletName,
+  now,
+}: {
+  rows: OutletItemRow[];
+  outletId: string;
+  outletName: string;
+  now: number;
+}) {
   const groups = useMemo(() => byCategory(rows), [rows]);
   return (
     <section aria-labelledby="tracked-heading" className="mt-6 px-4">
@@ -197,7 +228,7 @@ function TrackedSection({ rows, outletId, now }: { rows: OutletItemRow[]; outlet
               </h3>
               <ul aria-labelledby={id} className="mt-2 flex flex-col gap-3">
                 {g.rows.map((row) => (
-                  <TrackedItem key={row.item.id} row={row} outletId={outletId} now={now} />
+                  <TrackedItem key={row.item.id} row={row} outletId={outletId} outletName={outletName} now={now} />
                 ))}
               </ul>
             </div>
@@ -277,6 +308,7 @@ function BackToMap() {
 export default function OutletScreen({ outletId }: { outletId: string }) {
   const now = useNow(60_000);
   const api = useApi<OutletResponse>(`/api/outlet/${encodeURIComponent(outletId)}`);
+  usePricesChanged(api.retry);
   const configApi = useApi<WalkConfig>("/api/config");
   const data = api.data;
   const menuCount = data ? data.menu.reduce((n, c) => n + c.lines.length, 0) : 0;
@@ -337,7 +369,7 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
         <>
           <PricesRefresh.Provider value={api.retry}>
             <WalkConfigContext.Provider value={configApi.data ?? DEFAULT_CONFIG}>
-            <TrackedSection rows={data.items} outletId={data.outlet.id} now={now} />
+            <TrackedSection rows={data.items} outletId={data.outlet.id} outletName={data.outlet.name} now={now} />
             </WalkConfigContext.Provider>
           </PricesRefresh.Provider>
           <FullMenu menu={data.menu} now={now} />

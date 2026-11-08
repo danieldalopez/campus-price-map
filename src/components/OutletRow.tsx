@@ -3,6 +3,7 @@ import { walkLabel } from "@/lib/geo";
 import { isApproximate } from "@/lib/outlet";
 import { freshness } from "@/lib/pricing";
 import type { PriceRow } from "@/lib/types";
+import { BoughtButton, ConfirmedLine } from "./BoughtButton";
 import { OutletLink } from "./OutletLink";
 import { PendingLine } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
@@ -17,13 +18,15 @@ type Props = {
   dimmed: boolean;
   /** A Farther row that stands out: how much it saves compared with near you. */
   saves: number | null;
+  /** The item on this Results page, for "I bought it here". */
+  item: { id: string; name: string; size: string };
 };
 
 /**
  * One outlet on Results (SPEC section 7). The official price is the only price shown big. Dimming never
  * drops text below 4.5:1: it changes the card, not the ink.
  */
-export function OutletRow({ row, now, cheapest, dimmed, saves }: Props) {
+export function OutletRow({ row, now, cheapest, dimmed, saves, item }: Props) {
   const fresh = freshness(row, now);
   const soldOut = row.stock === "sold_out";
   const place = [
@@ -68,6 +71,7 @@ export function OutletRow({ row, now, cheapest, dimmed, saves }: Props) {
       )}
 
       {fresh ? <p className="mt-1 text-ink-2">{fresh.text}</p> : null}
+      {row.price !== null ? <ConfirmedLine row={row} now={now} /> : null}
       {saves !== null ? <p className="mt-1 font-bold text-cheap">Saves {formatPrice(saves)} compared with near you</p> : null}
       {row.just_confirmed ? (
         <p className="mt-1">
@@ -78,6 +82,9 @@ export function OutletRow({ row, now, cheapest, dimmed, saves }: Props) {
       ) : null}
       <PendingLine pending={row.pending} what={`at ${row.outlet.name}`} />
       {row.stock === "maybe_sold_out" ? <p className="mt-1">A student said it may be sold out.</p> : null}
+      {row.price !== null ? (
+        <BoughtButton outlet={row.outlet} item={item} price={row.price} className="mt-2" />
+      ) : null}
     </li>
   );
 }

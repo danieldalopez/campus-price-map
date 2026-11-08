@@ -75,6 +75,11 @@ export type PriceFields = {
   /** The newest pending report. `my_vote` is this device's vote on it, if it voted (Step 7). */
   pending: { price_id: number; price: number; mine: boolean; my_vote: Vote | null } | null;
   /**
+   * When a student last confirmed this price: a report of theirs (photo, receipt or typed) within $0.10 of
+   * it, e.g. from "I bought it" (Step 8). Null if no student has.
+   */
+  last_confirmed_at: string | null;
+  /**
    * Pipeline only: Databricks' Worth the walk suggestion for someone standing at this outlet: the cheaper
    * outlet within reach, its saving each time and the extra minutes (there and back). The Outlet page shows
    * it; Results computes its own, live, from the student's position.

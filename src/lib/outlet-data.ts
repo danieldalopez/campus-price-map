@@ -50,6 +50,7 @@ const CARRIES_CTE = `ca as (select item_id as k from carries where location_id =
 const ITEM_JOINS = `
   left join pp on pp.k = i.id
   left join st on st.k = i.id
+  left join lc on lc.k = i.id
   left join ca on ca.k = i.id`;
 
 function toItem(r: ItemCols): Item {
