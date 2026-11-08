@@ -49,7 +49,7 @@ Version 4, Sat Nov 7, night. Changes from version 3 (9:30 PM):
 5. Secrets only in env vars or Databricks secrets. Never in client code, logs, commits or error messages.
 6. Only the libraries in section 3. No state library, no UI kit, no Google Maps APIs.
 7. TypeScript strict. Validate every API input with `zod`. No `any` in `src/app/api` or `src/lib`.
-8. API routes that use `pg` set `export const runtime = "nodejs"`.
+8. API routes that use `pg` do **not** set `export const runtime`: the app has `cacheComponents` on, Next 16 rejects that line under it, and route handlers already run on Node.js. Instead they `await connection()` (from `next/server`) first, so they run at request time and are never prerendered with build-time data.
 9. **Leaflet:** load the map component with `dynamic(() => import(...), { ssr: false })`, import `leaflet/dist/leaflet.css` once, and draw pins with `L.divIcon` (no default marker images). This avoids the blank map and broken icon bugs.
 10. **Anything from Databricks is optional at runtime.** The synced tables (`serving.price_comparisons`, `serving.outlet_scores`) and Genie may not exist, or may be stale. If missing or stale (section 8), fall back to the live views and hide the features that need them (chips, tiers, BC stamp). Never crash on it.
 11. **Databricks CLI:** always pass `--profile campus-price-map`. Never run a command that creates, deletes or changes something in the workspace or in Lakebase without asking first. Read-only commands are fine.
