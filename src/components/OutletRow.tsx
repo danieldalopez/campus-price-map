@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import { walkLabel } from "@/lib/geo";
 import { isApproximate } from "@/lib/outlet";
@@ -34,7 +35,14 @@ export function OutletRow({ row, now, cheapest, dimmed, saves }: Props) {
     <li className={`rounded-tag border-2 border-ink p-3 ${card}`}>
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <h3 className="font-heading text-lg font-extrabold leading-tight">{row.outlet.name}</h3>
+          <h3 className="font-heading text-lg font-extrabold leading-tight">
+            <Link
+              href={`/outlet/${encodeURIComponent(row.outlet.id)}`}
+              className="underline decoration-2 underline-offset-2"
+            >
+              {row.outlet.name}
+            </Link>
+          </h3>
           {place.length > 0 ? <p className="text-ink-2">{place.join(" · ")}</p> : null}
         </div>
         {cheapest || soldOut ? (
