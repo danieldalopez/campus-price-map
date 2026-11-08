@@ -13,6 +13,8 @@ export type BarcodeResult = {
   item_id?: string;
   product_name?: string;
   quantity?: string;
+  /** "known" from a tracked brand whose size wasn't readable: its tracked sizes, so the scanner asks which. */
+  candidates?: string[];
 };
 
 /** 8 to 14 digits, the only input `/api/barcode` accepts. */

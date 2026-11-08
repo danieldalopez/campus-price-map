@@ -1,7 +1,7 @@
 // GET /api/barcode?code=0180854000101: what a scanned barcode is. docs/SPEC.md section 8.
 // { status: "matched" | "known" | "unknown", item_id?, product_name?, quantity? }
-// The bundled Open Food Facts extract first, then the Open Food Facts API (src/lib/barcodes.ts). A live answer
-// is never matched to an item (G16).
+// The bundled Open Food Facts extract first, then the Open Food Facts API (src/lib/barcodes.ts). Products
+// without an exact item match by brand and size (G16, SPEC version 15).
 
 import { connection, type NextRequest } from "next/server";
 import { barcodeQuerySchema, lookupBarcode } from "@/lib/barcodes";

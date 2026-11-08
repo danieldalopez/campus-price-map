@@ -6,6 +6,9 @@ Built at HackCamp 2026 (nwPlus, UBC Vancouver) by Sergio Lopez and Sebastian Sal
 
 > **Claude Code: this file is the spec.** Read it fully before every task. Work through section 13 one step at a time. If a request conflicts with this file, ask before building.
 
+Version 15, Sun Nov 8. Changes from version 14:
+- **The scanner matches drink variants by brand and size** (G16). Red Bull Sugarfree 250 ml → Red Bull 250 ml (I01), Coke Zero 355 ml → Coca-Cola 355 ml (I04), and so on, for bundled and live Open Food Facts answers alike. Multipacks never match. A tracked brand with no readable size shows "Which size?" with only that brand's tracked sizes.
+
 Version 14, Sun Nov 8. Changes from version 13:
 - **Red Bull 473 ml is tracked as I24** (16 outlets in the menu data). `scripts/build_seed.py` maps it; `db/migrations/2026-11-08_red_bull_473.sql` adds it to a live database without re-seeding (run once as the owner, safe to repeat). Its sticker reuses the Red Bull art; its barcode is mapped.
 - **Multi-buy deals** (`data/deals.csv`, bundled like `data/barcodes.csv`): INS Market's Red Bull 2 for $5.99 (250 ml), 2 for $7.49 (355 ml) and 2 for $8.99 (473 ml), from the `deal_*` columns of the raw menu file. A DEAL line sits beside the price; the list ranks a deal by its price each, and a "Best deal" card tops Results when a deal beats every other outlet's single price. The decision line, CHEAPEST stamp and Worth the walk still use single prices.
@@ -897,7 +900,7 @@ Figma file: (add link). Screens: Home, Results (with a pending row and a just co
 | G12 | Only code written after 12 PM Sat Nov 7. Public repo. Both teammates on Devpost. |
 | G14 | Worth the walk always shows the saving each time and the extra minutes behind every total. Time is never turned into money. The frequency is shown and the student can change it. Projections carry no "if prices hold" caveat. No interest rate is ever assumed. |
 | G15 | Location: requested on first search, watched only while the page is visible, rounded to about 11 m before leaving the phone, never stored or logged. The Google Maps directions link carries the outlet's coordinates only, never the student's location. |
-| G16 | Open Food Facts data stays under the ODbL with attribution. A live barcode lookup never auto-maps to an item. |
+| G16 | Open Food Facts data stays under the ODbL with attribution. A scanned product without an exact item matches by **brand and size** (version 15): any flavour or "zero sugar" version of a tracked drink counts as that drink at that size (`src/lib/variant-match.ts`), because these drinks are priced by size, not flavour. Multipacks and untracked sizes never match. A tracked brand with no readable size asks "Which size?" with only that brand's sizes. |
 | G13 | Model estimates are never shown as a price: no PriceTag, never ranked, never in chips, stamps, savings or Read aloud. Always the word "estimated" plus a range. Shown only when the validation gate in section 10 passed. Outlets with no prices get `?`, never a tier from their type alone. |
 
 ## 13. Build order (paste one prompt at a time)
