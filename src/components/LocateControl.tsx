@@ -11,13 +11,13 @@ import { useLocation } from "@/lib/use-location";
 /** Zoom used when centring on the student. */
 const HERE_ZOOM = 17;
 /** The "location is blocked" help fades away after this, so it doesn't sit on the map. */
-const HELP_MS = 8_000;
+const HELP_MS = 12_000;
 
 /** Steps to allow location for this site, for the phone in hand. */
 function allowSteps(): string {
   const ua = typeof navigator === "undefined" ? "" : navigator.userAgent;
   if (/iPhone|iPad|iPod/.test(ua)) {
-    return "Your phone blocked location for this site. To allow it: tap aA in the address bar → Website Settings → Location → Allow. It turns on as soon as you come back.";
+    return "Your phone blocked location for this site. To allow it: tap the page icon at the left of the address bar (it looks like aA or a small page) → Website Settings → Location → Allow. Or: Settings app → Safari (under Apps) → Location → Allow. It turns on as soon as you come back.";
   }
   if (/Android/.test(ua)) {
     return "Your phone blocked location for this site. To allow it: tap the icon left of the address → Permissions → Location → Allow. It turns on as soon as you come back.";
