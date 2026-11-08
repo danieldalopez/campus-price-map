@@ -601,8 +601,9 @@ def gold_item_stats():
 @dp.materialized_view(
     name="gold_walk_worth",
     comment=(
-        "Worth the walk (section 10): every item, origin outlet and cheaper outlet within worth_max_extra_min, "
-        "at bc_min_wage. net_rank 1 is the best option from that origin (highest net, not the cheapest price)."
+        "Worth the walk (section 10): every item, origin outlet and cheaper outlet within worth_max_extra_min. "
+        "saving_rank 1 is the suggestion from that origin: the biggest saving of at least even_band (SPEC v7, money "
+        "only). The wage columns (time_cost, net, verdict, break_even_*, net_rank) are kept but no longer used."
     ),
 )
 def gold_walk_worth():
@@ -613,6 +614,9 @@ def gold_walk_worth():
     # verdict         = worth_it if net > even_band; not_worth_it if net < -even_band; else about_even
     # break_even_wage = saving / (extra_min / 60);  break_even_min = saving / wage x 60
     # saved_H, minutes_H, net_H = saving, extra_min, net x H for each horizon, per weekly purchase
+    # saving_rank     = SPEC v7: the suggestion is the biggest saving (ties: shorter walk), and savings under even_band
+    #                   rank after everything else, so "saving_rank = 1 AND saving >= even_band" picks it. Time is never
+    #                   priced in the app any more; the wage columns above stay so the synced table keeps its shape.
     # Exact decimal arithmetic throughout (prices in cents, minutes in tenths, wage in cents), multiplying before the
     # one division by 60, and rounding half away from zero. Binary floating point rounded about 0.7% of nets
     # differently from any JavaScript port; with decimals the app reproduces every value in integer cents
@@ -681,6 +685,10 @@ def gold_walk_worth():
           row_number() OVER (PARTITION BY p.item_id, p.origin_location_id
                              ORDER BY p.net_cents DESC NULLS LAST, p.saving DESC, p.extra_min, p.cheaper_location_id)
             AS net_rank,
+          row_number() OVER (PARTITION BY p.item_id, p.origin_location_id
+                             ORDER BY CASE WHEN p.saving >= p.even_band THEN 0 ELSE 1 END,
+                                      p.saving DESC, p.extra_min, p.cheaper_location_id)
+            AS saving_rank,
           p.even_band, p.weeks_term, p.weeks_year, p.weeks_degree, p.worth_max_extra_min,
           current_timestamp() AS computed_at
         FROM priced p
@@ -743,7 +751,7 @@ def gold_price_comparisons():
           )
           WHERE rn = 1
         ),
-        best_walk AS (SELECT * FROM gold_walk_worth WHERE net_rank = 1),
+        best_walk AS (SELECT * FROM gold_walk_worth WHERE saving_rank = 1 AND saving >= even_band),
         estimates AS (
           SELECT e.item_id, e.location_id, e.est_price, e.est_low, e.est_high
           FROM model_estimates e
@@ -944,14 +952,19 @@ def gold_pitch_numbers():
           FROM gold_walk_worth
           WHERE verdict IS NOT NULL
         ),
-        options AS (
-          SELECT count(*) AS n, count_if(verdict = 'worth_it') AS n_worth, count_if(uses_seed) > 0 AS uses_seed
-          FROM walks
+        best AS (
+          SELECT * FROM walks WHERE saving_rank = 1 AND saving >= even_band
         ),
-        worth AS (
-          SELECT count(*) AS n, percentile_cont(0.5) WITHIN GROUP (ORDER BY net_term * 4) AS median_net,
+        saved AS (
+          SELECT count(*) AS n, percentile_cont(0.5) WITHIN GROUP (ORDER BY saved_term * 5) AS median_saved,
                  count_if(uses_seed) > 0 AS uses_seed
-          FROM walks WHERE verdict = 'worth_it'
+          FROM best
+        ),
+        top_walk AS (
+          SELECT item_name, origin_name, cheaper_name, saving, extra_min, saved_term * 5 AS saved, uses_seed
+          FROM best
+          ORDER BY saved_term DESC, extra_min, item_id, origin_location_id
+          LIMIT 1
         ),
         reports AS (
           SELECT count(*) AS n,
@@ -972,17 +985,19 @@ def gold_pitch_numbers():
                       CASE WHEN uses_seed THEN ' · proof of concept: includes AI-estimated prototype prices' ELSE '' END) AS detail
         FROM gap
         UNION ALL
-        SELECT 'share_worth_the_walk_at_min_wage', round(try_divide(n_worth * 100.0, n), 1), 'percent',
-               concat(n_worth, ' of ', n, ' cheaper options are worth the walk at $',
-                      format_number(cfg.bc_min_wage, 2), '/h',
-                      CASE WHEN options.uses_seed THEN ' · proof of concept: includes AI-estimated prototype prices' ELSE '' END)
-        FROM options CROSS JOIN cfg
-        UNION ALL
-        SELECT 'median_net_per_term_4_a_week', round(median_net, 2), 'CAD',
-               concat('median over ', n, ' worthwhile switches, 4 purchases a week for a ',
+        SELECT 'median_saved_per_term_5_a_week', CAST(round(median_saved, 2) AS DOUBLE), 'CAD',
+               concat('median over ', n, ' item and outlet pairs with a cheaper outlet within ',
+                      CAST(cfg.worth_max_extra_min AS INT), ' extra minutes, 5 purchases a week for a ',
                       CAST(cfg.weeks_term AS INT), '-week term, if prices hold',
-                      CASE WHEN worth.uses_seed THEN ' · proof of concept: includes AI-estimated prototype prices' ELSE '' END)
-        FROM worth CROSS JOIN cfg
+                      CASE WHEN saved.uses_seed THEN ' · proof of concept: includes AI-estimated prototype prices' ELSE '' END)
+        FROM saved CROSS JOIN cfg
+        UNION ALL
+        SELECT 'biggest_saved_per_term_5_a_week', CAST(round(saved, 2) AS DOUBLE), 'CAD',
+               concat(item_name, ': ', format_number(extra_min, 0), ' extra minutes from ', origin_name, ' to ',
+                      cheaper_name, ' saves $', format_number(saving, 2), ' each time, 5 a week for a ',
+                      CAST(cfg.weeks_term AS INT), '-week term, if prices hold',
+                      CASE WHEN top_walk.uses_seed THEN ' · proof of concept: includes AI-estimated prototype prices' ELSE '' END)
+        FROM top_walk CROSS JOIN cfg
         UNION ALL
         SELECT 'price_reports', CAST(n AS DOUBLE), 'count',
                concat(n_student, ' from students, ', n - n_seed - n_student, ' from the team and menus, ', n_seed,
