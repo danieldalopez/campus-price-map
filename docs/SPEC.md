@@ -213,7 +213,7 @@ I24 Red Bull, 473 ml can                      Energy drinks
 
 StatCan matches (I08, I09, I11, I20, I21) live in `data/statcan_map.csv`, section 10.
 
-`scripts/build_seed.py` is the single source of truth for this list and for which menu lines count as which item (`match_items`). Coffee, latte and tea are the small 10 to 12 oz sizes because that's what almost every outlet lists. Generic foods (sandwich, wrap, muffin) use the lowest listed matching price per outlet. Quest and Clif are both tracked, as I18 and I23, so bar comparisons stay like for like. Red Bull 473 ml is not tracked.
+`scripts/build_seed.py` is the single source of truth for this list and for which menu lines count as which item (`match_items`). Coffee, latte and tea are the small 10 to 12 oz sizes because that's what almost every outlet lists. Generic foods (sandwich, wrap, muffin) use the lowest listed matching price per outlet. Quest and Clif are both tracked, as I18 and I23, so bar comparisons stay like for like. Red Bull 473 ml is tracked as I24 (version 14).
 
 ### Outlets
 
@@ -223,7 +223,7 @@ StatCan matches (I08, I09, I11, I20, I21) live in `data/statcan_map.csv`, sectio
 
 ### Where the prices come from
 
-`data/raw/campus_food_prices.csv` has 1,704 usable menu lines. 576 have a retrieved date (menus read on Nov 7): source `menu`. The other 1,128 are **AI-estimated prototype prices**, undated: source `seed`. For this prototype the app treats `seed` prices as real, official prices everywhere (comparisons, bands, Worth the walk, the Databricks engine). The source is kept so they stay traceable: the freshness line says "Our price". The Devpost presents the whole dataset as a **proof of concept**: `gold_pitch_numbers` counts `seed` prices too, and every number they contribute to carries the note "proof of concept: includes AI-estimated prototype prices". Quote that note with the number. Real reports (photo, receipt, typed) replace them as students confirm prices. Of the 593 tracked prices, 10 are `menu` and 583 are `seed`; `data/build_report.md` has the per-item counts.
+`data/raw/campus_food_prices.csv` has 1,704 usable menu lines. 576 have a retrieved date (menus read on Nov 7): source `menu`. The other 1,128 are **AI-estimated prototype prices**, undated: source `seed`. For this prototype the app treats `seed` prices as real, official prices everywhere (comparisons, bands, Worth the walk, the Databricks engine). The source is kept so they stay traceable: the freshness line says "Our price". The Devpost presents the whole dataset as a **proof of concept**: `gold_pitch_numbers` counts `seed` prices too, and every number they contribute to carries the note "proof of concept: includes AI-estimated prototype prices". Quote that note with the number. Real reports (photo, receipt, typed) replace them as students confirm prices. Of the 610 tracked prices, 10 are `menu` and 600 are `seed` (617 in the engine with the student reports so far); `data/build_report.md` has the per-item counts.
 
 ### What each outlet sells (`data/carries.csv`)
 
@@ -246,7 +246,7 @@ The SQL files in `db/` are the source of truth; this is the summary. Run them as
 | Table | What it holds |
 |---|---|
 | `locations` | 124 outlets: slug `id`, name, area, `operator`, `type`, address, `hours` (as listed), lat, lng, `is_benchmark`, UBC `poi_id`, `location_precision` |
-| `items` | 23 tracked items with `aliases` for search |
+| `items` | 24 tracked items with `aliases` for search |
 | `prices` | Insert-only price rows. `source` is `walk`, `menu`, `grocery`, `seed`, `photo`, `receipt` or `typed`. Price must be $0.25 to $25 |
 | `price_votes`, `stock_reports`, `photo_reads` | Insert-only student actions (photo_reads is for rate limiting only) |
 | `carries` | Which outlet sells which tracked item |
@@ -784,8 +784,8 @@ databricks postgres create-synced-table workspace.serving.price_comparisons --js
 
 `refresh`: `02_bronze_copy` → `price_engine` → `03_price_model` → refresh both synced tables (pipeline tasks on each synced table's pipeline; get the IDs from `databricks postgres get-synced-table`) → `04_grants`.
 
-- Schedule: **every hour on the hour** (America/Vancouver) until judging ends Sun 12:15 PM, then pause it. Plus "Run now" for the demo. Hourly, not every 30 min, because a run takes about 11 minutes and Free Edition compute is limited. The dev target has no `mode: development`, because development mode pauses every schedule and refuses to unpause it.
-- Measured on Nov 8: **11.4 min** for a full run (bronze copy 4.5 min, mostly serverless start-up and `%pip`; price engine 7 min), plus the snapshot sync. That's over 3 minutes, so don't wait for it live in the demo: show a recorded run.
+- Schedule: **every 2 hours on the hour** (America/Vancouver) until judging ends Sun 12:15 PM, then pause it. Plus "Run now" for the demo. Every 2 hours, not hourly, because a scheduled run takes 25 to 35 minutes (serverless start-up per task) and the app only falls back to live prices after 3 hours. The dev target has no `mode: development`, because development mode pauses every schedule and refuses to unpause it.
+- Measured on Nov 8: scheduled runs take **25 to 31 min** end to end (every task waits about 3 min for serverless start-up); a manual Run now right after another run takes 5 to 11 min on warm compute. Don't wait for it live in the demo: show a recorded run.
 - Deploy: `databricks bundle validate`, then `databricks bundle deploy -t dev`, then `databricks bundle run refresh -t dev`, each with `--profile campus-price-map`.
 - Screenshot the Job DAG, the pipeline graph and the data quality panel for Devpost.
 
@@ -907,7 +907,7 @@ Figma file: (add link). Screens: Home, Results (with a pending row and a just co
 
 Skip steps that are already done. Step numbers are labels; **run them in this order:** 1, 2, 3, 4, 5, 6, 7, 14, 10, 8, 9, 16, 12, 13. (Steps 11 and 15 were dropped in version 8.)
 
-**Build status (Sun Nov 8, version 12).** Merged on `main`:
+**Build status (Sun Nov 8, version 15).** Merged on `main`:
 - App: Steps 1, 2, 3, 4, 5 (Outlet page, full menus, Directions), 6 (Snap), 7 (voting), 8 (I bought it, last-confirmed times), 9 (Sold out, plus the location button), 14 (Worth the walk, money first), 16 (scanner), and "Wrong price?" (version 11).
 - Step 10: done (version 13). The sticker art, synthesised sounds, the sound on/off button and Read aloud.
 - Databricks: D1 to D8 merged. D8 uses the version 7 money-first ranking (`saving_rank`). Sergio deploys the bundle and runs the refresh Job to pick up code changes; merging alone doesn't update the workspace.
