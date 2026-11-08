@@ -25,7 +25,8 @@ import { StockButtons } from "./StockButtons";
 import { WakingUp } from "./WakingUp";
 import { WalkConfigContext } from "./WorthTheWalk";
 
-const CARD = "rounded-tag border-2 border-ink bg-card p-3 shadow-ink";
+/** Supporting cards: thin muted border, no shadow. Only the PriceTag and primary button keep the hard shadow. */
+const CARD = "rounded-tag border border-ink/20 bg-card p-4";
 
 /** "Hot drinks" -> "hot-drinks-0": ids that tie each list to its heading. */
 function slug(text: string, i: number): string {
@@ -92,7 +93,7 @@ function WalkLine({ walk }: { walk: NonNullable<OutletItemRow["walk"]> }) {
   const degree = project(walk, DEFAULT_PER_WEEK, config.weeks_degree);
   if (!walkShown(walk, config.even_band)) return null;
   return (
-    <div className="mt-2 rounded-tag border-2 border-ink bg-paper p-2">
+    <div className="mt-3 rounded-tag border border-l-4 border-ink/20 border-l-cheap bg-paper p-3">
       <p className="font-heading text-xl font-extrabold leading-tight">
         Worth the walk: <span className="text-cheap">save {formatPrice(term.saved)} a term</span>
       </p>
@@ -151,7 +152,9 @@ function TrackedItem({
   const saving = nearest && row.price !== null ? Math.round((row.price - nearest.price) * 100) / 100 : null;
 
   return (
-    <li className={`rounded-tag border-2 border-ink p-3 ${fresh?.stale ? "border-dashed bg-paper-2" : "bg-card shadow-ink"}`}>
+    <li
+      className={`rounded-tag border p-4 ${fresh?.stale ? "border-dashed border-ink/40 bg-paper-2" : "border-ink/20 bg-card"}`}
+    >
       <div className="flex items-start justify-between gap-2">
         <div className="flex min-w-0 items-start gap-2">
           <ItemArt item={row.item} size={40} />
@@ -173,10 +176,19 @@ function TrackedItem({
       </div>
 
       {row.price !== null ? (
-        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
-          <PriceTag price={row.price} tiltId={`${outletId}:${row.item.id}`} size="lg" />
-          <PriceBand band={row.band} pctVsMedian={row.pct_vs_median} />
-          {row.chip ? <span className="chip">{row.chip}</span> : null}
+        <div className="mt-3">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <PriceTag price={row.price} tiltId={`${outletId}:${row.item.id}`} size="lg" />
+            <span className="flex flex-wrap items-center gap-1.5">
+              <PriceBand band={row.band} pctVsMedian={row.pct_vs_median} />
+              {row.chip ? (
+                <span className="chip min-h-0 border border-ink/40 px-1.5 py-0.5 text-sm font-semibold">{row.chip}</span>
+              ) : null}
+            </span>
+          </div>
+          {/* Source and freshness sit right under the tag, as its small print. */}
+          {fresh ? <p className="mt-2 text-sm leading-snug text-ink-2">{fresh.text}</p> : null}
+          <ConfirmedLine row={row} now={now} />
         </div>
       ) : row.just_confirmed ? null : (
         <p className="mt-2">
@@ -190,15 +202,7 @@ function TrackedItem({
         </p>
       )}
 
-      {fresh ? <p className="mt-1 text-ink-2">{fresh.text}</p> : null}
-      {row.price !== null ? <ConfirmedLine row={row} now={now} /> : null}
-      {row.price !== null ? (
-        <WrongPriceButton
-          outlet={{ id: outletId, name: outletName }}
-          item={{ id: row.item.id, name: row.item.name, size: row.item.size }}
-          price={row.price}
-        />
-      ) : null}
+      {fresh && row.price === null ? <p className="mt-1 text-sm leading-snug text-ink-2">{fresh.text}</p> : null}
 
       {/* Pipeline only: the closest outlet that sells it for less, from serving.price_comparisons. */}
       {nearest && saving !== null && saving > 0 && !walkShown(row.walk, walkConfig.even_band) ? (
@@ -219,7 +223,13 @@ function TrackedItem({
       <PendingLine pending={row.pending} what={row.item.name} />
 
       {row.stock === "maybe_sold_out" ? <p className="mt-1">A student said it may be sold out.</p> : null}
-      <div className="mt-3 grid grid-cols-2 gap-2">
+
+      {/* Contributions, after the price and Worth the walk: quiet, compact, still 48 px targets. */}
+      <div
+        role="group"
+        aria-label={`Help keep ${row.item.name} right`}
+        className="mt-3 grid grid-cols-2 gap-2 border-t border-ink/15 pt-3"
+      >
         {row.price !== null ? (
           <BoughtButton
             outlet={{ id: outletId, name: outletName }}
@@ -229,6 +239,14 @@ function TrackedItem({
           />
         ) : null}
         <StockButtons outlet={{ id: outletId, name: outletName }} item={row.item} stock={row.stock} />
+        {row.price !== null ? (
+          <WrongPriceButton
+            outlet={{ id: outletId, name: outletName }}
+            item={{ id: row.item.id, name: row.item.name, size: row.item.size }}
+            price={row.price}
+            className="col-span-2 text-ink-2 decoration-1"
+          />
+        ) : null}
       </div>
     </li>
   );
@@ -290,7 +308,7 @@ function MenuSection({ category, index, now }: { category: MenuCategory; index: 
         {category.category}
       </h3>
       {shared ? <p className="text-ink-2">{shared}</p> : null}
-      <ul aria-labelledby={id} className="mt-2 divide-y-2 divide-paper-2 rounded-tag border-2 border-ink bg-card">
+      <ul aria-labelledby={id} className="mt-2 divide-y divide-ink/10 rounded-tag border border-ink/20 bg-card">
         {category.lines.map((line, i) => (
           <li key={line.id} className="flex items-baseline justify-between gap-3 px-3 py-2">
             <span className="min-w-0 leading-snug">
@@ -351,7 +369,7 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
 
   return (
     <main className="mx-auto min-h-dvh max-w-xl bg-paper pb-[max(env(safe-area-inset-bottom),24px)]">
-      <header className="sticky top-0 z-[1200] flex items-center gap-3 border-b-2 border-ink bg-paper px-4 pt-[max(env(safe-area-inset-top),12px)] pb-3">
+      <header className="sticky top-0 z-[1200] flex items-center gap-3 border-b border-ink/20 bg-paper px-4 pt-[max(env(safe-area-inset-top),12px)] pb-3">
         <BackToMap />
         <h1 className="min-w-0 font-heading text-2xl font-extrabold leading-tight">
           {data ? data.outlet.name : api.error ? "Outlet" : "Loading outlet…"}
@@ -382,7 +400,7 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
             <>
               <OutletFacts outlet={data.outlet} now={now} />
               <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2">
-                <DirectionsButton outlet={data.outlet} />
+                <DirectionsButton outlet={data.outlet} variant="primary" />
                 {menuCount > 0 ? (
                   <a
                     href="#menu-heading"
@@ -425,7 +443,7 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
 export function OutletSkeleton() {
   return (
     <main className="mx-auto min-h-dvh max-w-xl bg-paper">
-      <header className="flex items-center gap-3 border-b-2 border-ink px-4 pt-[max(env(safe-area-inset-top),12px)] pb-3">
+      <header className="flex items-center gap-3 border-b border-ink/20 px-4 pt-[max(env(safe-area-inset-top),12px)] pb-3">
         <BackToMap />
         <h1 className="font-heading text-2xl font-extrabold leading-tight">Loading outlet…</h1>
       </header>
