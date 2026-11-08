@@ -71,13 +71,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <main
-      className={
-        "fixed inset-0 overflow-hidden bg-paper " +
-        // Home's zoom buttons: a quiet 1 px border, no shadow (still 48 px targets, sized in globals.css).
-        "[&_.leaflet-bar]:border! [&_.leaflet-bar]:border-ink-2! [&_.leaflet-bar]:shadow-none!"
-      }
-    >
+    <main className="fixed inset-0 overflow-hidden bg-paper">
       {/* The map fills the screen. Hidden from keyboard and screen readers in list view. */}
       <div className="absolute inset-0" role="region" aria-label="Map of campus outlets" inert={view === "list"}>
         <WhileVisible fallback={<div className="h-full w-full bg-paper" aria-hidden="true" />}>

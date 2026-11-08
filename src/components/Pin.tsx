@@ -157,20 +157,14 @@ export function Pin({ position, children, href, overlayInsets = [16, 16], ...ico
   );
 }
 
-// A group: one neutral circle with the count, so a count never looks like a price. Only the price label (on
-// Results, "from $3.59") keeps the yellow tag.
-const CLUSTER_COUNT =
-  "inline-flex h-10 min-w-10 items-center justify-center rounded-full border-2 border-ink-2 bg-card " +
-  "px-2 font-sans text-base font-extrabold leading-none text-ink";
-
-/** A group of overlapping pins: a neutral circle with the count (and, on Results, the lowest price as a tag). */
+/** A group of overlapping pins: the count (and, on Results, the lowest price). Styled in globals.css. */
 export function clusterIcon({ count, label, description }: { count: number; label?: string; description: string }) {
-  const price = label ? `<span class="price-tag cpm-pin__tag">${esc(label)}</span>` : "";
-  const width = Math.max(48, label ? label.length * 10 + 30 + 48 : 0);
+  const price = label ? `<span class="cpm-cluster__label">${esc(label)}</span>` : "";
+  const width = Math.max(52, (label?.length ?? 0) * 10 + 44);
   return L.divIcon({
     className: "cpm-pin cpm-cluster",
     html:
-      `<span class="inline-flex items-center gap-1" aria-hidden="true">${price}<span class="${CLUSTER_COUNT}">${count}</span></span>` +
+      `<span class="cpm-cluster__stack" aria-hidden="true">${price}<span class="cpm-cluster__count">${count}</span></span>` +
       `<span class="sr-only">${esc(description)}</span>`,
     iconSize: [width, 48],
     iconAnchor: [width / 2, 24],
