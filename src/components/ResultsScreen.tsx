@@ -23,6 +23,7 @@ import {
   splitSections,
   withWalkFrom,
 } from "@/lib/pricing";
+import { statcanLine } from "@/lib/statcan";
 import type { PriceRow, PricesResponse } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 import { useLocation } from "@/lib/use-location";
@@ -30,6 +31,7 @@ import { useNow } from "@/lib/use-now";
 import { Button, buttonClasses } from "./Button";
 import { OutletRow } from "./OutletRow";
 import { PricesRefresh } from "./PendingLine";
+import { Stamp } from "./Stamp";
 import { WakingUp } from "./WakingUp";
 import { WhileVisible } from "./WhileVisible";
 import { WorthTheWalk } from "./WorthTheWalk";
@@ -126,6 +128,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
   const reference = referencePrice(decision);
   const bestPrice = decision.kind === "save" ? decision.at.price : decision.kind === "none" ? null : decision.closest.price;
   const item = data?.item ?? null;
+  const statcan = data?.bc ? statcanLine(data.bc, bestPrice) : null;
 
   return (
     <main className="mx-auto min-h-dvh max-w-xl bg-paper pb-[max(env(safe-area-inset-bottom),24px)]">
@@ -232,6 +235,12 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
                   : "the cheapest on campus is "
                 : "the closest is "}
               {groceryText(bestPrice, data.grocery)} ({formatPrice(data.grocery.price)}).
+            </p>
+          ) : null}
+          {statcan ? (
+            <p className="mt-3 px-4">
+              {statcan.stamp ? <Stamp kind="statcan" className="mr-2 align-middle" /> : null}
+              {statcan.text}
             </p>
           ) : null}
           {rows.length === 0 ? (
