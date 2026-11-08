@@ -3,6 +3,8 @@
 > **FIRST PROTOTYPE.** A working end-to-end prototype, built on 2026-11-07, to try the full product loop
 > (scan → share price → see cheapest → buy → community confirmation). It runs on sample data and is meant
 > for demos, feedback and as a reference for the main build, not as the final app.
+> **Building the next iteration?** Start with [BUILD_NOTES.md](BUILD_NOTES.md): how it was built, what we
+> struggled with, known limits and recommendations.
 
 Where is the thing I want cheapest on campus right now? A live, student-checked price guide for UBC, built as a
 Databricks App (AppKit + React) on Lakebase Postgres.
