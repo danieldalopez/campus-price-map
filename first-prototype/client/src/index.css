@@ -1,0 +1,137 @@
+@import "@databricks/appkit-ui/styles.css";
+@import "leaflet/dist/leaflet.css";
+
+/*
+ * Campus Price Map theme, built on the Databricks palette:
+ * navy #0B2026, lava #FF3621, oat #EEEDE9, cream #F9F7F4.
+ * Price levels pair colour with a $ / $$ / $$$ label, so colour is never the only signal.
+ */
+:root {
+  --radius: 0.875rem;
+  --background: #f9f7f4;
+  --foreground: #0b2026;
+  --card: #ffffff;
+  --card-foreground: #0b2026;
+  --popover: #ffffff;
+  --popover-foreground: #0b2026;
+  --primary: #0b2026;
+  --primary-foreground: #f9f7f4;
+  --secondary: #eeede9;
+  --secondary-foreground: #0b2026;
+  --muted: #eeede9;
+  --muted-foreground: #4b5b61;
+  --accent: #eeede9;
+  --accent-foreground: #0b2026;
+  --destructive: #b42d0b;
+  --destructive-foreground: #ffffff;
+  --border: #e2dfd8;
+  --input: #d9d5cc;
+  --ring: #ff3621;
+
+  --brand: #ff3621;
+  --brand-soft: #ffe6e1;
+  --brand-ink: #b4260f;
+  /* Filled buttons with white text: 5.1:1, passes WCAG AA for normal text. */
+  --brand-strong: #d42a10;
+
+  --level-1: #0b7a57;
+  --level-1-soft: #dff3ea;
+  --level-2: #8f5c00;
+  --level-2-soft: #fbefd6;
+  --level-3: #b42d0b;
+  --level-3-soft: #fde4dd;
+
+  --scanner: #0b2026;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0b2026;
+    --foreground: #f4f2ee;
+    --card: #11303a;
+    --card-foreground: #f4f2ee;
+    --popover: #11303a;
+    --popover-foreground: #f4f2ee;
+    --primary: #f4f2ee;
+    --primary-foreground: #0b2026;
+    --secondary: #1a3b46;
+    --secondary-foreground: #f4f2ee;
+    --muted: #17363f;
+    --muted-foreground: #b3c0c4;
+    --accent: #1a3b46;
+    --accent-foreground: #f4f2ee;
+    --destructive: #ff7a5c;
+    --destructive-foreground: #0b2026;
+    --border: #23464f;
+    --input: #2b525c;
+    --ring: #ff6a50;
+
+    --brand: #ff5a3f;
+    --brand-soft: #3a2420;
+    --brand-ink: #ff8c74;
+    --brand-strong: #d42a10;
+
+    --level-1: #45d3a3;
+    --level-1-soft: #12382f;
+    --level-2: #f2b84b;
+    --level-2-soft: #3a3016;
+    --level-3: #ff8466;
+    --level-3-soft: #40231d;
+
+    --scanner: #061418;
+  }
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Leaflet: keep map chrome on-theme. */
+.leaflet-container {
+  font-family: var(--font-sans);
+  background: var(--muted);
+}
+.leaflet-control-attribution {
+  font-size: 10px;
+}
+.cpm-tiles {
+  filter: saturate(0.55) contrast(0.95);
+}
+/* OpenStreetMap has no dark tiles: invert and re-hue for dark mode. */
+.cpm-tiles-dark {
+  filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(0.9) saturate(0.4);
+}
+.cpm-pin {
+  background: transparent;
+  border: none;
+}
+
+/* Scanner viewfinder sweep. */
+@keyframes cpm-sweep {
+  0% { top: 4%; opacity: 0.25; }
+  50% { opacity: 1; }
+  100% { top: 96%; opacity: 0.25; }
+}
+.cpm-sweep {
+  animation: cpm-sweep 2.2s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cpm-sweep {
+    animation: none;
+  }
+}
+
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
+}

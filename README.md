@@ -11,6 +11,11 @@ Built in 24 hours at [HackCamp 2026](https://hackcamp-2026.devpost.com/) (nwPlus
 | Figma | _add link_ |
 | Devpost | _add link_ |
 
+> **🧪 FIRST PROTOTYPE available:** [`first-prototype/`](first-prototype/) is a working first prototype (v0.1.0) of
+> the full loop (scan → share price → cheapest first → "Did you buy it?" → community confirmation, sold out, map,
+> outlet pages, thank-yous). It is a Databricks App (AppKit + React) on Lakebase with **sample data**, built as a
+> reference and demo for the main build. See [`first-prototype/README.md`](first-prototype/README.md) to run it.
+
 ---
 
 ## The problem
@@ -168,6 +173,7 @@ Free Edition Lakebase scales to zero when idle, so the first request after a qui
 - `data/` seed prices from the campus price walk, the item and outlet lists, and StatCan extracts
 - `notebooks/` Databricks notebooks for the StatCan benchmarks
 - `prompts/` Claude Code and Gemini prompts
+- `first-prototype/` **FIRST PROTOTYPE** (v0.1.0): working Databricks App on Lakebase with sample data
 
 ## What we know so far
 
