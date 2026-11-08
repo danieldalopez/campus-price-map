@@ -56,6 +56,14 @@ export default function HomeScreen() {
   // earlier visit, the dot comes back without a prompt.
   useEffect(() => resumeLocationIfGranted(), []);
 
+  // "/?q=ramen" opens Home already searching (a tapped line on an outlet's full menu links here). Read after
+  // mount: the page is a static shell, so the URL isn't known while rendering it.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("q");
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time sync from the URL on mount
+    if (q) setQuery(q);
+  }, []);
+
   const result = useMemo(() => searchItems(query, items), [query, items]);
   const searching = result.kind !== "empty";
 
