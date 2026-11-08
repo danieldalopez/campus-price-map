@@ -169,6 +169,7 @@ function hookVisibility() {
  */
 export function requestLocation(): void {
   if (typeof navigator === "undefined" || wanted) return;
+  rememberOff(false);
   if (!("geolocation" in navigator)) {
     update({ status: "fallback", reason: "unsupported" });
     return;
@@ -185,12 +186,45 @@ export function requestLocation(): void {
  */
 export function resumeLocationIfGranted(): void {
   if (typeof navigator === "undefined" || wanted || !navigator.permissions?.query) return;
+  // The student switched location off with the map's location button: stay off until they turn it on.
+  if (turnedOff()) return;
   navigator.permissions
     .query({ name: "geolocation" })
     .then((status) => {
       if (status.state === "granted") requestLocation();
     })
     .catch(() => {});
+}
+
+const OFF_KEY = "cpm.location_off";
+
+function turnedOff(): boolean {
+  try {
+    return window.localStorage.getItem(OFF_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function rememberOff(off: boolean) {
+  try {
+    if (off) window.localStorage.setItem(OFF_KEY, "1");
+    else window.localStorage.removeItem(OFF_KEY);
+  } catch {
+    // Storage blocked: it just won't be remembered.
+  }
+}
+
+/**
+ * Switch location off (the map's location button): stop watching, forget the position, measure from the AMS
+ * Nest, and don't turn it back on by itself on later visits. requestLocation() turns it on again.
+ */
+export function turnOffLocation(): void {
+  if (typeof navigator === "undefined") return;
+  wanted = false;
+  stopWatch();
+  rememberOff(true);
+  update({ ...INITIAL });
 }
 
 export function subscribeLocation(listener: () => void): () => void {

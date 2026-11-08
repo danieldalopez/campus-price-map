@@ -9,6 +9,7 @@ import { PendingLine } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
 import { PriceTag } from "./PriceTag";
 import { Stamp } from "./Stamp";
+import { StockButtons } from "./StockButtons";
 
 type Props = {
   row: PriceRow;
@@ -85,6 +86,7 @@ export function OutletRow({ row, now, cheapest, dimmed, saves, item }: Props) {
       {row.price !== null ? (
         <BoughtButton outlet={row.outlet} item={item} price={row.price} className="mt-2" />
       ) : null}
+      <StockButtons outlet={row.outlet} item={item} stock={row.stock} />
     </li>
   );
 }
