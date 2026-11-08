@@ -613,10 +613,14 @@ def gold_walk_worth():
     # verdict         = worth_it if net > even_band; not_worth_it if net < -even_band; else about_even
     # break_even_wage = saving / (extra_min / 60);  break_even_min = saving / wage x 60
     # saved_H, minutes_H, net_H = saving, extra_min, net x H for each horizon, per weekly purchase
+    # Exact decimal arithmetic throughout (prices in cents, minutes in tenths, wage in cents), multiplying before the
+    # one division by 60, and rounding half away from zero. Binary floating point rounded about 0.7% of nets
+    # differently from any JavaScript port; with decimals the app reproduces every value in integer cents
+    # (tests/fixtures/walk_worth.json, "rounding").
     def horizon(h):
         return f"""
           CAST(round(p.saving * p.weeks_{h}, 2) AS DECIMAL(10, 2)) AS saved_{h},
-          round(p.extra_min * p.weeks_{h}, 1) AS minutes_{h},
+          CAST(round(p.extra_min * p.weeks_{h}, 1) AS DECIMAL(10, 1)) AS minutes_{h},
           CAST(round(p.net_cents * p.weeks_{h}, 2) AS DECIMAL(10, 2)) AS net_{h}"""
 
     return _sql(
@@ -633,15 +637,22 @@ def gold_walk_worth():
           JOIN silver_outlet_distances d ON d.from_id = a.location_id AND d.to_id = b.location_id
         ),
         calc AS (
-          SELECT pr.*, c.bc_min_wage AS wage, c.round_trip, c.even_band, c.worth_max_extra_min,
-                 c.weeks_term, c.weeks_year, c.weeks_degree,
-                 pr.walk_min * CASE WHEN c.round_trip THEN 2 ELSE 1 END AS extra_min
+          SELECT pr.*,
+                 CAST(c.bc_min_wage AS DECIMAL(7, 2)) AS wage,
+                 c.round_trip,
+                 CAST(c.even_band AS DECIMAL(5, 2)) AS even_band,
+                 CAST(c.worth_max_extra_min AS DECIMAL(6, 1)) AS worth_max_extra_min,
+                 CAST(c.weeks_term AS DECIMAL(6, 2)) AS weeks_term,
+                 CAST(c.weeks_year AS DECIMAL(6, 2)) AS weeks_year,
+                 CAST(c.weeks_degree AS DECIMAL(6, 2)) AS weeks_degree,
+                 CAST(CAST(pr.walk_min AS DECIMAL(6, 1)) * CASE WHEN c.round_trip THEN 2 ELSE 1 END AS DECIMAL(6, 1))
+                   AS extra_min
           FROM pairs pr CROSS JOIN cfg c
         ),
         priced AS (
           SELECT *,
-                 extra_min / 60 * wage AS time_cost_exact,
-                 round(saving - extra_min / 60 * wage, 2) AS net_cents
+                 extra_min * wage / 60 AS time_cost_exact,
+                 round(saving - extra_min * wage / 60, 2) AS net_cents
           FROM calc
           WHERE extra_min <= worth_max_extra_min
         ),
@@ -663,7 +674,7 @@ def gold_walk_worth():
             ELSE 'about_even'
           END AS verdict,
           CAST(round(try_divide(p.saving * 60, p.extra_min), 2) AS DECIMAL(8, 2)) AS break_even_wage,
-          round(try_divide(p.saving * 60, p.wage), 1) AS break_even_min,
+          CAST(round(try_divide(p.saving * 60, p.wage), 1) AS DECIMAL(8, 1)) AS break_even_min,
           {horizon('term')},
           {horizon('year')},
           {horizon('degree')},
@@ -789,12 +800,12 @@ def gold_price_comparisons():
           sc.statcan_note,
           w.cheaper_location_id AS walk_best_location_id,
           w.saving AS walk_saving,
-          w.extra_min AS walk_extra_min,
+          CAST(w.extra_min AS DOUBLE) AS walk_extra_min,  -- synced column type stays DOUBLE
           w.time_cost AS walk_time_cost,
           w.net AS walk_net,
           w.verdict AS walk_verdict,
           w.break_even_wage AS walk_break_even_wage,
-          CAST(round(w.net * cfg.weeks_term, 2) AS DECIMAL(10, 2)) AS walk_net_term_per_weekly,
+          w.net_term AS walk_net_term_per_weekly,
           round(try_divide(b.price, cfg.bc_min_wage) * 60, 1) AS minutes_of_work,
           {chip} AS chip,
           b.est_price, b.est_low, b.est_high,
