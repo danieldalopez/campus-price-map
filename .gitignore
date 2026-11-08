@@ -5,3 +5,14 @@
 node_modules/
 __pycache__/
 .ipynb_checkpoints/
+
+# next.js
+/.next/
+/out/
+/build
+/coverage
+*.pem
+npm-debug.log*
+*.tsbuildinfo
+next-env.d.ts
+.vercel

@@ -1,0 +1,275 @@
+@import "tailwindcss";
+
+/* The Databricks App prototype is reference only; keep its classes out of our CSS. */
+@source not "../../first-prototype";
+
+/* Design tokens: docs/SPEC.md section 11. Light theme only (it's a paper look). */
+:root {
+  --paper: #f4eee2;
+  --paper-2: #eae1cf;
+  --card: #fffdf8;
+  --ink: #1a1a1a;
+  --ink-2: #4a4a4a;
+  --tag: #ffd23f;
+  --tag-ink: #1a1a1a;
+  --cheap: #1f7a4d;
+  --mid: #8a5a00;
+  --pricey: #b42318;
+  --pending: #3b5b8c;
+  --tape: rgba(233, 223, 199, 0.85);
+  --focus: #2563eb;
+  --band-avg: #f2c14e; /* average band chip: amber, distinct from --tag */
+  --radius: 6px;
+  --border: 2px solid var(--ink);
+  --shadow: 3px 3px 0 var(--ink);
+
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-tag: var(--tag);
+  --color-tag-ink: var(--tag-ink);
+  --color-cheap: var(--cheap);
+  --color-mid: var(--mid);
+  --color-pricey: var(--pricey);
+  --color-pending: var(--pending);
+  --color-band-avg: var(--band-avg);
+  --color-focus: var(--focus);
+
+  --font-heading: var(--font-bricolage), system-ui, sans-serif;
+  --font-sans: var(--font-source-sans), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-note: var(--font-caveat), cursive;
+
+  --radius-tag: var(--radius);
+  --shadow-ink: var(--shadow);
+  --shadow-ink-sm: 2px 2px 0 var(--ink);
+}
+
+html,
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 1rem; /* 16 px minimum for body text */
+  line-height: 1.4;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- PriceTag ---------- */
+@layer components {
+  .price-tag {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: var(--tag);
+    color: var(--tag-ink);
+    border: var(--border);
+    border-radius: 14px var(--radius) var(--radius) 14px;
+    box-shadow: var(--shadow);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    white-space: nowrap;
+    rotate: var(--tilt, 0deg);
+  }
+  /* the hole the string goes through */
+  .price-tag::before {
+    content: "";
+    flex: none;
+    width: 0.5em;
+    height: 0.5em;
+    min-width: 7px;
+    min-height: 7px;
+    border-radius: 999px;
+    background: var(--paper);
+    border: var(--border);
+  }
+
+  /* ---------- PriceBand chip ---------- */
+  .price-band {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    min-height: 32px;
+    padding: 0.2rem 0.6rem;
+    border: var(--border);
+    border-radius: var(--radius);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.875rem; /* 14 px minimum */
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  .price-band--good {
+    background: var(--cheap);
+    color: #fff;
+  }
+  .price-band--average {
+    background: var(--band-avg);
+    color: var(--ink);
+  }
+  .price-band--high {
+    background: var(--pricey);
+    color: #fff;
+  }
+
+  /* ---------- Map pins (L.divIcon) ---------- */
+  .cpm-pin {
+    /* Leaflet sets the size; this box is the 44 px+ hit area. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 0;
+    border-radius: 10px;
+  }
+  .cpm-pin__tag {
+    font-size: 0.95rem;
+    padding: 0.3rem 0.45rem 0.3rem 0.35rem;
+  }
+  .cpm-pin__tag--est {
+    border-style: dashed;
+  }
+  .cpm-pin__est {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+  /* grocery baseline: a different shape (a flat paper slip, no hole) */
+  .cpm-pin__grocery {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.2rem 0.5rem 0.25rem;
+    background: var(--card);
+    color: var(--ink);
+    border: var(--border);
+    border-radius: 2px;
+    box-shadow: var(--shadow);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.8rem;
+    line-height: 1.05;
+    rotate: var(--tilt, 0deg);
+  }
+  .cpm-pin__grocery-label {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+  }
+  .leaflet-marker-icon.cpm-pin:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------- Map look ---------- */
+.leaflet-container {
+  background: var(--paper);
+  font-family: var(--font-sans);
+}
+.leaflet-tile-pane {
+  filter: grayscale(1) sepia(0.25) contrast(0.95) brightness(1.05);
+}
+/* Home: keep zoom buttons and the attribution visible above the bottom bar. */
+.home-map .leaflet-bottom {
+  bottom: var(--home-bottom-ui, 6.5rem);
+}
+.leaflet-control-attribution {
+  font-size: 0.75rem;
+  background: rgba(255, 253, 248, 0.9) !important;
+  color: var(--ink);
+}
+.leaflet-control-attribution a {
+  color: var(--ink);
+  text-decoration: underline;
+}
+/* 48 px zoom buttons (tap target rule) */
+.leaflet-bar a,
+.leaflet-touch .leaflet-bar a {
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 22px;
+  color: var(--ink);
+  background: var(--card);
+}
+.leaflet-touch .leaflet-bar,
+.leaflet-bar {
+  border: var(--border) !important;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow) !important;
+}
+.leaflet-popup-content-wrapper {
+  background: var(--card);
+  color: var(--ink);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.leaflet-popup-content {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  margin: 12px 16px;
+}
+.leaflet-popup-content p {
+  margin: 0;
+}
+.leaflet-popup-content p + p {
+  margin-top: 0.25rem;
+}
+.leaflet-popup-tip {
+  background: var(--card);
+  border: var(--border);
+}
+.leaflet-container a.leaflet-popup-close-button {
+  width: 32px;
+  height: 32px;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+/* ---------- Motion and contrast preferences ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .price-tag,
+  .price-band,
+  .cpm-pin__grocery,
+  .leaflet-bar {
+    border-color: CanvasText;
+  }
+  .price-tag::before {
+    background: Canvas;
+    border-color: CanvasText;
+  }
+  .leaflet-tile-pane {
+    filter: none;
+  }
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}
