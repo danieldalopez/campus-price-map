@@ -12,6 +12,14 @@
 bundle:
   name: campus-price-map
 
+# Upload this folder plus ../data, so the pipeline can read data/statcan_map.csv (the hand-checked
+# item to StatCan mapping) from the workspace. Deployed files keep their repo layout under
+# ${workspace.file_path}: databricks/src/..., data/statcan_map.csv.
+sync:
+  paths:
+    - .
+    - ../data
+
 variables:
   catalog:
     description: Unity Catalog catalog for everything Databricks computes.
@@ -50,8 +58,13 @@ resources:
       continuous: false
       channel: CURRENT
       root_path: ./src
+      # Read in price_engine.py with spark.conf.get.
+      configuration:
+        cpm.catalog: ${var.catalog}
+        cpm.schema: ${var.schema}
+        cpm.statcan_map_path: ${workspace.file_path}/data/statcan_map.csv
       libraries:
-        # D1 ships a stub; D2 fills it with silver_* and gold_* (section 10, "The pipeline").
+        # silver_* and gold_* (section 10, "The pipeline"), D2 and D8.
         - file:
             path: ./src/price_engine.py
 
