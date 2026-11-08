@@ -79,7 +79,37 @@ async function zxingReader(): Promise<BarcodeReader> {
   };
 }
 
-/** The best reader this browser has. */
+/** `frame` turned 90° clockwise onto `out`, so a vertical barcode reads like a horizontal one. */
+function rotate90(frame: HTMLCanvasElement, out: HTMLCanvasElement): HTMLCanvasElement | null {
+  out.width = frame.height;
+  out.height = frame.width;
+  const ctx = out.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return null;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.translate(out.width, 0);
+  ctx.rotate(Math.PI / 2);
+  ctx.drawImage(frame, 0, 0);
+  return out;
+}
+
+/**
+ * Any orientation: read the frame as it is, then turned 90°. People hold a can upright, so its barcode is
+ * often vertical; 1D readers (zxing above all) scan along rows and miss it unless the frame is turned.
+ */
+function anyOrientation(reader: BarcodeReader): BarcodeReader {
+  const turned = document.createElement("canvas");
+  return {
+    kind: reader.kind,
+    read: async (frame) => {
+      const code = await reader.read(frame);
+      if (code) return code;
+      const rotated = rotate90(frame, turned);
+      return rotated ? reader.read(rotated) : null;
+    },
+  };
+}
+
+/** The best reader this browser has, reading barcodes held either way up. */
 export async function createBarcodeReader(): Promise<BarcodeReader> {
-  return (await nativeReader()) ?? zxingReader();
+  return anyOrientation((await nativeReader()) ?? (await zxingReader()));
 }
