@@ -46,9 +46,9 @@ variables:
   price_comparisons_sync_pipeline_id:
     description: Pipeline behind the synced table serving.price_comparisons (D3).
     default: d9a629a0-523c-4fb6-936e-28dd57bfca1d
-  # D5 adds, once gold_outlet_scores exists and is synced:
-  # outlet_scores_sync_pipeline_id:
-  #   description: Pipeline behind the synced table serving.outlet_scores.
+  outlet_scores_sync_pipeline_id:
+    description: Pipeline behind the synced table serving.outlet_scores (D5).
+    default: 4fe63306-de30-4eb7-9ff3-bfc06c558cba
 
 resources:
   pipelines:
@@ -123,18 +123,19 @@ resources:
             - task_key: price_model
           pipeline_task:
             pipeline_id: ${var.price_comparisons_sync_pipeline_id}
-        # D5 adds the outlet_scores sync. If Free Edition refuses two sync pipelines at once, chain them.
-        # - task_key: sync_outlet_scores
-        #   depends_on:
-        #     - task_key: price_model
-        #   pipeline_task:
-        #     pipeline_id: ${var.outlet_scores_sync_pipeline_id}
+        # D5: snapshot refresh of serving.outlet_scores (the map's $ tiers), after the price_comparisons sync
+        # (Free Edition may refuse two sync pipelines at once).
+        - task_key: sync_outlet_scores
+          depends_on:
+            - task_key: sync_price_comparisons
+          pipeline_task:
+            pipeline_id: ${var.outlet_scores_sync_pipeline_id}
 
         # D3: re-grant app_reader on the serving schema after every sync (a snapshot refresh can drop grants).
-        # When sync_outlet_scores is enabled, add it to depends_on too, or its table can be left without grants.
         - task_key: grants
           depends_on:
             - task_key: sync_price_comparisons
+            - task_key: sync_outlet_scores
           notebook_task:
             notebook_path: ./src/04_grants.py
             base_parameters:
