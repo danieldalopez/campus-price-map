@@ -189,7 +189,7 @@ StatCan matches (I08, I09, I11, I20, I21) live in `data/statcan_map.csv`, sectio
 
 ### Where the prices come from
 
-`data/raw/campus_food_prices.csv` has 1,704 usable menu lines. 576 have a retrieved date (menus read on Nov 7): source `menu`. The other 1,128 are **AI-estimated prototype prices**, undated: source `seed`. For this prototype the app treats `seed` prices as real, official prices everywhere (comparisons, bands, Worth the walk, the Databricks engine). The source is kept so they stay traceable: the freshness line says "Prototype price", and `gold_pitch_numbers` and the Devpost never quote them as research findings. Real reports (photo, receipt, typed) replace them as students confirm prices. Of the 593 tracked prices, 10 are `menu` and 583 are `seed`; `data/build_report.md` has the per-item counts.
+`data/raw/campus_food_prices.csv` has 1,704 usable menu lines. 576 have a retrieved date (menus read on Nov 7): source `menu`. The other 1,128 are **AI-estimated prototype prices**, undated: source `seed`. For this prototype the app treats `seed` prices as real, official prices everywhere (comparisons, bands, Worth the walk, the Databricks engine). The source is kept so they stay traceable: the freshness line says "Prototype price". The Devpost presents the whole dataset as a **proof of concept**: `gold_pitch_numbers` counts `seed` prices too, and every number they contribute to carries the note "proof of concept: includes AI-estimated prototype prices". Quote that note with the number. Real reports (photo, receipt, typed) replace them as students confirm prices. Of the 593 tracked prices, 10 are `menu` and 583 are `seed`; `data/build_report.md` has the per-item counts.
 
 ### What each outlet sells (`data/carries.csv`)
 
@@ -546,7 +546,7 @@ All tables are materialized views: full recompute every run, fine at this size.
 | `gold_item_stats` | Per item, over non benchmark outlets: n_outlets, min, median, max, spread, cheapest outlet, grocery baseline price. |
 | `gold_price_comparisons` | One row per item and outlet with an official price, plus estimated rows from `model_price_estimates` (columns below). This is the table the app serves. |
 | `gold_parity` | Compares `gold_official_prices` with `bronze_current_prices` (the live view). One row per mismatch. Expect zero; a non-zero count fails an `expect` and shows in the data quality panel. Reports newer than the bronze copy are excluded. |
-| `gold_pitch_numbers` | Real numbers for the Devpost: biggest same item gap between outlets; share of cheaper options that are worth the walk at the BC minimum wage; median net per term at 4 purchases a week among worthwhile switches; number of reports and confirmations. Never synced. |
+| `gold_pitch_numbers` | Proof-of-concept numbers for the Devpost (every official price, `seed` included and labelled in the detail): biggest same item gap between outlets; share of cheaper options that are worth the walk at the BC minimum wage; median net per term at 4 purchases a week among worthwhile switches; number of reports and confirmations. Never synced. |
 
 `gold_price_comparisons` columns (become `serving.price_comparisons`):
 
