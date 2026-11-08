@@ -87,18 +87,18 @@ flowchart LR
   P --> DB[("Databricks Lakebase<br/>Postgres")]
   SP --> DB
   SHEET["Price walk sheet"] --> DB
-  DB --> NB["Databricks notebook<br/>StatCan benchmarks"]
+  DB --> NB["Databricks notebook<br/>price model + StatCan benchmarks"]
   SC["StatCan Web Data Service"] --> NB
   NB --> DT[("Delta tables")]
   DT -->|"synced tables"| DB
   JOB["Monthly Job"] --> NB
 ```
 
-**Find the cheapest spot:** search calls `/api/prices`, which reads Lakebase with the `app_reader` role and returns outlets sorted closest first, then cheapest. Per item comparisons ("40 cents above campus average") are worked out from current prices at query time.
+**Find the cheapest spot:** search calls `/api/prices`, which reads Lakebase with the `app_reader` role and returns outlets sorted closest first, then cheapest. Per item comparisons ("40 cents above campus average") use the typical campus price from our price model (see [Price analysis](#price-analysis)), and fall back to the campus median of current prices until the notebook has run.
 
 **Log a price:** the photo goes to `/api/read-tag`, which sends it to Gemini with the key from Vercel environment variables. Gemini returns item, size and price as JSON, the route matches it to our item list, and the student confirms. `/api/save-price` validates it and inserts with the `app_writer` role.
 
-**Data engine:** Lakebase is registered in Unity Catalog, so a Databricks notebook reads `prices` directly. The notebook pulls StatCan tables with `stats_can`, builds BC benchmarks for the items that truly match as a Delta table, and that syncs back into Lakebase as a read only synced table. A monthly Job reruns it when StatCan publishes. Notebooks and Jobs never sit in the live path.
+**Data engine:** Lakebase is registered in Unity Catalog, so a Databricks notebook reads `prices` directly. The notebook fits a fixed effects price model to get a fair typical campus price per item, pulls StatCan tables with `stats_can`, and builds BC benchmarks for the items that truly match. Both are Delta tables that sync back into Lakebase as read only synced tables. A monthly Job reruns it when StatCan publishes. Notebooks and Jobs never sit in the live path.
 
 ## Tech stack
 
@@ -123,6 +123,7 @@ flowchart LR
 | `items` | 21 tracked items, size, category, StatCan match | Chosen by the team |
 | `prices` | Price per item per outlet, time, `source` (walk, menu, photo) | Our price walk, online menus, then students |
 | `stock_reports` | Sold out reports | Students |
+| `campus_typical_prices` | Typical campus price per item from the price model, with the number of prices behind it | Synced from Databricks |
 | `statcan_benchmarks` | BC average price for matched items, per unit, by month | Synced from Databricks |
 
 ### Statistics Canada tables
@@ -136,6 +137,43 @@ flowchart LR
 | 13‑10‑0835‑01 | Food insecurity by demographic | Why affordability matters |
 
 StatCan is supporting context, not the headline. We only compare true per unit matches, and we label every figure as a provincial average that lags a couple of months.
+
+## Price analysis
+
+A plain average is misleading here. Outlets stock different things, so a café that mostly sells lattes looks expensive next to a store that mostly sells water, even if it charges less for the same items. So the Databricks notebook compares outlets on the **same items** with a fixed effects model:
+
+```
+log(price) = item effect + outlet effect + error
+```
+
+- The **item effect** absorbs that a sandwich costs more than a banana.
+- The **outlet effect** is what's left: how much more or less an outlet charges for the same thing. Because prices are in logs, `exp(b) - 1` reads as a percentage.
+- We fit it with OLS and robust (HC1) standard errors, and recentre outlet effects on the campus average rather than on one outlet.
+- A mixed model with outlets as random effects runs alongside it, so outlets with only a few prices are pulled toward the average instead of swinging wildly.
+
+```python
+import numpy as np, statsmodels.formula.api as smf
+
+ols = smf.ols("np.log(price) ~ C(item_id) + C(location_id)", data=df).fit(cov_type="HC1")
+shrunk = smf.mixedlm("np.log(price) ~ C(item_id)", df, groups=df["location_id"]).fit()
+```
+
+### What the model is used for
+
+| Output | Where it goes |
+|---|---|
+| Typical campus price per item (the model's prediction at an average outlet) | Synced to Lakebase as `campus_typical_prices`. It's the "campus average" behind item labels like "40 cents above campus average", and the campus side of the "vs BC average" badge. It doesn't depend on which outlets we happened to visit. |
+| Outlet effects with 95% intervals | The notebook and the pitch only: "controlling for what they sell, the priciest outlet charges X% more than the cheapest for the same items." |
+
+The app never shows a single cheap or expensive score for a whole outlet. A place can have the cheapest coffee and the priciest Red Bull, so every comparison a student sees is about one item.
+
+### Keeping it honest
+
+- **Enough data first.** Only outlets with 4 or more prices, and only items sold at 2 or more outlets, so every outlet is compared through items it shares with others. Anything thinner shows "not enough data".
+- **Clean inputs.** Walk and photo prices by default. Menu prices can be stale or exclude tax, so they're only included behind a flag.
+- **Descriptive, not causal.** We say an outlet charges more for the same item, never why. It's one snapshot from a small sample.
+- **StatCan stays separate.** Only a few items match, in different units, so the BC comparison is a per unit ratio outside the regression.
+- **Fallback.** If the model won't fit cleanly, the notebook uses a median ratio index (each price divided by that item's campus median, averaged per outlet) and records which method ran.
 
 ## Guardrails
 
@@ -171,7 +209,7 @@ Free Edition Lakebase scales to zero when idle, so the first request after a qui
 ## Repo layout
 
 - `data/` seed prices from the campus price walk, the item and outlet lists, and StatCan extracts
-- `notebooks/` Databricks notebooks for the StatCan benchmarks
+- `notebooks/` Databricks notebooks for the price model and StatCan benchmarks
 - `prompts/` Claude Code and Gemini prompts
 - `first-prototype/` **FIRST PROTOTYPE** (v0.1.0): working Databricks App on Lakebase with sample data
 
@@ -190,7 +228,7 @@ We're keeping ourselves honest about what's evidence and what's still a guess.
 ## Prize tracks we're entering
 
 - **Superlatives:** Best Problem‑Solution Fit and Most Accessible Design (beginner stream), with Community Impact as a backup
-- **Best Use of Databricks:** Lakebase as the app database, StatCan notebook, synced tables, monthly Job
+- **Best Use of Databricks:** Lakebase as the app database, a notebook with a fixed effects price model and StatCan benchmarks, synced tables, monthly Job
 - **Best Use of Gemini API (MLH):** reading price tag photos
 - **GoDaddy Registry domain (MLH)**, plus Entire and Auth0 if time allows
 
