@@ -1,0 +1,689 @@
+{
+  "version": 2,
+  "config": {
+    "sample_questions": [
+      {
+        "id": "0ecb085c23b298f1b69d75a02d3bf3ed",
+        "question": [
+          "Cheapest Red Bull on campus?"
+        ]
+      },
+      {
+        "id": "464930af3f1717f50b44c03fda892a5d",
+        "question": [
+          "Which outlet is cheapest for the most items?"
+        ]
+      },
+      {
+        "id": "6283a656b30e1714b1adc3f709a4ec15",
+        "question": [
+          "From the Nest, which cheaper options save the most over a term?"
+        ]
+      },
+      {
+        "id": "9363b9750f75f0b4ddccdc7ebf60903f",
+        "question": [
+          "How much more does bottled water cost on campus than at Save-On-Foods?"
+        ]
+      },
+      {
+        "id": "e68520300d91196ef19826dfc0364f64",
+        "question": [
+          "Which items have the biggest price gap between outlets?"
+        ]
+      },
+      {
+        "id": "efd6f0ab309bf64b95e1ef40512ce939",
+        "question": [
+          "Which outlet is most expensive for coffee?"
+        ]
+      }
+    ]
+  },
+  "data_sources": {
+    "tables": [
+      {
+        "identifier": "workspace.cpm.bronze_items",
+        "column_configs": [
+          {
+            "column_name": "aliases",
+            "description": [
+              "Other spellings people type, pipe separated."
+            ]
+          },
+          {
+            "column_name": "category",
+            "description": [
+              "Item group, e.g. Energy drinks, Hot drinks, Cold coffee, Snacks, Fruit."
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          },
+          {
+            "column_name": "copied_at",
+            "exclude": true
+          },
+          {
+            "column_name": "id",
+            "description": [
+              "Item id, I01 to I23. Join key for item_id in every other table."
+            ]
+          },
+          {
+            "column_name": "image",
+            "exclude": true
+          },
+          {
+            "column_name": "name",
+            "description": [
+              "Item name as students say it, e.g. Red Bull, Drip coffee, Bottled water."
+            ],
+            "synonyms": [
+              "item",
+              "product"
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          },
+          {
+            "column_name": "size",
+            "description": [
+              "Pack or cup size, e.g. 250 ml can, small (10 to 12 oz). The same name can have two sizes (Red Bull 250 ml and 355 ml)."
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          }
+        ]
+      },
+      {
+        "identifier": "workspace.cpm.bronze_locations",
+        "column_configs": [
+          {
+            "column_name": "area",
+            "description": [
+              "Campus area, e.g. AMS Nest, Academic core, University Village, Residences. 'the Nest' means area = 'AMS Nest'."
+            ],
+            "synonyms": [
+              "building",
+              "zone"
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          },
+          {
+            "column_name": "copied_at",
+            "exclude": true
+          },
+          {
+            "column_name": "hours",
+            "description": [
+              "Opening hours as text."
+            ]
+          },
+          {
+            "column_name": "id",
+            "description": [
+              "Outlet id. Join key for location_id, origin_location_id, cheaper_location_id and the *_location_id columns."
+            ]
+          },
+          {
+            "column_name": "is_benchmark",
+            "description": [
+              "True only for the off campus grocery baseline, Save-On-Foods (Wesbrook Village). Not a campus outlet."
+            ]
+          },
+          {
+            "column_name": "lat",
+            "exclude": true
+          },
+          {
+            "column_name": "lng",
+            "exclude": true
+          },
+          {
+            "column_name": "location_precision",
+            "exclude": true
+          },
+          {
+            "column_name": "name",
+            "description": [
+              "Outlet name, e.g. H-Mart, Tim Hortons (David Lam), Starbucks (Bookstore)."
+            ],
+            "synonyms": [
+              "outlet",
+              "store",
+              "shop",
+              "cafe"
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          },
+          {
+            "column_name": "operator",
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          },
+          {
+            "column_name": "poi_id",
+            "exclude": true
+          },
+          {
+            "column_name": "type",
+            "description": [
+              "Outlet type, e.g. cafe, convenience, grocery."
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          }
+        ]
+      },
+      {
+        "identifier": "workspace.cpm.gold_item_stats",
+        "column_configs": [
+          {
+            "column_name": "campus_median",
+            "description": [
+              "Median official price across campus outlets."
+            ],
+            "synonyms": [
+              "typical price",
+              "average price on campus"
+            ]
+          },
+          {
+            "column_name": "grocery_price",
+            "description": [
+              "Price at the grocery baseline, Save-On-Foods (Wesbrook Village)."
+            ],
+            "synonyms": [
+              "Save-On-Foods price",
+              "grocery store price"
+            ]
+          },
+          {
+            "column_name": "item_name",
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          },
+          {
+            "column_name": "spread",
+            "description": [
+              "campus_max minus campus_min: the price gap between the cheapest and priciest campus outlet."
+            ],
+            "synonyms": [
+              "price gap",
+              "price range",
+              "difference"
+            ]
+          }
+        ]
+      },
+      {
+        "identifier": "workspace.cpm.gold_model_metrics"
+      },
+      {
+        "identifier": "workspace.cpm.gold_outlet_scores",
+        "column_configs": [
+          {
+            "column_name": "n_items_cheapest",
+            "description": [
+              "How many items this outlet is the cheapest on campus for."
+            ]
+          },
+          {
+            "column_name": "score_pct",
+            "description": [
+              "How far the outlet's prices sit from the campus median overall, in percent. Negative is cheaper."
+            ]
+          },
+          {
+            "column_name": "tier",
+            "description": [
+              "$ cheaper, $$ average, $$$ pricier. Empty when there's too little data."
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          }
+        ]
+      },
+      {
+        "identifier": "workspace.cpm.gold_price_comparisons",
+        "column_configs": [
+          {
+            "column_name": "band",
+            "description": [
+              "good, average or high versus the campus median."
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          },
+          {
+            "column_name": "chip",
+            "description": [
+              "The label the app shows, e.g. 'Cheapest on campus'."
+            ]
+          },
+          {
+            "column_name": "est_high",
+            "exclude": true
+          },
+          {
+            "column_name": "est_low",
+            "exclude": true
+          },
+          {
+            "column_name": "est_price",
+            "exclude": true
+          },
+          {
+            "column_name": "is_benchmark",
+            "description": [
+              "True for the grocery baseline row. Exclude it (NOT is_benchmark) for campus answers."
+            ]
+          },
+          {
+            "column_name": "minutes_of_work",
+            "exclude": true
+          },
+          {
+            "column_name": "pct_vs_median",
+            "description": [
+              "Percent above (+) or below (-) the campus median for this item."
+            ],
+            "synonyms": [
+              "markup",
+              "premium"
+            ]
+          },
+          {
+            "column_name": "price",
+            "description": [
+              "Official price in CAD."
+            ]
+          },
+          {
+            "column_name": "rank",
+            "description": [
+              "1 is the cheapest campus outlet for this item. Ties share a rank."
+            ]
+          },
+          {
+            "column_name": "source",
+            "description": [
+              "Where the price came from: seed (team price walk), menu (posted menu), photo, student."
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          },
+          {
+            "column_name": "walk_break_even_wage",
+            "exclude": true
+          },
+          {
+            "column_name": "walk_net",
+            "exclude": true
+          },
+          {
+            "column_name": "walk_net_term_per_weekly",
+            "exclude": true
+          },
+          {
+            "column_name": "walk_time_cost",
+            "exclude": true
+          },
+          {
+            "column_name": "walk_verdict",
+            "exclude": true
+          }
+        ]
+      },
+      {
+        "identifier": "workspace.cpm.gold_price_status",
+        "column_configs": [
+          {
+            "column_name": "device_id",
+            "exclude": true
+          },
+          {
+            "column_name": "reporter",
+            "exclude": true
+          },
+          {
+            "column_name": "status",
+            "description": [
+              "pending or official."
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          },
+          {
+            "column_name": "user_id",
+            "exclude": true
+          }
+        ]
+      },
+      {
+        "identifier": "workspace.cpm.gold_walk_worth",
+        "column_configs": [
+          {
+            "column_name": "break_even_min",
+            "exclude": true
+          },
+          {
+            "column_name": "break_even_wage",
+            "exclude": true
+          },
+          {
+            "column_name": "cheaper_name",
+            "description": [
+              "Cheaper outlet within walking range."
+            ],
+            "synonyms": [
+              "walk to"
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          },
+          {
+            "column_name": "extra_min",
+            "description": [
+              "Extra walking minutes, there and back."
+            ]
+          },
+          {
+            "column_name": "minutes_degree",
+            "exclude": true
+          },
+          {
+            "column_name": "minutes_term",
+            "exclude": true
+          },
+          {
+            "column_name": "minutes_year",
+            "exclude": true
+          },
+          {
+            "column_name": "net",
+            "exclude": true
+          },
+          {
+            "column_name": "net_degree",
+            "exclude": true
+          },
+          {
+            "column_name": "net_rank",
+            "exclude": true
+          },
+          {
+            "column_name": "net_term",
+            "exclude": true
+          },
+          {
+            "column_name": "net_year",
+            "exclude": true
+          },
+          {
+            "column_name": "origin_name",
+            "description": [
+              "Outlet the student starts from."
+            ],
+            "synonyms": [
+              "from",
+              "starting point"
+            ],
+            "enable_format_assistance": true,
+            "enable_entity_matching": true
+          },
+          {
+            "column_name": "saved_degree",
+            "description": [
+              "Dollars saved over a degree, buying once a week."
+            ]
+          },
+          {
+            "column_name": "saved_term",
+            "description": [
+              "Dollars saved over a term, buying once a week (saving times weeks_term)."
+            ],
+            "synonyms": [
+              "savings per term",
+              "over a term"
+            ]
+          },
+          {
+            "column_name": "saved_year",
+            "description": [
+              "Dollars saved over a year, buying once a week."
+            ]
+          },
+          {
+            "column_name": "saving",
+            "description": [
+              "Dollars saved per purchase by buying at the cheaper outlet."
+            ]
+          },
+          {
+            "column_name": "saving_rank",
+            "description": [
+              "1 is the suggested cheaper outlet from that origin for that item (the biggest saving)."
+            ]
+          },
+          {
+            "column_name": "time_cost",
+            "exclude": true
+          },
+          {
+            "column_name": "verdict",
+            "exclude": true
+          },
+          {
+            "column_name": "wage",
+            "exclude": true
+          }
+        ]
+      },
+      {
+        "identifier": "workspace.cpm.silver_prices",
+        "column_configs": [
+          {
+            "column_name": "device_id",
+            "exclude": true
+          },
+          {
+            "column_name": "reporter",
+            "exclude": true
+          },
+          {
+            "column_name": "user_id",
+            "exclude": true
+          }
+        ]
+      }
+    ]
+  },
+  "instructions": {
+    "text_instructions": [
+      {
+        "id": "1cb251ec0d568de6a929b520c4aed8d1",
+        "content": [
+          "## PURPOSE\n- Answer questions about food and drink prices at UBC campus outlets, for students and hackathon judges.\n\n## DISAMBIGUATION\n- \"Campus\" means rows where is_benchmark is false; Save-On-Foods (Wesbrook Village) is the off campus grocery baseline, used only when the user asks about grocery or Save-On-Foods.\n- \"Coffee\" means items I08, I09 (drip coffee), I10 (latte) and I12 (iced coffee or cold brew); tea is not coffee.\n- \"The Nest\" means outlets with area = 'AMS Nest'.\n- When an item name has two sizes (Red Bull), answer for each size.\n\n## DATA QUALITY NOTES\n- Prices reflect the last pipeline refresh (computed_at), not live reports; pending prices are not official.\n- Savings over a term, year or degree assume one purchase a week.\n\n## Instructions you must follow when providing summaries\n- Show prices in CAD with two decimals and name the outlet, not its id.\n- Say \"as of\" the computed_at time."
+        ]
+      }
+    ],
+    "example_question_sqls": [
+      {
+        "id": "18ac2e9bc8aa73214521a7901e8b4513",
+        "question": [
+          "From INS Market, what is worth walking for?"
+        ],
+        "sql": [
+          "SELECT gold_walk_worth.item_name, gold_walk_worth.cheaper_name, gold_walk_worth.saving, gold_walk_worth.extra_min, gold_walk_worth.saved_term FROM workspace.cpm.gold_walk_worth WHERE gold_walk_worth.origin_location_id = 'ins-market' AND gold_walk_worth.saving_rank = 1 ORDER BY gold_walk_worth.saved_term DESC LIMIT 10"
+        ],
+        "usage_guidance": [
+          "Worth the walk: one suggestion per item and origin is saving_rank = 1. Rank by saved_term for 'over a term'."
+        ]
+      },
+      {
+        "id": "611dd1686e36559bc2f29f24cc3492fc",
+        "question": [
+          "Where is the cheapest small drip coffee?"
+        ],
+        "sql": [
+          "SELECT bronze_items.name, bronze_items.size, bronze_locations.name AS outlet, gold_price_comparisons.price FROM workspace.cpm.gold_price_comparisons JOIN workspace.cpm.bronze_items ON gold_price_comparisons.item_id = bronze_items.id JOIN workspace.cpm.bronze_locations ON gold_price_comparisons.location_id = bronze_locations.id WHERE bronze_items.id = 'I08' AND NOT gold_price_comparisons.is_benchmark AND gold_price_comparisons.rank = 1"
+        ],
+        "usage_guidance": [
+          "Cheapest outlet for one item: filter rank = 1 and exclude the grocery benchmark. Show size, since some names have two sizes."
+        ]
+      },
+      {
+        "id": "97af5c2f00ae64182f48b7da9fbe8943",
+        "question": [
+          "Which outlets are priciest for energy drinks?"
+        ],
+        "sql": [
+          "SELECT bronze_locations.name AS outlet, COUNT(*) AS items, ROUND(AVG(gold_price_comparisons.pct_vs_median), 1) AS avg_pct_vs_median FROM workspace.cpm.gold_price_comparisons JOIN workspace.cpm.bronze_items ON gold_price_comparisons.item_id = bronze_items.id JOIN workspace.cpm.bronze_locations ON gold_price_comparisons.location_id = bronze_locations.id WHERE bronze_items.category = 'Energy drinks' AND NOT gold_price_comparisons.is_benchmark GROUP BY bronze_locations.name HAVING COUNT(*) >= 2 ORDER BY avg_pct_vs_median DESC LIMIT 10"
+        ],
+        "usage_guidance": [
+          "Compare outlets across a group of items with the average pct_vs_median, so items with different prices are comparable. Require at least 2 items."
+        ]
+      }
+    ],
+    "join_specs": [
+      {
+        "id": "2131bba46062ec43c1a075f5018c6c9c",
+        "left": {
+          "identifier": "workspace.cpm.silver_prices",
+          "alias": "silver_prices"
+        },
+        "right": {
+          "identifier": "workspace.cpm.bronze_locations",
+          "alias": "bronze_locations"
+        },
+        "sql": [
+          "`silver_prices`.`location_id` = `bronze_locations`.`id`",
+          "--rt=FROM_RELATIONSHIP_TYPE_MANY_TO_ONE--"
+        ]
+      },
+      {
+        "id": "688aef7c8526a79ca81e83c6e04d6ce7",
+        "left": {
+          "identifier": "workspace.cpm.gold_walk_worth",
+          "alias": "gold_walk_worth"
+        },
+        "right": {
+          "identifier": "workspace.cpm.bronze_locations",
+          "alias": "bronze_locations"
+        },
+        "sql": [
+          "`gold_walk_worth`.`origin_location_id` = `bronze_locations`.`id`",
+          "--rt=FROM_RELATIONSHIP_TYPE_MANY_TO_ONE--"
+        ]
+      },
+      {
+        "id": "6a56463fe623f0bf4bce9e3612e614db",
+        "left": {
+          "identifier": "workspace.cpm.gold_price_comparisons",
+          "alias": "gold_price_comparisons"
+        },
+        "right": {
+          "identifier": "workspace.cpm.bronze_locations",
+          "alias": "bronze_locations"
+        },
+        "sql": [
+          "`gold_price_comparisons`.`location_id` = `bronze_locations`.`id`",
+          "--rt=FROM_RELATIONSHIP_TYPE_MANY_TO_ONE--"
+        ]
+      },
+      {
+        "id": "8355a9373eab087c3c7ba466242727fe",
+        "left": {
+          "identifier": "workspace.cpm.gold_price_status",
+          "alias": "gold_price_status"
+        },
+        "right": {
+          "identifier": "workspace.cpm.bronze_items",
+          "alias": "bronze_items"
+        },
+        "sql": [
+          "`gold_price_status`.`item_id` = `bronze_items`.`id`",
+          "--rt=FROM_RELATIONSHIP_TYPE_MANY_TO_ONE--"
+        ]
+      },
+      {
+        "id": "adeb3b8177f1399a7ec12f963cba443e",
+        "left": {
+          "identifier": "workspace.cpm.gold_outlet_scores",
+          "alias": "gold_outlet_scores"
+        },
+        "right": {
+          "identifier": "workspace.cpm.bronze_locations",
+          "alias": "bronze_locations"
+        },
+        "sql": [
+          "`gold_outlet_scores`.`location_id` = `bronze_locations`.`id`",
+          "--rt=FROM_RELATIONSHIP_TYPE_ONE_TO_ONE--"
+        ]
+      },
+      {
+        "id": "c4538c6c80453a1f5e1db5d8f2f52591",
+        "left": {
+          "identifier": "workspace.cpm.gold_price_comparisons",
+          "alias": "gold_price_comparisons"
+        },
+        "right": {
+          "identifier": "workspace.cpm.bronze_items",
+          "alias": "bronze_items"
+        },
+        "sql": [
+          "`gold_price_comparisons`.`item_id` = `bronze_items`.`id`",
+          "--rt=FROM_RELATIONSHIP_TYPE_MANY_TO_ONE--"
+        ]
+      },
+      {
+        "id": "c74c7cde1f65d05ff9d1bb16bdbfb7de",
+        "left": {
+          "identifier": "workspace.cpm.gold_price_status",
+          "alias": "gold_price_status"
+        },
+        "right": {
+          "identifier": "workspace.cpm.bronze_locations",
+          "alias": "bronze_locations"
+        },
+        "sql": [
+          "`gold_price_status`.`location_id` = `bronze_locations`.`id`",
+          "--rt=FROM_RELATIONSHIP_TYPE_MANY_TO_ONE--"
+        ]
+      },
+      {
+        "id": "d834447a7a3a7c9b97dd6849db89188a",
+        "left": {
+          "identifier": "workspace.cpm.gold_item_stats",
+          "alias": "gold_item_stats"
+        },
+        "right": {
+          "identifier": "workspace.cpm.bronze_items",
+          "alias": "bronze_items"
+        },
+        "sql": [
+          "`gold_item_stats`.`item_id` = `bronze_items`.`id`",
+          "--rt=FROM_RELATIONSHIP_TYPE_ONE_TO_ONE--"
+        ]
+      },
+      {
+        "id": "f55c18c596d360473a8969803eb51800",
+        "left": {
+          "identifier": "workspace.cpm.silver_prices",
+          "alias": "silver_prices"
+        },
+        "right": {
+          "identifier": "workspace.cpm.bronze_items",
+          "alias": "bronze_items"
+        },
+        "sql": [
+          "`silver_prices`.`item_id` = `bronze_items`.`id`",
+          "--rt=FROM_RELATIONSHIP_TYPE_MANY_TO_ONE--"
+        ]
+      }
+    ]
+  }
+}
