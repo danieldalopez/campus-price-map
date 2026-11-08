@@ -397,9 +397,24 @@ def silver_votes():
 )
 def silver_outlet_distances():
     # walk_matrix holds a normal and a step-free time per pair (db/schema.sql); Worth the walk uses the normal one.
-    step_free_filter = (
-        "WHERE NOT coalesce(CAST(step_free AS BOOLEAN), false)" if _has_column("bronze_walk_matrix", "step_free") else ""
-    )
+    # 02_bronze_copy skips a Lakebase table that doesn't exist yet, so bronze_walk_matrix may be missing: then
+    # every pair uses the formula.
+    if _has_column("bronze_walk_matrix", "from_id"):
+        step_free_filter = (
+            "WHERE NOT coalesce(CAST(step_free AS BOOLEAN), false)"
+            if _has_column("bronze_walk_matrix", "step_free")
+            else ""
+        )
+        walk_matrix = f"""
+          SELECT CAST(from_id AS STRING) AS from_id, CAST(to_id AS STRING) AS to_id,
+                 CAST(meters AS INT) AS meters, CAST(minutes AS DOUBLE) AS minutes, CAST(source AS STRING) AS source
+          FROM bronze_walk_matrix
+          {step_free_filter}"""
+    else:
+        walk_matrix = """
+          SELECT CAST(NULL AS STRING) AS from_id, CAST(NULL AS STRING) AS to_id, CAST(NULL AS INT) AS meters,
+                 CAST(NULL AS DOUBLE) AS minutes, CAST(NULL AS STRING) AS source
+          LIMIT 0"""
     return _sql(
         f"""
         WITH loc AS (
@@ -416,11 +431,7 @@ def silver_outlet_distances():
           FROM loc a CROSS JOIN loc b
           WHERE a.location_id <> b.location_id
         ),
-        wm AS (
-          SELECT CAST(from_id AS STRING) AS from_id, CAST(to_id AS STRING) AS to_id,
-                 CAST(meters AS INT) AS meters, CAST(minutes AS DOUBLE) AS minutes, CAST(source AS STRING) AS source
-          FROM bronze_walk_matrix
-          {step_free_filter}
+        wm AS ({walk_matrix}
         )
         SELECT
           p.from_id, p.to_id,

@@ -445,6 +445,17 @@ def main():
     c.eq("biggest gap leaves seed prices out: Red Bull, $0.75", pnk["biggest_same_item_gap"]["value"], 0.75)
     c.eq("worth-the-walk share leaves seed prices out", pnk["share_worth_the_walk_at_min_wage"]["value"], 0.0)
 
+    print("\nwithout bronze_walk_matrix (02_bronze_copy skips a missing Lakebase table)")
+    matrix = BRONZE.pop("bronze_walk_matrix")
+    try:
+        ctes_nm, _ = build_ctes(load_engine(), args.schema)
+        sql = "WITH " + ",\n".join(ctes_nm) + "\nSELECT DISTINCT source FROM silver_outlet_distances"
+        c.eq("every pair falls back to the formula", [r["source"] for r in run_sql(sql, args.profile,
+                                                                                    args.warehouse_id)[1]],
+             ["haversine"])
+    finally:
+        BRONZE["bronze_walk_matrix"] = matrix
+
     print(f"\n{c.passed} passed, {c.failed} failed")
     sys.exit(1 if c.failed else 0)
 
