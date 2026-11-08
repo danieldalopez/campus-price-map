@@ -143,43 +143,51 @@ export default function HomeScreen() {
             {searchSummary(result)}
           </p>
 
-          <div className="pt-2">
-            {itemsApi.error ? (
-              <div role="alert" className={`${NOTE} mx-4 flex items-center justify-between gap-3`}>
-                <span>{itemsApi.error}</span>
-                <Button onClick={itemsApi.retry}>Try again</Button>
-              </div>
-            ) : searching ? (
-              <SearchResults result={result} query={query} items={items} onPick={pick} />
-            ) : (
-              <nav aria-label="Items">
-                {items.length > 0 ? (
-                  <ItemTiles
-                    layout="row"
-                    items={items}
-                    onSelect={pick}
-                    trailing={
-                      <button
-                        type="button"
-                        className={SEE_ALL_TILE}
-                        aria-haspopup="dialog"
-                        onClick={() => allItems.current?.showModal()}
-                      >
-                        <span aria-hidden="true" className="text-2xl leading-none">
-                          ▦
-                        </span>
-                        See all items
-                      </button>
-                    }
-                  />
-                ) : (
-                  <p className="sr-only">Loading items…</p>
-                )}
-              </nav>
-            )}
-            <WakingUp show={itemsApi.slow || outletsApi.slow} className="mx-4 mb-2" />
-          </div>
+          {itemsApi.error || searching ? (
+            <div className="pt-2">
+              {itemsApi.error ? (
+                <div role="alert" className={`${NOTE} mx-4 flex items-center justify-between gap-3`}>
+                  <span>{itemsApi.error}</span>
+                  <Button onClick={itemsApi.retry}>Try again</Button>
+                </div>
+              ) : (
+                <SearchResults result={result} query={query} items={items} onPick={pick} />
+              )}
+            </div>
+          ) : (
+            <div className="h-3" aria-hidden="true" />
+          )}
+          <WakingUp show={itemsApi.slow || outletsApi.slow} className="mx-4 mb-2" />
         </div>
+
+        {/* Item tiles float on the map, no band behind them. In List view they sit on paper. */}
+        {itemsApi.error || searching ? null : (
+          <nav aria-label="Items" className={view === "list" ? "pointer-events-auto bg-paper" : ""}>
+            {items.length > 0 ? (
+              <ItemTiles
+                layout="row"
+                items={items}
+                onSelect={pick}
+                className="pointer-events-auto pt-3"
+                trailing={
+                  <button
+                    type="button"
+                    className={SEE_ALL_TILE}
+                    aria-haspopup="dialog"
+                    onClick={() => allItems.current?.showModal()}
+                  >
+                    <span aria-hidden="true" className="text-2xl leading-none">
+                      ▦
+                    </span>
+                    See all items
+                  </button>
+                }
+              />
+            ) : (
+              <p className="sr-only">Loading items…</p>
+            )}
+          </nav>
+        )}
 
         {/* List view: everything the map shows, in text. The screen reader path. */}
         <div className="min-h-0 flex-1">
@@ -270,7 +278,11 @@ function OutletList({ outlets, loading, location }: { outlets: Outlet[]; loading
             </p>
             {o.area ? <p className="text-ink-2">{o.area}</p> : null}
             <p className="mt-1">
-              {o.is_benchmark ? null : <span className="font-mono font-bold">{tierLabel(o)} · </span>}
+              {o.is_benchmark ? null : (
+                <>
+                  <span className="font-mono font-bold">{tierLabel(o)}</span> ·{" "}
+                </>
+              )}
               {tierWords(o)}
             </p>
             {known || isApproximate(o.location_precision) ? (
