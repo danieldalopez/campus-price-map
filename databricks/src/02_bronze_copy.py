@@ -180,7 +180,9 @@ def connect_lakebase():
             )
             conn.autocommit = True  # the only transaction is the explicit BEGIN ... COMMIT below
             return conn
-        except (pg8000.dbapi.InterfaceError, pg8000.dbapi.OperationalError, OSError) as e:
+        # DatabaseError covers server-side refusals such as 57P03 "the database system is starting up" while
+        # Lakebase wakes from scale to zero; InterfaceError and OSError cover network failures.
+        except (pg8000.dbapi.InterfaceError, pg8000.dbapi.DatabaseError, OSError) as e:
             last_error = e
             first_line = str(e).splitlines()[0] if str(e) else type(e).__name__
             print(f"  attempt {attempt} failed: {first_line}")
