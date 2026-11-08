@@ -19,3 +19,6 @@ next-env.d.ts
 
 # databricks bundle cache
 .databricks/
+
+# Full-size sticker PNGs (32 MB); the app uses the WebPs in public/
+/assets/raw/

@@ -12,7 +12,7 @@ import {
   roundLatLng,
   type LocationState,
 } from "@/lib/geo";
-import { itemEmoji } from "@/lib/item-art";
+import { ItemArt } from "@/components/ItemArt";
 import {
   cheapestRow,
   decide,
@@ -138,9 +138,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
         </Link>
         {item ? (
           <>
-            <span aria-hidden="true" className="text-4xl leading-none">
-              {itemEmoji(item)}
-            </span>
+            <ItemArt item={item} size={64} />
             <div className="min-w-0">
               <h1 className="font-heading text-2xl font-extrabold leading-tight">{item.name}</h1>
               <p className="leading-tight text-ink-2">{item.size}</p>
