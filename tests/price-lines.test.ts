@@ -13,7 +13,7 @@ const DAY = 86_400_000;
 describe("freshness line", () => {
   it("names each source the way section 7 words it", () => {
     const nov7 = "2026-11-07T20:00:00Z";
-    assert.equal(freshness({ source: "seed", confirmations: 0, updated_at: nov7 }, NOW)?.text, "Prototype price");
+    assert.equal(freshness({ source: "seed", confirmations: 0, updated_at: nov7 }, NOW)?.text, "Our price");
     assert.equal(freshness({ source: "menu", confirmations: 0, updated_at: nov7 }, NOW)?.text, "Menu price · Nov 7");
     assert.equal(freshness({ source: "walk", confirmations: 0, updated_at: nov7 }, NOW)?.text, "From our price walk · Nov 7");
     assert.equal(freshness({ source: "grocery", confirmations: 0, updated_at: nov7 }, NOW)?.text, "Grocery baseline");

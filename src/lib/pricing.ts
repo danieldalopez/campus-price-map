@@ -223,7 +223,7 @@ export type Freshness = { text: string; stale: boolean };
 
 /**
  * "Confirmed by 2 students · 20 min ago", "From our price walk · Nov 7", "Menu price · Nov 7",
- * "Prototype price" (the seed prices) or "Grocery baseline". Older than 14 days: stale.
+ * "Our price" (the seed prices) or "Grocery baseline". Older than 14 days: stale.
  */
 export function freshness(
   row: Pick<PriceRow, "source" | "confirmations" | "updated_at">,
@@ -235,7 +235,7 @@ export function freshness(
   let text: string;
   switch (row.source) {
     case "seed":
-      text = "Prototype price";
+      text = "Our price";
       break;
     case "menu":
       text = `Menu price · ${shortDate.format(new Date(at))}`;
