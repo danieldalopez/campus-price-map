@@ -15,7 +15,8 @@ type Props = {
 };
 
 // Sticker card: cream, 2 px ink outline, 2 px hard shadow; pale yellow while pressed or selected
-// (aria-current). Art sits in a 48 px square so every tile lines up; 8 px to the name, 4 px to the size.
+// (aria-current). Art sits in a 48 px square so every tile lines up; 8 px to the name, 4 px to the size,
+// spare height at the bottom.
 const TILE =
   "flex h-full flex-col items-center rounded-tag border-2 border-ink bg-card px-2.5 pt-2 pb-2.5 " +
   "text-center shadow-ink-sm transition-[translate,box-shadow,background-color] " +
@@ -50,11 +51,9 @@ export function ItemTiles({ items, layout, trailing, onSelect, className = "" }:
             <span className="flex h-12 w-12 shrink-0 items-center justify-center" aria-hidden="true">
               <ItemArt item={item} size={40} />
             </span>
-            {/* Two-line name area on every tile, text sitting on its bottom line, so names and sizes line up
-                across the row and the size stays 4 px under the name. */}
-            <span className="mt-2 flex min-h-[2.5em] w-full items-end justify-center text-[0.9375rem] leading-[1.25]">
-              <span className="line-clamp-2 font-semibold">{item.name}</span>
-            </span>
+            {/* Same spacing on every tile: name 8 px under the art, size 4 px under the name. A two-line name
+                pushes the size down; the spare height goes to the bottom, never between art and name. */}
+            <span className="mt-2 line-clamp-2 w-full text-[0.9375rem] leading-[1.25] font-semibold">{item.name}</span>
             <span className={`mt-1 w-full text-sm leading-tight text-ink-2 ${layout === "row" ? "whitespace-nowrap" : ""}`}>
               {item.size}
             </span>

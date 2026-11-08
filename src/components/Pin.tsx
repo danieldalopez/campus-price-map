@@ -71,9 +71,10 @@ export function pinIcon({
     height = label ? 52 : 44;
   } else {
     // Estimated tier: "$$ est." in words (the dashed border is extra; the full sentence is in the accessible
-    // name). No tier yet: a paper tag that says "No price", never a bare "?" or a yellow price look.
+    // name). No tier yet: a small blank paper tag, no words and no yellow, so it never reads as a price;
+    // the accessible name says "no price tier yet".
     const none = label === "?";
-    const shown = none ? "No price" : label;
+    const shown = none ? "" : label;
     const est = estimated && !none ? `<span class="cpm-pin__est">est.</span>` : "";
     const icon = band ? `<span class="cpm-pin__band">${BAND_ICON[band]}</span>` : "";
     const cls = [
@@ -85,7 +86,7 @@ export function pinIcon({
     ]
       .filter(Boolean)
       .join(" ");
-    const tag = `<span class="${cls}" ${style}>${icon}<span class="cpm-pin__label">${esc(shown)}</span>${est}</span>`;
+    const tag = `<span class="${cls}" ${style}>${icon}${shown ? `<span class="cpm-pin__label">${esc(shown)}</span>` : ""}${est}</span>`;
     const stamp = cheapest ? `<span class="stamp stamp--cheapest cpm-pin__stamp">CHEAPEST</span>` : "";
     visual = `<span class="cpm-pin__stack" aria-hidden="true">${stamp}${tag}</span>`;
     width = Math.max(44, shown.length * 11 + (band ? 16 : 0) + (est ? 24 : 0) + 30, cheapest ? 92 : 0);

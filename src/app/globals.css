@@ -163,12 +163,10 @@ body {
     font-weight: 800;
     font-size: 0.75rem;
   }
-  /* No tier yet: a paper tag (not yellow) that says so, so it never reads as a price. */
+  /* No tier yet: a small blank paper tag (not yellow, no text), so it never reads as a price. */
   .cpm-pin__tag--none {
     background: var(--card);
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    font-weight: 800;
+    padding: 0.3rem 0.6rem 0.3rem 0.35rem;
   }
   /* grocery baseline: a different shape (a flat paper slip, no hole) */
   .cpm-pin__grocery {
