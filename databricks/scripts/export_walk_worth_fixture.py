@@ -79,7 +79,12 @@ def main():
             "saving": "origin_price - cheaper_price",
             "extra_min": "walk_min * (2 if round_trip else 1); student at the origin, so walk(you, near) = 0",
             "time_cost": "extra_min / 60 * wage",
-            "net": "round(saving - extra_min / 60 * wage, 2), half up",
+            "net": "round(saving - extra_min / 60 * wage, 2)",
+            "rounding": (
+                "Every rounded value is rounded half away from zero on its shortest decimal form, like Spark's round: "
+                "-5.175 -> -5.18 (JS Math.round gives -5.17). In JS: const r = Number(x.toPrecision(12)); "
+                "Math.sign(r) * Math.round(Math.abs(r) * 100) / 100"
+            ),
             "verdict": "worth_it if net > even_band; not_worth_it if net < -even_band; else about_even",
             "break_even_wage": "saving / (extra_min / 60), null when extra_min is 0",
             "break_even_min": "saving / wage * 60",
