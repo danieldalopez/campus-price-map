@@ -30,6 +30,26 @@ type Phase =
       candidates?: string[];
     };
 
+/** "Which size?" answers, remembered on this phone only: barcode → item id. */
+const SIZE_KEY = (code: string) => `cpm.barcode.${code}`;
+
+function rememberedItem(code: string): string | null {
+  try {
+    const v = window.localStorage.getItem(SIZE_KEY(code));
+    return v && /^I\d{2}$/.test(v) ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+function rememberItem(code: string, itemId: string) {
+  try {
+    window.localStorage.setItem(SIZE_KEY(code), itemId);
+  } catch {
+    // Storage blocked: it'll just ask again next time.
+  }
+}
+
 const WAITING = "Waiting for the camera. Allow camera access if your browser asks.";
 
 export const OFF_CREDIT = "Product data from Open Food Facts, available under the Open Database License (ODbL).";
@@ -143,6 +163,13 @@ export default function ScanScreen() {
 
   const lookUp = useEffectEvent(async (code: string) => {
     if ("vibrate" in navigator) navigator.vibrate(80);
+    // This phone already told us which size this barcode is ("Which size?"): go straight there.
+    const remembered = rememberedItem(code);
+    if (remembered) {
+      setPhase({ kind: "matched", itemId: remembered, name: null });
+      router.push(`/item/${remembered}`);
+      return;
+    }
     setPhase({ kind: "looking", code });
     lookupAbort.current?.abort();
     const controller = new AbortController();
@@ -413,6 +440,9 @@ export default function ScanScreen() {
               <nav aria-label="Items">
                 <ItemTiles
                   layout="grid"
+                  onSelect={(item) => {
+                    if (phase.kind === "tiles" && phase.candidates?.length && phase.code) rememberItem(phase.code, item.id);
+                  }}
                   items={
                     phase.kind === "tiles" && phase.candidates?.length
                       ? items.filter((i) => phase.candidates?.includes(i.id))
