@@ -38,7 +38,7 @@ GRID = {
     "sigma": [0.03, 0.05, 0.08, 0.12, 0.18],
 }
 BAND = math.log(1.05)            # ±5% around the campus average
-TIER_PROB = 0.6                  # a band needs at least this probability to set the tier
+TIER_PROB = 0.5                  # a band needs at least this probability to set the tier
 MEASURED_PROB, MEASURED_N = 0.8, 4
 Z80, Z90 = 1.2815516, 1.6448536
 

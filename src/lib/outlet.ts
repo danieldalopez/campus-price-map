@@ -6,7 +6,9 @@ import type { Outlet } from "./types";
 export const UBC_CENTRE: [number, number] = [49.2606, -123.246];
 export const HOME_ZOOM = 15;
 /** OpenStreetMap's tile server goes to 19. */
-export const MAX_ZOOM = 19;
+export const TILE_MAX_ZOOM = 19;
+/** One step past the tiles (they're stretched 2x) so the packed University Village pins come apart. */
+export const MAX_ZOOM = TILE_MAX_ZOOM + 1;
 
 /** The tier is never colour or symbol alone: list view and screen readers get these words (section 11). */
 export function tierWords(outlet: Pick<Outlet, "tier" | "tier_basis" | "is_benchmark">): string {

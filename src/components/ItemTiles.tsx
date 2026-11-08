@@ -14,10 +14,14 @@ type Props = {
   className?: string;
 };
 
-// Quiet sticker: white card, light border, no shadow. The art sits in a 48 px square so every tile lines up.
+// Sticker card: cream, 2 px ink outline, 2 px hard shadow; pale yellow while pressed or selected
+// (aria-current). Art sits in a 48 px square so every tile lines up; 8 px to the name, 4 px to the size,
+// spare height at the bottom.
 const TILE =
-  "flex h-full flex-col items-center justify-start gap-0.5 rounded-tag border border-ink/20 " +
-  "bg-card px-2.5 pt-1.5 pb-2 text-center transition-colors hover:border-ink-2 active:bg-paper-2";
+  "flex h-full flex-col items-center rounded-tag border-2 border-ink bg-card px-2.5 pt-2 pb-2.5 " +
+  "text-center shadow-ink-sm transition-[translate,box-shadow,background-color] " +
+  "hover:bg-tag-pale active:translate-x-[2px] active:translate-y-[2px] active:bg-tag-pale active:shadow-none " +
+  "aria-[current=true]:bg-tag-pale";
 
 /**
  * Item stickers as tiles, from /api/items. Tapping one opens Results for that item (/item/[id]).
@@ -30,8 +34,9 @@ export function ItemTiles({ items, layout, trailing, onSelect, className = "" }:
     layout === "row"
       ? "flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 pt-0.5 pb-3 scroll-px-4 [scrollbar-width:none]"
       : "grid grid-cols-3 gap-3";
-  // Row tiles grow to fit their name and size on one line (never cut, never wrapped), from 120 px up.
-  const cell = layout === "row" ? "min-w-[7.5rem] shrink-0 snap-start" : "min-w-0";
+  // Row tiles are all 144 px wide: wide enough for the longest size on one line ("medium, 14 to 16 oz");
+  // a long name wraps onto its second line.
+  const cell = layout === "row" ? "w-36 shrink-0 snap-start" : "min-w-0";
 
   return (
     <ul className={`${list} ${className}`}>
@@ -46,13 +51,10 @@ export function ItemTiles({ items, layout, trailing, onSelect, className = "" }:
             <span className="flex h-12 w-12 shrink-0 items-center justify-center" aria-hidden="true">
               <ItemArt item={item} size={40} />
             </span>
-            {/* Name and size: one line each in the row, in full (the tile widens instead). */}
-            <span
-              className={`w-full font-semibold leading-tight ${layout === "row" ? "text-[0.9375rem] whitespace-nowrap" : ""}`}
-            >
-              {item.name}
-            </span>
-            <span className={`w-full text-sm leading-snug text-ink-2 ${layout === "row" ? "whitespace-nowrap" : ""}`}>
+            {/* Same spacing on every tile: name 8 px under the art, size 4 px under the name. A two-line name
+                pushes the size down; the spare height goes to the bottom, never between art and name. */}
+            <span className="mt-2 line-clamp-2 w-full text-[0.9375rem] leading-[1.25] font-semibold">{item.name}</span>
+            <span className={`mt-1 w-full text-sm leading-tight text-ink-2 ${layout === "row" ? "whitespace-nowrap" : ""}`}>
               {item.size}
             </span>
           </Link>

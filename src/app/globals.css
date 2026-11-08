@@ -12,6 +12,7 @@
   --ink-2: #4a4a4a;
   --tag: #ffd23f;
   --tag-ink: #1a1a1a;
+  --tag-pale: #fff3c4; /* selected / pressed card */
   --cheap: #1f7a4d;
   --mid: #8a5a00;
   --pricey: #b42318;
@@ -22,8 +23,10 @@
   --radius: 6px;
   --border: 2px solid var(--ink);
   --shadow: 3px 3px 0 var(--ink);
-  /* Quieter edges for ordinary cards and secondary controls (design pass): the hard shadow is kept for
-     the primary button and the price tag only. --line keeps 3:1 against --card for control edges. */
+  /* Shadow ladder (sticker look): 3 px on the logo and the primary action, 2 px (--shadow-sm) on secondary
+     buttons, cards, map markers and the Map / List switch. --line keeps 3:1 against --card. */
+  --shadow-sm: 2px 2px 0 var(--ink);
+  --control-radius: 8px;
   --line: #8c8475;
   --line-soft: #d8cdb8;
 
@@ -38,6 +41,7 @@
   --color-ink-2: var(--ink-2);
   --color-tag: var(--tag);
   --color-tag-ink: var(--tag-ink);
+  --color-tag-pale: var(--tag-pale);
   --color-cheap: var(--cheap);
   --color-mid: var(--mid);
   --color-pricey: var(--pricey);
@@ -54,7 +58,8 @@
 
   --radius-tag: var(--radius);
   --shadow-ink: var(--shadow);
-  --shadow-ink-sm: 2px 2px 0 var(--ink);
+  --shadow-ink-sm: var(--shadow-sm);
+  --radius-control: var(--control-radius);
 }
 
 html,
@@ -147,14 +152,21 @@ body {
   .cpm-pin__tag {
     font-size: 0.95rem;
     padding: 0.3rem 0.45rem 0.3rem 0.35rem;
+    box-shadow: var(--shadow-sm);
   }
   .cpm-pin__tag--est {
     border-style: dashed;
   }
+  /* "est." after an estimated tier, in words rather than a bare "~". */
   .cpm-pin__est {
     font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: 0.8rem;
+    font-weight: 800;
+    font-size: 0.75rem;
+  }
+  /* No tier yet: a small blank paper tag (not yellow, no text), so it never reads as a price. */
+  .cpm-pin__tag--none {
+    background: var(--card);
+    padding: 0.3rem 0.6rem 0.3rem 0.35rem;
   }
   /* grocery baseline: a different shape (a flat paper slip, no hole) */
   .cpm-pin__grocery {
@@ -208,40 +220,37 @@ body {
     background: var(--card);
   }
 
-  /* A group of overlapping pins: two tags stacked, with the count. */
+  /* A group of overlapping pins: a yellow rounded square with the count in bold (plus the lowest price on
+     Results). No inner circle. */
   .cpm-cluster__stack {
-    position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    min-width: 44px;
-    min-height: 40px;
-    padding: 0.25rem 0.5rem;
-    background: var(--card);
-    color: var(--ink);
+    justify-content: center;
+    gap: 0.4rem;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 0.5rem;
+    background: var(--tag);
+    color: var(--tag-ink);
     border: var(--border);
-    border-radius: 999px;
-    font-family: var(--font-mono);
-    font-weight: 700;
+    border-radius: var(--control-radius);
+    box-shadow: var(--shadow-sm);
     line-height: 1;
     white-space: nowrap;
   }
   .cpm-cluster__label {
+    font-family: var(--font-mono);
+    font-weight: 700;
     font-size: 0.9rem;
   }
   .cpm-cluster__count {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.6rem;
-    height: 1.6rem;
-    padding: 0 0.3rem;
-    border-radius: 999px;
-    background: var(--ink);
-    color: var(--card);
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
     font-weight: 800;
+  }
+  .cpm-cluster__label + .cpm-cluster__count {
+    padding-left: 0.4rem;
+    border-left: 2px solid var(--ink);
   }
 
   /* The student's live location dot (decorative; the location line says it in words). */

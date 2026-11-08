@@ -109,7 +109,7 @@ function WalkLine({ walk }: { walk: NonNullable<OutletItemRow["walk"]> }) {
         <span className="font-bold text-cheap">{formatPrice(degree.saved)} over a degree</span>.
       </p>
       <p className="mt-1 text-ink-2">
-        {formatPrice(walk.saving)} × {DEFAULT_PER_WEEK} a week × {config.weeks_term} weeks, if prices hold.
+        {formatPrice(walk.saving)} × {DEFAULT_PER_WEEK} a week × {config.weeks_term} weeks.
       </p>
     </div>
   );
@@ -312,13 +312,20 @@ function MenuSection({ category, index, now }: { category: MenuCategory; index: 
       {shared ? <p className="text-ink-2">{shared}</p> : null}
       <ul aria-labelledby={id} className="mt-2 divide-y divide-ink/10 rounded-tag border border-ink/20 bg-card">
         {category.lines.map((line, i) => (
-          <li key={line.id} className="flex items-baseline justify-between gap-3 px-3 py-2">
-            <span className="min-w-0 leading-snug">
-              {line.item}
-              {line.variant ? <span className="text-ink-2"> · {line.variant}</span> : null}
-              {!shared && texts[i] ? <span className="block text-ink-2">{texts[i]}</span> : null}
-            </span>
-            <span className="shrink-0 font-mono font-bold tabular-nums">{formatPrice(line.price)}</span>
+          <li key={line.id}>
+            {/* Tap a line to search every menu on campus for it. */}
+            <Link
+              href={`/?q=${encodeURIComponent(line.item)}`}
+              aria-label={`${line.item}${line.variant ? `, ${line.variant}` : ""}, ${formatPrice(line.price)}. Find it on other menus`}
+              className="flex min-h-12 items-baseline justify-between gap-3 px-3 py-2 active:bg-paper-2"
+            >
+              <span className="min-w-0 leading-snug">
+                {line.item}
+                {line.variant ? <span className="text-ink-2"> · {line.variant}</span> : null}
+                {!shared && texts[i] ? <span className="block text-ink-2">{texts[i]}</span> : null}
+              </span>
+              <span className="shrink-0 font-mono font-bold tabular-nums">{formatPrice(line.price)}</span>
+            </Link>
           </li>
         ))}
       </ul>
@@ -406,6 +413,15 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
                 {menuCount > 0 ? (
                   <a
                     href="#menu-heading"
+                    onClick={(e) => {
+                      // Scroll visibly (an instant jump read as "nothing happened"), and work on repeat taps.
+                      const target = document.getElementById("menu-heading");
+                      if (!target) return;
+                      e.preventDefault();
+                      const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                      target.scrollIntoView({ behavior: still ? "auto" : "smooth", block: "start" });
+                      history.replaceState(null, "", "#menu-heading");
+                    }}
                     className="inline-flex min-h-12 items-center font-bold underline decoration-2 underline-offset-4"
                   >
                     Full menu · {menuCount === 1 ? "1 item" : `${menuCount} items`}
@@ -432,7 +448,7 @@ export default function OutletScreen({ outletId }: { outletId: string }) {
           <FullMenu menu={data.menu} now={now} />
           <p className="mt-8 px-4 text-ink-2">
             {data.price_source_used === "pipeline"
-              ? "Compared prices from the last Databricks refresh."
+              ? "Compared prices from our last update."
               : "Live prices from the campus database."}
           </p>
         </>

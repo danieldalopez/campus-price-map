@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { requestLocation, resumeLocationIfGranted, walkLabel, walkMinutes, type LocationState } from "@/lib/geo";
 import { byPopularity } from "@/lib/item-art";
 import { isApproximate, tierLabel, tierWords } from "@/lib/outlet";
@@ -12,6 +12,7 @@ import type { ItemsResponse, LocationsResponse, Outlet } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 import { useLocation } from "@/lib/use-location";
 import { Button, buttonClasses } from "./Button";
+import { Icon } from "./Icon";
 import { ItemTiles } from "./ItemTiles";
 import { OutletLink } from "./OutletLink";
 import { SearchResults, searchSummary } from "./SearchResults";
@@ -28,14 +29,17 @@ const HomeMap = dynamic(() => import("./HomeMap"), {
 type View = "map" | "list";
 
 const SEE_ALL_TILE =
-  "flex h-full w-full flex-col items-center justify-center gap-1 rounded-tag border border-dashed " +
-  "border-ink-2 bg-paper-2 px-2 py-2 text-center font-heading text-[0.9375rem] font-bold leading-tight " +
-  "active:bg-card";
+  "flex h-full w-full flex-col items-center justify-center gap-1 rounded-tag border-2 border-dashed " +
+  "border-ink bg-paper-2 px-2 py-2 text-center font-heading text-[0.9375rem] font-bold leading-tight " +
+  "hover:bg-tag-pale active:bg-tag-pale";
 
 // One half of the Map / List switch: each half is a full-height (48 px) target; the selected half is ink.
 const SEGMENT =
-  "flex h-full flex-1 items-center justify-center rounded-full font-heading text-base font-bold " +
+  "flex h-full flex-1 items-center justify-center font-heading text-base font-bold " +
   "text-ink aria-pressed:bg-ink aria-pressed:text-card";
+
+// Search box and its clear button: 2 px ink outline, 8 px corners; focus turns it yellow.
+const SEARCH_EDGE = "rounded-control border-2 border-ink bg-card";
 
 const NOTE = "rounded-tag border border-ink-2 bg-card px-3 py-2 leading-snug";
 
@@ -47,6 +51,16 @@ export default function HomeScreen() {
   const allItems = useRef<HTMLDialogElement>(null);
   const location = useLocation();
 
+  // Height of the floating bottom bar, so the list can scroll its last card clear of it.
+  const [barHeight, setBarHeight] = useState(0);
+  const bar = useCallback((el: HTMLDivElement | null) => {
+    if (!el) return;
+    setBarHeight(el.offsetHeight);
+    const observer = new ResizeObserver(() => setBarHeight(el.offsetHeight));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const itemsApi = useApi<ItemsResponse>("/api/items");
   const outletsApi = useApi<LocationsResponse>("/api/locations");
   const items = useMemo(() => byPopularity(itemsApi.data?.items ?? []), [itemsApi.data]);
@@ -55,6 +69,14 @@ export default function HomeScreen() {
   // Location is asked for on the first search or tile tap, never here. If it was already allowed on an
   // earlier visit, the dot comes back without a prompt.
   useEffect(() => resumeLocationIfGranted(), []);
+
+  // "/?q=ramen" opens Home already searching (a tapped line on an outlet's full menu links here). Read after
+  // mount: the page is a static shell, so the URL isn't known while rendering it.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("q");
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time sync from the URL on mount
+    if (q) setQuery(q);
+  }, []);
 
   const result = useMemo(() => searchItems(query, items), [query, items]);
   const searching = result.kind !== "empty";
@@ -83,11 +105,12 @@ export default function HomeScreen() {
         {/* Floating on top: title, search and item tiles. */}
         <div
           data-map-overlay="top"
-          className="pointer-events-auto border-b border-ink/15 bg-paper pt-[env(safe-area-inset-top)]"
+          className="pointer-events-auto border-b-2 border-ink bg-paper pt-[env(safe-area-inset-top)]"
         >
-          <header className="flex h-14 items-center justify-between gap-2 pr-1 pl-4">
-            <h1 className="font-heading text-[1.375rem] font-extrabold leading-none">
-              <span className="bg-[linear-gradient(transparent_55%,var(--tag)_55%)] px-0.5">Campus Price Map</span>
+          <header className="flex h-16 items-center justify-between gap-2 px-4">
+            {/* The logo: a yellow price-sticker badge, with the strongest (3 px) shadow on the screen. */}
+            <h1 className="rounded-control border-2 border-ink bg-tag px-2.5 py-1.5 font-heading text-[1.25rem] font-extrabold leading-none text-tag-ink shadow-ink">
+              Campus Price Map
             </h1>
             <SoundToggle />
           </header>
@@ -97,18 +120,10 @@ export default function HomeScreen() {
               Search products
             </label>
             <div className="relative min-w-0 flex-1">
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-ink-2"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.25"
-                strokeLinecap="round"
-              >
-                <circle cx="11" cy="11" r="6.5" />
-                <path d="M16 16l4.5 4.5" />
-              </svg>
+              <Icon
+                name="search"
+                className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-ink"
+              />
               <input
                 id="item-search"
                 type="search"
@@ -120,14 +135,14 @@ export default function HomeScreen() {
                 spellCheck={false}
                 enterKeyHint="search"
                 aria-describedby="search-status"
-                className="h-[3.125rem] w-full rounded-tag border border-ink-2 bg-card pr-3 pl-10 text-base placeholder:text-ink-2 [&::-webkit-search-cancel-button]:hidden"
+                className={`h-[3.125rem] w-full ${SEARCH_EDGE} pr-3 pl-10 text-base placeholder:text-ink-2 focus:bg-tag-pale focus:shadow-[0_0_0_3px_var(--tag)] focus:outline-none [&::-webkit-search-cancel-button]:hidden`}
               />
             </div>
             {query ? (
               <button
                 type="button"
                 aria-label="Clear search"
-                className="flex h-[3.125rem] w-12 shrink-0 items-center justify-center rounded-tag border border-ink-2 bg-card text-2xl"
+                className={`flex h-[3.125rem] w-12 shrink-0 items-center justify-center ${SEARCH_EDGE} text-2xl hover:bg-tag-pale`}
                 onClick={() => setQuery("")}
               >
                 <span aria-hidden="true">×</span>
@@ -138,53 +153,74 @@ export default function HomeScreen() {
             {searchSummary(result)}
           </p>
 
-          <div className="pt-2">
-            {itemsApi.error ? (
-              <div role="alert" className={`${NOTE} mx-4 flex items-center justify-between gap-3`}>
-                <span>{itemsApi.error}</span>
-                <Button onClick={itemsApi.retry}>Try again</Button>
-              </div>
-            ) : searching ? (
-              <SearchResults result={result} query={query} items={items} onPick={pick} />
-            ) : (
-              <nav aria-label="Items">
-                {items.length > 0 ? (
-                  <ItemTiles
-                    layout="row"
-                    items={items}
-                    onSelect={pick}
-                    trailing={
-                      <button
-                        type="button"
-                        className={SEE_ALL_TILE}
-                        aria-haspopup="dialog"
-                        onClick={() => allItems.current?.showModal()}
-                      >
-                        <span aria-hidden="true" className="text-2xl leading-none">
-                          ▦
-                        </span>
-                        See all items
-                      </button>
-                    }
-                  />
-                ) : (
-                  <p className="sr-only">Loading items…</p>
-                )}
-              </nav>
-            )}
-            <WakingUp show={itemsApi.slow || outletsApi.slow} className="mx-4 mb-2" />
-          </div>
+          {itemsApi.error || searching ? (
+            <div className="pt-2">
+              {itemsApi.error ? (
+                <div role="alert" className={`${NOTE} mx-4 flex items-center justify-between gap-3`}>
+                  <span>{itemsApi.error}</span>
+                  <Button onClick={itemsApi.retry}>Try again</Button>
+                </div>
+              ) : (
+                <SearchResults result={result} query={query} items={items} onPick={pick} />
+              )}
+            </div>
+          ) : (
+            <div className="h-3" aria-hidden="true" />
+          )}
+          <WakingUp show={itemsApi.slow || outletsApi.slow} className="mx-4 mb-2" />
         </div>
 
-        {/* List view: everything the map shows, in text. The screen reader path. */}
+        {/* Item tiles float on the map, no band behind them. In List view they sit on paper. */}
+        {itemsApi.error || searching ? null : (
+          <nav aria-label="Items" className={view === "list" ? "pointer-events-auto bg-paper" : ""}>
+            {items.length > 0 ? (
+              <ItemTiles
+                layout="row"
+                items={items}
+                onSelect={pick}
+                className="pointer-events-auto pt-3"
+                trailing={
+                  <button
+                    type="button"
+                    className={SEE_ALL_TILE}
+                    aria-haspopup="dialog"
+                    onClick={() => allItems.current?.showModal()}
+                  >
+                    <span aria-hidden="true" className="text-2xl leading-none">
+                      ▦
+                    </span>
+                    See all items
+                  </button>
+                }
+              />
+            ) : (
+              <p className="sr-only">Loading items…</p>
+            )}
+          </nav>
+        )}
+
+        {/* List view: everything the map shows, in text. The screen reader path. It runs to the bottom of the
+            screen, under the floating bottom bar, so no strip of map shows between the list and the buttons. */}
         <div className="min-h-0 flex-1">
           {view === "list" ? (
-            <OutletList outlets={outlets} loading={outletsApi.loading} location={location} />
+            <OutletList outlets={outlets} loading={outletsApi.loading} location={location} bottomInset={barHeight} />
           ) : null}
         </div>
 
-        {/* Bottom bar */}
-        <div data-map-overlay="bottom" className="pointer-events-auto px-4 pb-[max(env(safe-area-inset-bottom),12px)]">
+        {/* Bottom bar: floats over the map, and over the list in List view (a paper fade keeps it readable). */}
+        {/* Capped width so the actions don't stretch across a desktop screen. */}
+        {view === "list" ? (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-paper from-60% to-transparent"
+            style={{ height: barHeight + 24 }}
+          />
+        ) : null}
+        <div
+          ref={bar}
+          data-map-overlay="bottom"
+          className="pointer-events-auto absolute inset-x-0 bottom-0 mx-auto w-full max-w-[26rem] px-4 pb-[max(env(safe-area-inset-bottom),12px)]"
+        >
           {outletsApi.error ? (
             <div role="alert" className={`${NOTE} mb-2 flex items-center justify-between gap-3`}>
               <span>{outletsApi.error}</span>
@@ -194,7 +230,7 @@ export default function HomeScreen() {
           <div
             role="group"
             aria-label="Show outlets as"
-            className="mx-auto flex h-[3.125rem] w-[11.5rem] rounded-full border border-ink-2 bg-card"
+            className="mx-auto flex h-[3.25rem] w-[11.5rem] overflow-hidden rounded-control border-2 border-ink bg-card shadow-ink-sm"
           >
             <button type="button" aria-pressed={view === "map"} onClick={() => setView("map")} className={SEGMENT}>
               Map
@@ -203,15 +239,18 @@ export default function HomeScreen() {
               List
             </button>
           </div>
-          <div className="mt-2 flex gap-2">
+          <div className="mt-2.5 flex gap-2">
             <Link
               href="/scan"
-              className={buttonClasses("secondary", "md", "min-h-[3.25rem]! shrink-0 border! border-ink-2! px-4 shadow-none!")}
+              className={buttonClasses("secondary", "md", "h-[3.25rem] shrink-0 rounded-control px-4")}
             >
-              <span aria-hidden="true">▥</span> Scan
+              <Icon name="scan" className="h-6 w-6" /> Scan
             </Link>
-            <Link href="/snap" className={buttonClasses("primary", "md", "min-h-[3.25rem]! min-w-0 flex-1 text-lg!")}>
-              <span aria-hidden="true">📷</span> Snap a price
+            <Link
+              href="/snap"
+              className={buttonClasses("primary", "md", "h-[3.25rem] min-w-0 flex-1 rounded-control text-lg!")}
+            >
+              <Icon name="camera" className="h-6 w-6" /> Snap a price
             </Link>
           </div>
         </div>
@@ -236,7 +275,9 @@ export default function HomeScreen() {
 }
 
 /** Every outlet the map shows, in text: name, area, tier in words, walk time once location is on. */
-function OutletList({ outlets, loading, location }: { outlets: Outlet[]; loading: boolean; location: LocationState }) {
+type OutletListProps = { outlets: Outlet[]; loading: boolean; location: LocationState; bottomInset: number };
+
+function OutletList({ outlets, loading, location, bottomInset }: OutletListProps) {
   const known = location.status === "on";
   const rows = outlets
     .map((o) => ({ o, walk: walkMinutes(location.origin, o) }))
@@ -244,7 +285,8 @@ function OutletList({ outlets, loading, location }: { outlets: Outlet[]; loading
   return (
     <section
       aria-labelledby="outlets-heading"
-      className="pointer-events-auto h-full overflow-y-auto bg-paper px-4 pt-2 pb-4"
+      className="pointer-events-auto h-full overflow-y-auto bg-paper px-4 pt-2"
+      style={{ paddingBottom: bottomInset + 16 }}
     >
       <h2 id="outlets-heading" className="font-heading text-2xl font-extrabold">
         {loading ? "Loading outlets…" : `${outlets.length} outlets`}
@@ -258,7 +300,11 @@ function OutletList({ outlets, loading, location }: { outlets: Outlet[]; loading
             </p>
             {o.area ? <p className="text-ink-2">{o.area}</p> : null}
             <p className="mt-1">
-              {o.is_benchmark ? null : <span className="font-mono font-bold">{tierLabel(o)} · </span>}
+              {o.is_benchmark ? null : (
+                <>
+                  <span className="font-mono font-bold">{tierLabel(o)}</span> ·{" "}
+                </>
+              )}
               {tierWords(o)}
             </p>
             {known || isApproximate(o.location_precision) ? (

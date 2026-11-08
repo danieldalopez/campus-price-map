@@ -3,7 +3,7 @@
 // Loaded only through dynamic(() => import("./HomeMap"), { ssr: false }) (SPEC rule 9).
 import { useMemo, useState, type CSSProperties } from "react";
 import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
-import { isApproximate, HOME_ZOOM, MAX_ZOOM, tierLabel, tierWords, UBC_CENTRE } from "@/lib/outlet";
+import { isApproximate, HOME_ZOOM, MAX_ZOOM, TILE_MAX_ZOOM, tierLabel, tierWords, UBC_CENTRE } from "@/lib/outlet";
 import type { Outlet } from "@/lib/types";
 import { useLocation } from "@/lib/use-location";
 import { ClusterLayer, type MapPoint } from "./ClusterLayer";
@@ -69,6 +69,7 @@ export default function HomeMap({ outlets }: Props) {
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         maxZoom={MAX_ZOOM}
+        maxNativeZoom={TILE_MAX_ZOOM}
       />
       <ZoomControl position="bottomright" />
       <LocateControl />

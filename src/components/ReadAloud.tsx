@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { canSpeak, speak, stopSpeaking } from "@/lib/speech";
+import { Icon } from "./Icon";
 
 const noop = () => () => {};
 
@@ -37,7 +38,7 @@ export function ReadAloud({ text, className = "" }: { text: string | null; class
         speak(text, () => setSpeaking(false));
       }}
     >
-      <span aria-hidden="true">{speaking ? "■" : "🔈"}</span> {speaking ? "Stop" : "Read aloud"}
+      {speaking ? <span aria-hidden="true">■</span> : <Icon name="sound-on" />} {speaking ? "Stop" : "Read aloud"}
     </button>
   );
 }

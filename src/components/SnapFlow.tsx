@@ -12,6 +12,7 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
+import { Icon } from "./Icon";
 import { getDeviceId } from "@/lib/device";
 import { formatPrice } from "@/lib/format";
 import { compressPhoto, PhotoDecodeError } from "@/lib/image";
@@ -217,7 +218,7 @@ function CameraButton({ onPhoto, label, variant, capture = true }: CameraButtonP
         "w-full cursor-pointer focus-within:outline-[3px] focus-within:outline-offset-2 focus-within:outline-focus",
       )}
     >
-      <span aria-hidden="true">{capture ? "📷" : "🖼️"}</span> {label}
+      {capture ? <Icon name="camera" /> : <span aria-hidden="true">🖼️</span>} {label}
       <input
         type="file"
         accept="image/*"
@@ -925,7 +926,7 @@ export default function SnapFlow({ items, outlets }: { items: SnapItem[]; outlet
             </Button>
           ) : null}
           <Button className="w-full" onClick={() => setPhase("start")}>
-            <span aria-hidden="true">📷</span> Try another photo
+            <Icon name="camera" /> Try another photo
           </Button>
         </div>
       </section>
@@ -967,7 +968,7 @@ export default function SnapFlow({ items, outlets }: { items: SnapItem[]; outlet
         <Unmatched draft={draft} />
         <div className="mt-6 flex flex-col gap-3">
           <Button variant={editing === 0 ? "primary" : "secondary"} className="w-full" onClick={() => setPhase("start")}>
-            <span aria-hidden="true">📷</span> Snap another photo
+            <Icon name="camera" /> Snap another photo
           </Button>
           <Button className="w-full" onClick={() => toPick("Pick another item")}>
             Add an item by hand
