@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %pip install -U databricks-sdk "psycopg[binary]"
+# MAGIC %pip install -U databricks-sdk pg8000
 
 # COMMAND ----------
 
@@ -12,7 +12,8 @@ dbutils.library.restartPython()  # load the upgraded databricks-sdk (the postgre
 # MAGIC
 # MAGIC First task of the `refresh` Job. Spec: `docs/SPEC.md`, section 10, "Getting Lakebase data into Databricks".
 # MAGIC
-# MAGIC - Connects to Lakebase with `psycopg` and a 1 hour credential from
+# MAGIC - Connects to Lakebase with `pg8000` (pure Python; `psycopg[binary]`'s bundled libpq aborts the Python
+# MAGIC   process on serverless) and a 1 hour credential from
 # MAGIC   `WorkspaceClient().postgres.generate_database_credential(...)`, issued to whoever the Job runs as. No password is stored.
 # MAGIC - Reads `prices`, `price_votes`, `stock_reports`, `items`, `locations`, `carries`, `app_config`, `walk_matrix`
 # MAGIC   and the `current_prices` view in **one read-only REPEATABLE READ transaction**, so every copy comes from the same
@@ -141,9 +142,10 @@ def spark_ddl(columns):
 
 # COMMAND ----------
 
+import ssl
 import time
 
-import psycopg
+import pg8000.dbapi
 from databricks.sdk import WorkspaceClient
 
 COLUMNS_SQL = """
@@ -157,7 +159,7 @@ KINDS = {"r": "table", "p": "table", "v": "view", "m": "materialized view", "f":
 
 
 def connect_lakebase():
-    """Open a psycopg connection with a 1 hour OAuth credential. Retries while Lakebase wakes from scale to zero."""
+    """Open a pg8000 connection with a 1 hour OAuth credential. Retries while Lakebase wakes from scale to zero."""
     w = WorkspaceClient()
     host = w.postgres.get_endpoint(name=LAKEBASE_ENDPOINT).status.hosts.host
     user = w.current_user.me().user_name
@@ -166,18 +168,19 @@ def connect_lakebase():
     last_error = None
     for attempt in range(1, 4):
         try:
-            return psycopg.connect(
+            conn = pg8000.dbapi.connect(
                 host=host,
                 port=5432,
-                dbname=LAKEBASE_DATABASE,
+                database=LAKEBASE_DATABASE,
                 user=user,
                 password=token,
-                sslmode="require",
-                connect_timeout=30,
+                ssl_context=ssl.create_default_context(),  # TLS with certificate and host name checks
+                timeout=30,
                 application_name="cpm_02_bronze_copy",
-                autocommit=True,  # the only transaction is the explicit conn.transaction() below
             )
-        except psycopg.OperationalError as e:
+            conn.autocommit = True  # the only transaction is the explicit START TRANSACTION below
+            return conn
+        except (pg8000.dbapi.InterfaceError, pg8000.dbapi.DatabaseError, OSError) as e:
             last_error = e
             first_line = str(e).splitlines()[0] if str(e) else type(e).__name__
             print(f"  attempt {attempt} failed: {first_line}")
@@ -190,10 +193,10 @@ fetched = {}  # name -> (kind, columns, rows, lakebase_count)
 skipped = {}  # name -> message
 
 conn = connect_lakebase()
-conn.read_only = True
-conn.isolation_level = psycopg.IsolationLevel.REPEATABLE_READ
+cur = conn.cursor()
 try:
-    with conn.transaction(), conn.cursor() as cur:
+    cur.execute("START TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY")
+    try:
         cur.execute("SET LOCAL TIME ZONE 'UTC'")
         cur.execute("SELECT now()")
         snapshot_at = cur.fetchone()[0]
@@ -201,21 +204,26 @@ try:
             relation = qualified_pg(LAKEBASE_SCHEMA, name)
             cur.execute(KIND_SQL, (relation,))
             found = cur.fetchone()
-            if found is None:
+            if found is None or found[0] is None:
                 skipped[name] = (
                     f"{LAKEBASE_SCHEMA}.{name} doesn't exist in Lakebase yet "
-                    "(app Step 2 creates it: db/schema.sql, db/views.sql, scripts/seed.ts)"
+                    "(app Step 2 creates it: db/schema.sql, db/views.sql, db/seed.sql)"
                 )
                 continue
             kind = KINDS.get(found[0], found[0])
             cur.execute(COLUMNS_SQL, (relation,))
-            columns = cur.fetchall()
+            columns = [tuple(c) for c in cur.fetchall()]
             cur.execute(select_sql(LAKEBASE_SCHEMA, name, columns))
-            rows = cur.fetchall()
+            rows = [tuple(r) for r in cur.fetchall()]  # pg8000 returns lists
             cur.execute(f"SELECT count(*) FROM {relation}")
             lakebase_count = cur.fetchone()[0]
             fetched[name] = (kind, columns, rows, lakebase_count)
             print(f"  read {LAKEBASE_SCHEMA}.{name} ({kind}): {len(rows)} rows, {len(columns)} columns")
+    finally:
+        try:
+            cur.execute("ROLLBACK")  # read only: nothing to commit
+        except Exception as e:  # don't hide the error that got us here
+            print(f"  rollback failed: {type(e).__name__}")
 finally:
     conn.close()
 
