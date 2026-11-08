@@ -6,6 +6,9 @@ Built at HackCamp 2026 (nwPlus, UBC Vancouver) by Sergio Lopez and Sebastian Sal
 
 > **Claude Code: this file is the spec.** Read it fully before every task. Work through section 13 one step at a time. If a request conflicts with this file, ask before building.
 
+Version 12, Sun Nov 8. Changes from version 11:
+- **Build status** added at the top of section 13, so sessions skip finished work. Section 7 rows now list "Wrong price?", "I bought it here" and the Sold out buttons as built.
+
 Version 11, Sun Nov 8. Changes from version 10:
 - **"Wrong price?"** under every official price on Results and the Outlet page. It opens the "I bought it" sheet in a second mode: "What's the price here?", empty rather than prefilled, with an optional price-tag photo (`/api/read-photo` with `hint: "tag"`). It has the same save and safeguards: within $0.10 of the shown price it counts as a confirmation; otherwise it's a pending report that only changes the price once a second student confirms it.
 
@@ -318,7 +321,7 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
   - **Just confirmed line**, pipeline mode only: if live `current_prices` has an official price newer than the pipeline's row, show "Just confirmed: $3.25 · comparisons update on the next refresh". The big price stays the pipeline's until then.
   - **Pending line**, only if `pending_prices` has a row: a blue PENDING stamp and "New report: $3.25 · waiting for a second student" with **Yes / No / Not sure**. If this device made the report: "Your report: $3.25 · waiting for a second student", no buttons.
   - If the outlet has no official price yet: "No confirmed price yet" plus the pending line. If the row has an estimate: "No confirmed price yet · estimated $2.90 to $3.40 · Snap it to confirm", in small text with no PriceTag. Estimated rows sort after every row with an official price and never appear in the decision line, the CHEAPEST stamp, the Worth the walk card or Read aloud.
-  - Sold out stamp if any, and an **I bought it here** button. Sold out rows sort below in stock ones.
+  - Sold out stamp if any, a **Wrong price?** link, an **I bought it here** button and **Sold out here? / It's back** (Steps 8 and 9, version 11). Sold out rows sort below in stock ones.
   - Rejected reports are never shown.
 - Small map: pins show this item's official price; the cheapest pin gets a CHEAPEST stamp.
 - "vs grocery" line if the grocery baseline has the item: "$1.10 more than Save-On-Foods Wesbrook".
@@ -348,7 +351,7 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
 **Outlet `/outlet/[id]`**
 - Name, today's hours, items grouped by category.
 - A **Directions** button under the name (section 7, Directions).
-- Each item: PriceTag, PriceBand, plus its `chip` from `price_comparisons`, with a link to `nearest_cheaper_location_id` ("$0.35 less at Mercante, about 3 min from here"), the pending line as on Results, and a Sold out button. Chips and links are hidden when the pipeline isn't available.
+- Each item: PriceTag, PriceBand, plus its `chip` from `price_comparisons`, with a link to `nearest_cheaper_location_id` ("$0.35 less at Mercante, about 3 min from here"), the pending line as on Results, **Wrong price?**, **I bought it here** and **Sold out here? / It's back**. Chips and links are hidden when the pipeline isn't available.
 - Under each item with a cheaper option, Databricks' Worth the walk suggestion for standing at this outlet: "Worth the walk: 8 extra minutes to Tim Hortons saves $1.00 each time · $65.00 a term if you buy it 5 times a week". Read from `price_comparisons.walk_best_location_id`, `walk_saving` and `walk_extra_min` (section 10); the app only multiplies out the term total. Hidden under `even_band` or when that outlet is sold out.
 - No single score for the whole outlet on this page.
 
@@ -890,6 +893,13 @@ Figma file: (add link). Screens: Home, Results (with a pending row and a just co
 ## 13. Build order (paste one prompt at a time)
 
 Skip steps that are already done. Step numbers are labels; **run them in this order:** 1, 2, 3, 4, 5, 6, 7, 14, 10, 8, 9, 16, 12, 13. (Steps 11 and 15 were dropped in version 8.)
+
+**Build status (Sun Nov 8, version 12).** Merged on `main`:
+- App: Steps 1, 2, 3, 4, 5 (Outlet page, full menus, Directions), 6 (Snap), 7 (voting), 8 (I bought it, last-confirmed times), 9 (Sold out, plus the location button), 14 (Worth the walk, money first), 16 (scanner), and "Wrong price?" (version 11).
+- Step 10: **partly done.** The sticker art is in `public/items` and `public/stickers`. Sounds (`sounds.ts`), the mute toggle and Read aloud (`speech.ts`) aren't built.
+- Databricks: D1 to D8 merged. D8 uses the version 7 money-first ranking (`saving_rank`). Sergio deploys the bundle and runs the refresh Job to pick up code changes; merging alone doesn't update the workspace.
+- **Left:** the rest of Step 10 (sounds, Read aloud), Step 12 (Auth0, optional), Step 13 (Ask with Genie, optional). Steps 11 and 15 are dropped.
+- **Data:** almost every live price is an AI-estimated `seed` price (about 11 are from menus). Label it as proof of concept in the demo and on Devpost, and load real price-walk prices if the team has them.
 
 If behind, cut in this order: Step 13, D7, Step 16 (scanner), Step 12, D6, Step 9, the receipt part of Step 8, D5. Never cut D1 to D4, D8 or Step 14: Worth the walk and the Databricks engine are the submission.
 
