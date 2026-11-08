@@ -26,6 +26,7 @@ import {
 import type { PriceRow, PricesResponse } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 import { useLocation } from "@/lib/use-location";
+import { useNow } from "@/lib/use-now";
 import { Button, buttonClasses } from "./Button";
 import { OutletRow } from "./OutletRow";
 import { WakingUp } from "./WakingUp";
@@ -36,16 +37,6 @@ const ResultsMap = dynamic(() => import("./ResultsMap"), {
   ssr: false,
   loading: () => <div className="h-full w-full bg-paper-2" aria-hidden="true" />,
 });
-
-/** Re-render freshness ("20 min ago") once a minute. */
-function useNow(intervalMs: number): number {
-  const [now, setNow] = useState(() => Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), intervalMs);
-    return () => clearInterval(id);
-  }, [intervalMs]);
-  return now;
-}
 
 const CARD = "rounded-tag border-2 border-ink bg-card p-3 shadow-ink";
 

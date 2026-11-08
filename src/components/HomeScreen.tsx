@@ -13,6 +13,7 @@ import { useApi } from "@/lib/use-api";
 import { useLocation } from "@/lib/use-location";
 import { Button, buttonClasses } from "./Button";
 import { ItemTiles } from "./ItemTiles";
+import { OutletLink } from "./OutletLink";
 import { SearchResults, searchSummary } from "./SearchResults";
 import { WakingUp } from "./WakingUp";
 import { WhileVisible } from "./WhileVisible";
@@ -115,7 +116,7 @@ export default function HomeScreen() {
                 <Button onClick={itemsApi.retry}>Try again</Button>
               </div>
             ) : searching ? (
-              <SearchResults result={result} items={items} onPick={pick} />
+              <SearchResults result={result} query={query} items={items} onPick={pick} />
             ) : (
               <nav aria-label="Items">
                 {items.length > 0 ? (
@@ -215,7 +216,9 @@ function OutletList({ outlets, loading, location }: { outlets: Outlet[]; loading
       <ul className="mt-3 flex flex-col gap-3">
         {rows.map(({ o, walk }) => (
           <li key={o.id} className="rounded-tag border-2 border-ink bg-card p-3 shadow-ink">
-            <p className="font-heading text-lg font-extrabold leading-tight">{o.name}</p>
+            <p className="font-heading text-lg font-extrabold leading-tight">
+              <OutletLink id={o.id}>{o.name}</OutletLink>
+            </p>
             {o.area ? <p className="text-ink-2">{o.area}</p> : null}
             <p className="mt-1">
               {o.is_benchmark ? null : <span className="font-mono font-bold">{tierLabel(o)} · </span>}

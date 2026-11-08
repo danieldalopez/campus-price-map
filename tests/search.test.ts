@@ -2,7 +2,16 @@
 //   npm test      (node --test tests/*.test.ts)
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { damerauLevenshtein, normalise, parseAliases, searchItems, typoBudget } from "../src/lib/search.ts";
+import {
+  damerauLevenshtein,
+  groupByItemName,
+  normalise,
+  parseAliases,
+  prepareMenu,
+  searchItems,
+  searchMenu,
+  typoBudget,
+} from "../src/lib/search.ts";
 
 // The 23 items and their aliases exactly as db/seed.sql loads them into `items`.
 const ITEMS = [
@@ -130,5 +139,100 @@ describe("searchItems", () => {
     assert.equal(searchItems("", ITEMS).kind, "empty");
     assert.equal(searchItems("  -- ", ITEMS).kind, "empty");
     assert.equal(searchItems("kombucha", ITEMS).kind, "none");
+  });
+});
+
+// Real menu lines (menu_items), trimmed to what each case needs, plus near misses that must NOT match.
+const MENU = [
+  ["Kinton Ramen", "Ramen / Japanese", "Pork Shoyu Ramen", null, 15.99],
+  ["Kinton Ramen", "Ramen / Japanese", "Chicken Miso Ramen", null, 16.99],
+  ["Kinton Ramen", "Ramen / Japanese", "Edamame", null, 5.99],
+  ["Kinton Ramen", "Ramen / Japanese", "Homemade Lemonade", null, 4.99],
+  ["Grand Noodle Emporium", "Contains Pork", "Miso Roasted Chicken Ramen", null, 12.99],
+  ["Meet Night Izakaya", "Izakaya", "Tonkotsu Ramen", null, 16.95],
+  ["Ramen Danbo Express", "Ramen", "Classic Tonkotsu Ramen", null, 17.25],
+  ["Grocery Checkout", "Grocery", "Instant Ramen (Shin)", "cup", 2.79],
+  ["Blue Chip Cafe", "UBC's Favourite Cookie", "Chocolate Chunk Cookie", null, 3.19],
+  ["Subway (Life Building)", "Sides", "Cookie", null, 1.59],
+  ["Tim Hortons (Orca House)", "Baked goods", "Chocolate Chip Cookie", null, 1.69],
+  ["Tim Hortons (David Lam)", "Baked goods", "Chocolate Chip Cookie", null, 1.69],
+  ["Togo Sushi", "Sushi", "Maki Sushi Combo", null, 17.35],
+  ["H-Mart", "Grab and go", "Sushi Pack (California Roll)", "8 pcs", 6.75],
+  ["Togo Sushi", "Sushi", "Salmon Roll", null, 8.5],
+  ["Tim Hortons (Orca House)", "Hot drinks", "Steeped Tea", "Small 10 oz", 2.09],
+  ["The Point Grill", "Mains", "Steak Sandwich", null, 18.0],
+  ["Blue Chip Cafe", "Coffee Drinks", "Latte", "16oz", 5.99],
+].map(([outlet, category, item, variant, price]) => ({
+  outlet: outlet as string,
+  category: category as string,
+  item: item as string,
+  variant: variant as string | null,
+  price: price as number,
+}));
+const MENU_INDEX = prepareMenu(MENU);
+const menu = (q: string) => searchMenu(q, MENU_INDEX);
+const items = (q: string) => menu(q).lines.map((l) => l.item);
+
+describe("searchMenu", () => {
+  it("ramen finds every ramen by item name, cheapest first, and not the rest of Kinton's menu", () => {
+    const r = menu("ramen");
+    assert.equal(r.kind, "match");
+    assert.deepEqual(items("ramen"), [
+      "Instant Ramen (Shin)",
+      "Miso Roasted Chicken Ramen",
+      "Pork Shoyu Ramen",
+      "Tonkotsu Ramen",
+      "Chicken Miso Ramen",
+      "Classic Tonkotsu Ramen",
+    ]);
+    assert.ok(!items("ramen").includes("Edamame"), "a menu section called Ramen doesn't pull in its edamame");
+  });
+
+  it("cookie finds cookies, and groups the same name across outlets", () => {
+    assert.deepEqual(items("cookie"), ["Cookie", "Chocolate Chip Cookie", "Chocolate Chip Cookie", "Chocolate Chunk Cookie"]);
+    assert.deepEqual(items("cookies"), items("cookie"), "a plural finds the singular");
+    const groups = groupByItemName(menu("cookie").lines);
+    assert.deepEqual(
+      groups.map((g) => [g.name, g.lines.length]),
+      [["Cookie", 1], ["Chocolate Chip Cookie", 2], ["Chocolate Chunk Cookie", 1]],
+    );
+  });
+
+  it("sushi finds item names first; menu sections only when no name matches", () => {
+    assert.deepEqual(items("sushi"), ["Sushi Pack (California Roll)", "Maki Sushi Combo"]);
+    assert.ok(!items("sushi").includes("Salmon Roll"), "Togo's Salmon Roll only matches through its section");
+    const r = menu("izakaya");
+    assert.equal(r.kind, "category");
+    assert.deepEqual(items("izakaya"), ["Tonkotsu Ramen"]);
+  });
+
+  it("tonkotsu finds both tonkotsu ramens", () => {
+    assert.equal(menu("tonkotsu").kind, "match");
+    assert.deepEqual(items("Tonkotsu"), ["Tonkotsu Ramen", "Classic Tonkotsu Ramen"]);
+  });
+
+  it("a typo: raemn means ramen", () => {
+    const r = menu("raemn");
+    assert.equal(r.kind, "typo");
+    if (r.kind !== "typo") return;
+    assert.equal(r.didYouMean, "ramen");
+    assert.equal(r.lines[0].item, "Instant Ramen (Shin)");
+    assert.equal(r.total, 6);
+    assert.equal(menu("tonkatsu").kind, "typo", "tonkatsu is one letter off tonkotsu");
+  });
+
+  it("matches the start of words, so tea doesn't find steak", () => {
+    assert.deepEqual(items("tea"), ["Steeped Tea"]);
+    assert.deepEqual(items("chicken ramen"), ["Miso Roasted Chicken Ramen", "Chicken Miso Ramen"]);
+    assert.deepEqual(items("latte 16oz"), ["Latte"], "the variant counts for multi-word queries");
+  });
+
+  it("caps the lines, counts the total, and ignores one-letter and empty queries", () => {
+    const r = searchMenu("ramen", MENU_INDEX, 2);
+    assert.equal(r.lines.length, 2);
+    assert.equal(r.total, 6);
+    assert.equal(menu("r").kind, "empty");
+    assert.equal(menu(" -- ").kind, "empty");
+    assert.equal(menu("zzzz").kind, "none");
   });
 });

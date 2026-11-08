@@ -8,6 +8,7 @@ import type { Outlet } from "@/lib/types";
 import { useLocation } from "@/lib/use-location";
 import { ClusterLayer, type MapPoint } from "./ClusterLayer";
 import { LocationDot } from "./LocationDot";
+import { outletHref } from "./OutletLink";
 
 type Props = { outlets: Outlet[] };
 
@@ -24,9 +25,10 @@ function measureOverlays(): [number, number] {
   return [Math.ceil(topPx) + 8, Math.ceil(bottomPx) + 8];
 }
 
+/** Tapping a pin opens the outlet's page (name, today's hours, prices, full menu). */
 function toPoint(o: Outlet): MapPoint {
   const words = tierWords(o);
-  const approx = isApproximate(o.location_precision) ? " · approximate location" : "";
+  const approx = isApproximate(o.location_precision) ? ", approximate location" : "";
   return {
     id: o.id,
     lat: o.lat,
@@ -34,19 +36,9 @@ function toPoint(o: Outlet): MapPoint {
     label: o.is_benchmark ? "" : tierLabel(o),
     kind: o.is_benchmark ? "grocery" : "outlet",
     estimated: o.tier_basis === "estimated",
-    description: `${o.name}, ${words}`,
+    description: `${o.name}, ${words}${approx}. Opens its prices and menu.`,
     summary: `${o.name}: ${o.is_benchmark ? "grocery baseline" : tierLabel(o)}`,
-    popup: (
-      <>
-        <p className="m-0 font-heading text-lg font-extrabold leading-tight">{o.name}</p>
-        {o.area ? <p className="m-0 mt-1 text-ink-2">{o.area}</p> : null}
-        <p className="m-0 mt-1">
-          {words}
-          {approx}
-        </p>
-        {o.hours ? <p className="m-0 mt-1 text-ink-2">{o.hours}</p> : null}
-      </>
-    ),
+    href: outletHref(o.id),
   };
 }
 

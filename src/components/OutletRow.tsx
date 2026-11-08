@@ -3,6 +3,8 @@ import { walkLabel } from "@/lib/geo";
 import { isApproximate } from "@/lib/outlet";
 import { freshness } from "@/lib/pricing";
 import type { PriceRow } from "@/lib/types";
+import { OutletLink } from "./OutletLink";
+import { PendingLine } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
 import { PriceTag } from "./PriceTag";
 import { Stamp } from "./Stamp";
@@ -34,7 +36,9 @@ export function OutletRow({ row, now, cheapest, dimmed, saves }: Props) {
     <li className={`rounded-tag border-2 border-ink p-3 ${card}`}>
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <h3 className="font-heading text-lg font-extrabold leading-tight">{row.outlet.name}</h3>
+          <h3 className="font-heading text-lg font-extrabold leading-tight">
+            <OutletLink id={row.outlet.id}>{row.outlet.name}</OutletLink>
+          </h3>
           {place.length > 0 ? <p className="text-ink-2">{place.join(" · ")}</p> : null}
         </div>
         {cheapest || soldOut ? (
@@ -72,16 +76,7 @@ export function OutletRow({ row, now, cheapest, dimmed, saves }: Props) {
           on the next refresh
         </p>
       ) : null}
-      {row.pending ? (
-        <p className="mt-2 flex flex-wrap items-center gap-2">
-          <Stamp kind="pending" />
-          <span>
-            {row.pending.mine ? "Your report" : "New report"}:{" "}
-            <span className="font-mono font-bold">{formatPrice(row.pending.price)}</span> · waiting for a second
-            student
-          </span>
-        </p>
-      ) : null}
+      {row.pending ? <PendingLine pending={row.pending} /> : null}
       {row.stock === "maybe_sold_out" ? <p className="mt-1">A student said it may be sold out.</p> : null}
     </li>
   );

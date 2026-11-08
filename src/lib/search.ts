@@ -171,3 +171,203 @@ export function parseAliases(raw: string | null | undefined): string[] {
     .map((a) => a.trim())
     .filter(Boolean);
 }
+
+// ---------------------------------------------------------------------------------------------------------
+// Menu search: every menu line on campus, tracked or not (GET /api/menu-search, docs/SPEC.md section 7).
+//
+// Same normalisation, plural rule and typo budget as the item search above, applied word by word, because
+// menu names are longer ("Pork Shoyu Ramen"): a query matches the start of a word, so "tea" finds "Green
+// Tea" but not "Steak". Order: item names (word start, then contains for 4+ letters), then typos in item
+// names ("Did you mean ramen?"), then the menu's own section names ("Sushi"), cheapest first in each.
+// ---------------------------------------------------------------------------------------------------------
+
+/** What menu search needs from a line. */
+export type MenuSearchLine = { item: string; variant: string | null; category: string; price: number };
+
+type MenuKeys = {
+  /** The whole item name, normalised: "porkshoyuramen". */
+  name: string;
+  /** Item name words as written ("Ramen") and normalised ("ramen"), in step. */
+  rawWords: string[];
+  words: string[];
+  /** Item name plus variant words, for multi-word queries ("latte 16oz"). */
+  wordsWithVariant: string[];
+  category: string;
+  categoryWords: string[];
+};
+
+/** Lines with their search keys worked out once (the server keeps this for every line on campus). */
+export type MenuIndex<T extends MenuSearchLine> = { entries: { line: T; keys: MenuKeys; order: number }[] };
+
+export type MenuSearchResult<T extends MenuSearchLine> =
+  /** The query is shorter than MENU_MIN_QUERY letters or digits. */
+  | { kind: "empty"; lines: []; total: 0 }
+  /** "match": item names matched. "category": only the menu's section names did. */
+  | { kind: "match" | "category"; lines: T[]; total: number }
+  /** Only near misses: show "Did you mean <didYouMean>?". */
+  | { kind: "typo"; lines: T[]; total: number; didYouMean: string }
+  | { kind: "none"; lines: []; total: 0 };
+
+/** About 30 lines is what fits under the search field without becoming a wall. */
+export const MENU_SEARCH_LIMIT = 30;
+/** One letter would match half the campus. */
+export const MENU_MIN_QUERY = 2;
+/** Contains matches inside a word ("cake" in "Cheesecake") need at least this many letters. */
+const MENU_MIN_CONTAINS = 4;
+
+/** "Pork Shoyu Ramen (Large)" -> ["Pork", "Shoyu", "Ramen", "Large"]. Apostrophes stay inside a word. */
+function splitWords(text: string): string[] {
+  return text.split(/[^\p{L}\p{N}']+/u).filter((w) => normalise(w) !== "");
+}
+
+function menuKeys(line: MenuSearchLine): MenuKeys {
+  const rawWords = splitWords(line.item);
+  const words = rawWords.map(normalise);
+  return {
+    name: normalise(line.item),
+    rawWords,
+    words,
+    wordsWithVariant: [...words, ...splitWords(line.variant ?? "").map(normalise)],
+    category: normalise(line.category),
+    categoryWords: splitWords(line.category).map(normalise),
+  };
+}
+
+/** Work out every line's search keys once. Keeps the order given (it breaks price ties). */
+export function prepareMenu<T extends MenuSearchLine>(lines: readonly T[]): MenuIndex<T> {
+  return { entries: lines.map((line, order) => ({ line, keys: menuKeys(line), order })) };
+}
+
+/** A query word matches a word that starts with it, or with its singular ("cookies" finds "Cookie"). */
+function startsAnyWord(queryWord: string, words: readonly string[]): boolean {
+  const one = singular(queryWord);
+  return words.some((w) => w.startsWith(queryWord) || w.startsWith(one));
+}
+
+/** 0: every query word starts a word of the name (the variant counts for multi-word queries). 1: the whole
+ *  query is inside the name (4+ letters). null: neither. */
+function menuRank(q: string, queryWords: readonly string[], k: MenuKeys): number | null {
+  if (k.name.startsWith(q)) return 0;
+  if (queryWords.length === 1) {
+    if (startsAnyWord(queryWords[0], k.words)) return 0;
+  } else if (
+    queryWords.every((qw) => startsAnyWord(qw, k.wordsWithVariant)) &&
+    queryWords.some((qw) => startsAnyWord(qw, k.words))
+  ) {
+    return 0;
+  }
+  if (q.length >= MENU_MIN_CONTAINS && k.name.includes(q)) return 1;
+  return null;
+}
+
+/** The closest name word within the typo budget of `queryWord`, as written, with its distance. */
+function closestWord(queryWord: string, k: MenuKeys): { word: string; distance: number } | null {
+  const budget = typoBudget(queryWord.length);
+  if (budget === 0) return null;
+  let best: { word: string; distance: number } | null = null;
+  for (let i = 0; i < k.words.length; i++) {
+    const w = k.words[i];
+    if (Math.abs(w.length - queryWord.length) > budget) continue;
+    const distance = damerauLevenshtein(queryWord, w);
+    if (distance <= budget && (best === null || distance < best.distance)) {
+      best = { word: k.rawWords[i].toLowerCase(), distance };
+    }
+  }
+  return best;
+}
+
+/** Every query word starts a word of the name or is a near miss of one, and at least one is a near miss.
+ *  Returns what each query word was taken to mean, or null. */
+function menuTypo(queryWords: readonly string[], k: MenuKeys): { meant: string[]; distance: number } | null {
+  const meant: string[] = [];
+  let distance = 0;
+  for (const qw of queryWords) {
+    if (startsAnyWord(qw, k.words)) {
+      meant.push(qw);
+      continue;
+    }
+    const near = closestWord(qw, k);
+    if (!near) return null;
+    meant.push(near.word);
+    distance += near.distance;
+  }
+  return distance > 0 ? { meant, distance } : null;
+}
+
+function inCategory(q: string, queryWords: readonly string[], k: MenuKeys): boolean {
+  if (queryWords.every((qw) => startsAnyWord(qw, k.categoryWords))) return true;
+  return q.length >= MENU_MIN_CONTAINS && k.category.includes(q);
+}
+
+type Ranked<T> = { line: T; rank: number; order: number };
+
+function cheapestFirst<T extends MenuSearchLine>(a: Ranked<T>, b: Ranked<T>): number {
+  return a.rank - b.rank || a.line.price - b.line.price || a.order - b.order;
+}
+
+/**
+ * Search every menu line. Returns at most `limit` lines, best tier first and cheapest first within it, plus
+ * how many matched in total.
+ */
+export function searchMenu<T extends MenuSearchLine>(
+  query: string,
+  index: MenuIndex<T>,
+  limit = MENU_SEARCH_LIMIT,
+): MenuSearchResult<T> {
+  const q = normalise(query);
+  if (q.length < MENU_MIN_QUERY) return { kind: "empty", lines: [], total: 0 };
+  const queryWords = splitWords(query).map(normalise);
+  if (queryWords.length === 0) queryWords.push(q);
+
+  const finish = (found: Ranked<T>[]) => found.sort(cheapestFirst).slice(0, limit).map((r) => r.line);
+
+  // 1. Item names.
+  const named: Ranked<T>[] = [];
+  for (const { line, keys, order } of index.entries) {
+    const rank = menuRank(q, queryWords, keys);
+    if (rank !== null) named.push({ line, rank, order });
+  }
+  if (named.length > 0) return { kind: "match", lines: finish(named), total: named.length };
+
+  // 2. Near misses in item names. The suggestion is what most of the closest lines were taken to mean.
+  const typos: Ranked<T>[] = [];
+  const votes = new Map<string, { count: number; distance: number }>();
+  for (const { line, keys, order } of index.entries) {
+    const typo = menuTypo(queryWords, keys);
+    if (!typo) continue;
+    typos.push({ line, rank: typo.distance, order });
+    const meant = typo.meant.join(" ");
+    const v = votes.get(meant) ?? { count: 0, distance: typo.distance };
+    votes.set(meant, { count: v.count + 1, distance: Math.min(v.distance, typo.distance) });
+  }
+  if (typos.length > 0) {
+    const [didYouMean] = [...votes.entries()].sort(
+      (a, b) => a[1].distance - b[1].distance || b[1].count - a[1].count || a[0].localeCompare(b[0]),
+    )[0];
+    return { kind: "typo", lines: finish(typos), total: typos.length, didYouMean };
+  }
+
+  // 3. The menu's own section names ("Sushi", "Breakfast Pastries").
+  const sections: Ranked<T>[] = [];
+  for (const { line, keys, order } of index.entries) {
+    if (inCategory(q, queryWords, keys)) sections.push({ line, rank: 0, order });
+  }
+  if (sections.length > 0) return { kind: "category", lines: finish(sections), total: sections.length };
+
+  return { kind: "none", lines: [], total: 0 };
+}
+
+/**
+ * Group lines by item name (case, accents and punctuation ignored), keeping their order: the group whose
+ * best line comes first comes first. The group is named after its first line.
+ */
+export function groupByItemName<T extends { item: string }>(lines: readonly T[]): { name: string; lines: T[] }[] {
+  const groups = new Map<string, { name: string; lines: T[] }>();
+  for (const line of lines) {
+    const key = normalise(line.item);
+    const group = groups.get(key);
+    if (group) group.lines.push(line);
+    else groups.set(key, { name: line.item.trim(), lines: [line] });
+  }
+  return [...groups.values()];
+}

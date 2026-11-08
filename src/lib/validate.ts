@@ -29,6 +29,29 @@ export const pricesQuerySchema = z
     message: "Send both lat and lng, or neither.",
   });
 
+/** An outlet's slug id, e.g. "blue-chip-cafe" (GET /api/outlet/[id]). */
+export const outletIdSchema = z
+  .string({ error: "Pick an outlet to see its prices." })
+  .trim()
+  .toLowerCase()
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "That isn't an outlet we know.")
+  .max(80, "That isn't an outlet we know.");
+
+/** GET /api/menu-search?q=ramen&lat=49.2666&lng=-123.2499. lat and lng come together or not at all. */
+export const menuSearchQuerySchema = z
+  .object({
+    q: z
+      .string({ error: "Type what you want to find." })
+      .trim()
+      .min(1, "Type what you want to find.")
+      .max(60, "That search is too long. Try a word or two."),
+    lat: coordinate(-90, 90).optional(),
+    lng: coordinate(-180, 180).optional(),
+  })
+  .refine((q) => (q.lat === undefined) === (q.lng === undefined), {
+    message: "Send both lat and lng, or neither.",
+  });
+
 /** The device's random id (src/lib/device.ts, Step 6), sent as a header so it never sits in a URL. */
 export const deviceIdSchema = z
   .string()

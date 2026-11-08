@@ -3,6 +3,7 @@
 // Pins that group when they would overlap (zoomed out). Only import from a map component loaded with
 // dynamic(..., { ssr: false }) (SPEC rule 9).
 import L from "leaflet";
+import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import { Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import { clusterByDistance, type Spacing } from "@/lib/cluster";
@@ -19,7 +20,10 @@ export type MapPoint = {
   description: string;
   /** One line for this pin in a group's list (when the map can't zoom in any further). */
   summary: string;
-  popup: ReactNode;
+  /** Shown on tap when there is no `href`. */
+  popup?: ReactNode;
+  /** Tapping the pin opens this page (the outlet page). */
+  href?: string;
   kind?: PinKind;
   estimated?: boolean;
   band?: Band | null;
@@ -65,6 +69,7 @@ export function ClusterLayer({ points, overlayInsets, clusterLabel, spacing = TA
           band={p.band}
           cheapest={p.cheapest}
           soldOut={p.soldOut}
+          href={p.href}
           overlayInsets={overlayInsets}
         >
           {p.popup}
@@ -128,7 +133,17 @@ function ClusterPin({ members, label, atMaxZoom, overlayInsets = [16, 16] }: Clu
           <ul className="m-0 mt-1 list-none p-0">
             {members.map((m) => (
               <li key={m.id} className="mt-1">
-                {m.summary}
+                {m.href ? (
+                  <Link
+                    href={m.href}
+                    prefetch={false}
+                    className="inline-flex min-h-12 items-center font-bold text-ink! underline decoration-2 underline-offset-4"
+                  >
+                    {m.summary}
+                  </Link>
+                ) : (
+                  m.summary
+                )}
               </li>
             ))}
           </ul>
