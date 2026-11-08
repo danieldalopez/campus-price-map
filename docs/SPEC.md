@@ -6,6 +6,10 @@ Built at HackCamp 2026 (nwPlus, UBC Vancouver) by Sergio Lopez and Sebastian Sal
 
 > **Claude Code: this file is the spec.** Read it fully before every task. Work through section 13 one step at a time. If a request conflicts with this file, ask before building.
 
+Version 14, Sun Nov 8. Changes from version 13:
+- **Red Bull 473 ml is tracked as I24** (16 outlets in the menu data). `scripts/build_seed.py` maps it; `db/migrations/2026-11-08_red_bull_473.sql` adds it to a live database without re-seeding (run once as the owner, safe to repeat). Its sticker reuses the Red Bull art; its barcode is mapped.
+- **Multi-buy deals** (`data/deals.csv`, bundled like `data/barcodes.csv`): INS Market's Red Bull 2 for $5.99 (250 ml), 2 for $7.49 (355 ml) and 2 for $8.99 (473 ml), from the `deal_*` columns of the raw menu file. A DEAL line sits beside the price; the list ranks a deal by its price each, and a "Best deal" card tops Results when a deal beats every other outlet's single price. The decision line, CHEAPEST stamp and Worth the walk still use single prices.
+
 Version 13, Sun Nov 8. Changes from version 12:
 - **Step 10 finished.** `src/lib/sounds.ts` synthesises the five sounds with Web Audio: snap (shutter), slap (report saved), cha-ching (results show a cheaper spot), thud (sold out, or a report voted down) and chime (a price confirmed, or "It's back"). The sound on/off button (`SoundToggle`) is in the home, Results and Outlet headers, remembered on the phone, and off by default when the phone asks for reduced motion. Read aloud (`src/lib/speech.ts`, `ReadAloud`) on Results reads the decision line, the top 3 outlets and the Worth the walk saving. Every sound comes with text on screen.
 - **Location button, blocked:** a tap while off always asks again (the phone shows a prompt if it still may). If the phone has blocked the site, a note gives that phone's steps (iPhone, Android or other), fades after 8 s or on ✕, and location turns on by itself once it's allowed and the student comes back. Browsers never let a site show the prompt again after "Don't Allow"; that's why the note exists.
@@ -175,7 +179,7 @@ assets/PROMPTS.md every AI Studio prompt we used (for Devpost)
 
 ## 6. Data
 
-### Items (fixed IDs, 23)
+### Items (fixed IDs, 24)
 
 ```
 I01 Red Bull, 250 ml can                      Energy drinks
@@ -201,6 +205,7 @@ I20 Banana                                    Fruit
 I21 Apple                                     Fruit
 I22 Red Bull, 355 ml can                      Energy drinks
 I23 Clif Bar, 68 g                            Snacks
+I24 Red Bull, 473 ml can                      Energy drinks
 ```
 
 StatCan matches (I08, I09, I11, I20, I21) live in `data/statcan_map.csv`, section 10.

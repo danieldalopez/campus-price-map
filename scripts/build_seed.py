@@ -54,6 +54,7 @@ ITEMS = [
     ("I21", "Apple", "each", None, "Fruit", "apple"),
     ("I22", "Red Bull", "355 ml can", 355, "Energy drinks", "red bull 355|big red bull"),
     ("I23", "Clif Bar", "68 g", None, "Snacks", "clif|clif bar|cliff bar|energy bar"),
+    ("I24", "Red Bull", "473 ml can", 473, "Energy drinks", "red bull 473|tall red bull|large red bull"),
 ]
 ITEM_IDS = {i[0] for i in ITEMS}
 
@@ -76,6 +77,8 @@ def match_items(item, variant, category):
             out.append("I01")
         elif v == "355 ml":
             out.append("I22")
+        elif v == "473 ml":
+            out.append("I24")
     if n == "monster energy" and v == "473 ml":
         out.append("I02")
     if n == "celsius energy" and v == "355 ml":
@@ -218,7 +221,7 @@ def barcode_item(price_item, variant, off_size):
     if "pack" in p or " x " in v:
         return None
     if p.startswith("red bull"):
-        return {"250 ml": "I01", "355 ml": "I22"}.get(v)
+        return {"250 ml": "I01", "355 ml": "I22", "473 ml": "I24"}.get(v)
     if p.startswith("monster"):
         return "I02"
     if p.startswith("celsius"):

@@ -18,7 +18,7 @@ create table locations (
 );
 
 create table items (
-  id        text primary key,                           -- 'I01' .. 'I23'
+  id        text primary key,                           -- 'I01' .. 'I24'
   name      text not null,
   size      text not null,
   volume_ml int,
