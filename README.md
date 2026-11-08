@@ -11,6 +11,9 @@ Built in 24 hours at [HackCamp 2026](https://hackcamp-2026.devpost.com/) (nwPlus
 | Figma | _add link_ |
 | Devpost | _add link_ |
 
+> **📋 Master plan:** [`docs/SPEC.md`](docs/SPEC.md) is the build spec we work from: product, data, the Databricks
+> price engine, design, guardrails, build order for both tracks, and the prizes we're going for.
+
 > **🧪 FIRST PROTOTYPE available:** [`first-prototype/`](first-prototype/) is a working first prototype (v0.1.0) of
 > the full loop (scan → share price → cheapest first → "Did you buy it?" → community confirmation, sold out, map,
 > outlet pages, thank-yous). It is a Databricks App (AppKit + React) on Lakebase with **sample data**, built as a
@@ -208,6 +211,7 @@ Free Edition Lakebase scales to zero when idle, so the first request after a qui
 
 ## Repo layout
 
+- `docs/SPEC.md` **master plan**: the build spec both of us (and our Claude Code sessions) work from
 - `data/` seed prices from the campus price walk, the item and outlet lists, and StatCan extracts
 - `notebooks/` Databricks notebooks for the price model and StatCan benchmarks
 - `prompts/` Claude Code and Gemini prompts
