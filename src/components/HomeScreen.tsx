@@ -223,7 +223,7 @@ export default function HomeScreen() {
           <div className="mt-2.5 flex gap-2">
             <Link
               href="/scan"
-              className={buttonClasses("secondary", "md", "h-[3.25rem] shrink-0 rounded-control border-2! border-ink! px-4")}
+              className={buttonClasses("secondary", "md", "h-[3.25rem] shrink-0 rounded-control border-2! border-ink! px-4 shadow-ink-sm active:translate-x-[2px] active:translate-y-[2px] active:shadow-none")}
             >
               <Icon name="scan" className="h-6 w-6" /> Scan
             </Link>
