@@ -143,6 +143,11 @@ APPROX = {  # area or building → (lat, lng, precision); centroids from ubcv_bu
     "Wesbrook Village": (49.254766, -123.236554, "area"),
 }
 
+# Vendors with no UBC point and no known building, located from OpenStreetMap (© OpenStreetMap contributors, ODbL).
+OSM_POINTS = {  # vendor → (lat, lng, precision)
+    "Popeyes": (49.265351, -123.236911, "exact"),  # node 12215720529, 2320 Acadia Road
+}
+
 CHAINS = (
     "starbucks", "tim hortons", "subway", "booster juice", "mcdonald", "a&w", "freshslice", "pita pit",
     "popeyes", "chipotle", "osmow", "triple o", "blenz", "freshii", "shoppers drug mart", "save-on-foods",
@@ -244,6 +249,8 @@ def main():
     for s in stores:
         if s["latitude"].strip():
             lat, lng, prec = float(s["latitude"]), float(s["longitude"]), "exact"
+        elif s["vendor"].strip() in OSM_POINTS:
+            lat, lng, prec = OSM_POINTS[s["vendor"].strip()]
         else:
             key = s["campus_location"] if s["campus_location"] in APPROX else s["area"]
             if key not in APPROX:
