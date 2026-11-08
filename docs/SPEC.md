@@ -748,8 +748,8 @@ databricks postgres create-synced-table workspace.serving.price_comparisons --js
 
 `refresh`: `02_bronze_copy` → `price_engine` → `03_price_model` → refresh both synced tables (pipeline tasks on each synced table's pipeline; get the IDs from `databricks postgres get-synced-table`) → `04_grants`.
 
-- Schedule: every 30 min from Sat night to Sun 12:15 PM, then pause. Plus "Run now" for the demo.
-- Measure one full run in D4 and write the time here: ______. If it's over 3 minutes, don't wait for it live in the demo; show the recorded run.
+- Schedule: **every hour on the hour** (America/Vancouver) until judging ends Sun 12:15 PM, then pause it. Plus "Run now" for the demo. Hourly, not every 30 min, because a run takes about 11 minutes and Free Edition compute is limited. The dev target has no `mode: development`, because development mode pauses every schedule and refuses to unpause it.
+- Measured on Nov 8: **11.4 min** for a full run (bronze copy 4.5 min, mostly serverless start-up and `%pip`; price engine 7 min), plus the snapshot sync. That's over 3 minutes, so don't wait for it live in the demo: show a recorded run.
 - Deploy: `databricks bundle validate`, then `databricks bundle deploy -t dev`, then `databricks bundle run refresh -t dev`, each with `--profile campus-price-map`.
 - Screenshot the Job DAG, the pipeline graph and the data quality panel for Devpost.
 

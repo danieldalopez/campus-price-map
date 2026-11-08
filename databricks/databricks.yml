@@ -79,11 +79,12 @@ resources:
       tags:
         project: campus-price-map
         aidevkit_project: ai-dev-kit
-      # D4 adds the schedule: every 30 min from Sat night to Sun 12:15 PM, then pause.
-      # Development mode pauses schedules, so D4 also sets presets.trigger_pause_status: UNPAUSED on the target.
-      # schedule:
-      #   quartz_cron_expression: "0 0/30 * * * ?"
-      #   timezone_id: America/Vancouver
+      # D4: every hour on the hour (a full run takes about 11 minutes, so every 30 min would keep serverless busy a
+      # third of the time on Free Edition). Pause it after judging (Sun Nov 8, 12:15 PM): the Devpost checklist says so.
+      schedule:
+        quartz_cron_expression: "0 0 * * * ?"
+        timezone_id: America/Vancouver
+        pause_status: UNPAUSED
       tasks:
         # No cluster settings anywhere: every task runs on serverless.
         - task_key: bronze_copy
@@ -144,8 +145,8 @@ resources:
 targets:
   dev:
     default: true
-    # Development mode prefixes resource names with "[dev <user>]", marks the pipeline as
-    # development and pauses schedules. Tables still land in workspace.cpm.
-    mode: development
+    # No `mode: development` (D4): development mode pauses every schedule and refuses to unpause it, and this is the
+    # only deployment, so the hourly refresh has to run. Resources are named plainly ("refresh", "price_engine"), the
+    # pipeline runs in normal mode (it retries on failure), and tables still land in workspace.cpm.
     workspace:
       host: https://dbc-7d171812-536c.cloud.databricks.com
