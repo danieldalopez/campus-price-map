@@ -19,9 +19,12 @@ import {
   decisionText,
   fartherStandsOut,
   groceryText,
+  isComparable,
+  isNear,
   referencePrice,
   splitSections,
   withWalkFrom,
+  type Decision,
 } from "@/lib/pricing";
 import { statcanLine } from "@/lib/statcan";
 import type { PriceRow, PricesResponse } from "@/lib/types";
@@ -47,21 +50,89 @@ const ResultsMap = dynamic(() => import("./ResultsMap"), {
   loading: () => <div className="h-full w-full bg-paper-2" aria-hidden="true" />,
 });
 
-const CARD = "rounded-tag border-2 border-ink bg-card p-3 shadow-ink";
+const CARD = "rounded-tag border border-ink/20 bg-card p-3";
 
-/** Where walk times are measured from, in one line (SPEC section 7, "Location"). */
+/** "Near you" only when walk times really are from the student; otherwise from the AMS Nest. */
+function nearLabel(usingNest: boolean): string {
+  return usingNest ? "Near AMS Nest" : "Near you";
+}
+
+/** The same, mid-sentence. */
+function nearWords(usingNest: boolean): string {
+  return usingNest ? "near AMS Nest" : "near you";
+}
+
+/** Where walk times are measured from, in one quiet line (SPEC section 7, "Location"). */
 function LocationLine({ location }: { location: LocationState }) {
-  if (location.status === "on") {
-    return <p className="text-ink-2">Walk times are from where you are.</p>;
+  if (!location.usingNest) {
+    return <p className="text-sm text-ink-2">Walk times are from where you are.</p>;
   }
   if (location.status === "asking") {
-    return <p className="text-ink-2">Finding where you are… walk times are from the AMS Nest until then.</p>;
+    return <p className="text-sm text-ink-2">Finding where you are… distances from AMS Nest until then.</p>;
   }
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-      <p className="min-w-0 flex-1 basis-56">{NEST_MESSAGE}</p>
-      {location.status === "off" ? <Button onClick={requestLocation}>Use my location</Button> : null}
-    </div>
+    <p className="flex flex-wrap items-center gap-x-1.5 text-sm text-ink-2">
+      <span className="sr-only">{NEST_MESSAGE}</span>
+      <span aria-hidden="true">Distances from AMS Nest</span>
+      {location.status === "off" ? (
+        <>
+          <span aria-hidden="true">·</span>
+          <button
+            type="button"
+            onClick={requestLocation}
+            className="-my-3 inline-flex min-h-12 items-center rounded-tag px-1 font-bold text-ink underline decoration-1 underline-offset-4 hover:decoration-2 focus-visible:outline-2 focus-visible:outline-focus"
+          >
+            Use my location
+          </button>
+        </>
+      ) : null}
+    </p>
+  );
+}
+
+/** "~3 min" or "<1 min", for the compact summary. */
+function shortWalk(min: number | null): string | null {
+  if (min === null) return null;
+  return min < 1 ? "<1 min" : `~${min} min`;
+}
+
+/**
+ * The one-line answer under the header: where to go, the price and the walk. Says "cheapest" only when at
+ * least two prices were compared; with one price it says so instead.
+ */
+function Summary({ decision, rows, usingNest }: { decision: Decision; rows: PriceRow[]; usingNest: boolean }) {
+  if (decision.kind === "none") {
+    return <p className="font-heading text-lg font-extrabold leading-snug">No confirmed price for this item yet.</p>;
+  }
+  const target = decision.kind === "save" ? decision.at : decision.closest;
+  const pool = rows.filter(isComparable).filter((r) => decision.scope === "campus" || isNear(r));
+  const walk = shortWalk(target.walk_min);
+  const from = walk ? `${walk} walk${usingNest ? " from AMS Nest" : ""}` : null;
+  const lead =
+    decision.kind === "save"
+      ? `Save ${formatPrice(decision.saving)} at`
+      : pool.length < 2
+        ? decision.scope === "near"
+          ? "1 nearby price found:"
+          : "1 price found:"
+        : decision.scope === "near"
+          ? "Cheapest nearby:"
+          : "Cheapest on campus:";
+  return (
+    <p className="leading-snug">
+      <span className="block text-sm font-bold text-ink-2">{lead}</span>
+      <span className="font-heading text-base font-extrabold">{target.outlet.name}</span>{" "}
+      <span className="whitespace-nowrap">
+        <span aria-hidden="true">· </span>
+        <span className="font-mono text-lg font-bold">{formatPrice(target.price)}</span>
+      </span>
+      {from ? (
+        <span className="block text-sm text-ink-2">
+          <span className="sr-only">, </span>
+          {from}
+        </span>
+      ) : null}
+    </p>
   );
 }
 
@@ -76,20 +147,22 @@ type SectionProps = {
   /** Farther only: the price a row has to beat by $1.00 to stand out. */
   reference?: number | null;
   item: { id: string; name: string; size: string };
+  /** "near you" or "near AMS Nest", for a Farther row's saving. */
+  nearWords: string;
 };
 
-function Section({ id, title, hint, rows, empty, now, cheapestId, reference, item }: SectionProps) {
+function Section({ id, title, hint, rows, empty, now, cheapestId, reference, item, nearWords }: SectionProps) {
   const farther = reference !== undefined;
   return (
-    <section aria-labelledby={id} className="mt-6 px-4">
-      <h2 id={id} className="font-heading text-2xl font-extrabold leading-tight">
+    <section aria-labelledby={id} className="mt-5 px-4">
+      <h2 id={id} className="font-heading text-xl font-extrabold leading-tight">
         {title}
       </h2>
-      <p className="text-ink-2">{hint}</p>
+      <p className="text-sm text-ink-2">{hint}</p>
       {rows.length === 0 ? (
         <p className="mt-2">{empty}</p>
       ) : (
-        <ul className="mt-3 flex flex-col gap-3">
+        <ul className="mt-2 flex flex-col gap-2">
           {rows.map((row) => {
             const standsOut = farther && fartherStandsOut(row, reference ?? null);
             const saves =
@@ -104,6 +177,7 @@ function Section({ id, title, hint, rows, empty, now, cheapestId, reference, ite
                 cheapest={row.outlet.id === cheapestId}
                 dimmed={farther && !standsOut}
                 saves={saves}
+                nearWords={nearWords}
                 item={item}
               />
             );
@@ -118,12 +192,12 @@ function Section({ id, title, hint, rows, empty, now, cheapestId, reference, ite
  * What Read aloud says (SPEC section 7): the decision line, the top 3 outlets with an official price
  * ("Grocery Checkout, 3 dollars 59, about 1 minute"), and the Worth the walk saving if there is one.
  */
-function readAloudText(itemName: string, decisionLine: string, ordered: PriceRow[]): string {
+function readAloudText(itemName: string, decisionLine: string, ordered: PriceRow[], nearWords: string): string {
   const top = ordered.filter((r) => r.price !== null && r.stock !== "sold_out").slice(0, 3);
   const parts = [`${itemName}. ${decisionLine}.`];
   if (top.length > 0) {
     parts.push(
-      `Cheapest near you: ${top
+      `Cheapest ${nearWords}: ${top
         .map((r) => {
           const walk = r.walk_min === null ? "" : `, about ${r.walk_min} ${r.walk_min === 1 ? "minute" : "minutes"}`;
           return `${r.outlet.name}, ${spokenPrice(r.price as number)}${walk}`;
@@ -171,8 +245,16 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
     }
   }, [data, decision]);
   const spoken = useMemo(
-    () => (data ? readAloudText(data.item.name, decisionText(decision), [...sections.near, ...sections.farther]) : null),
-    [data, decision, sections],
+    () =>
+      data
+        ? readAloudText(
+            data.item.name,
+            decisionText(decision).replace(/near you/g, nearWords(location.usingNest)),
+            [...sections.near, ...sections.farther],
+            nearWords(location.usingNest),
+          )
+        : null,
+    [data, decision, sections, location.usingNest],
   );
   const cheapest = useMemo(() => cheapestRow(rows), [rows]);
   const reference = referencePrice(decision);
@@ -182,24 +264,22 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
 
   return (
     <main className="mx-auto min-h-dvh max-w-xl bg-paper pb-[max(env(safe-area-inset-bottom),24px)]">
-      <header className="sticky top-0 z-[1200] flex items-center gap-3 border-b-2 border-ink bg-paper px-4 pt-[max(env(safe-area-inset-top),12px)] pb-3">
-        <Link href="/" className={buttonClasses("secondary", "md", "shrink-0 px-3")} aria-label="Back to the map">
-          <span aria-hidden="true">←</span> Map
-        </Link>
+      <header className="sticky top-0 z-[1200] flex items-center gap-2 border-b border-ink/15 bg-paper px-2 pt-[max(env(safe-area-inset-top),8px)] pb-2">
+        <BackToMap />
         {item ? (
           <>
-            <ItemArt item={item} size={64} />
-            <div className="min-w-0">
-              <h1 className="font-heading text-2xl font-extrabold leading-tight">{item.name}</h1>
-              <p className="leading-tight text-ink-2">{item.size}</p>
+            <ItemArt item={item} size={52} />
+            <div className="min-w-0 flex-1">
+              <h1 className="font-heading text-2xl font-extrabold leading-tight break-words">{item.name}</h1>
+              <p className="text-sm leading-tight text-ink-2">{item.size}</p>
             </div>
           </>
         ) : (
-          <h1 className="font-heading text-2xl font-extrabold leading-tight">
+          <h1 className="min-w-0 flex-1 font-heading text-2xl font-extrabold leading-tight">
             {api.error ? "Prices" : "Loading prices…"}
           </h1>
         )}
-        <SoundToggle className="ml-auto" />
+        <SoundToggle className="border! border-ink/20! shadow-none!" />
       </header>
 
       <div className="mt-3 flex flex-col gap-3 px-4">
@@ -221,11 +301,17 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
         ) : null}
 
         {/* Announced when results arrive (section 11). */}
-        <section aria-live="polite" aria-busy={api.loading} className={data ? CARD : "sr-only"}>
+        <section
+          aria-live="polite"
+          aria-busy={api.loading}
+          className={data ? "flex items-center gap-2 rounded-tag border border-ink/15 bg-card py-2 pr-2 pl-3" : "sr-only"}
+        >
           {data ? (
             <>
-              <p className="font-heading text-xl font-extrabold leading-snug">{decisionText(decision)}</p>
-              <ReadAloud text={spoken} className="mt-3" />
+              <div className="min-w-0 flex-1">
+                <Summary decision={decision} rows={rows} usingNest={location.usingNest} />
+              </div>
+              <ReadAloud text={spoken} />
               <p className="sr-only">
                 {rows.length === 1 ? "1 outlet" : `${rows.length} outlets`} on campus sell it.
               </p>
@@ -239,7 +325,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
         <div
           role="region"
           aria-label={`Map of ${item?.name ?? "item"} prices. The list below has everything the map shows.`}
-          className="mt-4 h-60 border-y-2 border-ink"
+          className="mt-4 h-[220px] border-y border-ink/15"
         >
           <WhileVisible fallback={<div className="h-full w-full bg-paper-2" aria-hidden="true" />}>
             <ResultsMap
@@ -258,13 +344,14 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
         <PricesRefresh.Provider value={api.retry}>
           <Section
             id="near-heading"
-            title="Near you"
+            title={nearLabel(location.usingNest)}
             hint="About 3 min walk or less, cheapest first."
             rows={sections.near}
             empty="Nothing within about 3 min walk."
             now={now}
             cheapestId={cheapest?.outlet.id ?? null}
             item={data.item}
+            nearWords={nearWords(location.usingNest)}
           />
           <Section
             id="farther-heading"
@@ -276,6 +363,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
             cheapestId={cheapest?.outlet.id ?? null}
             reference={reference}
             item={data.item}
+            nearWords={nearWords(location.usingNest)}
           />
 
           {data.grocery && bestPrice !== null ? (
@@ -283,7 +371,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
               <span className="font-bold">vs grocery: </span>
               {decision.kind === "save"
                 ? decision.scope === "near"
-                  ? "the cheapest near you is "
+                  ? `the cheapest ${nearWords(location.usingNest)} is `
                   : "the cheapest on campus is "
                 : "the closest is "}
               {groceryText(bestPrice, data.grocery)} ({formatPrice(data.grocery.price)}).
@@ -309,14 +397,25 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
   );
 }
 
+/** 48 px back control: just the arrow, named for screen readers. */
+function BackToMap() {
+  return (
+    <Link
+      href="/"
+      aria-label="Back to the map"
+      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-tag text-2xl hover:bg-paper-2 focus-visible:outline-2 focus-visible:outline-focus"
+    >
+      <span aria-hidden="true">←</span>
+    </Link>
+  );
+}
+
 /** Shown while the page reads its params (before the client takes over). */
 export function ResultsSkeleton() {
   return (
     <main className="mx-auto min-h-dvh max-w-xl bg-paper">
-      <header className="flex items-center gap-3 border-b-2 border-ink px-4 pt-[max(env(safe-area-inset-top),12px)] pb-3">
-        <Link href="/" className={buttonClasses("secondary", "md", "shrink-0 px-3")} aria-label="Back to the map">
-          <span aria-hidden="true">←</span> Map
-        </Link>
+      <header className="flex items-center gap-2 border-b border-ink/15 px-2 pt-[max(env(safe-area-inset-top),8px)] pb-2">
+        <BackToMap />
         <h1 className="font-heading text-2xl font-extrabold leading-tight">Loading prices…</h1>
       </header>
     </main>

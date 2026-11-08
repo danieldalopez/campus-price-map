@@ -4,7 +4,8 @@ import { isApproximate } from "@/lib/outlet";
 import { freshness } from "@/lib/pricing";
 import type { PriceRow } from "@/lib/types";
 import { BoughtButton, ConfirmedLine, WrongPriceButton } from "./BoughtButton";
-import { OutletLink } from "./OutletLink";
+import Link from "next/link";
+import { outletHref } from "./OutletLink";
 import { PendingLine } from "./PendingLine";
 import { PriceBand } from "./PriceBand";
 import { PriceTag } from "./PriceTag";
@@ -19,6 +20,8 @@ type Props = {
   dimmed: boolean;
   /** A Farther row that stands out: how much it saves compared with near you. */
   saves: number | null;
+  /** "near you", or "near AMS Nest" when walk times are from the Nest. */
+  nearWords?: string;
   /** The item on this Results page, for "I bought it here". */
   item: { id: string; name: string; size: string };
 };
@@ -27,39 +30,51 @@ type Props = {
  * One outlet on Results (SPEC section 7). The official price is the only price shown big. Dimming never
  * drops text below 4.5:1: it changes the card, not the ink.
  */
-export function OutletRow({ row, now, cheapest, dimmed, saves, item }: Props) {
+export function OutletRow({ row, now, cheapest, dimmed, saves, nearWords = "near you", item }: Props) {
   const fresh = freshness(row, now);
   const soldOut = row.stock === "sold_out";
   const place = [
     row.walk_min === null ? null : walkLabel(row.walk_min),
     isApproximate(row.outlet.location_precision) ? "approximate location" : null,
   ].filter(Boolean);
-  const card = dimmed || fresh?.stale ? "border-dashed bg-paper-2" : "bg-card shadow-ink";
+  const card = dimmed || fresh?.stale ? "border-dashed border-ink/30 bg-paper-2" : "border-ink/15 bg-card";
 
   return (
-    <li className={`rounded-tag border-2 border-ink p-3 ${card}`}>
-      <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0">
-          <h3 className="font-heading text-lg font-extrabold leading-tight">
-            <OutletLink id={row.outlet.id}>{row.outlet.name}</OutletLink>
-          </h3>
-          {place.length > 0 ? <p className="text-ink-2">{place.join(" · ")}</p> : null}
-        </div>
-        {cheapest || soldOut ? (
-          <div className="flex shrink-0 flex-col items-end gap-1 pt-0.5">
-            {cheapest ? <Stamp kind="cheapest" /> : null}
-            {soldOut ? <Stamp kind="sold-out" /> : null}
+    <li className={`rounded-tag border p-3 ${card}`}>
+      <div className="flex items-start justify-between gap-3">
+        <Link
+          href={outletHref(row.outlet.id)}
+          prefetch={false}
+          className="group -m-1 flex min-h-12 min-w-0 flex-1 items-center gap-1 rounded-tag p-1 focus-visible:outline-2 focus-visible:outline-focus"
+        >
+          <span className="min-w-0 flex-1">
+            <span className="block font-heading text-lg font-bold leading-tight group-hover:underline">
+              {row.outlet.name}
+            </span>
+            {place.length > 0 ? <span className="block text-sm text-ink-2">{place.join(" · ")}</span> : null}
+          </span>
+          <span aria-hidden="true" className="shrink-0 text-xl text-ink-2">
+            ›
+          </span>
+        </Link>
+        {row.price !== null ? (
+          <div className="flex shrink-0 flex-col items-end gap-1">
+            <PriceTag price={row.price} tiltId={row.outlet.id} size="lg" />
+            {fresh ? <p className="text-right text-sm text-ink-2">{fresh.text}</p> : null}
           </div>
         ) : null}
       </div>
 
-      {row.price !== null ? (
-        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
-          <PriceTag price={row.price} tiltId={row.outlet.id} size="lg" />
-          <PriceBand band={row.band} pctVsMedian={row.pct_vs_median} />
-          {row.chip ? <span className="chip">{row.chip}</span> : null}
+      {cheapest || soldOut || (row.price !== null && (row.band || row.chip)) ? (
+        <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
+          {cheapest ? <Stamp kind="cheapest" /> : null}
+          {soldOut ? <Stamp kind="sold-out" /> : null}
+          {row.price !== null ? <PriceBand band={row.band} pctVsMedian={row.pct_vs_median} /> : null}
+          {row.price !== null && row.chip ? <span className="chip">{row.chip}</span> : null}
         </div>
-      ) : row.just_confirmed ? null : (
+      ) : null}
+
+      {row.price !== null || row.just_confirmed ? null : (
         <p className="mt-2">
           <span className="font-bold">No confirmed price yet</span>
           {row.estimate ? (
@@ -70,11 +85,10 @@ export function OutletRow({ row, now, cheapest, dimmed, saves, item }: Props) {
           ) : null}
         </p>
       )}
-
-      {fresh ? <p className="mt-1 text-ink-2">{fresh.text}</p> : null}
+      {row.price === null && fresh ? <p className="mt-1 text-sm text-ink-2">{fresh.text}</p> : null}
       {row.price !== null ? <ConfirmedLine row={row} now={now} /> : null}
       {row.price !== null ? <WrongPriceButton outlet={row.outlet} item={item} price={row.price} /> : null}
-      {saves !== null ? <p className="mt-1 font-bold text-cheap">Saves {formatPrice(saves)} compared with near you</p> : null}
+      {saves !== null ? <p className="mt-1 font-bold text-cheap">Saves {formatPrice(saves)} compared with {nearWords}</p> : null}
       {row.just_confirmed ? (
         <p className="mt-1">
           <span className="font-bold">Just confirmed: </span>

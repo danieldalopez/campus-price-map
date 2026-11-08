@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { canSpeak, speak, stopSpeaking } from "@/lib/speech";
-import { buttonClasses } from "./Button";
 
 const noop = () => () => {};
 
@@ -22,7 +21,11 @@ export function ReadAloud({ text, className = "" }: { text: string | null; class
   return (
     <button
       type="button"
-      className={buttonClasses("secondary", "md", `shrink-0 px-3 ${className}`)}
+      className={
+        "inline-flex min-h-12 shrink-0 items-center gap-1.5 rounded-tag border border-ink/20 bg-card px-2.5 " +
+        "text-sm font-bold text-ink hover:bg-paper-2 focus-visible:outline-2 focus-visible:outline-focus " +
+        `aria-pressed:bg-ink aria-pressed:text-card ${className}`
+      }
       aria-pressed={speaking}
       onClick={() => {
         if (speaking) {
