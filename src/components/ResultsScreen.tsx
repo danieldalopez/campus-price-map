@@ -32,6 +32,7 @@ import { OutletRow } from "./OutletRow";
 import { PricesRefresh } from "./PendingLine";
 import { WakingUp } from "./WakingUp";
 import { WhileVisible } from "./WhileVisible";
+import { WorthTheWalk } from "./WorthTheWalk";
 
 // Leaflet is client only: never server render the map (SPEC rule 9).
 const ResultsMap = dynamic(() => import("./ResultsMap"), {
@@ -178,6 +179,7 @@ export default function ResultsScreen({ itemId }: { itemId: string }) {
             </>
           ) : null}
         </section>
+        {data ? <WorthTheWalk rows={rows} /> : null}
       </div>
 
       {data && rows.some((r) => r.price !== null) ? (

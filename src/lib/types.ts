@@ -74,6 +74,12 @@ export type PriceFields = {
   estimate: { low: number; high: number } | null;
   /** The newest pending report. `my_vote` is this device's vote on it, if it voted (Step 7). */
   pending: { price_id: number; price: number; mine: boolean; my_vote: Vote | null } | null;
+  /**
+   * Pipeline only: Databricks' Worth the walk suggestion for someone standing at this outlet: the cheaper
+   * outlet within reach, its saving each time and the extra minutes (there and back). The Outlet page shows
+   * it; Results computes its own, live, from the student's position.
+   */
+  walk: { location_id: string; name: string | null; saving: number; extra_min: number } | null;
 };
 
 /** One outlet that sells the item (Results). */
