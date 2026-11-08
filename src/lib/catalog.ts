@@ -1,5 +1,6 @@
 // Items and outlets from Lakebase, shaped for the API (docs/SPEC.md sections 6 and 8). Server only.
 
+import { shownSize } from "./item-size";
 import { query } from "./db";
 import { parseAliases } from "./search";
 import { servingTableReadable } from "./serving";
@@ -22,11 +23,12 @@ export function toItem(r: ItemRow): Item {
   return {
     id: r.id,
     name: r.name,
-    size: r.size,
+    size: shownSize(r.id, r.size),
     category: r.category,
     image: text(r.image),
     volume_ml: num(r.volume_ml),
-    aliases: parseAliases(r.aliases),
+    // The stored size stays searchable ("drip coffee small") now that the shown one reads differently.
+    aliases: [...parseAliases(r.aliases), `${r.name} ${r.size}`],
   };
 }
 

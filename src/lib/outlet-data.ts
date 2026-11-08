@@ -9,6 +9,7 @@
 //
 // Full menu: every menu_items line for the outlet, from the cached campus menu (src/lib/menu.ts).
 
+import { shownSize } from "./item-size";
 import { loadOutlet } from "./catalog";
 import { query } from "./db";
 import { dealFor, hasDeal } from "./deals";
@@ -58,11 +59,12 @@ function toItem(r: ItemCols): Item {
   return {
     id: r.item_id,
     name: r.item_name,
-    size: r.size,
+    size: shownSize(r.item_id, r.size),
     category: r.category,
     image: text(r.image),
     volume_ml: num(r.volume_ml),
-    aliases: parseAliases(r.aliases),
+    // The stored size stays searchable ("drip coffee small") now that the shown one reads differently.
+    aliases: [...parseAliases(r.aliases), `${r.item_name} ${r.size}`],
   };
 }
 

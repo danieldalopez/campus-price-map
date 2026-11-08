@@ -15,10 +15,10 @@ type Props = {
 };
 
 // Sticker card: cream, 2 px ink outline, 2 px hard shadow; pale yellow while pressed or selected
-// (aria-current). Art sits in a 48 px square so every tile lines up; 8 px to the name, 4 px to the size,
-// spare height at the bottom.
+// (aria-current). The art fills its square edge to edge (48 px on phones, 56 px wider up) so it carries
+// the tile; 8 px to the name, 4 px to the size, spare height at the bottom.
 const TILE =
-  "flex h-full flex-col items-center rounded-tag border-2 border-ink bg-card px-2.5 pt-2 pb-2.5 " +
+  "flex h-full flex-col items-center rounded-tag border-2 border-ink bg-card px-2 pt-2 pb-2 " +
   "text-center shadow-ink-sm transition-[translate,box-shadow,background-color] " +
   "hover:bg-tag-pale active:translate-x-[2px] active:translate-y-[2px] active:bg-tag-pale active:shadow-none " +
   "aria-[current=true]:bg-tag-pale";
@@ -32,11 +32,11 @@ export function ItemTiles({ items, layout, trailing, onSelect, className = "" }:
   // "See all items" is the non-scrolling alternative.
   const list =
     layout === "row"
-      ? "flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 pt-0.5 pb-3 scroll-px-4 [scrollbar-width:none]"
+      ? "flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pt-0.5 pb-3 scroll-px-4 [scrollbar-width:none]"
       : "grid grid-cols-3 gap-3";
-  // Row tiles are all 144 px wide: wide enough for the longest size on one line ("medium, 14 to 16 oz");
-  // a long name wraps onto its second line.
-  const cell = layout === "row" ? "w-36 shrink-0 snap-start" : "min-w-0";
+  // Row tiles are all one width (120 px on phones, 128 px wider up): enough for the longest size on one line
+  // ("591 ml bottle"); a long name wraps onto its second line.
+  const cell = layout === "row" ? "w-[7.5rem] shrink-0 snap-start sm:w-32" : "min-w-0";
 
   return (
     <ul className={`${list} ${className}`}>
@@ -48,12 +48,10 @@ export function ItemTiles({ items, layout, trailing, onSelect, className = "" }:
             className={TILE}
             onClick={() => onSelect?.(item)}
           >
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center" aria-hidden="true">
-              <ItemArt item={item} size={40} />
-            </span>
+            <ItemArt item={item} size={56} className="h-12 w-12 sm:h-14 sm:w-14" />
             {/* Same spacing on every tile: name 8 px under the art, size 4 px under the name. A two-line name
                 pushes the size down; the spare height goes to the bottom, never between art and name. */}
-            <span className="mt-2 line-clamp-2 w-full text-[0.9375rem] leading-[1.25] font-semibold">{item.name}</span>
+            <span className="mt-2 line-clamp-2 w-full text-sm leading-[1.25] font-bold sm:text-[0.9375rem]">{item.name}</span>
             <span className={`mt-1 w-full text-sm leading-tight text-ink-2 ${layout === "row" ? "whitespace-nowrap" : ""}`}>
               {item.size}
             </span>
