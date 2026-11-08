@@ -39,6 +39,7 @@ export type LiveExtraCols = {
   /** This device's vote on the pending report, if any (`$2` is the device id). */
   pending_my_vote: string | null;
   stock: Stock;
+  last_confirmed_at: Date | null;
 };
 
 /** The live official price (current_prices) plus the item's campus median (item_medians). */
@@ -78,19 +79,42 @@ export type PipelinePriceCols = {
 };
 
 /** Live CTE bodies, filtered by `$1` on `key` ("item_id" for Results, "location_id" for the Outlet page). */
+/** A student's price within this many dollars of the official price confirms it (the section 6 matching band). */
+export const CONFIRM_BAND = 0.1;
+
 export function liveCtes(key: "item_id" | "location_id"): string {
   const other = key === "item_id" ? "location_id" : "item_id";
   return `
   cp as (select ${other} as k, price, source, confirmations, updated_at from current_prices where ${key} = $1),
-  pp as (select ${other} as k, price_id, price, device_id from pending_prices where ${key} = $1),
-  st as (select ${other} as k, stock from stock_status where ${key} = $1)`;
+  pp as (
+    -- A report within CONFIRM_BAND of the official price isn't a new price: it confirms the current one
+    -- ("I bought it", Step 8), so it shows as "Confirmed … ago" instead of a pending line to vote on.
+    select p.${other} as k, p.price_id, p.price, p.device_id
+    from pending_prices p
+    left join current_prices c on c.item_id = p.item_id and c.location_id = p.location_id
+    where p.${key} = $1 and (c.price is null or abs(p.price - c.price) > ${CONFIRM_BAND})),
+  st as (select ${other} as k, stock from stock_status where ${key} = $1),
+  lc as (
+    -- When a student last confirmed the official price: their own report (photo, receipt or typed, not voted
+    -- down) within CONFIRM_BAND of it. A wrong price ($700 for a Red Bull) never counts and never changes it.
+    select ps.${other} as k,
+           max(greatest(ps.reported_at, case when ps.status = 'official' then ps.updated_at end)) as last_confirmed_at
+    from price_status ps
+    join current_prices c on c.item_id = ps.item_id and c.location_id = ps.location_id
+    where ps.${key} = $1 and ps.source in ('photo', 'receipt', 'typed') and ps.status <> 'rejected'
+      and abs(ps.price - c.price) <= ${CONFIRM_BAND}
+    group by ps.${other})`;
 }
 
-/** Pending and stock columns; needs `pp` and `st` from liveCtes joined on `k`, and the device id (or null) as `$2`. */
+/**
+ * Pending, stock and last-confirmed columns; needs `pp`, `st` and `lc` from liveCtes joined on `k`, and the
+ * device id (or null) as `$2`.
+ */
 export const LIVE_EXTRA_COLUMNS = `
   pp.price_id as pending_price_id, pp.price as pending_price, pp.device_id as pending_device_id,
   (select v.vote from price_votes v where v.price_id = pp.price_id and v.device_id = $2::text) as pending_my_vote,
-  coalesce(st.stock, 'in_stock') as stock`;
+  coalesce(st.stock, 'in_stock') as stock,
+  lc.last_confirmed_at`;
 
 /** The pipeline columns PipelinePriceCols reads; needs `pc`, `nl` (nearest cheaper outlet) and `cp`. */
 export const PIPELINE_COLUMNS = `
@@ -106,11 +130,15 @@ export const PIPELINE_COLUMNS = `
     where s.item_id = pc.item_id and s.location_id = pc.walk_best_location_id) as walk_best_stock`;
 
 /** Pending report (whether this device made it is decided here, so other devices' ids never leave) and stock. */
-export function liveExtras(r: LiveExtraCols, deviceId: string | undefined): Pick<PriceFields, "stock" | "pending"> {
+export function liveExtras(
+  r: LiveExtraCols,
+  deviceId: string | undefined,
+): Pick<PriceFields, "stock" | "pending" | "last_confirmed_at"> {
   const pendingPrice = num(r.pending_price);
   const pendingId = num(r.pending_price_id);
   return {
     stock: r.stock,
+    last_confirmed_at: iso(r.last_confirmed_at),
     pending:
       pendingPrice !== null && pendingId !== null
         ? {
@@ -123,7 +151,7 @@ export function liveExtras(r: LiveExtraCols, deviceId: string | undefined): Pick
   };
 }
 
-type PriceOnly = Omit<PriceFields, "stock" | "pending">;
+type PriceOnly = Omit<PriceFields, "stock" | "pending" | "last_confirmed_at">;
 
 /**
  * Live mode: the official price, and its band from the campus median. No chip, nearest cheaper or estimate.
@@ -232,7 +260,8 @@ const BASE_COLUMNS = `
 
 const BASE_JOINS = `
   left join pp on pp.k = l.id
-  left join st on st.k = l.id`;
+  left join st on st.k = l.id
+  left join lc on lc.k = l.id`;
 
 function baseRow(r: BaseRow, origin: LatLng | null, deviceId: string | undefined) {
   const outlet = {
