@@ -702,7 +702,7 @@ tier_basis                      "measured" | "estimated" | null
 n_items_cheapest, updated_at
 ```
 
-Tier rules: no official prices at the outlet → null (`?` in the app; we never rate an outlet on its type alone). Otherwise, the band whose probability is at least 0.6 sets the tier: `$` cheaper, `$$` average, `$$$` pricier. If no band reaches 0.6 → null. `tier_basis` is "measured" if `n_obs` ≥ 4 and that probability is at least 0.8, otherwise "estimated".
+Tier rules: no official prices at the outlet → null (`?` in the app; we never rate an outlet on its type alone). Otherwise, the band whose probability is at least 0.5 sets the tier: `$` cheaper, `$$` average, `$$$` pricier. If no band reaches 0.5 → null. `tier_basis` is "measured" if `n_obs` ≥ 4 and that probability is at least 0.8, otherwise "estimated".
 
 `model_price_estimates` (Delta, not synced on its own): for each pair in `carries` (section 6) that has no official price, `est_price` (posterior median), `est_low` and `est_high` (calibrated 80% interval) and `est_support` (prices of this item elsewhere plus prices at this outlet). It's written only when the gate passes, and only for pairs with `est_support` ≥ 3. `gold_price_comparisons` reads this table on its next run and adds those pairs as rows with `price` null and the `est_*` columns filled. Estimates reach the app one refresh late, and we avoid a third synced table. On the very first run the table doesn't exist yet, so the pipeline treats it as empty.
 
