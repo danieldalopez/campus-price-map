@@ -21,7 +21,7 @@ import { OutletLink } from "./OutletLink";
 export const WalkConfigContext = createContext<WalkConfig>(DEFAULT_CONFIG);
 
 const FIELD =
-  "min-h-12 rounded-tag border-2 border-ink bg-card px-3 font-sans text-base text-ink focus-visible:outline-focus";
+  "min-h-12 rounded-tag border border-ink/60 bg-card px-3 font-sans text-base text-ink focus-visible:outline-focus";
 
 const HORIZON_WORDS = { term: "a term", year: "a year", degree: "a degree" } as const;
 
@@ -72,7 +72,7 @@ export function WorthTheWalk({ rows, item }: { rows: PriceRow[]; item: Pick<Item
   return (
     <section
       aria-labelledby={`${ids}-h`}
-      className="rounded-tag border-2 border-ink bg-card p-3 shadow-ink"
+      className="rounded-tag border border-ink/20 border-l-4 border-l-cheap bg-card p-3"
     >
       <h2 id={`${ids}-h`} className="font-heading text-2xl font-extrabold leading-tight">
         Worth the walk: <span className="text-cheap">save {formatPrice(term.saved)} a term</span>
@@ -99,13 +99,13 @@ export function WorthTheWalk({ rows, item }: { rows: PriceRow[]; item: Pick<Item
 
       <ul aria-live="polite" className="mt-3 grid grid-cols-3 gap-2">
         {totals.map((t) => (
-          <li key={t.h} className="rounded-tag border-2 border-ink bg-paper p-2 text-center">
+          <li key={t.h} className="rounded-tag bg-paper p-2 text-center">
             <p className="font-mono text-lg font-bold leading-tight text-cheap">{formatPrice(t.saved)}</p>
             <p className="text-sm leading-tight">saved {HORIZON_WORDS[t.h]}</p>
           </li>
         ))}
       </ul>
-      <p className="mt-2 text-ink-2">
+      <p className="mt-2 text-sm text-ink-2">
         {term.purchases} purchases a term ({config.weeks_term} weeks), if prices hold.
       </p>
 
