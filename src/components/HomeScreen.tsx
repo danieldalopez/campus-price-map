@@ -220,7 +220,11 @@ function OutletList({ outlets, loading, location }: { outlets: Outlet[]; loading
       <ul className="mt-3 flex flex-col gap-3">
         {rows.map(({ o, walk }) => (
           <li key={o.id} className="rounded-tag border-2 border-ink bg-card p-3 shadow-ink">
-            <p className="font-heading text-lg font-extrabold leading-tight">{o.name}</p>
+            <p className="font-heading text-lg font-extrabold leading-tight">
+              <Link href={`/outlet/${encodeURIComponent(o.id)}`} className="underline decoration-2 underline-offset-2">
+                {o.name}
+              </Link>
+            </p>
             {o.area ? <p className="text-ink-2">{o.area}</p> : null}
             <p className="mt-1">
               {o.is_benchmark ? null : <span className="font-mono font-bold">{tierLabel(o)} · </span>}

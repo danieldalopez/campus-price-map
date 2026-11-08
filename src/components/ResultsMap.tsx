@@ -66,6 +66,11 @@ function toPoint(row: PriceRow & { price: number }, cheapestId: string | null): 
         {row.band ? <p className="m-0 mt-1">{BAND_WORD[row.band]}</p> : null}
         {walk ? <p className="m-0 mt-1 text-ink-2">{walk}</p> : null}
         {soldOut ? <p className="m-0 mt-1 font-bold">Sold out</p> : null}
+        <p className="m-0 mt-2">
+          <a href={`/outlet/${encodeURIComponent(row.outlet.id)}`} className="font-bold text-ink underline">
+            Everything at {row.outlet.name}
+          </a>
+        </p>
       </>
     ),
   };

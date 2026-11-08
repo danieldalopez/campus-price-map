@@ -101,3 +101,16 @@ export type PricesResponse = {
 
 /** Every error response: one plain sentence for the user. */
 export type ApiError = { error: string };
+
+/** One item on the Outlet page: the same price fields as a Results row, keyed by item instead of outlet. */
+/** `nearest_cheaper.walk_min` is measured from this outlet. */
+export type OutletItemRow = Omit<PriceRow, "outlet" | "walk_min"> & { item: Item };
+
+/** GET /api/outlet/[id]: the outlet and every tracked item it sells (SPEC section 8). */
+export type OutletResponse = {
+  outlet: Outlet;
+  /** Items in id order; the page groups them by category. */
+  items: OutletItemRow[];
+  price_source_used: "live" | "pipeline";
+  computed_at: string | null;
+};
