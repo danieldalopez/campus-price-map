@@ -171,6 +171,181 @@ body {
     font-family: var(--font-mono);
     font-size: 0.95rem;
   }
+  /* Results pins: the band is the border colour plus its icon next to the price (section 11). */
+  .cpm-pin__stack {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .cpm-pin__band {
+    font-family: var(--font-sans);
+    font-weight: 800;
+  }
+  .cpm-pin__tag--good {
+    border-color: var(--cheap);
+    border-width: 3px;
+  }
+  .cpm-pin__tag--average {
+    border-color: var(--mid);
+    border-width: 3px;
+  }
+  .cpm-pin__tag--high {
+    border-color: var(--pricey);
+    border-width: 3px;
+  }
+  .cpm-pin__tag--sold-out .cpm-pin__label {
+    text-decoration: line-through;
+  }
+  .cpm-pin__stamp {
+    font-size: 0.75rem;
+    padding: 0.05rem 0.3rem;
+    background: var(--card);
+  }
+
+  /* A group of overlapping pins: two tags stacked, with the count. */
+  .cpm-cluster__stack {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 44px;
+    min-height: 40px;
+    padding: 0.25rem 0.5rem;
+    background: var(--tag);
+    color: var(--tag-ink);
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: 3px 3px 0 var(--card), 5px 5px 0 var(--ink);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .cpm-cluster__label {
+    font-size: 0.9rem;
+  }
+  .cpm-cluster__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.6rem;
+    height: 1.6rem;
+    padding: 0 0.3rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--card);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  /* The student's live location dot (decorative; the location line says it in words). */
+  .cpm-dot {
+    position: relative;
+  }
+  .cpm-dot__core,
+  .cpm-dot__ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+  }
+  .cpm-dot__core {
+    inset: 3px;
+    background: var(--focus);
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--ink);
+  }
+  .cpm-dot__ring {
+    background: rgba(37, 99, 235, 0.25);
+    animation: cpm-dot-pulse 2s ease-out infinite;
+  }
+  @keyframes cpm-dot-pulse {
+    0% {
+      transform: scale(0.6);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+  /* Results map: where walk times start when location is off (the AMS Nest). */
+  .cpm-start__dot {
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: var(--ink);
+    border: 3px solid var(--card);
+    box-shadow: 0 0 0 2px var(--ink);
+  }
+
+  /* ---------- Stamp ---------- */
+  .stamp {
+    display: inline-block;
+    padding: 0.1rem 0.4rem;
+    border: 2px solid currentColor;
+    border-radius: 3px;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    white-space: nowrap;
+    rotate: -3deg;
+  }
+  .stamp--cheapest {
+    color: var(--cheap);
+  }
+  .stamp--sold-out {
+    color: var(--pricey);
+  }
+  .stamp--pending {
+    color: var(--pending);
+  }
+  .stamp--statcan {
+    color: var(--ink);
+  }
+
+  /* Comparison chip from price_comparisons.chip (pipeline only). */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0.2rem 0.6rem;
+    border: 2px dashed var(--ink);
+    border-radius: var(--radius);
+    font-weight: 700;
+    font-size: 0.875rem;
+  }
+
+  /* ---------- WakingUp ---------- */
+  .waking-up {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    background: var(--card);
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    font-weight: 700;
+  }
+  .waking-up__dot {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 999px;
+    background: var(--pending);
+    animation: cpm-blink 1s ease-in-out infinite alternate;
+  }
+  @keyframes cpm-blink {
+    to {
+      opacity: 0.25;
+    }
+  }
+
   .leaflet-marker-icon.cpm-pin:focus-visible {
     outline: 3px solid var(--focus);
     outline-offset: 2px;
@@ -259,8 +434,12 @@ body {
   .price-tag,
   .price-band,
   .cpm-pin__grocery,
+  .cpm-cluster__stack,
   .leaflet-bar {
     border-color: CanvasText;
+  }
+  .cpm-dot__core {
+    background: Highlight;
   }
   .price-tag::before {
     background: Canvas;

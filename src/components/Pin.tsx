@@ -6,8 +6,11 @@ import L from "leaflet";
 import { useMemo, type ReactNode } from "react";
 import { Marker, Popup } from "react-leaflet";
 import { tiltFor } from "@/lib/format";
+import type { Band } from "@/lib/types";
 
 export type PinKind = "outlet" | "grocery";
+
+const BAND_ICON: Record<Band, string> = { good: "✓", average: "=", high: "↑" };
 
 type PinIconOptions = {
   /** Outlet id: fixes the tilt. */
@@ -20,6 +23,12 @@ type PinIconOptions = {
   estimated?: boolean;
   /** "grocery" = the grocery baseline: a different shape, labelled "grocery". */
   kind?: PinKind;
+  /** Results map: the price band, as the pin's border colour plus its icon next to the price. */
+  band?: Band | null;
+  /** Results map: the cheapest outlet gets a CHEAPEST stamp. */
+  cheapest?: boolean;
+  /** Results map: sold out (struck through, plus the words in the accessible name). */
+  soldOut?: boolean;
 };
 
 const ESCAPES: Record<string, string> = {
@@ -44,6 +53,9 @@ export function pinIcon({
   description,
   estimated = false,
   kind = "outlet",
+  band = null,
+  cheapest = false,
+  soldOut = false,
 }: PinIconOptions): L.DivIcon {
   const tilt = tiltFor(id);
   const style = `style="--tilt:${tilt}deg"`;
@@ -58,9 +70,20 @@ export function pinIcon({
     height = label ? 52 : 44;
   } else {
     const est = estimated ? `<span class="cpm-pin__est">est.</span>` : "";
-    const cls = `price-tag cpm-pin__tag${estimated ? " cpm-pin__tag--est" : ""}`;
-    visual = `<span class="${cls}" ${style} aria-hidden="true">${esc(label)}${est}</span>`;
-    width = Math.max(44, label.length * 11 + (estimated ? 30 : 0) + 30);
+    const icon = band ? `<span class="cpm-pin__band">${BAND_ICON[band]}</span>` : "";
+    const cls = [
+      "price-tag cpm-pin__tag",
+      estimated ? "cpm-pin__tag--est" : "",
+      band ? `cpm-pin__tag--${band}` : "",
+      soldOut ? "cpm-pin__tag--sold-out" : "",
+    ]
+      .filter(Boolean)
+      .join(" ");
+    const tag = `<span class="${cls}" ${style}>${icon}<span class="cpm-pin__label">${esc(label)}</span>${est}</span>`;
+    const stamp = cheapest ? `<span class="stamp stamp--cheapest cpm-pin__stamp">CHEAPEST</span>` : "";
+    visual = `<span class="cpm-pin__stack" aria-hidden="true">${stamp}${tag}</span>`;
+    width = Math.max(44, label.length * 11 + (estimated ? 30 : 0) + (band ? 16 : 0) + 30, cheapest ? 92 : 0);
+    if (cheapest) height = 70;
   }
 
   return L.divIcon({
@@ -85,14 +108,14 @@ type PinProps = PinIconOptions & {
 
 /** A tag-shaped map pin. Keyboard focusable (Leaflet gives it role="button"). */
 export function Pin({ position, children, overlayInsets = [16, 16], ...icon }: PinProps) {
-  const { id, label, description, estimated, kind } = icon;
+  const { id, label, description, estimated, kind, band, cheapest, soldOut } = icon;
   const divIcon = useMemo(
-    () => pinIcon({ id, label, description, estimated, kind }),
-    [id, label, description, estimated, kind],
+    () => pinIcon({ id, label, description, estimated, kind, band, cheapest, soldOut }),
+    [id, label, description, estimated, kind, band, cheapest, soldOut],
   );
   const [top, bottom] = overlayInsets;
   return (
-    <Marker position={position} icon={divIcon} keyboard riseOnHover>
+    <Marker position={position} icon={divIcon} keyboard riseOnHover zIndexOffset={cheapest ? 500 : 0}>
       {children ? (
         <Popup
           minWidth={180}
@@ -104,4 +127,19 @@ export function Pin({ position, children, overlayInsets = [16, 16], ...icon }: P
       ) : null}
     </Marker>
   );
+}
+
+/** A group of overlapping pins: a little stack of tags with the count (and, on Results, the lowest price). */
+export function clusterIcon({ count, label, description }: { count: number; label?: string; description: string }) {
+  const price = label ? `<span class="cpm-cluster__label">${esc(label)}</span>` : "";
+  const width = Math.max(52, (label?.length ?? 0) * 10 + 44);
+  return L.divIcon({
+    className: "cpm-pin cpm-cluster",
+    html:
+      `<span class="cpm-cluster__stack" aria-hidden="true">${price}<span class="cpm-cluster__count">${count}</span></span>` +
+      `<span class="sr-only">${esc(description)}</span>`,
+    iconSize: [width, 48],
+    iconAnchor: [width / 2, 24],
+    popupAnchor: [0, -24],
+  });
 }
