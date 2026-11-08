@@ -21,7 +21,14 @@ type Phase =
   | { kind: "camera" }
   | { kind: "looking"; code: string }
   | { kind: "matched"; itemId: string; name: string | null }
-  | { kind: "tiles"; why: "picked" | "known" | "unknown" | "failed"; name?: string; code?: string };
+  | {
+      kind: "tiles";
+      why: "picked" | "known" | "unknown" | "failed";
+      name?: string;
+      code?: string;
+      /** A tracked brand without a readable size: only its sizes are offered. */
+      candidates?: string[];
+    };
 
 const WAITING = "Waiting for the camera. Allow camera access if your browser asks.";
 
@@ -153,7 +160,7 @@ export default function ScanScreen() {
         setPhase({ kind: "matched", itemId: data.item_id, name });
         router.push(`/item/${data.item_id}`);
       } else if (data.status === "known" && name) {
-        setPhase({ kind: "tiles", why: "known", name, code });
+        setPhase({ kind: "tiles", why: "known", name, code, candidates: data.candidates });
       } else {
         setPhase({ kind: "tiles", why: "unknown", code });
       }
@@ -236,6 +243,9 @@ export default function ScanScreen() {
   } else if (phase.kind === "matched") {
     heading = `Found ${matchedName ?? "your item"}`;
     line = "Opening its prices…";
+  } else if (phase.kind === "tiles" && phase.why === "known" && phase.candidates?.length) {
+    heading = `That's ${phase.name}. Which size?`;
+    line = "Drinks are priced by size, not flavour: pick the size and you'll see where it's cheapest.";
   } else if (phase.kind === "tiles" && phase.why === "known") {
     heading = `That's ${phase.name}. We don't track it yet.`;
   } else if (phase.kind === "tiles" && phase.why === "unknown") {
@@ -401,7 +411,14 @@ export default function ScanScreen() {
               </div>
             ) : items.length > 0 ? (
               <nav aria-label="Items">
-                <ItemTiles layout="grid" items={items} />
+                <ItemTiles
+                  layout="grid"
+                  items={
+                    phase.kind === "tiles" && phase.candidates?.length
+                      ? items.filter((i) => phase.candidates?.includes(i.id))
+                      : items
+                  }
+                />
               </nav>
             ) : (
               <p className="text-ink-2">Loading items…</p>

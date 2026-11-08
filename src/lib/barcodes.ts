@@ -2,13 +2,16 @@
 //
 // 1. The bundled Open Food Facts extract, data/barcodes.csv, read once per server instance and kept in memory.
 //    A row with an item_id is "matched"; a row without one is "known".
-// 2. Otherwise the Open Food Facts API, with a 4 s timeout. Its answer is cached in memory. A live answer is
-//    only ever "known" or "unknown": it never maps to one of our items on its own (G16).
+// 2. Otherwise the Open Food Facts API, with a 4 s timeout. Its answer is cached in memory.
+// Either way, a product we have no exact item for is matched by brand and size (src/lib/variant-match.ts,
+// G16 as of SPEC version 15): Red Bull Sugarfree 250 ml counts as Red Bull 250 ml, because drinks are priced
+// by size, not flavour. Multipacks never match.
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
 import { BARCODE_PATTERN, barcodeKeys, type BarcodeResult } from "./gtin";
+import { familyCandidates, itemForVariant } from "./variant-match";
 
 export const barcodeQuerySchema = z.object({
   code: z
@@ -74,9 +77,10 @@ export function displayName(name: string | null, brands: string | null): string 
 
 function rowResult(cols: Map<string, number>, r: string[]): BarcodeResult {
   const get = (name: string) => (r[cols.get(name) ?? -1] ?? "").trim();
-  const itemId = get("item_id");
-  const productName = displayName(get("product_name"), get("brand"));
   const quantity = get("quantity");
+  // Rows the seed didn't map (another flavour of a tracked drink) still match by brand and size.
+  const itemId = get("item_id") || itemForVariant(get("product_name"), get("brand"), quantity) || "";
+  const productName = displayName(get("product_name"), get("brand"));
   return {
     status: ITEM_ID.test(itemId) ? "matched" : "known",
     ...(ITEM_ID.test(itemId) ? { item_id: itemId } : {}),
@@ -179,7 +183,15 @@ async function fetchOpenFoodFacts(code: string): Promise<BarcodeResult | null> {
   // A product with no name or brand can't be shown as "That's …", so it's no better than unknown.
   if (!name) return { status: "unknown" };
   const quantity = product.quantity?.trim();
-  return { status: "known", product_name: name, ...(quantity ? { quantity } : {}) };
+  const itemId = itemForVariant(product.product_name ?? null, product.brands ?? null, quantity ?? null);
+  if (itemId) return { status: "matched", item_id: itemId, product_name: name, ...(quantity ? { quantity } : {}) };
+  const candidates = familyCandidates(product.product_name ?? null, product.brands ?? null, quantity ?? null);
+  return {
+    status: "known",
+    product_name: name,
+    ...(quantity ? { quantity } : {}),
+    ...(candidates.length > 0 ? { candidates } : {}),
+  };
 }
 
 /** Open Food Facts, through the in-memory cache. `null` when it couldn't answer this time. */
