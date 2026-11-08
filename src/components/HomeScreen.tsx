@@ -1,10 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { ITEMS, ITEMS_BY_POPULARITY } from "@/lib/item-list";
 import type { Outlet } from "@/lib/outlet";
-import { Button } from "./Button";
+import { Button, buttonClasses } from "./Button";
 import { ItemTiles } from "./ItemTiles";
 
 // Leaflet is client only: never server render the map (SPEC rule 9).
@@ -128,6 +129,9 @@ export default function HomeScreen({ outlets, source }: Props) {
             <span aria-hidden="true">☰</span> List
           </Button>
         </div>
+        <Link href="/snap" className={buttonClasses("primary", "lg", "mt-2 w-full")}>
+          <span aria-hidden="true">📷</span> Snap a price
+        </Link>
       </div>
 
       {/* See all items: native modal dialog (focus trap and Escape for free). */}
