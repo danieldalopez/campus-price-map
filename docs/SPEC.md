@@ -100,7 +100,8 @@ src/app/
 src/components/   PriceTag PriceBand ItemSticker ItemTiles Pin Stamp Tape ReceiptCard Button CameraButton BottomSheet SoundToggle ReadAloud Toast WakingUp WorthTheWalk RouteLayer RouteSteps LocationDot Scanner
 src/lib/          db.ts gemini.ts genie.ts geo.ts device.ts image.ts sounds.ts speech.ts validate.ts format.ts pricing.ts walkworth.ts search.ts route.ts barcode.ts
 db/               schema.sql roles.sql views.sql
-data/             items.csv outlets.csv prices.csv carries.csv   (exported from the "Campus Price Map data" Google Sheet)
+data/raw/         campus_food_prices.csv barcode_lookup.csv      (raw inputs, never edited)
+data/             items.csv outlets.csv prices.csv carries.csv menu_items.csv build_report.md   (built by scripts/build_seed.py)
                   statcan_map.csv                             (hand-checked item to StatCan mapping, section 10)
                   walk_matrix.csv                             (outlet to outlet walking minutes, from build-walk-matrix.mjs)
                   barcodes.csv                                (Open Food Facts extract, ODbL licence, section 6)
@@ -148,41 +149,47 @@ assets/PROMPTS.md every AI Studio prompt we used (for Devpost)
 
 ## 6. Data
 
-### Items (fixed IDs, 21)
+### Items (fixed IDs, 23)
 
 ```
-I01 Red Bull, 250 ml can            Energy drinks
-I02 Monster Energy, 473 ml can      Energy drinks
-I03 Celsius, 355 ml can             Energy drinks
-I04 Coca-Cola, 355 ml can           Soft drinks
-I05 Coca-Cola, 591 ml bottle        Soft drinks
-I06 Bottled water, 500 ml           Water
-I07 Sparkling water, 355 ml can     Water
-I08 Drip coffee, small              Hot drinks
-I09 Drip coffee, medium             Hot drinks
-I10 Latte, medium                   Hot drinks
-I11 Tea, medium                     Hot drinks
-I12 Iced coffee, medium             Cold coffee
-I13 Bagel with cream cheese         Breakfast and bakery
-I14 Muffin                          Breakfast and bakery
-I15 Pre-made sandwich               Lunch grab and go
-I16 Pre-made wrap                   Lunch grab and go
-I17 Sushi roll pack                 Lunch grab and go
-I18 Protein bar (one brand)         Snacks
-I19 Chips, single serve             Snacks
-I20 Banana                          Fruit
-I21 Apple                           Fruit
+I01 Red Bull, 250 ml can                      Energy drinks
+I02 Monster Energy, 473 ml can                Energy drinks
+I03 Celsius, 355 ml can                       Energy drinks
+I04 Coca-Cola, 355 ml can                     Soft drinks
+I05 Coca-Cola, 591 ml bottle                  Soft drinks
+I06 Bottled water, 500 ml                     Water
+I07 Sparkling water, 355 ml can               Water            (no prices yet)
+I08 Drip coffee, small, 10 to 12 oz           Hot drinks
+I09 Drip coffee, medium, 14 to 16 oz          Hot drinks
+I10 Latte, small, 10 to 12 oz                 Hot drinks
+I11 Tea, small, 10 to 12 oz                   Hot drinks
+I12 Iced coffee or cold brew, 12 oz           Cold coffee
+I13 Bagel with cream cheese                   Breakfast and bakery
+I14 Muffin                                    Breakfast and bakery
+I15 Pre-made sandwich                         Lunch grab and go
+I16 Pre-made wrap                             Lunch grab and go
+I17 Sushi pack, California roll, 8 pieces     Lunch grab and go
+I18 Quest Protein Bar, 60 g                   Snacks
+I19 Lay's Classic chips, 40 g                 Snacks
+I20 Banana                                    Fruit
+I21 Apple                                     Fruit
+I22 Red Bull, 355 ml can                      Energy drinks
+I23 Clif Bar, 68 g                            Snacks
 ```
 
 StatCan matches (I08, I09, I11, I20, I21) live in `data/statcan_map.csv`, section 10.
 
-The Items tab of the data sheet is the single source of truth. If it differs from this list, the sheet wins and this list gets updated.
+`scripts/build_seed.py` is the single source of truth for this list and for which menu lines count as which item (`match_items`). Coffee, latte and tea are the small 10 to 12 oz sizes because that's what almost every outlet lists. Generic foods (sandwich, wrap, muffin) use the lowest listed matching price per outlet. Quest and Clif are both tracked, as I18 and I23, so bar comparisons stay like for like. Red Bull 473 ml is not tracked.
 
 ### Outlets
 
-`data/outlets.csv`, IDs `L01` to `L21`. Fill lat and lng from openstreetmap.org before seeding (right click, "Show address"), and skip any row without coordinates. L17 to L21 are placeholders: split them into one row per real outlet after the price walk (`L17a`, `L17b`...). `L20` Save-On-Foods Wesbrook is the grocery baseline: `is_benchmark = true`, never ranked and never shown as "cheapest on campus". It's used for the "vs grocery" comparison only.
+`data/outlets.csv`, built by `scripts/build_seed.py`: 124 outlets with slug IDs (`blue-chip-cafe`, `harvest-market`). 95 have exact coordinates from UBC's food outlet points (`poi_id`). 29 had none, so they sit at their building's centroid (`location_precision = building`) or their area's (`area`, e.g. University Village), spread a few metres apart so pins don't stack. The app labels those "approximate location". Popeyes (Lelem Village) is skipped until it has coordinates. `save-on-foods-wesbrook-village` is the grocery baseline: `is_benchmark = true`, never ranked and never shown as "cheapest on campus". It's used for the "vs grocery" comparison only.
 
-Fill `type` (cafe, convenience, food_court, restaurant, grocery) and `operator` (ams, ubc_food_services, chain, independent) for every outlet, using exactly these values. The price model (section 10) uses them to estimate outlets with few prices.
+`type` is one of cafe, convenience, quick_service, restaurant, dining_hall, grocery (from the vendor type). `operator` is one of ams, ubc_food_services, chain, independent (name rules in the build script; review by hand). The price model (section 10) uses both to estimate outlets with few prices.
+
+### Where the prices come from
+
+`data/raw/campus_food_prices.csv` has 1,704 usable menu lines. 576 have a retrieved date (menus read on Nov 7): source `menu`. The other 1,128 are **AI-estimated prototype prices**, undated: source `seed`. For this prototype the app treats `seed` prices as real, official prices everywhere (comparisons, bands, Worth the walk, the Databricks engine). The source is kept so they stay traceable: the freshness line says "Prototype price", and `gold_pitch_numbers` and the Devpost never quote them as research findings. Real reports (photo, receipt, typed) replace them as students confirm prices. Of the 593 tracked prices, 10 are `menu` and 583 are `seed`; `data/build_report.md` has the per-item counts.
 
 ### What each outlet sells (`data/carries.csv`)
 
@@ -196,86 +203,26 @@ Only packaged items have barcodes: I01 to I07, I18, I19 (and I13, I15, I16, I17 
 - Output, a few hundred rows: `barcode, product_name, brand, quantity, item_id, mapped_by`. A rule fills `item_id` when brand and size match (any flavour or sugar-free version of the same size maps to the same item), and we review every row by hand. Rows that match no item keep `item_id` empty.
 - **Licence:** Open Food Facts data is under the ODbL. Our extract is a derived database in a public repo, so it ships under the ODbL with attribution (`data/barcodes.LICENSE.md` and the credits in section 15).
 
-**Decisions needed before building this** (Sergio):
-1. Red Bull 355 ml has no item (I01 is 250 ml). Add it as I22, or show "not tracked yet"?
-2. I18 is "Protein bar (one brand)". Pick the brand. Clif is an energy bar, not a protein bar, so Clif and Quest can't both be I18.
+**Built:** `data/barcodes.csv` comes from `data/raw/barcode_lookup.csv` (117 rows kept, 115 mapped). Multipacks are dropped, codes with a bad check digit are dropped, the Dasani barcode maps to I06 (it's the 500 ml bottle), Red Bull 355 ml maps to I22, Quest to I18, Clif to I23. `mapped_by` says how sure the mapping is: `exact`, `flavour_variant`, `brand_size_unverified` (the size wasn't on the label data) or `not_tracked` (Red Bull 473 ml).
 
-### Schema (`db/schema.sql`)
+### Schema (`db/schema.sql`, `db/views.sql`, `db/roles.sql`, `db/seed.sql`)
 
-```sql
-create table locations (
-  id text primary key, name text not null, area text, operator text, type text,
-  address text, hours_weekend text, hours_weekday text,
-  lat double precision not null, lng double precision not null,
-  is_benchmark boolean not null default false
-);
-create table items (
-  id text primary key, name text not null, size text not null, volume_ml int,
-  category text not null, image text,  -- /items/I01.webp
-  aliases text not null default ''     -- search aliases, pipe separated: 'redbull|red bull|rb'
-);
-create type price_source as enum ('walk','menu','grocery','photo','receipt','typed');
-create table prices (
-  id bigint generated always as identity primary key,
-  item_id text not null references items(id),
-  location_id text not null references locations(id),
-  price numeric(6,2) not null check (price between 0.25 and 25),
-  source price_source not null,
-  device_id text check (device_id ~ '^[0-9a-f-]{36}$'),  -- null for team seed rows
-  user_id text,                         -- Auth0 user id after Step 12, else null
-  needs_review boolean not null default false,
-  reported_at timestamptz not null default now()
-);
-create table price_votes (
-  id bigint generated always as identity primary key,
-  price_id bigint not null references prices(id),
-  device_id text not null check (device_id ~ '^[0-9a-f-]{36}$'),
-  user_id text,
-  vote text not null check (vote in ('yes','no','unsure')),
-  created_at timestamptz not null default now(),
-  unique (price_id, device_id)
-);
-create table stock_reports (
-  id bigint generated always as identity primary key,
-  item_id text not null references items(id),
-  location_id text not null references locations(id),
-  status text not null check (status in ('sold_out','back')),
-  device_id text not null check (device_id ~ '^[0-9a-f-]{36}$'),
-  user_id text,
-  reported_at timestamptz not null default now()
-);
-create table carries (
-  item_id text not null references items(id),
-  location_id text not null references locations(id),
-  primary key (item_id, location_id)
-);
-create table app_config (                -- one source for numbers both the app and Databricks use
-  key text primary key, value text not null, source text, updated_at timestamptz not null default now()
-);
--- seeded rows: bc_min_wage (Sergio fills from gov.bc.ca, with source and effective date),
--- weeks_term = 13, weeks_year = 26, weeks_degree = 104, even_band = 0.10, round_trip = true,
--- worth_max_extra_min = 20 (cheaper outlets more than 20 extra minutes away are never suggested)
-create table walk_matrix (               -- outlet to outlet walking, from data/walk_matrix.csv
-  from_id text not null references locations(id),
-  to_id text not null references locations(id),
-  meters int not null, minutes numeric(5,1) not null,
-  source text not null check (source in ('ors','haversine')),
-  primary key (from_id, to_id)
-);
-create table photo_reads (               -- rate limiting only; no image, no result
-  id bigint generated always as identity primary key,
-  device_id text not null check (device_id ~ '^[0-9a-f-]{36}$'),
-  created_at timestamptz not null default now()
-);
-create index on prices (item_id, location_id, reported_at desc);
-create index on price_votes (price_id);
-create index on stock_reports (item_id, location_id, reported_at desc);
-create index on photo_reads (device_id, created_at desc);
-```
+The SQL files in `db/` are the source of truth; this is the summary. Run them as the owner, in that order. `db/test_db.sh` runs all four on a throwaway local Postgres and checks permissions, the verification rules and stock.
 
-`device_id` is text (validated as a UUID) because Lakehouse Sync, the optional CDC route into Databricks (section 10), doesn't support the `uuid` type.
+| Table | What it holds |
+|---|---|
+| `locations` | 124 outlets: slug `id`, name, area, `operator`, `type`, address, `hours` (as listed), lat, lng, `is_benchmark`, UBC `poi_id`, `location_precision` |
+| `items` | 23 tracked items with `aliases` for search |
+| `prices` | Insert-only price rows. `source` is `walk`, `menu`, `grocery`, `seed`, `photo`, `receipt` or `typed`. Price must be $0.25 to $25 |
+| `price_votes`, `stock_reports`, `photo_reads` | Insert-only student actions (photo_reads is for rate limiting only) |
+| `carries` | Which outlet sells which tracked item |
+| `menu_items` | Every menu line we collected (1,704), tracked or not, for Genie and browsing; `item_ids` says which tracked items a line counts as |
+| `app_config` | Numbers the app and Databricks share: `bc_min_wage`, weeks per term, year and degree, `even_band`, `round_trip`, `worth_max_extra_min` |
+| `walk_matrix` | Outlet to outlet walking minutes, normal and step-free, filled later from the UBC path network |
 
-**"A different student"** everywhere below means a different `user_id` when both rows have one, otherwise a different `device_id`. Team seed rows (null `device_id`) count as nobody.
+`device_id` columns are text checked against the UUID shape, because Lakehouse Sync, the optional CDC route into Databricks (section 10), doesn't support the `uuid` type.
+
+**"A different student"** everywhere below means a different `user_id` when both rows have one, otherwise a different `device_id`. Team and seed rows (no device, no user) count as nobody.
 
 ### Verification: Pending vs Official
 
@@ -287,7 +234,7 @@ Rows are never updated; status is computed, so `app_writer` stays insert only. T
 Two copies of the same rules can drift apart. The pipeline guards against that with a parity check (`gold_parity`, section 10) that compares its official prices with the live `current_prices` view on every run. Any mismatch is a bug in one of the two, so fix it before the demo.
 
 Rules for each price row. Votes and matching reports count only when they come from a different student than the reporter.
-1. `official` if source is `walk`, `menu` or `grocery` (team data).
+1. `official` if source is `walk`, `menu`, `grocery` (team data) or `seed` (prototype data).
 2. `rejected` if `no` votes ≥ 1 and `no` > `yes`.
 3. `official` if `yes` > `no` and `yes` ≥ 1, or if a different student reported a price within $0.10 for the same item and outlet within 48 h of this row (matching reports confirm each other). A row with `needs_review` needs 2 confirmations (yes votes plus matching reports).
 4. Otherwise `pending`. `unsure` votes never count either way.
@@ -315,14 +262,14 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
 - `app_reader` (native password role): `usage` on schemas `public` and `serving`; `select` on all tables and views in both.
 - `app_writer` (native password role): `insert` on `prices`, `price_votes`, `stock_reports`, `photo_reads` only, plus `usage` on their identity sequences. No update, no delete.
 - Grants on `serving` are re-applied after every sync by `04_grants.py` (section 10), in case a snapshot refresh recreates the tables. If grants turn out to survive a refresh, drop that task.
-- Seed (`scripts/seed.ts`) runs locally with `DATABASE_URL_ADMIN` from `data/*.csv`. Price log rows map `Source` to `walk`, `menu` or `grocery`.
+- Seed: `python3 -I scripts/build_seed.py` turns `data/raw/` into `data/*.csv` and `db/seed.sql`. Paste `db/seed.sql` into the Lakebase SQL editor (or run it with psql as the owner). No Node dependency, so it doesn't wait on the app scaffold.
 
 ## 7. Screens
 
 **Home `/`: the map is the app**
 - The map fills the screen. Centred on UBC (49.2606, -123.2460), zoom 15, paper tinted tiles (section 11), with the student's live location dot once location is on.
 - Floating on top: search field "What do you want?" (`src/lib/search.ts`, below).
-- Below it: **item tiles**, all 21 item stickers in a horizontal scroll (most bought first: Red Bull, drip coffee medium, latte, water, sandwich, chips, then the rest), plus a "See all items" grid. Tapping a tile opens Results.
+- Below it: **item tiles**, all 23 item stickers in a horizontal scroll (most bought first: Red Bull, drip coffee small, latte, water, sandwich, chips, then the rest), plus a "See all items" grid. Tapping a tile opens Results.
 - List view (toggle in the bottom bar) shows everything the map shows, in text. It's the screen reader path, not an afterthought.
 
 **Search (`src/lib/search.ts`)**
@@ -389,9 +336,9 @@ Synced tables are read only in Postgres. Never insert, update or delete in them,
 1. Camera: `<input type="file" accept="image/*" capture="environment">`.
 2. Compress in the browser (`src/lib/image.ts`, canvas): long edge 1280 px, JPEG quality 0.8. Measure the **base64 string**, since that's what is sent: if it's over 2.5 MB, redo at 1024 px and 0.6. A 1280 px JPEG is normally 200 to 500 KB, so this is a safety net. Vercel rejects request bodies over 4.5 MB, so the server rejects any `image` string over 3.5 MB with "That photo is too big, try again."
 3. Reading: sticker shuffle animation, "Reading the price…"
-4. Confirm, one card per item found: item (dropdown with stickers, 21 items), price (`inputmode="decimal"`, big), outlet (3 nearest suggested, then full list). Nothing saves without a tap on **Looks right**.
+4. Confirm, one card per item found: item (dropdown with stickers, 23 items), price (`inputmode="decimal"`, big), outlet (3 nearest suggested, then full list). Nothing saves without a tap on **Looks right**.
 5. Saved: slap sound, "Your report: $3.25 · waiting for a second student", thank you toast.
-- Nothing readable: "Couldn't read a price. Pick your item" → 21 sticker tiles.
+- Nothing readable: "Couldn't read a price. Pick your item" → 23 sticker tiles.
 - Product with no price: item preselected, "What's the price here?" with a **Skip, just show me prices** link to results.
 
 **Scan `/scan` (lowest priority, after the decisions in section 6)**
@@ -690,7 +637,7 @@ log price(i, o) = α[i]                    item effect          prior N(category
                 + ε                       noise                N(0, σ²)
 ```
 
-- `type` (cafe, convenience, food_court, restaurant, grocery) and `operator` (ams, ubc_food_services, chain, independent) come from `locations` (section 6). They let an outlet with one price borrow from outlets like it.
+- `type` (cafe, convenience, quick_service, restaurant, dining_hall, grocery) and `operator` (ams, ubc_food_services, chain, independent) come from `locations` (section 6). They let an outlet with one price borrow from outlets like it.
 - `γ` lets an outlet be cheap on coffee but pricey on snacks.
 - Prices are in logs, so effects are percentages: τ_o = 0.12 means outlets typically sit within about ±12% of similar outlets.
 
@@ -904,7 +851,7 @@ Figma file: (add link). Screens: Home, Results (with a pending row and a just co
 | ID | Rule |
 |---|---|
 | G1 | Gemini only suggests. Nothing saves without the student tapping Looks right. |
-| G2 | Item allowlist: only the 21 IDs. No match means the student picks from tiles. |
+| G2 | Item allowlist: only the 23 IDs. No match means the student picks from tiles. |
 | G3 | Server price check: $0.25 to $25, `needs_review` over 3x the campus median. |
 | G4 | Secrets only in Vercel env vars, `.env.local` and Databricks secrets. The owner credential is never in Vercel. The Databricks token is used only by `/api/ask`. |
 | G5 | Photos compressed on the phone, base64 over 3.5 MB rejected on the server. 10 inserts per device or user per minute; 10 photo reads per device per minute, 500 per day in total. |
@@ -931,7 +878,7 @@ Before Step 2, Sergio: create a free OpenRouteService key, put it in `.env.local
 App track (Sebastian, Claude Code):
 
 1. **Scaffold and look.** "Read docs/SPEC.md. Do Step 1: scaffold the app (sections 3 and 4), add tokens, fonts and the PriceTag, PriceBand, Button, Pin and ItemTiles components (section 11), and a full-screen map Home that reads `data/outlets.csv` directly for now." **Show me:** tag pins on a full-screen paper map at 390 x 844.
-2. **Database.** "Do Step 2: write `db/schema.sql`, `db/views.sql`, `db/roles.sql` and `scripts/seed.ts` exactly as section 6. Don't run anything against the database; show me the SQL." **Show me:** the SQL. (We run it in the Lakebase SQL editor, then `npm run seed`.)
+2. **Database.** (Done, see section 6.) "Do Step 2: write `db/schema.sql`, `db/views.sql`, `db/roles.sql`, `scripts/build_seed.py` and `db/seed.sql` exactly as section 6. Don't run anything against the database; show me the SQL." **Show me:** the SQL. (We run it in the Lakebase SQL editor, then `npm run seed`.)
 3. **Prove the pipe.** "Do Step 3: `src/lib/db.ts` as section 5 and `GET /api/health` (pipeline field `null` until D3). Then tell me which env vars to add in Vercel." **Show me:** the Vercel link `/api/health` on a phone returning 5 outlet names. If Lakebase refuses the connection from Vercel for 30 minutes, stop and tell us; we ask the Databricks booth.
 4. **Read API and search.** "Do Step 4: `/api/items`, `/api/locations`, `/api/prices` with the source selection in section 8, `src/lib/geo.ts` with `watchPosition` and the live dot, `src/lib/pricing.ts`, `src/lib/search.ts` with its tests, switch the map to the API, add search, tiles and the Results page (section 7) with the Nest fallback and WakingUp." **Show me:** "Redbull" and "rdbull" both find Red Bull, nearby outlets first, cheapest first, walk times, `price_source_used: "live"`.
 5. **Outlet page.** "Do Step 5: `/api/outlet/[id]` and the Outlet page. Chips and nearest cheaper links come from `serving.price_comparisons` and are hidden if it's missing." **Show me:** tapping a pin opens it; with D3 done, chips show.
