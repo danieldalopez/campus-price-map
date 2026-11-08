@@ -20,7 +20,7 @@ type PinIconOptions = {
   label: string;
   /** Accessible name, e.g. "Blue Chip Cafe, no price tier yet". */
   description: string;
-  /** Estimated tier: adds the word "est." (the dashed border is extra). */
+  /** Estimated tier: shown as "~$$" (the dashed border is extra). */
   estimated?: boolean;
   /** "grocery" = the grocery baseline: a different shape, labelled "grocery". */
   kind?: PinKind;
@@ -70,7 +70,9 @@ export function pinIcon({
     width = Math.max(64, label.length * 10 + 24);
     height = label ? 52 : 44;
   } else {
-    const est = estimated ? `<span class="cpm-pin__est">est.</span>` : "";
+    // Estimated tier: "~$$" reads as "about $$" (the dashed border is extra; the words are in the accessible
+    // name). No tier yet: "No price" instead of a bare "?".
+    const shown = label === "?" ? "No price" : estimated ? `~${label}` : label;
     const icon = band ? `<span class="cpm-pin__band">${BAND_ICON[band]}</span>` : "";
     const cls = [
       "price-tag cpm-pin__tag",
@@ -80,10 +82,10 @@ export function pinIcon({
     ]
       .filter(Boolean)
       .join(" ");
-    const tag = `<span class="${cls}" ${style}>${icon}<span class="cpm-pin__label">${esc(label)}</span>${est}</span>`;
+    const tag = `<span class="${cls}" ${style}>${icon}<span class="cpm-pin__label">${esc(shown)}</span></span>`;
     const stamp = cheapest ? `<span class="stamp stamp--cheapest cpm-pin__stamp">CHEAPEST</span>` : "";
     visual = `<span class="cpm-pin__stack" aria-hidden="true">${stamp}${tag}</span>`;
-    width = Math.max(44, label.length * 11 + (estimated ? 30 : 0) + (band ? 16 : 0) + 30, cheapest ? 92 : 0);
+    width = Math.max(44, shown.length * 11 + (band ? 16 : 0) + 30, cheapest ? 92 : 0);
     if (cheapest) height = 70;
   }
 
@@ -155,14 +157,20 @@ export function Pin({ position, children, href, overlayInsets = [16, 16], ...ico
   );
 }
 
-/** A group of overlapping pins: a little stack of tags with the count (and, on Results, the lowest price). */
+// A group: one neutral circle with the count, so a count never looks like a price. Only the price label (on
+// Results, "from $3.59") keeps the yellow tag.
+const CLUSTER_COUNT =
+  "inline-flex h-10 min-w-10 items-center justify-center rounded-full border-2 border-ink-2 bg-card " +
+  "px-2 font-sans text-base font-extrabold leading-none text-ink";
+
+/** A group of overlapping pins: a neutral circle with the count (and, on Results, the lowest price as a tag). */
 export function clusterIcon({ count, label, description }: { count: number; label?: string; description: string }) {
-  const price = label ? `<span class="cpm-cluster__label">${esc(label)}</span>` : "";
-  const width = Math.max(52, (label?.length ?? 0) * 10 + 44);
+  const price = label ? `<span class="price-tag cpm-pin__tag">${esc(label)}</span>` : "";
+  const width = Math.max(48, label ? label.length * 10 + 30 + 48 : 0);
   return L.divIcon({
     className: "cpm-pin cpm-cluster",
     html:
-      `<span class="cpm-cluster__stack" aria-hidden="true">${price}<span class="cpm-cluster__count">${count}</span></span>` +
+      `<span class="inline-flex items-center gap-1" aria-hidden="true">${price}<span class="${CLUSTER_COUNT}">${count}</span></span>` +
       `<span class="sr-only">${esc(description)}</span>`,
     iconSize: [width, 48],
     iconAnchor: [width / 2, 24],

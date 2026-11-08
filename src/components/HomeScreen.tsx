@@ -28,11 +28,16 @@ const HomeMap = dynamic(() => import("./HomeMap"), {
 type View = "map" | "list";
 
 const SEE_ALL_TILE =
-  "flex h-full w-full flex-col items-center justify-center gap-1 rounded-tag border-2 " +
-  "border-dashed border-ink bg-paper-2 px-2 py-2 text-center font-heading font-extrabold " +
-  "leading-tight shadow-ink active:translate-x-[2px] active:translate-y-[2px] active:shadow-ink-sm";
+  "flex h-full w-full flex-col items-center justify-center gap-1 rounded-tag border border-dashed " +
+  "border-ink-2 bg-paper-2 px-2 py-2 text-center font-heading text-[0.9375rem] font-bold leading-tight " +
+  "active:bg-card";
 
-const NOTE = "rounded-tag border-2 border-ink bg-card px-3 py-2 leading-snug shadow-ink";
+// One half of the Map / List switch: each half is a full-height (48 px) target; the selected half is ink.
+const SEGMENT =
+  "flex h-full flex-1 items-center justify-center rounded-full font-heading text-base font-bold " +
+  "text-ink aria-pressed:bg-ink aria-pressed:text-card";
+
+const NOTE = "rounded-tag border border-ink-2 bg-card px-3 py-2 leading-snug";
 
 /** Home: the map is the app (SPEC section 7). Items and outlets come from /api/items and /api/locations. */
 export default function HomeScreen() {
@@ -66,7 +71,13 @@ export default function HomeScreen() {
   }
 
   return (
-    <main className="fixed inset-0 overflow-hidden bg-paper">
+    <main
+      className={
+        "fixed inset-0 overflow-hidden bg-paper " +
+        // Home's zoom buttons: a quiet 1 px border, no shadow (still 48 px targets, sized in globals.css).
+        "[&_.leaflet-bar]:border! [&_.leaflet-bar]:border-ink-2! [&_.leaflet-bar]:shadow-none!"
+      }
+    >
       {/* The map fills the screen. Hidden from keyboard and screen readers in list view. */}
       <div className="absolute inset-0" role="region" aria-label="Map of campus outlets" inert={view === "list"}>
         <WhileVisible fallback={<div className="h-full w-full bg-paper" aria-hidden="true" />}>
@@ -76,42 +87,64 @@ export default function HomeScreen() {
 
       <div className="pointer-events-none absolute inset-0 z-[1100] flex flex-col">
         {/* Floating on top: title, search and item tiles. */}
-        <div data-map-overlay="top" className="pt-[max(env(safe-area-inset-top),12px)]">
-          <header className="flex items-center justify-between gap-2 px-4">
-            <h1 className="pointer-events-auto inline-flex -rotate-1 items-center gap-2 rounded-tag border-2 border-ink bg-tag px-3 py-1.5 font-heading text-xl font-extrabold leading-none shadow-ink">
-              Campus Price Map
+        <div
+          data-map-overlay="top"
+          className="pointer-events-auto border-b border-ink/15 bg-paper pt-[env(safe-area-inset-top)]"
+        >
+          <header className="flex h-14 items-center justify-between gap-2 pr-1 pl-4">
+            <h1 className="font-heading text-[1.375rem] font-extrabold leading-none">
+              <span className="bg-[linear-gradient(transparent_55%,var(--tag)_55%)] px-0.5">Campus Price Map</span>
             </h1>
-            <SoundToggle className="pointer-events-auto" />
+            <SoundToggle />
           </header>
 
-          <form role="search" onSubmit={submit} className="pointer-events-auto mx-4 mt-2 flex gap-2">
+          <form role="search" onSubmit={submit} className="mx-4 flex gap-2">
             <label htmlFor="item-search" className="sr-only">
-              What do you want?
+              Search products
             </label>
-            <input
-              id="item-search"
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="What do you want?"
-              autoComplete="off"
-              autoCorrect="off"
-              spellCheck={false}
-              enterKeyHint="search"
-              aria-describedby="search-status"
-              className="min-h-12 min-w-0 flex-1 rounded-tag border-2 border-ink bg-card px-3 text-lg shadow-ink placeholder:text-ink-2 [&::-webkit-search-cancel-button]:hidden"
-            />
+            <div className="relative min-w-0 flex-1">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-ink-2"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.25"
+                strokeLinecap="round"
+              >
+                <circle cx="11" cy="11" r="6.5" />
+                <path d="M16 16l4.5 4.5" />
+              </svg>
+              <input
+                id="item-search"
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search products"
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck={false}
+                enterKeyHint="search"
+                aria-describedby="search-status"
+                className="h-[3.125rem] w-full rounded-tag border border-ink-2 bg-card pr-3 pl-10 text-base placeholder:text-ink-2 [&::-webkit-search-cancel-button]:hidden"
+              />
+            </div>
             {query ? (
-              <Button aria-label="Clear search" className="w-12 px-0 text-2xl" onClick={() => setQuery("")}>
+              <button
+                type="button"
+                aria-label="Clear search"
+                className="flex h-[3.125rem] w-12 shrink-0 items-center justify-center rounded-tag border border-ink-2 bg-card text-2xl"
+                onClick={() => setQuery("")}
+              >
                 <span aria-hidden="true">×</span>
-              </Button>
+              </button>
             ) : null}
           </form>
           <p id="search-status" role="status" aria-live="polite" className="sr-only">
             {searchSummary(result)}
           </p>
 
-          <div className="pointer-events-auto mt-2">
+          <div className="pt-2">
             {itemsApi.error ? (
               <div role="alert" className={`${NOTE} mx-4 flex items-center justify-between gap-3`}>
                 <span>{itemsApi.error}</span>
@@ -167,20 +200,23 @@ export default function HomeScreen() {
           <div
             role="group"
             aria-label="Show outlets as"
-            className="grid grid-cols-2 gap-2 rounded-tag border-2 border-ink bg-card p-2 shadow-ink"
+            className="mx-auto flex h-[3.125rem] w-[11.5rem] rounded-full border border-ink-2 bg-card"
           >
-            <Button aria-pressed={view === "map"} onClick={() => setView("map")}>
-              <span aria-hidden="true">🗺️</span> Map
-            </Button>
-            <Button aria-pressed={view === "list"} onClick={() => setView("list")}>
-              <span aria-hidden="true">☰</span> List
-            </Button>
+            <button type="button" aria-pressed={view === "map"} onClick={() => setView("map")} className={SEGMENT}>
+              Map
+            </button>
+            <button type="button" aria-pressed={view === "list"} onClick={() => setView("list")} className={SEGMENT}>
+              List
+            </button>
           </div>
           <div className="mt-2 flex gap-2">
-            <Link href="/scan" className={buttonClasses("secondary", "lg", "shrink-0 px-4")}>
+            <Link
+              href="/scan"
+              className={buttonClasses("secondary", "md", "min-h-[3.25rem]! shrink-0 border! border-ink-2! px-4 shadow-none!")}
+            >
               <span aria-hidden="true">▥</span> Scan
             </Link>
-            <Link href="/snap" className={buttonClasses("primary", "lg", "min-w-0 flex-1")}>
+            <Link href="/snap" className={buttonClasses("primary", "md", "min-h-[3.25rem]! min-w-0 flex-1 text-lg!")}>
               <span aria-hidden="true">📷</span> Snap a price
             </Link>
           </div>
@@ -222,7 +258,7 @@ function OutletList({ outlets, loading, location }: { outlets: Outlet[]; loading
       <p className="text-ink-2">{known ? "Closest first, from where you are." : "In alphabetical order."}</p>
       <ul className="mt-3 flex flex-col gap-3">
         {rows.map(({ o, walk }) => (
-          <li key={o.id} className="rounded-tag border-2 border-ink bg-card p-3 shadow-ink">
+          <li key={o.id} className="rounded-tag border border-ink/20 bg-card p-3">
             <p className="font-heading text-lg font-extrabold leading-tight">
               <OutletLink id={o.id}>{o.name}</OutletLink>
             </p>
