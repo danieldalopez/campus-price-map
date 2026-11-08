@@ -121,11 +121,9 @@ function Summary({ decision, rows, usingNest }: { decision: Decision; rows: Pric
   return (
     <p className="leading-snug">
       <span className="block text-sm font-bold text-ink-2">{lead}</span>
-      <span className="font-heading text-base font-extrabold">{target.outlet.name}</span>{" "}
-      <span className="whitespace-nowrap">
-        <span aria-hidden="true">· </span>
-        <span className="font-mono text-lg font-bold">{formatPrice(target.price)}</span>
-      </span>
+      <span className="block font-heading text-base font-extrabold">{target.outlet.name}</span>
+      <span className="sr-only">, </span>
+      <span className="block font-mono text-lg font-bold">{formatPrice(target.price)}</span>
       {from ? (
         <span className="block text-sm text-ink-2">
           <span className="sr-only">, </span>
