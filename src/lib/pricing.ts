@@ -77,11 +77,40 @@ export function isNear(row: PriceRow): boolean {
   return row.walk_min !== null && row.walk_min <= NEAR_MINUTES;
 }
 
+/**
+ * The price the list ranks a row by: what you'd pay each, counting a multi-buy deal when it's cheaper than the
+ * single price (data/deals.csv). Only the list order uses it; the decision line, CHEAPEST stamp and Worth the
+ * walk compare single prices, because a deal only applies if you buy that many.
+ */
+export function listPrice(row: PriceRow): number | null {
+  if (row.price === null) return null;
+  return row.deal && row.deal.each < row.price ? row.deal.each : row.price;
+}
+
+/** Like compareRows, but a deal counts: "2 for $5.99" ranks as $3.00 each. */
+export function compareForList(a: PriceRow, b: PriceRow): number {
+  const g = group(a) - group(b);
+  if (g !== 0) return g;
+  const pa = listPrice(a);
+  const pb = listPrice(b);
+  if (pa !== null && pb !== null && pa !== pb) return pa - pb;
+  return compareRows(a, b);
+}
+
+/** The best in-stock deal on the page: the lowest price each, if it beats every other outlet's single price. */
+export function bestDeal(rows: PriceRow[]): (PriceRow & { deal: NonNullable<PriceRow["deal"]> }) | null {
+  const deals = rows.filter(
+    (r): r is PriceRow & { deal: NonNullable<PriceRow["deal"]> } =>
+      !!r.deal && r.deal.cheapest_on_campus && r.stock !== "sold_out",
+  );
+  return deals.sort((a, b) => a.deal.each - b.deal.each)[0] ?? null;
+}
+
 export type Sections = { near: PriceRow[]; farther: PriceRow[] };
 
-/** Near you (about 3 min or less) and Farther, each sorted with compareRows. */
+/** Near you (about 3 min or less) and Farther, each sorted with compareForList (deals count). */
 export function splitSections(rows: PriceRow[]): Sections {
-  const sorted = [...rows].sort(compareRows);
+  const sorted = [...rows].sort(compareForList);
   return { near: sorted.filter(isNear), farther: sorted.filter((r) => !isNear(r)) };
 }
 
