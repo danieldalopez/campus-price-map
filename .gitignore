@@ -16,3 +16,6 @@ npm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 .vercel
+
+# databricks bundle cache
+.databricks/

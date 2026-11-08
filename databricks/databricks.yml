@@ -1,0 +1,131 @@
+# Campus Price Map: the Databricks price comparison engine (docs/SPEC.md, section 10).
+#
+#   Lakebase ──02_bronze_copy──▶ bronze_* ──price_engine──▶ silver_* / gold_* ──synced tables──▶ serving.*
+#
+# Always pass the profile (SPEC rule 11), from this folder:
+#   databricks bundle validate --profile campus-price-map
+#   databricks bundle deploy -t dev --profile campus-price-map      (ask first: creates the Job and pipeline)
+#   databricks bundle run refresh -t dev --profile campus-price-map (ask first)
+#
+# Everything runs on serverless, so it stays inside Databricks Free Edition.
+
+bundle:
+  name: campus-price-map
+
+variables:
+  catalog:
+    description: Unity Catalog catalog for everything Databricks computes.
+    default: workspace
+  schema:
+    description: Schema for bronze, silver, gold and model tables.
+    default: cpm
+  lakebase_endpoint:
+    description: Lakebase endpoint resource path. 02_bronze_copy asks it for a 1 hour credential, so no password is stored.
+    default: projects/campus-price-map/branches/production/endpoints/primary
+  lakebase_database:
+    description: Postgres database the app writes to.
+    default: databricks_postgres
+  lakebase_schema:
+    description: Postgres schema holding the app tables and views (db/schema.sql, db/views.sql).
+    default: public
+  refresh_performance_target:
+    description: >-
+      Serverless mode for the refresh Job. STANDARD keeps the Free Edition quota safe on a 30 minute
+      schedule. D4 measures a run; switch to PERFORMANCE_OPTIMIZED only if Run now is too slow for the demo.
+    default: STANDARD
+  # D3 fills these with the pipeline IDs of the two synced tables:
+  #   databricks postgres get-synced-table <name> --profile campus-price-map
+  # price_comparisons_sync_pipeline_id:
+  #   description: Pipeline behind the synced table serving.price_comparisons.
+  # outlet_scores_sync_pipeline_id:
+  #   description: Pipeline behind the synced table serving.outlet_scores.
+
+resources:
+  pipelines:
+    price_engine:
+      name: price_engine
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      serverless: true
+      continuous: false
+      channel: CURRENT
+      root_path: ./src
+      libraries:
+        # D1 ships a stub; D2 fills it with silver_* and gold_* (section 10, "The pipeline").
+        - file:
+            path: ./src/price_engine.py
+
+  jobs:
+    refresh:
+      name: refresh
+      description: Lakebase → bronze → price engine → price model → synced tables → grants (docs/SPEC.md, section 10, "Refresh Job").
+      max_concurrent_runs: 1
+      performance_target: ${var.refresh_performance_target}
+      tags:
+        project: campus-price-map
+        aidevkit_project: ai-dev-kit
+      # D4 adds the schedule: every 30 min from Sat night to Sun 12:15 PM, then pause.
+      # Development mode pauses schedules, so D4 also sets presets.trigger_pause_status: UNPAUSED on the target.
+      # schedule:
+      #   quartz_cron_expression: "0 0/30 * * * ?"
+      #   timezone_id: America/Vancouver
+      tasks:
+        # No cluster settings anywhere: every task runs on serverless.
+        - task_key: bronze_copy
+          notebook_task:
+            notebook_path: ./src/02_bronze_copy.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+              lakebase_endpoint: ${var.lakebase_endpoint}
+              lakebase_database: ${var.lakebase_database}
+              lakebase_schema: ${var.lakebase_schema}
+          timeout_seconds: 900
+
+        - task_key: price_engine
+          depends_on:
+            - task_key: bronze_copy
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.price_engine.id}
+            full_refresh: false
+
+        # D5 adds the price model (outlet tiers and estimated prices):
+        # - task_key: price_model
+        #   depends_on:
+        #     - task_key: price_engine
+        #   notebook_task:
+        #     notebook_path: ./src/03_price_model.py
+        #     base_parameters:
+        #       catalog: ${var.catalog}
+        #       schema: ${var.schema}
+
+        # D3 adds the snapshot refresh of both synced tables (create_synced_tables.sh creates them).
+        # Until D5 lands, they depend on price_engine instead of price_model.
+        # If Free Edition refuses two sync pipelines at once, chain them one after the other.
+        # - task_key: sync_price_comparisons
+        #   depends_on:
+        #     - task_key: price_model
+        #   pipeline_task:
+        #     pipeline_id: ${var.price_comparisons_sync_pipeline_id}
+        # - task_key: sync_outlet_scores
+        #   depends_on:
+        #     - task_key: price_model
+        #   pipeline_task:
+        #     pipeline_id: ${var.outlet_scores_sync_pipeline_id}
+
+        # D3 adds the re-grant of app_reader on the serving schema after every sync:
+        # - task_key: grants
+        #   depends_on:
+        #     - task_key: sync_price_comparisons
+        #     - task_key: sync_outlet_scores
+        #   notebook_task:
+        #     notebook_path: ./src/04_grants.py
+
+targets:
+  dev:
+    default: true
+    # Development mode prefixes resource names with "[dev <user>]", marks the pipeline as
+    # development and pauses schedules. Tables still land in workspace.cpm.
+    mode: development
+    workspace:
+      host: https://dbc-7d171812-536c.cloud.databricks.com
