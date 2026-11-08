@@ -11,19 +11,10 @@ import { useLocation } from "@/lib/use-location";
 /** Zoom used when centring on the student. */
 const HERE_ZOOM = 17;
 /** The "location is blocked" help fades away after this, so it doesn't sit on the map. */
-const HELP_MS = 12_000;
+const HELP_MS = 8_000;
 
-/** Steps to allow location for this site, for the phone in hand. */
-function allowSteps(): string {
-  const ua = typeof navigator === "undefined" ? "" : navigator.userAgent;
-  if (/iPhone|iPad|iPod/.test(ua)) {
-    return "Your phone blocked location for this site. To allow it: tap the page icon at the left of the address bar (it looks like aA or a small page) → Website Settings → Location → Allow. Or: Settings app → Safari (under Apps) → Location → Allow. It turns on as soon as you come back.";
-  }
-  if (/Android/.test(ua)) {
-    return "Your phone blocked location for this site. To allow it: tap the icon left of the address → Permissions → Location → Allow. It turns on as soon as you come back.";
-  }
-  return "Your browser blocked location for this site. Allow it in the site settings (the icon left of the address). It turns on as soon as you come back.";
-}
+/** The note shown when the phone has blocked location for this site: short, so it doesn't cover the map. */
+const BLOCKED_TEXT = "Location is blocked for this site. Allow it in your browser's site settings, then tap again.";
 
 /**
  * The location button on the home map, stacked above the zoom buttons.
@@ -70,7 +61,7 @@ export function LocateControl() {
   useEffect(() => {
     if (!denied || !tapped.current) return;
     tapped.current = false;
-    const show = setTimeout(() => setHelp(allowSteps()), 0);
+    const show = setTimeout(() => setHelp(BLOCKED_TEXT), 0);
     const hide = setTimeout(() => setHelp(null), HELP_MS);
     return () => {
       clearTimeout(show);
