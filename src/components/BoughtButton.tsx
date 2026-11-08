@@ -27,6 +27,24 @@ export function BoughtButton({ outlet, item, price, className = "" }: Props) {
 }
 
 /**
+ * "Wrong price?" under a price: opens the same sheet to report the right one (a tag photo or typed). It
+ * waits for a second student before it changes anything, like every report.
+ */
+export function WrongPriceButton({ outlet, item, price }: Omit<Props, "className">) {
+  const open = useOpenBought();
+  return (
+    <button
+      type="button"
+      onClick={() => open({ outlet, item, price, mode: "wrong" })}
+      className="mt-1 min-h-12 py-2 text-left font-bold underline decoration-2 underline-offset-2"
+      aria-label={`Wrong price? Report the price of ${item.name} at ${outlet.name}`}
+    >
+      Wrong price?
+    </button>
+  );
+}
+
+/**
  * "✓ Confirmed by a student · 20 min ago": when a student last confirmed this price (Step 8). Shown with every
  * price that has one, so people know how fresh it is.
  */

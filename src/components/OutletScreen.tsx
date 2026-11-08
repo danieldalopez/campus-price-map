@@ -12,7 +12,7 @@ import { useApi } from "@/lib/use-api";
 import { DEFAULT_CONFIG, DEFAULT_PER_WEEK, project, type WalkConfig } from "@/lib/walkworth";
 import { useNow } from "@/lib/use-now";
 import { Button, buttonClasses } from "./Button";
-import { BoughtButton, ConfirmedLine } from "./BoughtButton";
+import { BoughtButton, ConfirmedLine, WrongPriceButton } from "./BoughtButton";
 import { usePricesChanged } from "./BoughtProvider";
 import { DirectionsButton } from "./DirectionsButton";
 import { OutletLink } from "./OutletLink";
@@ -160,6 +160,13 @@ function TrackedItem({
 
       {fresh ? <p className="mt-1 text-ink-2">{fresh.text}</p> : null}
       {row.price !== null ? <ConfirmedLine row={row} now={now} /> : null}
+      {row.price !== null ? (
+        <WrongPriceButton
+          outlet={{ id: outletId, name: outletName }}
+          item={{ id: row.item.id, name: row.item.name, size: row.item.size }}
+          price={row.price}
+        />
+      ) : null}
 
       {/* Pipeline only: the closest outlet that sells it for less, from serving.price_comparisons. */}
       {nearest && saving !== null && saving > 0 ? (
