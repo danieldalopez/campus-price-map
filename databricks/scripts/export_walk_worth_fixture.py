@@ -78,13 +78,21 @@ def main():
         "formula": {
             "saving": "origin_price - cheaper_price",
             "extra_min": "walk_min * (2 if round_trip else 1); student at the origin, so walk(you, near) = 0",
-            "time_cost": "extra_min / 60 * wage",
-            "net": "round(saving - extra_min / 60 * wage, 2), half up",
-            "verdict": "worth_it if net > even_band; not_worth_it if net < -even_band; else about_even",
-            "break_even_wage": "saving / (extra_min / 60), null when extra_min is 0",
-            "break_even_min": "saving / wage * 60",
-            "per horizon H": "saved_H = saving * H, minutes_H = extra_min * H, net_H = net * H",
+            "time_cost": "extra_min * wage / 60, to the cent",
+            "net": "saving - extra_min * wage / 60, to the cent",
+            "verdict": "worth_it if net > even_band; not_worth_it if net < -even_band; else about_even (rounded net)",
+            "break_even_wage": "saving * 60 / extra_min, to the cent; null when extra_min is 0",
+            "break_even_min": "saving * 60 / wage, to 0.1 min",
+            "per horizon H": "saved_H = saving * H, minutes_H = extra_min * H, net_H = net * H (the rounded net)",
         },
+        "rounding": (
+            "The pipeline computes in exact decimals and rounds half away from zero. Reproduce it in integers: "
+            "s = cents(saving), w = cents(wage), e = tenths(extra_min), where cents(x) = Math.round(x * 100) and "
+            "tenths(x) = Math.round(x * 10); half = q => Math.sign(q) * Math.round(Math.abs(q)). Then "
+            "net = half((600 * s - e * w) / 600) / 100; time_cost = half(e * w / 600) / 100; "
+            "break_even_wage = half(600 * s / e) / 100; break_even_min = half(600 * s / w) / 10. "
+            "Don't round a floating point result: about 0.7% of nets would come out a cent off (e.g. -5.175)."
+        ),
         "rows": [{c: r.get(c) for c in COLUMNS} for r in rows],
     }
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
